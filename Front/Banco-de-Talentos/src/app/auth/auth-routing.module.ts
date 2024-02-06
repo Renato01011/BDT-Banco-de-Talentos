@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
-import { ListComponent } from './list/list.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -9,12 +9,12 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'list',
-        component: ListComponent,
+        path: 'login',
+        component: LoginComponent,
       },
       {
         path: '**',
-        redirectTo: 'list',
+        redirectTo: 'login',
       },
     ],
   },
@@ -24,4 +24,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class DashboardRoutingModule {}
+export class AuthRoutingModule {}

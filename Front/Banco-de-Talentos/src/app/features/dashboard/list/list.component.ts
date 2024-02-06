@@ -12,6 +12,6 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {}
 
   onNewTalent() {
-    this.router.navigateByUrl('/talent');
+    this.router.navigateByUrl('/home/talent');
   }
 }

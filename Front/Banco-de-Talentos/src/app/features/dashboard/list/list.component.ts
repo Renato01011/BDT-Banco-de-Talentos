@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-list',
@@ -8,8 +9,15 @@ import { Router } from '@angular/router';
 })
 export class ListComponent implements OnInit {
   constructor(private router: Router) {}
-
-  ngOnInit(): void {}
+  items: MenuItem[] = [];
+  ngOnInit(): void {
+    this.items = [
+      { label: 'Básico' },
+      { label: 'Intermedio' },
+      { label: 'Avanzado' },
+      { label: 'Nativo' },
+    ];
+  }
 
   onNewTalent() {
     this.router.navigateByUrl('/home/talent');

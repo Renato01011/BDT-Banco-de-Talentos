@@ -6,34 +6,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Blob;
+import java.sql.Date;
 
 @Entity
 @Getter
 @Setter
 @Data
 @NoArgsConstructor
-public class BT_TM_USUARIO {
+public class btTmListaUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID_USUARIO;
+    private int idListaUsuario;
 
     @Column
-    private String NO_NOMBRE;
+    private int idUsuario;
 
     @Column
-    private String AP_APELLIDO_PATERNO;
+    private String noListaUsuario;
 
     @Column
-    private String AP_APELLIDO_MATERNO;
-
-    @Column
-    private Blob IM_IMAGEN;
-
-    @Column
-    private String USUARIO;
-
-    @Column
-    private String PASSWORD;
+    private Date feCreacion;
 }

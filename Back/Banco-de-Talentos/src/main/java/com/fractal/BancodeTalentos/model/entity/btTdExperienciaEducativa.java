@@ -8,33 +8,33 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Date;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @Data
 @NoArgsConstructor
-public class BT_TD_EXPERIENCIA_EDUCATIVA {
+public class btTdExperienciaEducativa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID_EXPERIENCIA_EDUCATIVA;
+    private int idExperienciaEducativa;
 
     @Column
-    private String NO_INSTITUCION_EDUCATIVA;
+    private String noInstitucionEducativa;
 
     @Column
-    private String NO_CARRERA;
+    private String noCarrera;
 
     @Column
-    private String NO_GRADO;
+    private String noGrado;
 
     @Column
-    private Date FE_INICIO;
+    private Date feInicio;
 
     @Column
-    private Date FE_FIN;
+    private Date feFin;
 
     @Column
-    private int ID_TALENTO;
+    private int idTalento;
 
 }

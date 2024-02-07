@@ -6,25 +6,32 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Getter
 @Setter
 @Data
 @NoArgsConstructor
-public class BT_TD_HABILIDAD_TECNICA {
+public class btTdExperienciaLaboral {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID_HABILIDAD_TECNICA;
+    private int idExperienciaLaboral;
 
     @Column
-    private String NO_HABILIDAD;
+    private String noExperienciaLaboral;
 
     @Column
-    private int ID_TALENTO;
+    private String noPuesto;
 
     @Column
-    private int NU_ANIOS;
+    private Date feInicio;
+
+    @Column
+    private Date feFin;
+
+    @Column
+    private int idTalento;
 
 }

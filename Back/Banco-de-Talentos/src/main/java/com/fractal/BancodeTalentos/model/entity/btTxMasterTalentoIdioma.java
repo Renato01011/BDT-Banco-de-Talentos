@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.aspectj.weaver.GeneratedReferenceTypeDelegate;
 
 import javax.persistence.*;
 
@@ -13,16 +12,22 @@ import javax.persistence.*;
 @Setter
 @Data
 @NoArgsConstructor
-public class BT_TM_MASTER_TALENTO {
+public class btTxMasterTalentoIdioma {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID_MASTER_TALENTO;
+    private int idMasterTalentoIdioma;
 
     @Column
-    private int ID_TALENTO;
+    private int idTalento;
 
     @Column
-    private int ID;
+    private int idIdioma;
+
+    @Column
+    private int idNivel;
+
+    @Column
+    private int nuEstrellas;
 
 }

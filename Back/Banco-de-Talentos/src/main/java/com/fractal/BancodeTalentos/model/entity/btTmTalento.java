@@ -15,46 +15,43 @@ import java.sql.Date;
 @Setter
 @Data
 @NoArgsConstructor
-public class BT_TM_TALENTO {
+public class btTmTalento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID_TALENTO;
+    private int idTalento;
 
     @Column
-    private String NO_NOMBRE;
+    private String noNombre;
 
     @Column
-    private String AP_APELLIDO_PATERNO;
+    private String apApellidoPaterno;
 
     @Column
-    private String AP_APELLIDO_MATERNO;
+    private String apApellidoMaterno;
 
     @Column
-    private Blob IM_IMAGEN;
+    private byte[] imImagen;
 
     @Column
-    private String DE_DESCRIPCION;
+    private String deDescripcion;
 
     @Column
-    private int NU_MONTO_INICIAL;
+    private int nuMontoInicial;
 
     @Column
-    private int NU_MONTO_FINAL;
+    private int nuMontoFinal;
 
     @Column
-    private String NU_CELULAR;
+    private String nuCelular;
 
     @Column
-    private String DI_LINKDN;
+    private String diLinkdn;
 
     @Column
-    private String DI_GITHUB;
+    private String diGithub;
 
     @Column
-    private Blob CV_BASE64;
-
-    @Column
-    private Date FE_CREACION;
+    private Date feCreacion;
 
 }

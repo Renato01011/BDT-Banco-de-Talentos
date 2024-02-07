@@ -6,32 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @Data
 @NoArgsConstructor
-public class BT_TD_EXPERIENCIA_LABORAL {
+public class btTxMasterTalento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID_EXPERIENCIA_LABORAL;
+    private int idMasterTalento;
 
     @Column
-    private String NO_EXPERIENCIA_LABORAL;
+    private int idTalento;
 
     @Column
-    private String NO_PUESTO;
-
-    @Column
-    private Date FE_INICIO;
-
-    @Column
-    private Date FE_FIN;
-
-    @Column
-    private int ID_TALENTO;
+    private int id;
 
 }

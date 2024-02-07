@@ -12,16 +12,15 @@ import javax.persistence.*;
 @Setter
 @Data
 @NoArgsConstructor
-public class BT_TD_HABILIDAD_BLANDA {
+public class btTxMasterUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID_HABILIDAD_BLANDA;
+    private int idMasterUsuario;
 
     @Column
-    private String NO_HABILIDAD;
+    private int idUsuario;
 
     @Column
-    private int ID_TALENTO;
-
+    private int idRol;
 }

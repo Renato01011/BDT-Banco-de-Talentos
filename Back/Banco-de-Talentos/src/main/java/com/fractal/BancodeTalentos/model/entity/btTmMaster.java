@@ -12,34 +12,34 @@ import javax.persistence.*;
 @Setter
 @Data
 @NoArgsConstructor
-public class BT_TM_MASTER {
+public class btTmMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
 
     @Column
-    private int ID_Master;
+    private int idMaster;
 
     @Column
-    private String DE_DESCRIPCION;
+    private String deDescripcion;
 
     @Column
-    private String STRING_UNO;
+    private String stringUno;
 
     @Column
-    private String STRING_DOS;
+    private String stringDos;
 
     @Column
-    private String STRING_TRES;
+    private String stringTres;
 
     @Column
-    private int ID_UNO;
+    private int idUno;
 
     @Column
-    private int ID_DOS;
+    private int idDos;
 
     @Column
-    private int ID_TRES;
+    private int IdTres;
 
 }

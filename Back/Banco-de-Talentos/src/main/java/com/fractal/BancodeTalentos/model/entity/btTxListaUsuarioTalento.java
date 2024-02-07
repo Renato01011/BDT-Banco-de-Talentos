@@ -6,25 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity
 @Getter
 @Setter
 @Data
 @NoArgsConstructor
-public class BT_TM_LISTA_USUARIO {
+public class btTxListaUsuarioTalento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID_LISTA_USUARIO;
+    private int idListaUsuarioDetalle;
 
     @Column
-    private int ID_USUARIO;
+    private int idListaUsuario;
 
     @Column
-    private int NO_LISTA_USUARIO;
+    private int idTalento;
 
-    @Column
-    private Date FE_CREACION;
 }

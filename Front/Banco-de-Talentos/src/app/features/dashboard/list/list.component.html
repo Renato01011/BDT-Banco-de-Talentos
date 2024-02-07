@@ -1,4 +1,56 @@
-<p>list works!</p>
-<button mat-button mat-flat-button color="primary" (click)="onNewTalent()">
-  Nuevo Talento
-</button>
+<p-toolbar>
+  <div class="p-toolbar-group-left">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Nuevo Talento"
+      icon="pi pi-plus"
+      class="p-button-outlined p-button-info"
+      (click)="onNewTalent()"
+    ></button>
+  </div>
+
+  <div class="p-toolbar-group-right">
+    <div class="px-1">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Habilidades"
+        class="p-button-rounded p-button-secondary p-button-sm"
+      ></button>
+    </div>
+    <div class="px-1">
+      <p-splitButton
+        label="Nivel de inglés"
+        [model]="this.items"
+        styleClass="p-button-rounded p-button-secondary p-button-sm"
+      ></p-splitButton>
+    </div>
+    <div class="px-1">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Favoritos"
+        class="p-button-rounded p-button-secondary p-button-sm"
+      ></button>
+    </div>
+    <div class="px-1">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="Search" />
+      </span>
+    </div>
+    <div class="px-1">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Buscar"
+        class="p-button-success p-button-sm"
+      ></button>
+    </div>
+  </div>
+</p-toolbar>

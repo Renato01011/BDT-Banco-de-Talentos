@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 
+import { StyleClassModule } from 'primeng/styleclass';
+import { MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -23,6 +28,11 @@ import { DropdownModule } from 'primeng/dropdown';
     ToggleButtonModule,
     CheckboxModule,
     DropdownModule,
+    StyleClassModule,
+    MenuModule,
+    AvatarModule,
+    AvatarGroupModule,
+    MenubarModule,
   ],
 })
 export class MaterialModule {}

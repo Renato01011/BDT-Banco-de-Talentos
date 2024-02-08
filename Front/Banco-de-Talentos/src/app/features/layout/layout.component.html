@@ -1,3 +1,22 @@
-<span>My App</span>
+<p-menubar>
+  <ng-template pTemplate="start">
+    <img src="./assets/users/fractal-logo.png" alt="Logo" class="logo-image" />
+  </ng-template>
+  <ng-template pTemplate="end">
+    <div class="profile-info">
+      <p-avatar
+        image="./assets/users/2.jpg"
+        styleClass="mr-2"
+        size="large"
+        shape="circle"
+        class="pr-1"
+      ></p-avatar>
+      <div class="flex flex-column">
+        <span class="profile-name">Claudia Vasquez</span>
+        <span class="profile-role">Reclutador</span>
+      </div>
+    </div>
+  </ng-template>
+</p-menubar>
 
 <router-outlet></router-outlet>

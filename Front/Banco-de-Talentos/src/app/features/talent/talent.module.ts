@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TalentRoutingModule } from './talent-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 import { NewTalentComponent } from './new-talent/new-talent.component';
+import { MaterialModule } from 'src/app/shared/material/material.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { NewTalentComponent } from './new-talent/new-talent.component';
   ],
   imports: [
     CommonModule,
-    TalentRoutingModule
+    TalentRoutingModule,
+    MaterialModule
   ]
 })
 export class TalentModule { }

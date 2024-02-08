@@ -1,1 +1,130 @@
-<p>new-talent works!</p>
+<div class="h-full flex flex-warp align-items-center justify-content-center">
+    <p-card class="w-7 bg-cover bg-center border-white-alpha-30 border-2 border-round h-full flex align-items-center justify-content-center"
+    [style]="{'width': '100%', 'height': '100%'}">
+        <ng-template pTemplate="header">
+            <div class="p-3 pb-0 grid">
+                <div class="col-7">
+                    <h2>Nuevo Talento</h2>
+                    <p>Detalla al nuevo talento que deseas agregar.</p>
+                </div>
+                <div class="col flex justify-content-end">
+                    <div class="p-2">
+                        <button
+                        pButton
+                        pRipple
+                        type="button"
+                        label="Volver"
+                        class="p-button-outlined p-button-info"
+                        [style]="{'height': '50px'}"
+                    ></button>
+                    </div>
+                    <div class="p-2">
+                        <button
+                        pButton
+                        pRipple
+                        type="button"
+                        label="Guardar"
+                        class="p-button-success"
+                        [style]="{'height': '50px'}"
+                    ></button>
+                    </div>
+                </div>
+    
+            </div>
+        </ng-template>
+        <div class="p-4 pt-3">
+            <p-scrollPanel [style]="{ height: '500px' }" styleClass="custombar1">
+                <div>
+                    <h3>Curriculum Vitae</h3>
+                    <button pButton class="p-button-outlined" label="Curriculum Vitae"></button>
+                </div>
+                <div>
+                    <h3>Foto de perfil</h3>
+                    <button pButton class="p-button-outlined" label="Foto de perfil"></button>
+                </div>
+                <div>
+                    <h3>Medios Sociales</h3>
+                    <p>Link de LinkedIn</p>
+                    <input pInputText placeholder="Nombre de la empresa" class="w-full"/>
+                    <p>Link de Github</p>
+                    <input pInputText placeholder="Puesto en la empresa" class="w-full"/>
+                </div>
+                <div>
+                    <h3>Banda salarial</h3>
+                    <p-toggleButton onLabel="Soles" offLabel="Soles" onIcon="pi pi-check" offIcon="pi pi-times"></p-toggleButton>
+                    <p-toggleButton onLabel="Dolares" offLabel="Dolares" onIcon="pi pi-check" offIcon="pi pi-times"></p-toggleButton>
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <p>Monto Inicial</p>
+                            <input pInputText class="w-full"/>
+                        </div>
+                        <div class="field col">
+                            <p>Monto Final</p>
+                            <input pInputText class="w-full"/>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Habilidades tecnicas</h3>
+                    <p>Habilidad técnica</p>
+                    <input pInputText placeholder="Nombre de la habilidad" class="w-full"/>
+                    <p>Años de experiencia</p>
+                    <input pInputText placeholder="Nro. de años" class="w-full"/>
+                    <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text"></button>
+                </div>
+                <div>
+                    <h3>Experiencias laborales</h3>
+                    <p>Empresa</p>
+                    <input pInputText placeholder="Nombre de la empresa" class="w-full"/>
+                    <p-checkbox [binary]="true" inputId="binary" label="Aquí en Fractal"></p-checkbox>
+                    <p>Puesto</p>
+                    <input pInputText placeholder="Puesto en la empresa" class="w-full"/>
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <p>Año y mes de inicio</p>
+                            <input pInputText class="w-full"/>
+                        </div>
+                        <div class="field col">
+                            <p>Año y mes fin</p>
+                            <input pInputText class="w-full"/>
+                        </div>
+                    </div>
+                    <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
+                </div>
+                <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text"></button>
+                <div>
+                    <h3>Experiencias educativas</h3>
+                    <p>Institución</p>
+                    <input pInputText placeholder="Nombre de la institución" class="w-full"/>
+                    <p-checkbox [binary]="true" inputId="binary" label="Aquí en Fractal"></p-checkbox>
+                    <p>Carrera</p>
+                    <input pInputText placeholder="Nombre de la carrera" class="w-full"/>
+                    <p>Grado</p>
+                    <input pInputText placeholder="Grado de la carrera" class="w-full"/>
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <p>Año y mes de inicio</p>
+                            <input pInputText class="w-full"/>
+                        </div>
+                        <div class="field col">
+                            <p>Año y mes fin</p>
+                            <input pInputText class="w-full"/>
+                        </div>
+                    </div>
+                    <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
+                </div>
+                <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text"></button>
+                <div>
+                    <h3>Idiomas</h3>
+                    <p>Idioma</p>
+                    <p-dropdown [options]="idiomas" placeholder="Nombre del idioma" optionLabel="name" [showClear]="true"></p-dropdown>
+                    <p>Nivel</p>
+                    <p-dropdown [options]="niveles" placeholder="Nivel del idioma" optionLabel="name" [showClear]="true"></p-dropdown>
+                    <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text"></button>
+                </div>
+            </p-scrollPanel>
+        </div>
+    </p-card>
+</div>
+
+

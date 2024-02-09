@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
 
 import { StyleClassModule } from 'primeng/styleclass';
+import { RatingModule } from 'primeng/rating';
+import { ListboxModule } from 'primeng/listbox';
+import { ChipsModule } from 'primeng/chips';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ToastModule } from 'primeng/toast';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
@@ -33,6 +39,12 @@ import { DropdownModule } from 'primeng/dropdown';
     AvatarModule,
     AvatarGroupModule,
     MenubarModule,
+    MultiSelectModule,
+    OverlayPanelModule,
+    ToastModule,
+    ChipsModule,
+    ListboxModule,
+    RatingModule,
   ],
 })
 export class MaterialModule {}

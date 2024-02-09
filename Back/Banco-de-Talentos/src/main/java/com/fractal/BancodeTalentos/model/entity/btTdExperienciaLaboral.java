@@ -17,7 +17,8 @@ import java.sql.Date;
 public class btTdExperienciaLaboral {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_EXPERIENCIA_LABORAL")
+    @SequenceGenerator(name = "SEQ_BT_ID_EXPERIENCIA_LABORAL", sequenceName = "SEQ_BT_ID_EXPERIENCIA_LABORAL", allocationSize = 1)
     @Column(name = "ID_EXPERIENCIA_LABORAL")
     private int idExperienciaLaboral;
 

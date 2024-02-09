@@ -16,7 +16,8 @@ import javax.persistence.*;
 public class btTxMasterTalentoIdioma {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_MASTER_TALENTO_IDIOMA")
+    @SequenceGenerator(name = "SEQ_BT_ID_MASTER_TALENTO_IDIOMA", sequenceName = "SEQ_BT_ID_MASTER_TALENTO_IDIOMA", allocationSize = 1)
     @Column(name = "ID_MASTER_TALENTO_IDIOMA")
     private int idMasterTalentoIdioma;
 

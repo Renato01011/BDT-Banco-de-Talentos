@@ -16,7 +16,8 @@ import javax.persistence.*;
 public class btTdFeedbackTalento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_FEEDBACK")
+    @SequenceGenerator(name = "SEQ_BT_ID_FEEDBACK", sequenceName = "SEQ_BT_ID_FEEDBACK", allocationSize = 1)
     @Column(name = "ID_FEEDBACK")
     private int idFeedback;
 

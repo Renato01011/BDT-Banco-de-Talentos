@@ -16,8 +16,9 @@ import javax.persistence.*;
 public class btTmMaster {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID NUMBER")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_NUMBER")
+    @SequenceGenerator(name = "SEQ_BT_ID_NUMBER", sequenceName = "SEQ_BT_ID_NUMBER", allocationSize = 1)
+    @Column(name = "ID_NUMBER")
     private int id;
 
     @Column(name = "ID_MASTER")

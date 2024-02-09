@@ -19,7 +19,8 @@ import java.sql.Date;
 public class btTmTalento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_TALENTO")
+    @SequenceGenerator(name = "SEQ_BT_ID_TALENTO", sequenceName = "SEQ_BT_ID_TALENTO", allocationSize = 1)
     @Column(name = "ID_TALENTO")
     private int idTalento;
 

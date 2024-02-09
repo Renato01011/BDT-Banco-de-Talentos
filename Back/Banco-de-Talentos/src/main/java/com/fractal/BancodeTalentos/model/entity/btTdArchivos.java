@@ -17,8 +17,9 @@ import java.sql.Blob;
 public class btTdArchivos {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_ARCHIVO")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_ARCHIVOS")
+    @SequenceGenerator(name = "SEQ_BT_ID_ARCHIVOS", sequenceName = "SEQ_BT_ID_ARCHIVOS", allocationSize = 1)
     private int idArchivo;
 
     @Column(name = "NO_ARCHIVO")

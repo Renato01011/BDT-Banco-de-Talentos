@@ -17,8 +17,9 @@ import java.sql.Blob;
 public class btTmUsuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_USUARIO NUMBER")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_USUARIO_NUMBER")
+    @SequenceGenerator(name = "SEQ_BT_ID_USUARIO_NUMBER", sequenceName = "SEQ_BT_ID_USUARIO_NUMBER", allocationSize = 1)
+    @Column(name = "ID_USUARIO_NUMBER")
     private int idUsuario;
 
     @Column(name = "NO_NOMBRE")

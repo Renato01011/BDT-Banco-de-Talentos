@@ -11,6 +11,7 @@ import java.sql.Blob;
 import java.sql.Date;
 
 @Entity
+@Table(name = "BT_TM_TALENTO")
 @Getter
 @Setter
 @Data
@@ -19,39 +20,40 @@ public class btTmTalento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_TALENTO")
     private int idTalento;
 
-    @Column
+    @Column(name = "NO_NOMBRE")
     private String noNombre;
 
-    @Column
+    @Column(name = "AP_APELLIDO_PATERNO")
     private String apApellidoPaterno;
 
-    @Column
+    @Column(name = "AP_APELLIDO_MATERNO")
     private String apApellidoMaterno;
 
-    @Column
+    @Column(name = "IM_IMAGEN")
     private byte[] imImagen;
 
-    @Column
+    @Column(name = "DE_DESCRIPCION")
     private String deDescripcion;
 
-    @Column
+    @Column(name = "NU_MONTO_INICIAL")
     private int nuMontoInicial;
 
-    @Column
+    @Column(name = "NU_MONTO_FINAL")
     private int nuMontoFinal;
 
-    @Column
+    @Column(name = "NU_CELULAR")
     private String nuCelular;
 
-    @Column
+    @Column(name = "DI_LINKDN")
     private String diLinkdn;
 
-    @Column
+    @Column(name = "DI_GITHUB")
     private String diGithub;
 
-    @Column
+    @Column(name = "FE_CREACION")
     private Date feCreacion;
 
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.sql.Blob;
 
 @Entity
+@Table(name = "BT_TD_ARCHIVOS")
 @Getter
 @Setter
 @Data
@@ -17,18 +18,19 @@ public class btTdArchivos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_ARCHIVO")
     private int idArchivo;
 
-    @Column
+    @Column(name = "NO_ARCHIVO")
     private String noArchivo;
 
-    @Column
+    @Column(name = "FL_TIPO_ARCHIVO")
     private String flTipoArchivo;
 
-    @Column
+    @Column(name = "AR_RCHIVO")
     private byte[] arArchivo;
 
-    @Column
+    @Column(name = "ID_TALENTO")
     private int idTalento;
 
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.sql.Blob;
 
 @Entity
+@Table(name = "BT_TM_USUARIO")
 @Getter
 @Setter
 @Data
@@ -17,23 +18,24 @@ public class btTmUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_USUARIO NUMBER")
     private int idUsuario;
 
-    @Column
+    @Column(name = "NO_NOMBRE")
     private String noNombre;
 
-    @Column
+    @Column(name = "AP_APELLIDO_PATERNO")
     private String apApellidoPaterno;
 
-    @Column
+    @Column(name = "AP_APELLIDO_MATERNO")
     private String apApellidoMaterno;
 
-    @Column
+    @Column(name = "IM_IMAGEN")
     private byte[] imImagen;
 
-    @Column
+    @Column(name = "US_USUARIO")
     private String usUsuario;
 
-    @Column
+    @Column(name = "PW_PASSWORD")
     private String pwPassword;
 }

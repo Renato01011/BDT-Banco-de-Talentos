@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "BT_TX_MASTER_TALENTO_IDIOMA")
 @Getter
 @Setter
 @Data
@@ -16,18 +17,19 @@ public class btTxMasterTalentoIdioma {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_MASTER_TALENTO_IDIOMA")
     private int idMasterTalentoIdioma;
 
-    @Column
+    @Column(name = "ID_TALENTO")
     private int idTalento;
 
-    @Column
+    @Column(name = "ID_IDIOMA")
     private int idIdioma;
 
-    @Column
+    @Column(name = "ID_NIVEL")
     private int idNivel;
 
-    @Column
+    @Column(name = "NU_ESTRELLAS")
     private int nuEstrellas;
 
 }

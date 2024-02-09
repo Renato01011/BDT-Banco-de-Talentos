@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "BT_TD_FEEDBACK_TALENTO")
 @Getter
 @Setter
 @Data
@@ -16,15 +17,16 @@ public class btTdFeedbackTalento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_FEEDBACK")
     private int idFeedback;
 
-    @Column
+    @Column(name = "ID_TALENTO")
     private int idTalento;
 
-    @Column
+    @Column(name = "NU_ESTRELLAS")
     private int nuEstrellas;
 
-    @Column
+    @Column(name = "DE_DESCRIPCION")
     private String deDescripcion;
 
 }

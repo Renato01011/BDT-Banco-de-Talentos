@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
+@Table(name = "BT_TM_LISTA_USUARIO")
 @Getter
 @Setter
 @Data
@@ -17,14 +18,15 @@ public class btTmListaUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_LISTA_USUARIO")
     private int idListaUsuario;
 
-    @Column
+    @Column(name = "ID_USUARIO")
     private int idUsuario;
 
-    @Column
+    @Column(name = "NO_LISTA_USUARIO")
     private String noListaUsuario;
 
-    @Column
+    @Column(name = "FE_CREACION")
     private Date feCreacion;
 }

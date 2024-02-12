@@ -20,7 +20,7 @@ public class BtTdArchivos implements Serializable {
     @Column(name = "ID_ARCHIVO")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_ARCHIVOS")
     @SequenceGenerator(name = "SEQ_BT_ID_ARCHIVOS", sequenceName = "SEQ_BT_ID_ARCHIVOS", allocationSize = 1)
-    private int idArchivo;
+    private Integer idArchivo;
 
     @Column(name = "NO_ARCHIVO")
     private String noArchivo;
@@ -32,6 +32,6 @@ public class BtTdArchivos implements Serializable {
     private byte[] arArchivo;
 
     @Column(name = "ID_TALENTO")
-    private int idTalento;
+    private Integer idTalento;
 
 }

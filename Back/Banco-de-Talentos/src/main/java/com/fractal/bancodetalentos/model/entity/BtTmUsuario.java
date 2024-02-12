@@ -20,7 +20,7 @@ public class BtTmUsuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_USUARIO_NUMBER")
     @SequenceGenerator(name = "SEQ_BT_ID_USUARIO_NUMBER", sequenceName = "SEQ_BT_ID_USUARIO_NUMBER", allocationSize = 1)
     @Column(name = "ID_USUARIO_NUMBER")
-    private int idUsuario;
+    private Integer idUsuario;
 
     @Column(name = "NO_NOMBRE")
     private String noNombre;

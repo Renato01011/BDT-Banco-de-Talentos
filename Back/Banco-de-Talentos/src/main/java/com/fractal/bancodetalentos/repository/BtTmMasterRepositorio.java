@@ -10,4 +10,5 @@ public interface BtTmMasterRepositorio extends JpaRepository<BtTmMaster, Integer
 
     @Query(value = "SELECT * FROM BT_TM_MASTER WHERE DE_DESCRIPCION = 'IDIOMA'" , nativeQuery = true)
     List<BtTmMaster> searchLanguage();
+
 }

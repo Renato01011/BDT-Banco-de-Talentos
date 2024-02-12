@@ -20,11 +20,11 @@ public class BtTxMasterUsuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_MASTER_USUARIO")
     @SequenceGenerator(name = "SEQ_BT_ID_MASTER_USUARIO", sequenceName = "SEQ_BT_ID_MASTER_USUARIO", allocationSize = 1)
     @Column(name = "ID_MASTER_USUARIO")
-    private int idMasterUsuario;
+    private Integer idMasterUsuario;
 
     @Column(name = "ID_USUARIO")
-    private int idUsuario;
+    private Integer idUsuario;
 
     @Column(name = "ID_ROL")
-    private int idRol;
+    private Integer idRol;
 }

@@ -1,0 +1,13 @@
+package com.fractal.bancodetalentos.repository;
+
+import com.fractal.bancodetalentos.model.entity.BtTmMaster;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
+public interface BtTmMasterRepositorio extends JpaRepository<BtTmMaster, Integer> {
+
+    @Query(value = "SELECT * FROM BT_TM_MASTER WHERE DE_DESCRIPCION = 'IDIOMA'" , nativeQuery = true)
+    List<BtTmMaster> searchLanguage();
+}

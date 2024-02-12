@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { StyleClassModule } from 'primeng/styleclass';
 import { RatingModule } from 'primeng/rating';
+import { DialogModule } from 'primeng/dialog';
+import { ChipModule } from 'primeng/chip';
 import { ListboxModule } from 'primeng/listbox';
 import { ChipsModule } from 'primeng/chips';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
@@ -46,7 +48,12 @@ import { ImageModule } from 'primeng/image';
     ChipsModule,
     ListboxModule,
     RatingModule,
+<<<<<<< Updated upstream
     ImageModule,
+=======
+    DialogModule,
+    ChipModule,
+>>>>>>> Stashed changes
   ],
 })
 export class MaterialModule {}

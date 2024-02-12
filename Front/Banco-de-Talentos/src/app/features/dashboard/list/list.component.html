@@ -165,7 +165,7 @@
     </div>
     <!-- Profile Card Details -->
     <div class="col-12 md:col-8">
-      <p-scrollPanel class="w-full max-h-screen">
+      <p-scrollPanel [style]="{ width: '100%', height: 'calc(100vh - 190px)' }">
         <p-card>
           <div class="grid">
             <!-- Profile picture -->
@@ -264,8 +264,365 @@
               </div>
             </div>
           </div>
+          <!-- Skills -->
+          <div class="grid">
+            <!-- Technical Skills -->
+            <div class="col-7">
+              <div class="border-round-sm flex justify-content-between">
+                <div class="flex align-items-center justify-content-center">
+                  <span class="text-base font-medium"
+                    >Habilidades Técnicas</span
+                  >
+                </div>
+                <div class="flex align-items-center justify-content-center">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-plus"
+                    class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+                    (click)="openNew()"
+                  ></button>
+                </div>
+              </div>
+
+              <div class="border-round-sm">
+                <div class="flex align-items-center flex-wrap gap-1">
+                  <p-chip
+                    *ngFor="let skill of inlineTechnicalSkills"
+                    [label]="skill.name"
+                    styleClass="custom-chip"
+                  ></p-chip>
+                </div>
+              </div>
+            </div>
+            <!-- Soft Skills -->
+            <div class="col-5">
+              <div class="border-round-sm flex justify-content-between">
+                <div class="flex align-items-center justify-content-center">
+                  <span class="text-base font-medium">Habilidades Blandas</span>
+                </div>
+                <div class="flex align-items-center justify-content-center">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-plus"
+                    class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+                    (click)="openNew()"
+                  ></button>
+                </div>
+              </div>
+
+              <div class="border-round-sm">
+                <div class="flex align-items-center flex-wrap gap-1">
+                  <p-chip
+                    *ngFor="let skill of softSkills"
+                    [label]="skill.name"
+                    styleClass="custom-red-chip"
+                  ></p-chip>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- About me-->
+          <div class="grid">
+            <div class="col">
+              <div class="p-1 border-round-sm bg-primary text-sm">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
+                enim neque harum. Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Saepe enim neque harum.
+                <span class="custom-cursor mx-2" (click)="handleClick()">
+                  <i class="pi pi-pencil"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- Experience -->
+          <div class="grid">
+            <!-- Exp - Header -->
+            <div class="col">
+              <div class="border-round-sm flex justify-content-between">
+                <div class="flex align-items-center justify-content-center">
+                  <span class="text-base font-medium">Experiencia</span>
+                </div>
+                <div class="flex align-items-center justify-content-center">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-plus"
+                    class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+                    (click)="openNew()"
+                  ></button>
+                </div>
+              </div>
+              <!-- Exp - Body -->
+              <div class="border-round-sm">
+                <div class="grid">
+                  <div class="col-2">
+                    <div
+                      class="flex align-items-center justify-content-center h-4rem border-round"
+                    >
+                      <p-avatar
+                        image="./assets/users/1.jpg"
+                        size="large"
+                        shape="circle"
+                      ></p-avatar>
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="flex align-items-center h-4rem border-round">
+                      <div class="flex flex-column gap-2 w-full">
+                        <div class="flex align-items-center font-semibold">
+                          FRACTAL
+                        </div>
+                        <div
+                          class="flex align-items-center profile-detail text-sm"
+                        >
+                          Desarrollador Full-Stack 2015 - 2021 6años
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <div
+                      class="flex align-items-center justify-content-center h-4rem border-round"
+                    >
+                      <button
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-secondary p-button-text"
+                      ></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Education -->
+          <div class="grid">
+            <!-- Education - Header -->
+            <div class="col">
+              <div class="border-round-sm flex justify-content-between">
+                <div class="flex align-items-center justify-content-center">
+                  <span class="text-base font-medium">Educación</span>
+                </div>
+                <div class="flex align-items-center justify-content-center">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-plus"
+                    class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+                    (click)="openNew()"
+                  ></button>
+                </div>
+              </div>
+              <!-- Education - Body -->
+              <div class="border-round-sm">
+                <div class="grid">
+                  <div class="col-2">
+                    <div
+                      class="flex align-items-center justify-content-center h-4rem border-round"
+                    >
+                      <p-avatar
+                        image="./assets/users/1.jpg"
+                        size="large"
+                        shape="circle"
+                      ></p-avatar>
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="flex align-items-center h-4rem border-round">
+                      <div class="flex flex-column gap-2 w-full">
+                        <div class="flex align-items-center font-semibold">
+                          Pontificia Universidad Católica del Perú
+                        </div>
+                        <div
+                          class="flex align-items-center profile-detail text-sm"
+                        >
+                          Bachiller en Ingeniería de Sistemas 2015 - 2021
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <div
+                      class="flex align-items-center justify-content-center h-4rem border-round"
+                    >
+                      <button
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-secondary p-button-text"
+                      ></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Language -->
+          <div class="grid">
+            <!-- Language - Header -->
+            <div class="col">
+              <div class="border-round-sm flex justify-content-between">
+                <div class="flex align-items-center justify-content-center">
+                  <span class="text-base font-medium">Idiomas</span>
+                </div>
+                <div class="flex align-items-center justify-content-center">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-plus"
+                    class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+                    (click)="openNew()"
+                  ></button>
+                </div>
+              </div>
+              <!-- Language - Body -->
+              <div class="border-round-sm">
+                <div class="grid">
+                  <div class="col-2">
+                    <div
+                      class="flex align-items-center justify-content-center h-4rem border-round"
+                    >
+                      <div class="flex flex-column gap-2">
+                        <div class="flex align-items-center font-semibold">
+                          Inglés
+                        </div>
+                        <div
+                          class="flex align-items-center profile-detail text-sm"
+                        >
+                          Avanzado
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="flex align-items-center h-4rem border-round">
+                      <div class="flex flex-column gap-2 w-full">
+                        <p-rating
+                          [(ngModel)]="rating"
+                          [stars]="5"
+                          [cancel]="false"
+                          [readonly]="true"
+                        ></p-rating>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <div
+                      class="flex align-items-center justify-content-center h-4rem border-round"
+                    >
+                      <button
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-secondary p-button-text"
+                      ></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Feedback -->
+          <div class="grid">
+            <!-- Feedback - Header -->
+            <div class="col">
+              <div class="border-round-sm flex justify-content-between">
+                <div class="flex align-items-center justify-content-center">
+                  <span class="text-base font-medium">Feedback</span>
+                </div>
+                <div class="flex align-items-center justify-content-center">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-plus"
+                    class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+                    (click)="openNew()"
+                  ></button>
+                </div>
+              </div>
+              <!-- Feedback - Body -->
+              <div class="border-round-sm">
+                <div class="grid">
+                  <div class="col-2">
+                    <div
+                      class="flex align-items-center justify-content-center h-4rem border-round"
+                    >
+                      <p-avatar
+                        image="./assets/users/1.jpg"
+                        size="large"
+                        shape="circle"
+                      ></p-avatar>
+                    </div>
+                  </div>
+                  <div class="col-10">
+                    <div class="flex align-items-center h-4rem border-round">
+                      <div class="flex flex-column gap-2 w-full">
+                        <div class="flex align-items-center font-semibold">
+                          <div class="grid w-full">
+                            <div class="col">
+                              <div class="border-round-sm">Cesar Ortiz</div>
+                            </div>
+                            <div class="col">
+                              <div class="border-round-sm">
+                                <p-rating
+                                  [(ngModel)]="rating"
+                                  [stars]="5"
+                                  [cancel]="false"
+                                  [readonly]="true"
+                                ></p-rating>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="flex align-items-center profile-detail text-sm"
+                        >
+                          Lorem ipsum dolor sit, amet consectetur adipisicing
+                          elit. Omnis nostrum id ab.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex align-items-center">
+                <span class="custom-cursor" (click)="handleClick()">
+                  <i class="pi pi-pencil"></i>
+                  <span class="text-sm"> Dar nuevo feedback</span>
+                </span>
+              </div>
+            </div>
+          </div>
         </p-card>
       </p-scrollPanel>
     </div>
   </div>
 </section>
+<p-dialog
+  header="Agregar una nueva habilidad técnica"
+  [(visible)]="skillDialog"
+>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Agregar"
+      icon="pi pi-check"
+      class="p-button-text"
+    ></button>
+  </ng-template>
+</p-dialog>

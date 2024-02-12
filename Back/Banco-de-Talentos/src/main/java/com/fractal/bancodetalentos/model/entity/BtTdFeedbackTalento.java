@@ -20,13 +20,13 @@ public class BtTdFeedbackTalento implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_FEEDBACK")
     @SequenceGenerator(name = "SEQ_BT_ID_FEEDBACK", sequenceName = "SEQ_BT_ID_FEEDBACK", allocationSize = 1)
     @Column(name = "ID_FEEDBACK")
-    private int idFeedback;
+    private Integer idFeedback;
 
     @Column(name = "ID_TALENTO")
-    private int idTalento;
+    private Integer idTalento;
 
     @Column(name = "NU_ESTRELLAS")
-    private int nuEstrellas;
+    private Integer nuEstrellas;
 
     @Column(name = "DE_DESCRIPCION")
     private String deDescripcion;

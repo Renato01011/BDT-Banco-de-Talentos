@@ -19,11 +19,11 @@ public class BtTmMaster implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_NUMBER")
     @SequenceGenerator(name = "SEQ_BT_ID_NUMBER", sequenceName = "SEQ_BT_ID_NUMBER", allocationSize = 1)
-    @Column(name = "ID_NUMBER")
-    private int id;
+    @Column(name = "ID")
+    private Integer id;
 
     @Column(name = "ID_MASTER")
-    private int idMaster;
+    private Integer idMaster;
 
     @Column(name = "DE_DESCRIPCION")
     private String deDescripcion;
@@ -38,12 +38,12 @@ public class BtTmMaster implements Serializable {
     private String stringTres;
 
     @Column(name = "ID_UNO")
-    private int idUno;
+    private Integer idUno;
 
     @Column(name = "ID_DOS")
-    private int idDos;
+    private Integer idDos;
 
     @Column(name = "ID_TRES")
-    private int idTres;
+    private Integer idTres;
 
 }

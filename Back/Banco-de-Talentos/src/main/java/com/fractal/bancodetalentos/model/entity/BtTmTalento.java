@@ -22,7 +22,7 @@ public class BtTmTalento implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_TALENTO")
     @SequenceGenerator(name = "SEQ_BT_ID_TALENTO", sequenceName = "SEQ_BT_ID_TALENTO", allocationSize = 1)
     @Column(name = "ID_TALENTO")
-    private int idTalento;
+    private Integer idTalento;
 
     @Column(name = "NO_NOMBRE")
     private String noNombre;
@@ -40,10 +40,10 @@ public class BtTmTalento implements Serializable {
     private String deDescripcion;
 
     @Column(name = "NU_MONTO_INICIAL")
-    private int nuMontoInicial;
+    private Integer nuMontoInicial;
 
     @Column(name = "NU_MONTO_FINAL")
-    private int nuMontoFinal;
+    private Integer nuMontoFinal;
 
     @Column(name = "NU_CELULAR")
     private String nuCelular;

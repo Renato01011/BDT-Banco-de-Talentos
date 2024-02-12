@@ -20,12 +20,12 @@ public class BtTdHabilidadBlanda implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_HABILIDAD_BLANDA")
     @SequenceGenerator(name = "SEQ_BT_ID_HABILIDAD_BLANDA", sequenceName = "SEQ_BT_ID_HABILIDAD_BLANDA", allocationSize = 1)
     @Column(name = "ID_HABILIDAD_BLANDA")
-    private int idHabilidadBlanda;
+    private Integer idHabilidadBlanda;
 
     @Column(name = "NO_HABILIDAD")
     private String noHabilidad;
 
     @Column(name = "ID_TALENTO")
-    private int idTalento;
+    private Integer idTalento;
 
 }

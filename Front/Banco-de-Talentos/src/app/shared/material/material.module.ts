@@ -21,6 +21,7 @@ import { CardModule } from 'primeng/card';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   exports: [
@@ -45,6 +46,7 @@ import { DropdownModule } from 'primeng/dropdown';
     ChipsModule,
     ListboxModule,
     RatingModule,
+    ImageModule,
   ],
 })
 export class MaterialModule {}

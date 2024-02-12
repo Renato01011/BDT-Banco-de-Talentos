@@ -21,7 +21,7 @@ public class BtTdExperienciaEducativa implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_EXPERIENCIA_EDUCATIVA")
     @SequenceGenerator(name = "SEQ_BT_ID_EXPERIENCIA_EDUCATIVA", sequenceName = "SEQ_BT_ID_EXPERIENCIA_EDUCATIVA", allocationSize = 1)
     @Column(name = "ID_EXPERIENCIA_EDUCATIVA")
-    private int idExperienciaEducativa;
+    private Integer idExperienciaEducativa;
 
     @Column(name = "NO_INSTITUCION_EDUCATIVA")
     private String noInstitucionEducativa;
@@ -39,6 +39,6 @@ public class BtTdExperienciaEducativa implements Serializable {
     private Date feFin;
 
     @Column(name = "ID_TALENTO")
-    private int idTalento;
+    private Integer idTalento;
 
 }

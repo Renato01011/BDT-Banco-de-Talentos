@@ -1,7 +1,7 @@
 package com.fractal.bancodetalentos.service.impl;
 
 import com.fractal.bancodetalentos.model.entity.BtTmMaster;
-import com.fractal.bancodetalentos.model.response.LanguageResp;
+import com.fractal.bancodetalentos.model.response.*;
 import com.fractal.bancodetalentos.repository.BtTmMasterRepositorio;
 import com.fractal.bancodetalentos.service.MasterService;
 import lombok.RequiredArgsConstructor;
@@ -44,4 +44,69 @@ public class MasterServiceImpl implements MasterService {
         }
         return respList;
     }
+
+    @Override
+    public List<RolResp> getRol() {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("GET_ROLE").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        storedProcedureQuery.execute();
+        List<Object[]> list = storedProcedureQuery.getResultList();
+        List<RolResp> rolRespList = new ArrayList<>();
+        for (Object[] objects: list) {
+            RolResp rolResp = new RolResp();
+            rolResp.setId((BigDecimal) objects[0]);
+            rolResp.setName((String) objects[1]);
+            rolResp.setCode((String) objects[2]);
+            rolRespList.add(rolResp);
+        }
+        return rolRespList;
+    }
+
+    @Override
+    public List<CurrenciesResp> getCurrencies() {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("GET_CURRENCIES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        storedProcedureQuery.execute();
+        List<Object[]> list = storedProcedureQuery.getResultList();
+        List<CurrenciesResp> currenciesResps = new ArrayList<>();
+        for (Object[] objects: list) {
+            CurrenciesResp currResp = new CurrenciesResp();
+            currResp.setId((BigDecimal) objects[0]);
+            currResp.setName((String) objects[1]);
+            currResp.setCode((String) objects[2]);
+            currenciesResps.add(currResp);
+        }
+        return currenciesResps;
+    }
+
+    @Override
+    public List<ProfileResp> getProfile() {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("GET_PROFILE").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        storedProcedureQuery.execute();
+        List<Object[]> list = storedProcedureQuery.getResultList();
+        List<ProfileResp> profileResps = new ArrayList<>();
+        for (Object[] objects: list) {
+            ProfileResp profile = new ProfileResp();
+            profile.setId((BigDecimal) objects[0]);
+            profile.setName((String) objects[1]);
+            profile.setCode((String) objects[2]);
+            profileResps.add(profile);
+        }
+        return profileResps;
+    }
+
+    @Override
+    public List<LangProficiencyResp> getLangProficiency() {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("GET_LANG_PROFICIENCY").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        storedProcedureQuery.execute();
+        List<Object[]> list = storedProcedureQuery.getResultList();
+        List<LangProficiencyResp> proficiencyResp = new ArrayList<>();
+        for (Object[] objects: list) {
+            LangProficiencyResp resp = new LangProficiencyResp();
+            resp.setId((BigDecimal) objects[0]);
+            resp.setName((String) objects[1]);
+            proficiencyResp.add(resp);
+        }
+        return proficiencyResp;
+    }
+
+
 }

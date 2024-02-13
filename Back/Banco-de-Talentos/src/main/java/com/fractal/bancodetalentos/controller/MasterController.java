@@ -1,7 +1,7 @@
 package com.fractal.bancodetalentos.controller;
 
 import com.fractal.bancodetalentos.model.entity.BtTmMaster;
-import com.fractal.bancodetalentos.model.response.LanguageResp;
+import com.fractal.bancodetalentos.model.response.*;
 import com.fractal.bancodetalentos.service.MasterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,4 +24,16 @@ public class MasterController {
 
     @GetMapping("/language")
     public List<LanguageResp> find() { return masterService.getLanguage(); }
+
+    @GetMapping("/role")
+    public List<RolResp> findRol() {return masterService.getRol();}
+
+    @GetMapping("/currencies")
+    public List<CurrenciesResp> findCurrencies() {return masterService.getCurrencies();}
+
+    @GetMapping("/profile")
+    public List<ProfileResp> findProfile() {return masterService.getProfile();}
+
+    @GetMapping("/proficiency")
+    public List<LangProficiencyResp> findLangProficiency() {return masterService.getLangProficiency();}
 }

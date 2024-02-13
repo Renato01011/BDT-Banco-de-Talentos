@@ -1,110 +1,4 @@
-<section class="mt-2">
-  <p-toolbar>
-    <div class="p-toolbar-group-left">
-      <button
-        pButton
-        pRipple
-        type="button"
-        label="Nuevo Talento"
-        icon="pi pi-plus"
-        class="p-button-outlined p-button-info"
-        (click)="onNewTalent()"
-      ></button>
-    </div>
-
-    <div class="p-toolbar-group-right">
-      <div class="px-1">
-        <p-overlayPanel #hbd [style]="{ width: '350px' }">
-          <ng-template pTemplate>
-            <div class="py-2">
-              <p-chips
-                [(ngModel)]="selectedSkills"
-                [allowDuplicate]="false"
-              ></p-chips>
-            </div>
-            <div class="field-checkbox" *ngFor="let skill of skills">
-              <p-checkbox
-                name="group1"
-                [value]="skill.name"
-                [(ngModel)]="selectedSkills"
-                [inputId]="skill.code"
-              ></p-checkbox>
-              <label [for]="skill.code">{{ skill.name }}</label>
-            </div>
-          </ng-template>
-        </p-overlayPanel>
-
-        <button
-          type="text"
-          pButton
-          label="Habilidades"
-          (click)="hbd.toggle($event)"
-          class="p-button-rounded p-button-secondary p-button-sm"
-        ></button>
-      </div>
-
-      <div class="px-1">
-        <p-overlayPanel #english [style]="{ width: '150px' }">
-          <ng-template pTemplate>
-            <div class="field-checkbox">
-              <p-listbox
-                [options]="englishLevel"
-                [(ngModel)]="selectedEnglishLevel"
-                optionLabel="name"
-                [style]="{ border: 'none' }"
-              ></p-listbox>
-            </div>
-          </ng-template>
-        </p-overlayPanel>
-
-        <button
-          type="text"
-          pButton
-          label="Nivel de inglés"
-          (click)="english.toggle($event)"
-          class="p-button-rounded p-button-secondary p-button-sm"
-        ></button>
-      </div>
-      <div class="px-1">
-        <p-overlayPanel #favorite [style]="{ width: '180px' }">
-          <ng-template pTemplate>
-            <div class="field-checkbox">
-              <p-listbox
-                [options]="favorites"
-                [(ngModel)]="selectedFavorite"
-                optionLabel="name"
-                [style]="{ border: 'none' }"
-              ></p-listbox>
-            </div>
-          </ng-template>
-        </p-overlayPanel>
-
-        <button
-          type="text"
-          pButton
-          label="Nivel de inglés"
-          (click)="favorite.toggle($event)"
-          class="p-button-rounded p-button-secondary p-button-sm"
-        ></button>
-      </div>
-      <div class="px-1">
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input type="text" pInputText placeholder="Search" />
-        </span>
-      </div>
-      <div class="px-1">
-        <button
-          pButton
-          pRipple
-          type="button"
-          label="Buscar"
-          class="p-button-success p-button-sm"
-        ></button>
-      </div>
-    </div>
-  </p-toolbar>
-</section>
+<shared-control-panel></shared-control-panel>
 
 <section class="mt-2">
   <div class="grid">
@@ -602,11 +496,7 @@
   </div>
 </section>
 
-<p-dialog
-  [(visible)]="technicalSkillsDialog"
-  [modal]="true"
-  [closable]="false"
->
+<p-dialog [(visible)]="technicalSkillsDialog" [modal]="true" [closable]="false">
   <ng-template pTemplate="header">
     <div class="flex flex-column">
       <div class="flex align-items-start justify-content-start h-3rem">
@@ -619,7 +509,7 @@
   </ng-template>
   <div>
     <h4>Habilidad técnica</h4>
-    <input pInputText placeholder="Nombre de la empresa" class="w-full"/>
+    <input pInputText placeholder="Nombre de la empresa" class="w-full" />
   </div>
   <div>
     <h4>Años de Experiencia</h4>
@@ -650,11 +540,7 @@
   </ng-template>
 </p-dialog>
 
-<p-dialog
-  [(visible)]="softSkillsDialog"
-  [modal]="true"
-  [closable]="false"
->
+<p-dialog [(visible)]="softSkillsDialog" [modal]="true" [closable]="false">
   <ng-template pTemplate="header">
     <div class="flex flex-column">
       <div class="flex align-items-start justify-content-start h-3rem">
@@ -667,7 +553,7 @@
   </ng-template>
   <div>
     <h4>Habilidad blanda</h4>
-    <input pInputText placeholder="Nombre de la empresa" class="w-full"/>
+    <input pInputText placeholder="Nombre de la empresa" class="w-full" />
   </div>
   <ng-template pTemplate="footer">
     <div class="formgrid grid">
@@ -711,23 +597,31 @@
   </ng-template>
   <div>
     <p>Institución</p>
-    <input pInputText placeholder="Nombre de la institución" class="w-full"/>
-    <p-checkbox [binary]="true" inputId="binary" label="Aquí en Fractal"></p-checkbox>
+    <input pInputText placeholder="Nombre de la institución" class="w-full" />
+    <p-checkbox
+      [binary]="true"
+      inputId="binary"
+      label="Aquí en Fractal"
+    ></p-checkbox>
     <p>Carrera</p>
-    <input pInputText placeholder="Nombre de la carrera" class="w-full"/>
+    <input pInputText placeholder="Nombre de la carrera" class="w-full" />
     <p>Grado</p>
-    <input pInputText placeholder="Grado de la carrera" class="w-full"/>
+    <input pInputText placeholder="Grado de la carrera" class="w-full" />
     <div class="formgrid grid">
-        <div class="field col">
-            <p>Año y mes de inicio</p>
-            <input pInputText class="w-full"/>
-        </div>
-        <div class="field col">
-            <p>Año y mes fin</p>
-            <input pInputText class="w-full"/>
-        </div>
+      <div class="field col">
+        <p>Año y mes de inicio</p>
+        <input pInputText class="w-full" />
+      </div>
+      <div class="field col">
+        <p>Año y mes fin</p>
+        <input pInputText class="w-full" />
+      </div>
     </div>
-    <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
+    <p-checkbox
+      [binary]="true"
+      inputId="binary"
+      label="Hasta la actualidad"
+    ></p-checkbox>
   </div>
   <ng-template pTemplate="footer">
     <div class="formgrid grid">

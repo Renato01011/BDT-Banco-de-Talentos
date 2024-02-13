@@ -39,7 +39,9 @@ export class ListComponent implements OnInit {
   selectedFavorite: string[] = [];
   rating: number = 0;
 
-  skillDialog: boolean = false;
+  technicalSkillsDialog: boolean = false;
+  softSkillsDialog: boolean = false;
+  educationalExperienceDialog: boolean = false;
 
   technicalSkills: Favorite[] = [];
 
@@ -108,12 +110,28 @@ export class ListComponent implements OnInit {
     this.router.navigateByUrl('/home/talent');
   }
 
-  openNew() {
-    this.skillDialog = true;
+  openNewEducationalExperienceDialog() {
+    this.educationalExperienceDialog = true;
   }
 
-  hideDialog() {
-    this.skillDialog = false;
+  hideNewEducationalExperienceDialog() {
+    this.educationalExperienceDialog = false;
+  }
+
+  openNewSoftSkillDialog() {
+    this.softSkillsDialog = true;
+  }
+
+  hideNewSoftSkillDialog() {
+    this.softSkillsDialog = false;
+  }
+
+  openNewTechnicalSkillDialog() {
+    this.technicalSkillsDialog = true;
+  }
+
+  hideNewTechnicalSkillDialog() {
+    this.technicalSkillsDialog = false;
   }
 
   crearNuevoArray(): { name: string }[] {
@@ -124,6 +142,6 @@ export class ListComponent implements OnInit {
   }
 
   handleClick(): void {
-    this.skillDialog = true;
+    this.softSkillsDialog = true;
   }
 }

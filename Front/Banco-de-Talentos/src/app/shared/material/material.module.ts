@@ -24,6 +24,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { ImageModule } from 'primeng/image';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   exports: [
@@ -51,6 +52,7 @@ import { ImageModule } from 'primeng/image';
     ImageModule,
     DialogModule,
     ChipModule,
+    InputNumberModule,
   ],
 })
 export class MaterialModule {}

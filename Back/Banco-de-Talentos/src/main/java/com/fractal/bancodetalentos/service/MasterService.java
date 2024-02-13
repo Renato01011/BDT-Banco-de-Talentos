@@ -7,4 +7,6 @@ import java.util.List;
 public interface MasterService {
 
     List<BtTmMaster> searchLanguage();
+
+    List<BtTmMaster> getLanguage();
 }

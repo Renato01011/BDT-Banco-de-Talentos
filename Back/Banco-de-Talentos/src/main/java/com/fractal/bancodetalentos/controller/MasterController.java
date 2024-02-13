@@ -20,4 +20,7 @@ public class MasterController {
     public List<BtTmMaster> findLanguage(){
         return masterService.searchLanguage();
     }
+
+    @GetMapping("/language")
+    public List<BtTmMaster> find() { return masterService.getLanguage(); }
 }

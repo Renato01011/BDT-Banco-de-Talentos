@@ -280,7 +280,7 @@
                     pRipple
                     icon="pi pi-plus"
                     class="p-button-rounded p-button-secondary p-button-text p-button-sm"
-                    (click)="openNew()"
+                    (click)="openNewTechnicalSkillDialog()"
                   ></button>
                 </div>
               </div>
@@ -307,7 +307,7 @@
                     pRipple
                     icon="pi pi-plus"
                     class="p-button-rounded p-button-secondary p-button-text p-button-sm"
-                    (click)="openNew()"
+                    (click)="openNewSoftSkillDialog()"
                   ></button>
                 </div>
               </div>
@@ -350,7 +350,6 @@
                     pRipple
                     icon="pi pi-plus"
                     class="p-button-rounded p-button-secondary p-button-text p-button-sm"
-                    (click)="openNew()"
                   ></button>
                 </div>
               </div>
@@ -413,7 +412,7 @@
                     pRipple
                     icon="pi pi-plus"
                     class="p-button-rounded p-button-secondary p-button-text p-button-sm"
-                    (click)="openNew()"
+                    (click)="openNewEducationalExperienceDialog()"
                   ></button>
                 </div>
               </div>
@@ -476,7 +475,6 @@
                     pRipple
                     icon="pi pi-plus"
                     class="p-button-rounded p-button-secondary p-button-text p-button-sm"
-                    (click)="openNew()"
                   ></button>
                 </div>
               </div>
@@ -542,7 +540,6 @@
                     pRipple
                     icon="pi pi-plus"
                     class="p-button-rounded p-button-secondary p-button-text p-button-sm"
-                    (click)="openNew()"
                   ></button>
                 </div>
               </div>
@@ -604,8 +601,9 @@
     </div>
   </div>
 </section>
+
 <p-dialog
-  [(visible)]="skillDialog"
+  [(visible)]="technicalSkillsDialog"
   [modal]="true"
   [closable]="false"
 >
@@ -636,7 +634,111 @@
           label="Cancelar"
           icon="pi pi-times"
           class="p-button-outlined p-button-info w-full"
-          (click)="hideDialog()"
+          (click)="hideNewTechnicalSkillDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="softSkillsDialog"
+  [modal]="true"
+  [closable]="false"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Agregar una nueva habilidad blanda</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>Agrega tu nueva experiencia blanda</p>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <h4>Habilidad blanda</h4>
+    <input pInputText placeholder="Nombre de la empresa" class="w-full"/>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideNewSoftSkillDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="educationalExperienceDialog"
+  [modal]="true"
+  [closable]="false"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Agrega una nueva experiencia educativa</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>Describe y agrega tu nueva experiencia educativa.</p>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <p>Institución</p>
+    <input pInputText placeholder="Nombre de la institución" class="w-full"/>
+    <p-checkbox [binary]="true" inputId="binary" label="Aquí en Fractal"></p-checkbox>
+    <p>Carrera</p>
+    <input pInputText placeholder="Nombre de la carrera" class="w-full"/>
+    <p>Grado</p>
+    <input pInputText placeholder="Grado de la carrera" class="w-full"/>
+    <div class="formgrid grid">
+        <div class="field col">
+            <p>Año y mes de inicio</p>
+            <input pInputText class="w-full"/>
+        </div>
+        <div class="field col">
+            <p>Año y mes fin</p>
+            <input pInputText class="w-full"/>
+        </div>
+    </div>
+    <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideNewEducationalExperienceDialog()"
         ></button>
       </div>
       <div class="field col">

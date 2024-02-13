@@ -1,8 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Loader } from '../../services/loader/loader.service';
-import { LoaderService } from '../../services/loader/loader.service';
-import { LOADING_MESSAGE } from '../../global/constants/constants';
+import { Loader, LoaderService } from '../../services/loader/loader.service';
 
 @Component({
   selector: 'app-loader',
@@ -13,7 +11,7 @@ export class LoaderComponent implements OnInit {
   loader$: Subject<Loader> = this.loaderService.loader$;
 
   isLoading: boolean = false;
-  msg: string = LOADING_MESSAGE;
+  msg: string = '';
 
   constructor(
     private loaderService: LoaderService,

@@ -6,16 +6,9 @@ import { LayoutComponent } from './layout/layout.component';
 import { ListComponent } from './list/list.component';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { FormsModule } from '@angular/forms';
-import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   declarations: [LayoutComponent, ListComponent],
-  imports: [
-    CommonModule,
-    DashboardRoutingModule,
-    MaterialModule,
-    FormsModule,
-    CoreModule,
-  ],
+  imports: [CommonModule, DashboardRoutingModule, MaterialModule, FormsModule],
 })
 export class DashboardModule {}

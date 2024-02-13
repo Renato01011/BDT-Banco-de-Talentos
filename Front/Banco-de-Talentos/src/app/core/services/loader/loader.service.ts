@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { LOADING_MESSAGE } from '../../global/constants/constants';
 
 export interface Loader {
   status: boolean;
@@ -12,7 +13,7 @@ export interface Loader {
 export class LoaderService {
   loader: Loader = {
     status: false,
-    msg: '',
+    msg: LOADING_MESSAGE,
   };
 
   loader$ = new Subject<Loader>();

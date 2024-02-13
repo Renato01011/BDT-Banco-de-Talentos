@@ -48,12 +48,9 @@ import { ImageModule } from 'primeng/image';
     ChipsModule,
     ListboxModule,
     RatingModule,
-<<<<<<< Updated upstream
     ImageModule,
-=======
     DialogModule,
     ChipModule,
->>>>>>> Stashed changes
   ],
 })
 export class MaterialModule {}

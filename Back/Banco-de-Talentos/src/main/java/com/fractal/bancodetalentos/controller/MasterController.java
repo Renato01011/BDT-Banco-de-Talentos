@@ -1,6 +1,7 @@
 package com.fractal.bancodetalentos.controller;
 
 import com.fractal.bancodetalentos.model.entity.BtTmMaster;
+import com.fractal.bancodetalentos.model.response.LanguageResp;
 import com.fractal.bancodetalentos.service.MasterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,5 +23,5 @@ public class MasterController {
     }
 
     @GetMapping("/language")
-    public List<BtTmMaster> find() { return masterService.getLanguage(); }
+    public List<LanguageResp> find() { return masterService.getLanguage(); }
 }

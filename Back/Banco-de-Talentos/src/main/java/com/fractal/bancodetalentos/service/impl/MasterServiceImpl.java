@@ -25,11 +25,6 @@ public class MasterServiceImpl implements MasterService {
     private final EntityManager entityManager;
 
     @Override
-    public List<BtTmMaster> searchLanguage() {
-        return masterRepositorio.searchLanguage();
-    }
-
-    @Override
     public List<LanguageResp> getLanguage() {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("GET_LANGUAGE").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
         storedProcedureQuery.execute();
@@ -108,5 +103,30 @@ public class MasterServiceImpl implements MasterService {
         return proficiencyResp;
     }
 
+    @Override
+    public List<CountryCityResp> getCountryCity() {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("ADMIN.SP_PAIS_CIUDAD").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        storedProcedureQuery.execute();
+        List<Object[]> result = storedProcedureQuery.getResultList();
+        List<CountryCityResp> respList = new ArrayList<>();
+        for (Object[] objects: result) {
+            CountryCityResp countryCityResp = new CountryCityResp();
+            countryCityResp.setId((BigDecimal) objects[0]);
+            countryCityResp.setCountry((String) objects[1]);
+            countryCityResp.setCode((String) objects[2]);
+            String[] tempCities = ((String) objects[3]).split(";");
+            List<Cities> cities = new ArrayList<>();
+            for (String cityString:  tempCities) {
+                String[] cityList = cityString.split(",");
+                Cities city = new Cities();
+                city.setId(new BigDecimal(cityList[0]));
+                city.setCity(cityList[1]);
+                cities.add(city);
+            }
+            countryCityResp.setCities(cities);
+            respList.add(countryCityResp);
+        }
+        return respList;
+    }
 
 }

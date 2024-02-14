@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface MasterService {
 
-    List<BtTmMaster> searchLanguage();
-
     List<LanguageResp> getLanguage();
 
     List<RolResp> getRol();
@@ -18,4 +16,6 @@ public interface MasterService {
     List<ProfileResp> getProfile();
 
     List<LangProficiencyResp> getLangProficiency();
+
+    List<CountryCityResp> getCountryCity();
 }

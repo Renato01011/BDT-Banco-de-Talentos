@@ -11,7 +11,8 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cities {
+public class CountryResp {
     private BigDecimal id;
-    private String city;
+    private String country;
+    private String code;
 }

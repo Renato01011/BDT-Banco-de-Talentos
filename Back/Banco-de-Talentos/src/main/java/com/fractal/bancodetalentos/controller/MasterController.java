@@ -5,9 +5,11 @@ import com.fractal.bancodetalentos.model.response.*;
 import com.fractal.bancodetalentos.service.MasterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -32,6 +34,9 @@ public class MasterController {
     @GetMapping("/proficiency")
     public List<LangProficiencyResp> findLangProficiency() { return masterService.getLangProficiency(); }
 
-    @GetMapping("/country_cities")
-    public List<CountryCityResp> findCountryCity() { return masterService.getCountryCity(); }
+    @GetMapping("/countries")
+    public List<CountryResp> findCountry() { return masterService.getCountry(); }
+
+    @GetMapping("/cities/{countryId}")
+    public List<CityResp> findCityById(@PathVariable BigDecimal countryId) { return masterService.getCityById(countryId); }
 }

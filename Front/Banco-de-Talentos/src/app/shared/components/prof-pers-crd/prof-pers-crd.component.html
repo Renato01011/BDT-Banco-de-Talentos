@@ -1,0 +1,93 @@
+<div class="grid">
+  <div class="col-fixed flex align-items-center" style="width: 100px">
+    <p-avatar
+      image="./assets/users/1.jpg"
+      styleClass="mr-2"
+      size="xlarge"
+      shape="circle"
+      class="pr-1"
+    ></p-avatar>
+  </div>
+
+  <div class="col">
+    <div class="flex flex-column">
+      <div class="flex flex-row align-content-center">
+        <p class="mr-2 text-lg font-medium">Juan Lopez Martinez</p>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-heart"
+          class="p-button-rounded p-button-danger p-button-text"
+        ></button>
+      </div>
+      <div class="flex flex-row align-content-center profile-info">
+        <div class="mr-2">
+          <span class="text-sm">Full-stack developer</span>
+        </div>
+        <div class="mr-2">
+          <span class="mr-1 text-sm">
+            <i class="pi pi-map-marker" style="font-size: 0.875rem"></i>
+          </span>
+          <span class="text-sm">Lima, Peru</span>
+        </div>
+        <div class="mr-2">
+          <span class="text-sm mr-1">
+            <i class="pi pi-dollar" style="font-size: 0.875rem"></i>
+          </span>
+          <span class="text-sm">2500-3000</span>
+        </div>
+      </div>
+      <div class="mt-2 flex flex-row">
+        <p-rating
+          [(ngModel)]="rating"
+          [stars]="5"
+          [cancel]="false"
+          [readonly]="true"
+        ></p-rating>
+        <span class="ml-2 text-sm profile-feedbacks"
+          >{{ rating }} feedbacks</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="col-fixed flex align-content-start justify-content-center"
+    style="width: 150px"
+  >
+    <p-splitButton
+      label="Ver CV"
+      [model]="resume"
+      styleClass="p-button-text p-button-info p-button-sm"
+    ></p-splitButton>
+  </div>
+
+  <div class="col-fixed" style="width: 150px">
+    <div class="flex flex-column justify-content-between h-full">
+      <div class="">
+        <p-button
+          label="Contactar"
+          icon="pi pi-phone"
+          styleClass="p-button-sm p-button-success w-full"
+        ></p-button>
+      </div>
+      <div class="flex justify-content-end flex-wrap">
+        <div class="flex flex align-content-end">
+          <a class="custom-cursor px-2">
+            <span class="contact-icon">
+              <i class="pi pi-github" style="font-size: 1.5rem"></i>
+            </span>
+          </a>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+          <a class="custom-cursor px-2">
+            <span class="contact-icon">
+              <i class="pi pi-linkedin" style="font-size: 1.5rem"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

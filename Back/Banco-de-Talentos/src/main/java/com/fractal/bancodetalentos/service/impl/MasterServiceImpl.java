@@ -104,27 +104,36 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public List<CountryCityResp> getCountryCity() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("ADMIN.SP_PAIS_CIUDAD").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+    public List<CountryResp> getCountry() {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("ADMIN.SP_PAISES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
         storedProcedureQuery.execute();
         List<Object[]> result = storedProcedureQuery.getResultList();
-        List<CountryCityResp> respList = new ArrayList<>();
+        List<CountryResp> respList = new ArrayList<>();
         for (Object[] objects: result) {
-            CountryCityResp countryCityResp = new CountryCityResp();
-            countryCityResp.setId((BigDecimal) objects[0]);
-            countryCityResp.setCountry((String) objects[1]);
-            countryCityResp.setCode((String) objects[2]);
-            String[] tempCities = ((String) objects[3]).split(";");
-            List<Cities> cities = new ArrayList<>();
-            for (String cityString:  tempCities) {
-                String[] cityList = cityString.split(",");
-                Cities city = new Cities();
-                city.setId(new BigDecimal(cityList[0]));
-                city.setCity(cityList[1]);
-                cities.add(city);
-            }
-            countryCityResp.setCities(cities);
-            respList.add(countryCityResp);
+            CountryResp countryResp = new CountryResp();
+            countryResp.setId((BigDecimal) objects[0]);
+            countryResp.setCountry((String) objects[1]);
+            countryResp.setCode((String) objects[2]);
+            respList.add(countryResp);
+        }
+        return respList;
+    }
+
+    @Override
+    public List<CityResp> getCityById(BigDecimal countryId) {
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createStoredProcedureQuery("ADMIN.SP_CIUDADES")
+                .registerStoredProcedureParameter(1, BigDecimal.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Class.class, ParameterMode.REF_CURSOR)
+                .setParameter(1, countryId);
+        storedProcedureQuery.execute();
+        List<Object[]> result = storedProcedureQuery.getResultList();
+        List<CityResp> respList = new ArrayList<>();
+        for (Object[] objects: result) {
+            CityResp cityResp = new CityResp();
+            cityResp.setId((BigDecimal) objects[0]);
+            cityResp.setCity((String) objects[1]);
+            respList.add(cityResp);
         }
         return respList;
     }

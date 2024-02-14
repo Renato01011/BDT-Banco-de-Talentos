@@ -1,8 +1,8 @@
 package com.fractal.bancodetalentos.service;
 
-import com.fractal.bancodetalentos.model.entity.BtTmMaster;
 import com.fractal.bancodetalentos.model.response.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface MasterService {
@@ -17,5 +17,7 @@ public interface MasterService {
 
     List<LangProficiencyResp> getLangProficiency();
 
-    List<CountryCityResp> getCountryCity();
+    List<CountryResp> getCountry();
+
+    List<CityResp> getCityById(BigDecimal countryId);
 }

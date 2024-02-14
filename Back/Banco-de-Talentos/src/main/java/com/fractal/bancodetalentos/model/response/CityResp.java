@@ -6,15 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CountryCityResp {
+public class CityResp {
     private BigDecimal id;
-    private String country;
-    private String code;
-    private List<Cities> cities;
+    private String city;
 }

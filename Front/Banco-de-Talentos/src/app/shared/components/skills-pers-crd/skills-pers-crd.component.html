@@ -54,7 +54,7 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="technicalSkillsDialog" [modal]="true" [closable]="false">
+<p-dialog [(visible)]="technicalSkillsDialog" [modal]="true" [closable]="false" [style]="{ width: '650px' }">
   <ng-template pTemplate="header">
     <div class="flex flex-column">
       <div class="flex align-items-start justify-content-start h-3rem">
@@ -71,7 +71,7 @@
   </div>
   <div>
     <h4>Años de Experiencia</h4>
-    <p-inputNumber inputId="integeronly" [size]="50"></p-inputNumber>
+    <p-inputNumber inputId="integeronly" [size]="60"></p-inputNumber>
   </div>
   <ng-template pTemplate="footer">
     <div class="formgrid grid">
@@ -98,7 +98,7 @@
   </ng-template>
 </p-dialog>
 
-<p-dialog [(visible)]="softSkillsDialog" [modal]="true" [closable]="false">
+<p-dialog [(visible)]="softSkillsDialog" [modal]="true" [closable]="false" [style]="{ width: '650px' }">
   <ng-template pTemplate="header">
     <div class="flex flex-column">
       <div class="flex align-items-start justify-content-start h-3rem">

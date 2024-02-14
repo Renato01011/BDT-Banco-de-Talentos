@@ -58,9 +58,10 @@
   </div>
 </div>
 <p-dialog
-  [(visible)]="educationalExperienceDialog"
+  [(visible)]="newEducationalExperienceDialog"
   [modal]="true"
   [closable]="false"
+  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
     <div class="flex flex-column">
@@ -75,11 +76,13 @@
   <div>
     <p>Institución</p>
     <input pInputText placeholder="Nombre de la institución" class="w-full" />
-    <p-checkbox
-      [binary]="true"
-      inputId="binary"
-      label="Aquí en Fractal"
-    ></p-checkbox>
+    <div class="pt-2">
+      <p-checkbox
+        [binary]="true"
+        inputId="binary"
+        label="Aquí en Fractal"
+      ></p-checkbox>
+    </div>
     <p>Carrera</p>
     <input pInputText placeholder="Nombre de la carrera" class="w-full" />
     <p>Grado</p>

@@ -6,7 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./exp-pers-crd.component.scss'],
 })
 export class ExpPersCrdComponent implements OnInit {
+
+  newWorkExperienceDialog: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  openNewWorkExperienceDialog() {
+    this.newWorkExperienceDialog = true;
+  }
+
+  hideNewWorkExperienceDialog() {
+    this.newWorkExperienceDialog = false;
+  }
 }

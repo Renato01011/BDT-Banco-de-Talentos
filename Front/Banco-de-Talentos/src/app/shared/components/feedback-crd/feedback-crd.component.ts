@@ -7,11 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeedbackCrdComponent implements OnInit {
   rating: number = 0;
-  softSkillsDialog: boolean = false;
+  newFeedbackDialog: boolean = false;
   constructor() {}
 
   ngOnInit(): void {}
-  handleClick(): void {
-    this.softSkillsDialog = true;
+
+  openNewFeedbackDialog() {
+    this.newFeedbackDialog = true;
+  }
+
+  hideNewFeedbackDialog() {
+    this.newFeedbackDialog = false;
   }
 }

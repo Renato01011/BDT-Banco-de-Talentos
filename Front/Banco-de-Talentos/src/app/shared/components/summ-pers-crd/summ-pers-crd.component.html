@@ -1,0 +1,51 @@
+<div class="grid">
+  <div class="col">
+    <div class="p-1 border-round-sm text-sm">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim neque
+      harum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
+      enim neque harum.
+      <span class="custom-cursor mx-2" (click)="handleClick()">
+        <i class="pi pi-pencil"></i>
+      </span>
+    </div>
+  </div>
+</div>
+<p-dialog [(visible)]="softSkillsDialog" [modal]="true" [closable]="false">
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Agregar una nueva habilidad blanda</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>Agrega tu nueva experiencia blanda</p>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <h4>Habilidad blanda</h4>
+    <input pInputText placeholder="Nombre de la empresa" class="w-full" />
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideNewSoftSkillDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

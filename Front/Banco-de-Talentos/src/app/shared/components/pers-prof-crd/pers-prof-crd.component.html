@@ -1,0 +1,46 @@
+<div class="bg-blue-50 flex border-round-lg p-2 my-2 w-full">
+  <div class="w-3 font-bold p-2 flex align-items-center justify-content-center">
+    <p-avatar
+      image="./assets/users/1.jpg"
+      size="xlarge"
+      shape="circle"
+    ></p-avatar>
+  </div>
+  <div class="w-7 px-0 py-1 flex align-items-center">
+    <div class="flex flex-column flex-wrap w-full gap-1">
+      <div class="border-round flex align-items-center justify-content-start">
+        <span class="font-semibold">Juan Lopez Martinez</span>
+      </div>
+      <div class="border-round flex align-items-center justify-content-start">
+        <span class="profile-role text-sm">Full-stack developer</span>
+      </div>
+      <div class="border-round flex align-items-center justify-content-between">
+        <p-rating
+          [(ngModel)]="rating"
+          [stars]="5"
+          [cancel]="false"
+          [readonly]="true"
+        ></p-rating>
+      </div>
+      <div
+        class="border-round flex align-items-center justify-content-between profile-country-salary"
+      >
+        <span class="text-sm">
+          <i class="pi pi-map-marker" style="font-size: 0.875rem"></i>
+          Lima, Peru
+        </span>
+        <span class="text-sm">
+          <i class="pi pi-dollar" style="font-size: 0.875rem"></i>
+          2500 - 3000
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    class="w-2 font-bold p-2 flex align-content-start justify-content-center"
+  >
+    <span class="heart-icon">
+      <i class="pi pi-heart-fill" style="font-size: 1.25rem"></i>
+    </span>
+  </div>
+</div>

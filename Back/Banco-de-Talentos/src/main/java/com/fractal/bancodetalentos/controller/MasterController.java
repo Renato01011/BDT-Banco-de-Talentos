@@ -17,23 +17,21 @@ public class MasterController {
 
     private final MasterService masterService;
 
-    @GetMapping("/master")
-    public List<BtTmMaster> findLanguage(){
-        return masterService.searchLanguage();
-    }
-
     @GetMapping("/language")
     public List<LanguageResp> find() { return masterService.getLanguage(); }
 
     @GetMapping("/role")
-    public List<RolResp> findRol() {return masterService.getRol();}
+    public List<RolResp> findRol() { return masterService.getRol(); }
 
     @GetMapping("/currencies")
-    public List<CurrenciesResp> findCurrencies() {return masterService.getCurrencies();}
+    public List<CurrenciesResp> findCurrencies() { return masterService.getCurrencies(); }
 
     @GetMapping("/profile")
-    public List<ProfileResp> findProfile() {return masterService.getProfile();}
+    public List<ProfileResp> findProfile() { return masterService.getProfile(); }
 
     @GetMapping("/proficiency")
-    public List<LangProficiencyResp> findLangProficiency() {return masterService.getLangProficiency();}
+    public List<LangProficiencyResp> findLangProficiency() { return masterService.getLangProficiency(); }
+
+    @GetMapping("/country_cities")
+    public List<CountryCityResp> findCountryCity() { return masterService.getCountryCity(); }
 }

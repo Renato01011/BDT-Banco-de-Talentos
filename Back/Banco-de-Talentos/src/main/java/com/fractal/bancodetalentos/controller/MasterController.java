@@ -19,16 +19,16 @@ public class MasterController {
 
     private final MasterService masterService;
 
-    @GetMapping("/language")
+    @GetMapping("/languages")
     public List<LanguageResp> find() { return masterService.getLanguage(); }
 
-    @GetMapping("/role")
+    @GetMapping("/roles")
     public List<RolResp> findRol() { return masterService.getRol(); }
 
     @GetMapping("/currencies")
     public List<CurrenciesResp> findCurrencies() { return masterService.getCurrencies(); }
 
-    @GetMapping("/profile")
+    @GetMapping("/profiles")
     public List<ProfileResp> findProfile() { return masterService.getProfile(); }
 
     @GetMapping("/proficiency")

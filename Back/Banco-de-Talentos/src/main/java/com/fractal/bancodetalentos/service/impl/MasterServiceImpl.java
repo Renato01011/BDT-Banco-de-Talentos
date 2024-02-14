@@ -26,7 +26,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<LanguageResp> getLanguage() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("GET_LANGUAGE").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_LANGUAGES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
         storedProcedureQuery.execute();
         List<Object[]> result = storedProcedureQuery.getResultList();
         List<LanguageResp> respList = new ArrayList<>();
@@ -42,7 +42,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<RolResp> getRol() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("GET_ROLE").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_ROLES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
         storedProcedureQuery.execute();
         List<Object[]> list = storedProcedureQuery.getResultList();
         List<RolResp> rolRespList = new ArrayList<>();
@@ -58,7 +58,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<CurrenciesResp> getCurrencies() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("GET_CURRENCIES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_CURRENCIES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
         storedProcedureQuery.execute();
         List<Object[]> list = storedProcedureQuery.getResultList();
         List<CurrenciesResp> currenciesResps = new ArrayList<>();
@@ -74,7 +74,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<ProfileResp> getProfile() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("GET_PROFILE").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_PROFILES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
         storedProcedureQuery.execute();
         List<Object[]> list = storedProcedureQuery.getResultList();
         List<ProfileResp> profileResps = new ArrayList<>();
@@ -90,7 +90,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<LangProficiencyResp> getLangProficiency() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("GET_LANG_PROFICIENCY").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_LANG_PROFICIENCY").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
         storedProcedureQuery.execute();
         List<Object[]> list = storedProcedureQuery.getResultList();
         List<LangProficiencyResp> proficiencyResp = new ArrayList<>();

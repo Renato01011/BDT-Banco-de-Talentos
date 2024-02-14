@@ -6,16 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./educ-pers-crd.component.scss'],
 })
 export class EducPersCrdComponent implements OnInit {
-  educationalExperienceDialog: boolean = false;
+  newEducationalExperienceDialog: boolean = false;
   constructor() {}
 
   ngOnInit(): void {}
 
   openNewEducationalExperienceDialog() {
-    this.educationalExperienceDialog = true;
+    this.newEducationalExperienceDialog = true;
   }
 
   hideNewEducationalExperienceDialog() {
-    this.educationalExperienceDialog = false;
+    this.newEducationalExperienceDialog = false;
   }
 }

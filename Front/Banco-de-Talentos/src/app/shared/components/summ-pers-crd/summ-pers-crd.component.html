@@ -4,26 +4,33 @@
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim neque
       harum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
       enim neque harum.
-      <span class="custom-cursor mx-2" (click)="handleClick()">
+      <span class="custom-cursor mx-2" (click)="openEditDescriptionDialog()">
         <i class="pi pi-pencil"></i>
       </span>
     </div>
   </div>
 </div>
-<p-dialog [(visible)]="softSkillsDialog" [modal]="true" [closable]="false">
+<p-dialog
+  [(visible)]="editDescriptionDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '650px' }"
+>
   <ng-template pTemplate="header">
     <div class="flex flex-column">
       <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Agregar una nueva habilidad blanda</h2>
+        <h2>Edita tu descripción</h2>
       </div>
       <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Agrega tu nueva experiencia blanda</p>
+        <p>Tiempo de una nueva descripción? Editala.</p>
       </div>
     </div>
   </ng-template>
   <div>
-    <h4>Habilidad blanda</h4>
-    <input pInputText placeholder="Nombre de la empresa" class="w-full" />
+    <div class="h-7rem">
+      <p>Descripción</p>
+      <input pInputText placeholder="Escribe un descripción" class="w-full h-5rem"/>
+    </div>
   </div>
   <ng-template pTemplate="footer">
     <div class="formgrid grid">
@@ -34,7 +41,7 @@
           label="Cancelar"
           icon="pi pi-times"
           class="p-button-outlined p-button-info w-full"
-          (click)="hideNewSoftSkillDialog()"
+          (click)="hideEditDescriptionDialog()"
         ></button>
       </div>
       <div class="field col">

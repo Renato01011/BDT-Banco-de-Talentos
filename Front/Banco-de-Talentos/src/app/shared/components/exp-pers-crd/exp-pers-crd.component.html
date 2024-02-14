@@ -10,6 +10,7 @@
           pRipple
           icon="pi pi-plus"
           class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+          (click)="openNewWorkExperienceDialog()"
         ></button>
       </div>
     </div>
@@ -54,3 +55,72 @@
     </div>
   </div>
 </div>
+
+<p-dialog
+  [(visible)]="newWorkExperienceDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '650px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Agrega una nueva experiencia</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>Describe y agrega tu nueva experiencia laboral.</p>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <p>Empresa</p>
+    <input pInputText placeholder="Nombre de la empresa" class="w-full" />
+    <div class="pt-2">
+      <p-checkbox
+        [binary]="true"
+        inputId="binary"
+        label="Aquí en Fractal"
+      ></p-checkbox>
+    </div>
+    <p>Puesto</p>
+    <input pInputText placeholder="Puesto en la empresa" class="w-full" />
+    <div class="formgrid grid">
+      <div class="field col">
+        <p>Año y mes de inicio</p>
+        <input pInputText class="w-full" />
+      </div>
+      <div class="field col">
+        <p>Año y mes fin</p>
+        <input pInputText class="w-full" />
+      </div>
+    </div>
+    <p-checkbox
+      [binary]="true"
+      inputId="binary"
+      label="Hasta la actualidad"
+    ></p-checkbox>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideNewWorkExperienceDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

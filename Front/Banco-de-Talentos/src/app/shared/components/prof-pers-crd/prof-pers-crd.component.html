@@ -6,6 +6,7 @@
       size="xlarge"
       shape="circle"
       class="pr-1"
+      (click)="openEditProfilePicture()"
     ></p-avatar>
   </div>
 
@@ -35,7 +36,7 @@
           <span class="text-sm mr-1">
             <i class="pi pi-dollar" style="font-size: 0.875rem"></i>
           </span>
-          <span class="text-sm">2500-3000</span>
+          <span class="text-sm" (click)="openEditSalaryDialog()">2500-3000</span>
         </div>
       </div>
       <div class="mt-2 flex flex-row">
@@ -76,14 +77,14 @@
         <div class="flex flex align-content-end">
           <a class="custom-cursor px-2">
             <span class="contact-icon">
-              <i class="pi pi-github" style="font-size: 1.5rem"></i>
+              <i class="pi pi-github" style="font-size: 1.5rem" (click)="openEditSocialMediaDialog()"></i>
             </span>
           </a>
         </div>
         <div class="flex align-items-center justify-content-center">
           <a class="custom-cursor px-2">
             <span class="contact-icon">
-              <i class="pi pi-linkedin" style="font-size: 1.5rem"></i>
+              <i class="pi pi-linkedin" style="font-size: 1.5rem" (click)="openEditSocialMediaDialog()"></i>
             </span>
           </a>
         </div>
@@ -91,3 +92,159 @@
     </div>
   </div>
 </div>
+
+<p-dialog
+  [(visible)]="editProfilePicture"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '650px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Modifica tu foto de perfil</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>Sube una nueva foto de perfil.</p>
+      </div>
+    </div>
+  </ng-template>
+  <div class="flex flex-warp align-items-center justify-content-center">
+    <button pButton class="p-button-outlined border-500 w-full flex flex-column">
+        <i class="pi pi-cloud-upload px-2 pt-5" style="font-size: 1.5rem; color: #708090"></i>
+        <span class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round" style="color: #0B85C3">Sube una nueva foto de perfil</span>
+        <span class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round">PNG o JPG (max. 800x400px)</span>
+    </button>
+</div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideEditProfilePicture()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="editSalaryDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '650px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Modifica tu banda salarial</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>Agrega el rango de tus expectativas salariales.</p>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <div class="pb-1">
+      <p-toggleButton onLabel="Soles" offLabel="Soles" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{ width:'100%' }"></p-toggleButton>
+    </div>
+    <div class="pt-1">
+      <p-toggleButton onLabel="Dolares" offLabel="Dolares" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{ width:'100%' }"></p-toggleButton>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <p>Monto Inicial</p>
+        <input pInputText class="w-full"/>
+      </div>
+      <div class="field col">
+        <p>Monto Final</p>
+        <input pInputText class="w-full"/>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideEditSalaryDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="editSocialMediaDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '650px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Modifica tus medios sociales</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>Agrega y muestra tus medios sociales.</p>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <p>Link de LinkedIn</p>
+    <input pInputText placeholder="Ingrese su link de LinkedIn" class="w-full"/>
+  </div>
+  <div>
+    <p>Link de GitHub</p>
+    <input pInputText placeholder="Ingrese su link de GitHub" class="w-full"/>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideEditSocialMediaDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

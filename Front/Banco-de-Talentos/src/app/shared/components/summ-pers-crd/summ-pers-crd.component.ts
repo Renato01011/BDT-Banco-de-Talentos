@@ -6,20 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./summ-pers-crd.component.scss'],
 })
 export class SummPersCrdComponent implements OnInit {
-  softSkillsDialog: boolean = false;
+  editDescriptionDialog: boolean = false;
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  handleClick(): void {
-    this.softSkillsDialog = true;
-  }
-  openNewSoftSkillDialog() {
-    this.softSkillsDialog = true;
+  openEditDescriptionDialog() {
+    this.editDescriptionDialog = true;
   }
 
-  hideNewSoftSkillDialog() {
-    this.softSkillsDialog = false;
+  hideEditDescriptionDialog() {
+    this.editDescriptionDialog = false;
   }
 }

@@ -9,6 +9,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LangProficiencyResp {
-    private BigDecimal id;
+    private Integer id;
     private String name;
 }

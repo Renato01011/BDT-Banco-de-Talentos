@@ -32,7 +32,7 @@ public class MasterServiceImpl implements MasterService {
         List<LanguageResp> respList = new ArrayList<>();
         for (Object[] objects: result) {
             LanguageResp languageResp = new LanguageResp();
-            languageResp.setId((BigDecimal) objects[0]);
+            languageResp.setId((Integer) objects[0]);
             languageResp.setName((String) objects[1]);
             languageResp.setCode((String) objects[2]);
             respList.add(languageResp);
@@ -48,7 +48,7 @@ public class MasterServiceImpl implements MasterService {
         List<RolResp> rolRespList = new ArrayList<>();
         for (Object[] objects: list) {
             RolResp rolResp = new RolResp();
-            rolResp.setId((BigDecimal) objects[0]);
+            rolResp.setId((Integer) objects[0]);
             rolResp.setName((String) objects[1]);
             rolResp.setCode((String) objects[2]);
             rolRespList.add(rolResp);
@@ -64,7 +64,7 @@ public class MasterServiceImpl implements MasterService {
         List<CurrenciesResp> currenciesResps = new ArrayList<>();
         for (Object[] objects: list) {
             CurrenciesResp currResp = new CurrenciesResp();
-            currResp.setId((BigDecimal) objects[0]);
+            currResp.setId((Integer) objects[0]);
             currResp.setName((String) objects[1]);
             currResp.setCode((String) objects[2]);
             currenciesResps.add(currResp);
@@ -80,7 +80,7 @@ public class MasterServiceImpl implements MasterService {
         List<ProfileResp> profileResps = new ArrayList<>();
         for (Object[] objects: list) {
             ProfileResp profile = new ProfileResp();
-            profile.setId((BigDecimal) objects[0]);
+            profile.setId((Integer) objects[0]);
             profile.setName((String) objects[1]);
             profile.setCode((String) objects[2]);
             profileResps.add(profile);
@@ -96,7 +96,7 @@ public class MasterServiceImpl implements MasterService {
         List<LangProficiencyResp> proficiencyResp = new ArrayList<>();
         for (Object[] objects: list) {
             LangProficiencyResp resp = new LangProficiencyResp();
-            resp.setId((BigDecimal) objects[0]);
+            resp.setId((Integer) objects[0]);
             resp.setName((String) objects[1]);
             proficiencyResp.add(resp);
         }
@@ -111,7 +111,7 @@ public class MasterServiceImpl implements MasterService {
         List<CountryResp> respList = new ArrayList<>();
         for (Object[] objects: result) {
             CountryResp countryResp = new CountryResp();
-            countryResp.setId((BigDecimal) objects[0]);
+            countryResp.setId((Integer) objects[0]);
             countryResp.setCountry((String) objects[1]);
             countryResp.setCode((String) objects[2]);
             respList.add(countryResp);
@@ -120,10 +120,10 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public List<CityResp> getCityById(BigDecimal countryId) {
+    public List<CityResp> getCityById(Integer countryId) {
         StoredProcedureQuery storedProcedureQuery = entityManager
                 .createStoredProcedureQuery("ADMIN.SP_CIUDADES")
-                .registerStoredProcedureParameter(1, BigDecimal.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Class.class, ParameterMode.REF_CURSOR)
                 .setParameter(1, countryId);
         storedProcedureQuery.execute();
@@ -131,7 +131,7 @@ public class MasterServiceImpl implements MasterService {
         List<CityResp> respList = new ArrayList<>();
         for (Object[] objects: result) {
             CityResp cityResp = new CityResp();
-            cityResp.setId((BigDecimal) objects[0]);
+            cityResp.setId((Integer) objects[0]);
             cityResp.setCity((String) objects[1]);
             respList.add(cityResp);
         }

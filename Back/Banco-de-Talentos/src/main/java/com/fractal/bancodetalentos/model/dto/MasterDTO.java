@@ -8,9 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 public class MasterDTO {
 
-    private int id;
+    private Integer id;
 
-    private int idMaster;
+    private Integer idMaster;
 
     private String deDescripcion;
 
@@ -20,10 +20,10 @@ public class MasterDTO {
 
     private String stringTres;
 
-    private int idUno;
+    private Integer idUno;
 
-    private int idDos;
+    private Integer idDos;
 
-    private int idTres;
+    private Integer idTres;
 
 }

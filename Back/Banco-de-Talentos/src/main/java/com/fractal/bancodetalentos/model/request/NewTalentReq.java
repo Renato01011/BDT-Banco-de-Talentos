@@ -24,10 +24,10 @@ public class NewTalentReq {
     private String linkedin;
     private String github;
     private String tipoMoneda;
-    private Number montoInicial;
-    private Number montoFinal;
+    private Integer montoInicial;
+    private Integer montoFinal;
     private String celular;
-    private List<HabilidadesTecnicas> habilidadesTencnicas;
+    private List<HabilidadesTecnicas> habilidadesTecnicas;
     private List<HabilidadesBlandas> habilidadesBlandas;
     private List<ExperienciasLaborales> experienciasLaborales;
     private List<ExperienciasEducativas> experienciasEducativas;

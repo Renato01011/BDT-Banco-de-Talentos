@@ -1,57 +1,44 @@
-<div class="grid">
-  <div class="col">
-    <div class="border-round-sm flex justify-content-between">
-      <div class="flex align-items-center justify-content-center">
-        <span class="text-base font-medium">Experiencia</span>
-      </div>
-      <div class="flex align-items-center justify-content-center">
-        <button
-          pButton
-          pRipple
-          icon="pi pi-plus"
-          class="p-button-rounded p-button-secondary p-button-text p-button-sm"
-          (click)="openNewWorkExperienceDialog()"
-        ></button>
+<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+  <div class="w-12 p-1 flex align-items-center justify-content-between">
+    <div class="flex align-items-center justify-content-center">
+      <span class="text-base font-medium">Experiencia</span>
+    </div>
+    <div class="flex align-items-center justify-content-center">
+      <button
+        pButton
+        pRipple
+        icon="pi pi-plus"
+        class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+        (click)="openNewWorkExperienceDialog()"
+      ></button>
+    </div>
+  </div>
+  <div class="w-2 py-1 flex align-items-center justify-content-center">
+    <p-avatar
+      image="./assets/users/1.jpg"
+      size="large"
+      shape="circle"
+    ></p-avatar>
+  </div>
+  <div class="w-8 p-1 flex align-items-center justify-content-center">
+    <div class="flex flex-column gap-2 w-full">
+      <div class="flex align-items-center font-semibold">FRACTAL</div>
+      <div class="flex align-items-center profile-detail text-sm">
+        Desarrollador Full-Stack 2015 - 2021 6años
       </div>
     </div>
-
-    <div class="border-round-sm">
-      <div class="grid">
-        <div class="col-2">
-          <div
-            class="flex align-items-center justify-content-center h-4rem border-round"
-          >
-            <p-avatar
-              image="./assets/users/1.jpg"
-              size="large"
-              shape="circle"
-            ></p-avatar>
-          </div>
-        </div>
-        <div class="col-8">
-          <div class="flex align-items-center h-4rem border-round">
-            <div class="flex flex-column gap-2 w-full">
-              <div class="flex align-items-center font-semibold">FRACTAL</div>
-              <div class="flex align-items-center profile-detail text-sm">
-                Desarrollador Full-Stack 2015 - 2021 6años
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-2">
-          <div
-            class="flex align-items-center justify-content-center h-4rem border-round"
-          >
-            <button
-              pButton
-              pRipple
-              type="button"
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-secondary p-button-text"
-            ></button>
-          </div>
-        </div>
-      </div>
+  </div>
+  <div class="w-2 py-1 flex align-items-center justify-content-center">
+    <div
+      class="flex align-items-center justify-content-center h-4rem border-round"
+    >
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-pencil"
+        class="p-button-rounded p-button-secondary p-button-text"
+      ></button>
     </div>
   </div>
 </div>

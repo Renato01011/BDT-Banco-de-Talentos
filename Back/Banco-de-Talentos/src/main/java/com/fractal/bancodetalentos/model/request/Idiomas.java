@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Idiomas {
-    private Number idiomaId;
-    private Number nivelId;
+    private Integer idiomaId;
+    private Integer nivelId;
 }

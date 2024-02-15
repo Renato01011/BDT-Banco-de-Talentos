@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CountryResp {
-    private BigDecimal id;
+    private Integer id;
     private String country;
     private String code;
 }

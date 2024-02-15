@@ -12,6 +12,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CityResp {
-    private BigDecimal id;
+    private Integer id;
     private String city;
 }

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RolResp {
-    private BigDecimal id;
+    private Integer id;
     private String name;
     private String code;
 }

@@ -38,5 +38,5 @@ public class MasterController {
     public List<CountryResp> findCountry() { return masterService.getCountry(); }
 
     @GetMapping("/cities/{countryId}")
-    public List<CityResp> findCityById(@PathVariable BigDecimal countryId) { return masterService.getCityById(countryId); }
+    public List<CityResp> findCityById(@PathVariable Integer countryId) { return masterService.getCityById(countryId); }
 }

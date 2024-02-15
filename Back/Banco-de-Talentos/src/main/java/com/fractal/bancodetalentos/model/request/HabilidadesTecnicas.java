@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class HabilidadesTecnicas {
     private String nombre;
-    private Number anios;
+    private Integer anios;
 }

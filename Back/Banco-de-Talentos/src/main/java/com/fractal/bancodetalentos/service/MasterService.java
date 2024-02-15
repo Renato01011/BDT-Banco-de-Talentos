@@ -19,5 +19,5 @@ public interface MasterService {
 
     List<CountryResp> getCountry();
 
-    List<CityResp> getCityById(BigDecimal countryId);
+    List<CityResp> getCityById(Integer countryId);
 }

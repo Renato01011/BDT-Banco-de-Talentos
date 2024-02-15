@@ -21,7 +21,7 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.loaderService.showLoader('Loading');
     const interval$ = interval(1000);
-    const cancel$ = timer(2000);
+    const cancel$ = timer(1500);
     const subs = interval$.pipe(takeUntil(cancel$)).subscribe(this.observer);
   }
 }

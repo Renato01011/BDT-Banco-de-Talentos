@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -9,7 +10,7 @@ import { MenuItem } from 'primeng/api';
 export class HeaderComponent implements OnInit {
   profileOpItems: MenuItem[] = [];
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.profileOpItems = [
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Logout',
         icon: 'pi pi-fw pi-sign-out',
+        routerLink: '/auth/login',
       },
     ];
   }

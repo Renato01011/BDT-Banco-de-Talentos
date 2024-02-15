@@ -1,13 +1,13 @@
-<div class="grid">
-  <div class="col">
-    <div class="p-1 border-round-sm text-sm">
+<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+  <div class="w-12 p-1 flex align-items-center profile-detail">
+    <span class="text-left text-sm">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim neque
       harum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
       enim neque harum.
       <span class="custom-cursor mx-2" (click)="openEditDescriptionDialog()">
-        <i class="pi pi-pencil"></i>
+        <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
       </span>
-    </div>
+    </span>
   </div>
 </div>
 <p-dialog
@@ -29,7 +29,11 @@
   <div>
     <div class="h-7rem">
       <p>Descripción</p>
-      <input pInputText placeholder="Escribe un descripción" class="w-full h-5rem"/>
+      <input
+        pInputText
+        placeholder="Escribe un descripción"
+        class="w-full h-5rem"
+      />
     </div>
   </div>
   <ng-template pTemplate="footer">

@@ -1,56 +1,39 @@
-<div class="grid">
-  <div class="col">
-    <div class="border-round-sm flex justify-content-between">
-      <div class="flex align-items-center justify-content-center">
-        <span class="text-base font-medium">Feedback</span>
+<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+  <div class="w-12 p-1 flex align-items-center justify-content-between">
+    <div class="flex align-items-center justify-content-center">
+      <span class="text-base font-medium">Feedback</span>
+    </div>
+  </div>
+  <div class="w-2 py-1 flex align-items-center justify-content-center">
+    <p-avatar
+      image="./assets/users/1.jpg"
+      size="large"
+      shape="circle"
+    ></p-avatar>
+  </div>
+  <div class="w-10 p-1 flex align-items-center justify-content-center">
+    <div class="flex flex-column gap-2 w-full">
+      <div class="flex align-items-center font-semibold">
+        Cesar Ortiz
+        <span class="mx-4">
+          <p-rating
+            [(ngModel)]="rating"
+            [stars]="5"
+            [cancel]="false"
+            [readonly]="true"
+          ></p-rating>
+        </span>
+      </div>
+      <div class="flex align-items-center profile-detail text-sm">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis nostrum
+        id ab.
       </div>
     </div>
-
-    <div class="border-round-sm">
-      <div class="grid">
-        <div class="col-2">
-          <div
-            class="flex align-items-center justify-content-center h-4rem border-round"
-          >
-            <p-avatar
-              image="./assets/users/1.jpg"
-              size="large"
-              shape="circle"
-            ></p-avatar>
-          </div>
-        </div>
-        <div class="col-10">
-          <div class="flex align-items-center h-4rem border-round">
-            <div class="flex flex-column gap-2 w-full">
-              <div class="flex align-items-center font-semibold">
-                <div class="grid w-full">
-                  <div class="col">
-                    <div class="border-round-sm">Cesar Ortiz</div>
-                  </div>
-                  <div class="col">
-                    <div class="border-round-sm">
-                      <p-rating
-                        [(ngModel)]="rating"
-                        [stars]="5"
-                        [cancel]="false"
-                        [readonly]="true"
-                      ></p-rating>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="flex align-items-center profile-detail text-sm">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis
-                nostrum id ab.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="flex align-items-center">
-      <span class="custom-cursor" (click)="openNewFeedbackDialog()">
-        <i class="pi pi-pencil"></i>
+  </div>
+  <div class="w-12 py-1 flex align-items-center justify-content-start">
+    <div class="flex align-items-center justify-content-center border-round">
+      <span class="custom-cursor mx-4" (click)="openNewFeedbackDialog()">
+        <i class="pi pi-plus" style="font-size: 0.75rem"></i>
         <span class="text-sm"> Dar nuevo feedback</span>
       </span>
     </div>
@@ -75,11 +58,15 @@
   </ng-template>
   <div>
     <div class="pt-4">
-        <p-rating></p-rating>
+      <p-rating></p-rating>
     </div>
     <div class="h-7rem">
       <p>Feedback</p>
-      <input pInputText placeholder="Escribe un comentario" class="w-full h-5rem"/>
+      <input
+        pInputText
+        placeholder="Escribe un comentario"
+        class="w-full h-5rem"
+      />
     </div>
   </div>
   <ng-template pTemplate="footer">

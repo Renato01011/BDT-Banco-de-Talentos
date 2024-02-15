@@ -16,6 +16,7 @@ public class NewTalentReq {
 
     private String nombre;
     private String apellidoPaterno;
+    private String apellidoMaterno;
     private byte[] fotoDePerfil;
     private List<Documento> documentos;
     private String descripcion;
@@ -25,7 +26,7 @@ public class NewTalentReq {
     private String tipoMoneda;
     private Number montoInicial;
     private Number montoFinal;
-    private Number celular;
+    private String celular;
     private List<HabilidadesTecnicas> habilidadesTencnicas;
     private List<HabilidadesBlandas> habilidadesBlandas;
     private List<ExperienciasLaborales> experienciasLaborales;

@@ -1,0 +1,36 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+
+@Component({
+  selector: 'shared-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
+})
+export class HeaderComponent implements OnInit {
+  profileOpItems: MenuItem[] = [];
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.profileOpItems = [
+      {
+        label: 'Edit Profile',
+        icon: 'pi pi-fw pi-user',
+      },
+      {
+        label: 'Settings & Privacy',
+        icon: 'pi pi-fw pi-cog',
+      },
+      {
+        label: 'Help & Support',
+        icon: 'pi pi-fw pi-question-circle',
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-fw pi-sign-out',
+        routerLink: '/auth/login',
+      },
+    ];
+  }
+}

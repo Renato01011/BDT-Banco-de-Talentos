@@ -1,271 +1,36 @@
-<section class="mt-2">
-  <p-toolbar>
-    <div class="p-toolbar-group-left">
-      <button
-        pButton
-        pRipple
-        type="button"
-        label="Nuevo Talento"
-        icon="pi pi-plus"
-        class="p-button-outlined p-button-info"
-        (click)="onNewTalent()"
-      ></button>
-    </div>
+<shared-control-panel></shared-control-panel>
 
-    <div class="p-toolbar-group-right">
-      <div class="px-1">
-        <p-overlayPanel #hbd [style]="{ width: '350px' }">
-          <ng-template pTemplate>
-            <div class="py-2">
-              <p-chips
-                [(ngModel)]="selectedSkills"
-                [allowDuplicate]="false"
-              ></p-chips>
-            </div>
-            <div class="field-checkbox" *ngFor="let skill of skills">
-              <p-checkbox
-                name="group1"
-                [value]="skill.name"
-                [(ngModel)]="selectedSkills"
-                [inputId]="skill.code"
-              ></p-checkbox>
-              <label [for]="skill.code">{{ skill.name }}</label>
-            </div>
-          </ng-template>
-        </p-overlayPanel>
-
-        <button
-          type="text"
-          pButton
-          label="Habilidades"
-          (click)="hbd.toggle($event)"
-          class="p-button-rounded p-button-secondary p-button-sm"
-        ></button>
-      </div>
-
-      <div class="px-1">
-        <p-overlayPanel #english [style]="{ width: '150px' }">
-          <ng-template pTemplate>
-            <div class="field-checkbox">
-              <p-listbox
-                [options]="englishLevel"
-                [(ngModel)]="selectedEnglishLevel"
-                optionLabel="name"
-                [style]="{ border: 'none' }"
-              ></p-listbox>
-            </div>
-          </ng-template>
-        </p-overlayPanel>
-
-        <button
-          type="text"
-          pButton
-          label="Nivel de inglés"
-          (click)="english.toggle($event)"
-          class="p-button-rounded p-button-secondary p-button-sm"
-        ></button>
-      </div>
-      <div class="px-1">
-        <p-overlayPanel #favorite [style]="{ width: '180px' }">
-          <ng-template pTemplate>
-            <div class="field-checkbox">
-              <p-listbox
-                [options]="favorites"
-                [(ngModel)]="selectedFavorite"
-                optionLabel="name"
-                [style]="{ border: 'none' }"
-              ></p-listbox>
-            </div>
-          </ng-template>
-        </p-overlayPanel>
-
-        <button
-          type="text"
-          pButton
-          label="Nivel de inglés"
-          (click)="favorite.toggle($event)"
-          class="p-button-rounded p-button-secondary p-button-sm"
-        ></button>
-      </div>
-      <div class="px-1">
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input type="text" pInputText placeholder="Search" />
-        </span>
-      </div>
-      <div class="px-1">
-        <button
-          pButton
-          pRipple
-          type="button"
-          label="Buscar"
-          class="p-button-success p-button-sm"
-        ></button>
-      </div>
-    </div>
-  </p-toolbar>
-</section>
-
-<section class="mt-2">
-  <div class="grid">
-    <!-- Profile Card -->
-    <div class="col-12 md:col-4">
-      <p-scrollPanel class="w-full max-h-screen">
-        <div
-          class="grid border-round-lg p-2 m-2"
-          [ngStyle]="{ backgroundColor: 'var(--blue-50)' }"
+<div class="bg-white py-0 px-3 sm:px-6 shadow-none content">
+  <div class="flex flex-wrap border-round w-full">
+    <div
+      class="content w-12 sm:w-4 font-bold py-1 px-2 flex justify-content-center"
+    >
+      <div class="w-full">
+        <p-scrollPanel
+          [style]="{ width: '100%', height: 'calc(100vh - 190px)' }"
         >
-          <div class="col-fixed flex align-items-center" style="width: 74px">
-            <p-avatar
-              image="./assets/users/1.jpg"
-              styleClass="mr-2"
-              size="xlarge"
-              shape="circle"
-              class="pr-1"
-            ></p-avatar>
-          </div>
-          <div class="col flex flex-column gap-1">
-            <div class="flex align-items-center">
-              <span class="font-semibold">Juan Lopez Martinez</span>
-            </div>
-            <div class="flex align-items-center">
-              <span class="profile-role text-sm">Full-stack developer</span>
-            </div>
-            <div class="flex align-items-center">
-              <p-rating
-                [(ngModel)]="rating"
-                [stars]="5"
-                [cancel]="false"
-                [readonly]="true"
-              ></p-rating>
-            </div>
-            <div
-              class="flex flex-row justify-content-between flex-wrap gap-1 profile-country-salary"
-            >
-              <span class="text-sm">
-                <i class="pi pi-map-marker" style="font-size: 0.875rem"></i>
-                Lima, Peru
-              </span>
-              <span class="text-sm">
-                <i class="pi pi-dollar" style="font-size: 0.875rem"></i>
-                2500 - 3000
-              </span>
-            </div>
-          </div>
-          <div
-            class="col-fixed flex justify-content-center"
-            style="width: 45px"
-          >
-            <span class="heart-icon">
-              <i class="pi pi-heart-fill" style="font-size: 1.25rem"></i>
-            </span>
-          </div>
-        </div>
-      </p-scrollPanel>
+          <shared-pers-prof-crd></shared-pers-prof-crd>
+        </p-scrollPanel>
+      </div>
     </div>
-    <!-- Profile Card Details -->
-    <div class="col-12 md:col-8">
-      <p-scrollPanel class="w-full max-h-screen">
-        <p-card>
-          <div class="grid">
-            <!-- Profile picture -->
-            <div class="col-fixed flex align-items-center" style="width: 100px">
-              <p-avatar
-                image="./assets/users/1.jpg"
-                styleClass="mr-2"
-                size="xlarge"
-                shape="circle"
-                class="pr-1"
-              ></p-avatar>
-            </div>
-            <!-- Profile info -->
-            <div class="col">
-              <div class="flex flex-column">
-                <div class="flex flex-row align-content-center">
-                  <p class="mr-2 text-lg font-medium">Juan Lopez Martinez</p>
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    icon="pi pi-heart"
-                    class="p-button-rounded p-button-danger p-button-text"
-                  ></button>
-                </div>
-                <div class="flex flex-row align-content-center profile-info">
-                  <div class="mr-2">
-                    <span class="text-sm">Full-stack developer</span>
-                  </div>
-                  <div class="mr-2">
-                    <span class="mr-1 text-sm">
-                      <i
-                        class="pi pi-map-marker"
-                        style="font-size: 0.875rem"
-                      ></i>
-                    </span>
-                    <span class="text-sm">Lima, Peru</span>
-                  </div>
-                  <div class="mr-2">
-                    <span class="text-sm mr-1">
-                      <i class="pi pi-dollar" style="font-size: 0.875rem"></i>
-                    </span>
-                    <span class="text-sm">2500-3000</span>
-                  </div>
-                </div>
-                <div class="mt-2 flex flex-row">
-                  <p-rating
-                    [(ngModel)]="rating"
-                    [stars]="5"
-                    [cancel]="false"
-                    [readonly]="true"
-                  ></p-rating>
-                  <span class="ml-2 text-sm profile-feedbacks"
-                    >{{ rating }} feedbacks</span
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- Resume Btn -->
-            <div
-              class="col-fixed flex align-content-start justify-content-center"
-              style="width: 150px"
-            >
-              <p-splitButton
-                label="Ver CV"
-                [model]="resume"
-                styleClass="p-button-text p-button-info p-button-sm"
-              ></p-splitButton>
-            </div>
-            <!-- Contact info -->
-            <div class="col-fixed" style="width: 150px">
-              <div class="flex flex-column justify-content-between h-full">
-                <div class="">
-                  <p-button
-                    label="Contactar"
-                    icon="pi pi-phone"
-                    styleClass="p-button-sm p-button-success w-full"
-                  ></p-button>
-                </div>
-                <div class="flex justify-content-end flex-wrap">
-                  <div class="flex flex align-content-end">
-                    <a class="custom-cursor px-2">
-                      <span class="contact-icon">
-                        <i class="pi pi-github" style="font-size: 1.5rem"></i>
-                      </span>
-                    </a>
-                  </div>
-                  <div class="flex align-items-center justify-content-center">
-                    <a class="custom-cursor px-2">
-                      <span class="contact-icon">
-                        <i class="pi pi-linkedin" style="font-size: 1.5rem"></i>
-                      </span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </p-card>
-      </p-scrollPanel>
+    <div
+      class="content bg-white w-12 sm:w-8 font-bold p-2 flex justify-content-center sm:justify-content-start"
+    >
+      <div
+        class="w-full shadow-8 md:shadow-4 text-center border-round-lg surface-overlay"
+      >
+        <p-scrollPanel
+          [style]="{ width: '100%', height: 'calc(100vh - 190px)' }"
+        >
+          <shared-prof-pers-crd></shared-prof-pers-crd>
+          <shared-skills-pers-crd></shared-skills-pers-crd>
+          <shared-summ-pers-crd></shared-summ-pers-crd>
+          <shared-exp-pers-crd></shared-exp-pers-crd>
+          <shared-educ-pers-crd></shared-educ-pers-crd>
+          <shared-lang-pers-crd></shared-lang-pers-crd>
+          <shared-feedback-crd></shared-feedback-crd>
+        </p-scrollPanel>
+      </div>
     </div>
   </div>
-</section>
+</div>

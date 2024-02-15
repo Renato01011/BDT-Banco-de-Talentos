@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { StyleClassModule } from 'primeng/styleclass';
 import { RatingModule } from 'primeng/rating';
+import { DialogModule } from 'primeng/dialog';
+import { ChipModule } from 'primeng/chip';
 import { ListboxModule } from 'primeng/listbox';
 import { ChipsModule } from 'primeng/chips';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
@@ -21,6 +23,8 @@ import { CardModule } from 'primeng/card';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
+import { ImageModule } from 'primeng/image';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   exports: [
@@ -45,6 +49,10 @@ import { DropdownModule } from 'primeng/dropdown';
     ChipsModule,
     ListboxModule,
     RatingModule,
+    ImageModule,
+    DialogModule,
+    ChipModule,
+    InputNumberModule,
   ],
 })
 export class MaterialModule {}

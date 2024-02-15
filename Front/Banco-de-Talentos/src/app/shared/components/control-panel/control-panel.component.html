@@ -1,0 +1,102 @@
+<div class="py-3 px-3 sm:px-6 flex align-items-center shadow-none">
+  <div class="flex flex-wrap border-round w-full">
+    <div
+      class="w-12 sm:w-4 font-bold p-2 flex align-items-center justify-content-center sm:justify-content-start"
+    >
+      <p-button
+        label="Nuevo Talento"
+        icon="pi pi-plus"
+        styleClass="p-button-sm p-button-outlined p-button-info"
+        (click)="onNewTalent()"
+      ></p-button>
+    </div>
+    <div
+      class="w-12 sm:w-8 font-bold p-2 flex flex-wrap align-items-center justify-content-center sm:justify-content-between"
+    >
+      <div class="mx-2 mb-2 md:mb-0">
+        <p-overlayPanel #hbd [style]="{ width: '300px' }">
+          <ng-template pTemplate>
+            <div class="py-2">
+              <p-chips
+                [(ngModel)]="selectedSkills"
+                [allowDuplicate]="false"
+              ></p-chips>
+            </div>
+            <div class="field-checkbox" *ngFor="let skill of skills">
+              <p-checkbox
+                name="group1"
+                [value]="skill.name"
+                [(ngModel)]="selectedSkills"
+                [inputId]="skill.code"
+              ></p-checkbox>
+              <label [for]="skill.code">{{ skill.name }}</label>
+            </div>
+          </ng-template>
+        </p-overlayPanel>
+
+        <p-button
+          label="Habilidades"
+          styleClass="p-button-sm p-button-rounded p-button-secondary custom-btn"
+          (click)="hbd.toggle($event)"
+        ></p-button>
+      </div>
+      <div class="mx-2 mb-2 md:mb-0">
+        <p-overlayPanel #english [style]="{ width: '180px' }">
+          <ng-template pTemplate>
+            <div class="field-checkbox">
+              <p-listbox
+                [options]="englishLevel"
+                [(ngModel)]="selectedEnglishLevel"
+                optionLabel="name"
+                [style]="{ border: 'none' }"
+              ></p-listbox>
+            </div>
+          </ng-template>
+        </p-overlayPanel>
+
+        <p-button
+          label="Nivel de inglés"
+          styleClass="p-button-sm p-button-rounded p-button-secondary custom-btn"
+          (click)="english.toggle($event)"
+        ></p-button>
+      </div>
+      <div class="mx-2 mb-2 md:mb-0">
+        <p-overlayPanel #favorite [style]="{ width: '180px' }">
+          <ng-template pTemplate>
+            <div class="field-checkbox">
+              <p-listbox
+                [options]="favorites"
+                [(ngModel)]="selectedFavorite"
+                optionLabel="name"
+                [style]="{ border: 'none' }"
+              ></p-listbox>
+            </div>
+          </ng-template>
+        </p-overlayPanel>
+
+        <p-button
+          label="Favoritos"
+          styleClass="p-button-sm p-button-rounded p-button-secondary custom-btn"
+          (click)="favorite.toggle($event)"
+        ></p-button>
+      </div>
+      <div class="mx-2 mb-2 md:mb-0">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            type="text"
+            pInputText
+            placeholder="Buscar talento o puesto"
+            class="p-inputtext-sm"
+          />
+        </span>
+      </div>
+      <div class="mx-2 mb-2 md:mb-0">
+        <p-button
+          label="Buscar"
+          styleClass="p-button-sm p-button-success"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</div>

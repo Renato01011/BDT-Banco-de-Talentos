@@ -1,12 +1,7 @@
-.profile-info {
-  display: flex;
-  align-items: center;
+.navbar {
+  height: 85px;
 }
 
-.profile-name {
-  font-weight: bold;
-}
-
-.profile-role {
-  color: #798294;
+.content {
+  height: calc(100vh - 85px);
 }

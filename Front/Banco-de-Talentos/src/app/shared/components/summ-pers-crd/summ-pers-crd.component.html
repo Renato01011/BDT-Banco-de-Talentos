@@ -1,0 +1,62 @@
+<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+  <div class="w-12 p-1 flex align-items-center profile-detail">
+    <span class="text-left text-sm">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim neque
+      harum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
+      enim neque harum.
+      <span class="custom-cursor mx-2" (click)="openEditDescriptionDialog()">
+        <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
+      </span>
+    </span>
+  </div>
+</div>
+<p-dialog
+  [(visible)]="editDescriptionDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '650px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Edita tu descripción</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>Tiempo de una nueva descripción? Editala.</p>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <div class="h-7rem">
+      <p>Descripción</p>
+      <input
+        pInputText
+        placeholder="Escribe un descripción"
+        class="w-full h-5rem"
+      />
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideEditDescriptionDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

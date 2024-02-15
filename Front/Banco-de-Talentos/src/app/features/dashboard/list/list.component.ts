@@ -1,21 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
 
-interface Skills {
-  name: string;
-  code: string;
-}
-
-interface English {
-  name: string;
-  code: string;
-}
-
-interface Favorite {
-  name: string;
-  code: string;
-}
+import { Observer, interval, takeUntil, timer } from 'rxjs';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'app-list',
@@ -23,44 +10,18 @@ interface Favorite {
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private loaderService: LoaderService) {}
 
-  englishLevel: English[] = [];
-  skills: Skills[] = [];
-  favorites: Favorite[] = [];
-  selectedSkills: string[] = [];
-  selectedEnglishLevel: string[] = [];
-  selectedFavorite: string[] = [];
-  rating: number = 0;
-
-  resume: MenuItem[] = [];
-
-  toggleBtnOnIcon: string = 'pi pi-heart-fill';
-  toggleBtnOffIcon: string = 'pi pi-heart';
+  observer: Observer<any> = {
+    next: (value) => console.log('[next]:', value),
+    error: (error) => console.warn('[error]:', error),
+    complete: () => this.loaderService.hideLoader(),
+  };
 
   ngOnInit(): void {
-    this.englishLevel = [
-      { name: 'Básico', code: '1' },
-      { name: 'Intermedio', code: '2' },
-      { name: 'Avanzado', code: '3' },
-      { name: 'Nativo', code: '4' },
-    ];
-    this.skills = [
-      { name: 'Docker', code: '1' },
-      { name: 'Express', code: '2' },
-      { name: 'Github', code: '3' },
-      { name: 'Data Structure', code: '4' },
-      { name: 'Node.js', code: '5' },
-    ];
-    this.favorites = [
-      { name: 'Mis favoritos', code: '1' },
-      { name: 'Backups', code: '2' },
-    ];
-    this.rating = 3;
-    this.resume = [{ label: 'CV' }, { label: 'CV Fractal' }];
-  }
-
-  onNewTalent() {
-    this.router.navigateByUrl('/home/talent');
+    this.loaderService.showLoader('Loading');
+    const interval$ = interval(1000);
+    const cancel$ = timer(1500);
+    const subs = interval$.pipe(takeUntil(cancel$)).subscribe(this.observer);
   }
 }

@@ -1,60 +1,44 @@
-<div class="grid">
-  <div class="col">
-    <div class="border-round-sm flex justify-content-between">
-      <div class="flex align-items-center justify-content-center">
-        <span class="text-base font-medium">Idiomas</span>
-      </div>
-      <div class="flex align-items-center justify-content-center">
-        <button
-          pButton
-          pRipple
-          icon="pi pi-plus"
-          class="p-button-rounded p-button-secondary p-button-text p-button-sm"
-          (click)="openNewLanguageDialog()"
-        ></button>
-      </div>
+<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+  <div class="w-12 p-1 flex align-items-center justify-content-between">
+    <div class="flex align-items-center justify-content-center">
+      <span class="text-base font-medium">Idiomas</span>
     </div>
-
-    <div class="border-round-sm">
-      <div class="grid">
-        <div class="col-2">
-          <div
-            class="flex align-items-center justify-content-center h-4rem border-round"
-          >
-            <div class="flex flex-column gap-2">
-              <div class="flex align-items-center font-semibold">Inglés</div>
-              <div class="flex align-items-center profile-detail text-sm">
-                Avanzado
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-8">
-          <div class="flex align-items-center h-4rem border-round">
-            <div class="flex flex-column gap-2 w-full">
-              <p-rating
-                [(ngModel)]="rating"
-                [stars]="5"
-                [cancel]="false"
-                [readonly]="true"
-              ></p-rating>
-            </div>
-          </div>
-        </div>
-        <div class="col-2">
-          <div
-            class="flex align-items-center justify-content-center h-4rem border-round"
-          >
-            <button
-              pButton
-              pRipple
-              type="button"
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-secondary p-button-text"
-            ></button>
-          </div>
-        </div>
-      </div>
+    <div class="flex align-items-center justify-content-center">
+      <button
+        pButton
+        pRipple
+        icon="pi pi-plus"
+        class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+        (click)="openNewLanguageDialog()"
+      ></button>
+    </div>
+  </div>
+  <div class="w-3 sm:w-2 py-1 flex align-items-center justify-content-center">
+    <div class="flex flex-column gap-2">
+      <div class="flex align-items-center font-semibold">Inglés</div>
+      <div class="flex align-items-center profile-detail text-sm">Avanzado</div>
+    </div>
+  </div>
+  <div class="w-7 sm:w-8 p-1 flex align-items-center justify-content-start">
+    <p-rating
+      [(ngModel)]="rating"
+      [stars]="5"
+      [cancel]="false"
+      [readonly]="true"
+    ></p-rating>
+  </div>
+  <div class="w-2 py-1 flex align-items-center justify-content-center">
+    <div
+      class="flex align-items-center justify-content-center h-4rem border-round"
+    >
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-pencil"
+        class="p-button-rounded p-button-secondary p-button-text"
+        (click)="openEditLanguageDialog()"
+      ></button>
     </div>
   </div>
 </div>
@@ -77,9 +61,9 @@
   </ng-template>
   <div>
     <p>Idioma</p>
-    <p-dropdown [options]="languages" placeholder="Nombre del idioma" optionLabel="name" [showClear]="true" appendTo="body"></p-dropdown>
+    <p-dropdown [options]="languages" placeholder="Nombre del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full"></p-dropdown>
     <p>Nivel</p>
-    <p-dropdown [options]="levels" placeholder="Nivel del idioma" optionLabel="name" [showClear]="true" appendTo="body"></p-dropdown>
+    <p-dropdown [options]="levels" placeholder="Nivel del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full"></p-dropdown>
     <div class="pt-4">
         <p-rating></p-rating>
     </div>
@@ -101,6 +85,56 @@
           pButton
           pRipple
           label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="editLanguageDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '650px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Edita tu habilidad en el idioma</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>Edita tu habilidad en el idioma.</p>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <p>Idioma</p>
+    <p-dropdown [options]="languages" placeholder="Nombre del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full"></p-dropdown>
+    <p>Nivel</p>
+    <p-dropdown [options]="levels" placeholder="Nivel del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full"></p-dropdown>
+    <div class="pt-4">
+        <p-rating></p-rating>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideEditLanguageDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Editar"
           icon="pi pi-check"
           class="p-button-success w-full"
         ></button>

@@ -1,93 +1,95 @@
-<div class="grid">
-  <div class="col-fixed flex align-items-center" style="width: 100px">
+<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+  <div class="w-3 sm:w-2 p-1 flex align-items-center justify-content-center">
     <p-avatar
       image="./assets/users/1.jpg"
-      styleClass="mr-2"
       size="xlarge"
       shape="circle"
-      class="pr-1"
       (click)="openEditProfilePicture()"
     ></p-avatar>
   </div>
-
-  <div class="col">
-    <div class="flex flex-column">
-      <div class="flex flex-row align-content-center">
-        <p class="mr-2 text-lg font-medium">Juan Lopez Martinez</p>
-        <button
-          pButton
-          pRipple
-          type="button"
-          icon="pi pi-heart"
-          class="p-button-rounded p-button-danger p-button-text"
-        ></button>
+  <div class="w-9 sm:w-6 py-1 flex align-items-center justify-content-center">
+    <div class="flex flex-column flex-wrap w-full gap-1">
+      <div
+        class="border-round flex align-items-center sm:justify-content-start justify-content-between"
+      >
+        <span class="font-semibold">Juan Lopez Martinez</span>
+        <span class="custom-cursor mx-2 heart-icon">
+          <i class="pi pi-heart"></i>
+        </span>
       </div>
-      <div class="flex flex-row align-content-center profile-info">
-        <div class="mr-2">
-          <span class="text-sm">Full-stack developer</span>
+      <div class="flex flex-wrap">
+        <div
+          class="w-12 sm:w-4 border-round flex align-items-center justify-content-start"
+        >
+          <span class="profile-role text-sm">Full-stack developer</span>
         </div>
-        <div class="mr-2">
-          <span class="mr-1 text-sm">
+        <div
+          class="w-12 sm:w-8 border-round flex align-items-center justify-content-around profile-country-salary"
+        >
+          <span class="text-sm">
             <i class="pi pi-map-marker" style="font-size: 0.875rem"></i>
+            Lima, Peru
           </span>
-          <span class="text-sm">Lima, Peru</span>
-        </div>
-        <div class="mr-2">
-          <span class="text-sm mr-1">
+          <span class="text-sm">
             <i class="pi pi-dollar" style="font-size: 0.875rem"></i>
+            2500 - 3000
           </span>
-          <span class="text-sm" (click)="openEditSalaryDialog()">2500-3000</span>
+          <span class="custom-cursor mx-2" (click)="openEditSalaryDialog()">
+            <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
+          </span>
         </div>
       </div>
-      <div class="mt-2 flex flex-row">
+      <div
+        class="border-round flex align-items-center sm:justify-content-start justify-content-between"
+      >
         <p-rating
           [(ngModel)]="rating"
           [stars]="5"
           [cancel]="false"
           [readonly]="true"
         ></p-rating>
-        <span class="ml-2 text-sm profile-feedbacks"
-          >{{ rating }} feedbacks</span
-        >
+        <span class="mx-2 text-sm profile-feedbacks"
+          >{{ rating }} feedbacks
+        </span>
       </div>
     </div>
   </div>
-
-  <div
-    class="col-fixed flex align-content-start justify-content-center"
-    style="width: 150px"
-  >
-    <p-splitButton
-      label="Ver CV"
-      [model]="resume"
-      styleClass="p-button-text p-button-info p-button-sm"
-    ></p-splitButton>
-  </div>
-
-  <div class="col-fixed" style="width: 150px">
-    <div class="flex flex-column justify-content-between h-full">
-      <div class="">
+  <div class="w-12 sm:w-4 py-1">
+    <div class="flex flex-wrap align-content-evenly">
+      <div
+        class="w-12 border-round flex align-items-center justify-content-between mb-2 sm:mb-4"
+      >
+        <p-splitButton
+          label="Ver CV"
+          [model]="resume"
+          styleClass="p-button-text p-button-info p-button-sm"
+        ></p-splitButton>
         <p-button
           label="Contactar"
           icon="pi pi-phone"
           styleClass="p-button-sm p-button-success w-full"
         ></p-button>
       </div>
-      <div class="flex justify-content-end flex-wrap">
-        <div class="flex flex align-content-end">
-          <a class="custom-cursor px-2">
-            <span class="contact-icon">
-              <i class="pi pi-github" style="font-size: 1.5rem" (click)="openEditSocialMediaDialog()"></i>
-            </span>
-          </a>
-        </div>
-        <div class="flex align-items-center justify-content-center">
-          <a class="custom-cursor px-2">
-            <span class="contact-icon">
-              <i class="pi pi-linkedin" style="font-size: 1.5rem" (click)="openEditSocialMediaDialog()"></i>
-            </span>
-          </a>
-        </div>
+
+      <div
+        class="w-12 border-round flex align-items-center justify-content-center sm:justify-content-end"
+      >
+        <a class="custom-cursor px-2">
+          <span class="contact-icon">
+            <i class="pi pi-github" style="font-size: 1.5rem"></i>
+          </span>
+        </a>
+        <a class="custom-cursor px-2">
+          <span class="contact-icon">
+            <i class="pi pi-linkedin" style="font-size: 1.5rem"></i>
+          </span>
+        </a>
+        <span
+          class="custom-cursor edit-icon mx-2"
+          (click)="openEditSocialMediaDialog()"
+        >
+          <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
+        </span>
       </div>
     </div>
   </div>
@@ -110,12 +112,25 @@
     </div>
   </ng-template>
   <div class="flex flex-warp align-items-center justify-content-center">
-    <button pButton class="p-button-outlined border-500 w-full flex flex-column">
-        <i class="pi pi-cloud-upload px-2 pt-5" style="font-size: 1.5rem; color: #708090"></i>
-        <span class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round" style="color: #0B85C3">Sube una nueva foto de perfil</span>
-        <span class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round">PNG o JPG (max. 800x400px)</span>
+    <button
+      pButton
+      class="p-button-outlined border-300 w-full flex flex-column"
+    >
+      <i
+        class="pi pi-cloud-upload px-2 pt-5"
+        style="font-size: 1.5rem; color: #708090"
+      ></i>
+      <span
+        class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
+        style="color: #0b85c3"
+        >Sube una nueva foto de perfil</span
+      >
+      <span
+        class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
+        >PNG o JPG (max. 800x400px)</span
+      >
     </button>
-</div>
+  </div>
   <ng-template pTemplate="footer">
     <div class="formgrid grid">
       <div class="field col">
@@ -132,7 +147,7 @@
         <button
           pButton
           pRipple
-          label="Agregar"
+          label="Editar"
           icon="pi pi-check"
           class="p-button-success w-full"
         ></button>
@@ -158,20 +173,24 @@
     </div>
   </ng-template>
   <div>
-    <div class="pb-1">
-      <p-toggleButton onLabel="Soles" offLabel="Soles" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{ width:'100%' }"></p-toggleButton>
-    </div>
-    <div class="pt-1">
-      <p-toggleButton onLabel="Dolares" offLabel="Dolares" onIcon="pi pi-check" offIcon="pi pi-times" [style]="{ width:'100%' }"></p-toggleButton>
+    <div class="w-full">
+      <div *ngFor="let coin of coins" class="h-3rem w-full border-round border-1 border-300 mb-2 flex">
+        <div class="w-full pl-1 flex align-items-center justify-content-start">
+          <label [for]="coin.code" class="ml-2">{{ coin.name }}</label>
+        </div>
+        <div class="w-full pr-3 flex align-items-center justify-content-end">
+          <p-radioButton [inputId]="coin.code" name="coin" [value]="coin" [(ngModel)]="selectedCoin"></p-radioButton>
+        </div>
+      </div>
     </div>
     <div class="formgrid grid">
       <div class="field col">
         <p>Monto Inicial</p>
-        <input pInputText class="w-full"/>
+        <p-inputNumber class="w-full" styleClass="w-full"></p-inputNumber>
       </div>
       <div class="field col">
         <p>Monto Final</p>
-        <input pInputText class="w-full"/>
+        <p-inputNumber class="w-full" styleClass="w-full"></p-inputNumber>
       </div>
     </div>
   </div>
@@ -191,7 +210,7 @@
         <button
           pButton
           pRipple
-          label="Agregar"
+          label="Editar"
           icon="pi pi-check"
           class="p-button-success w-full"
         ></button>
@@ -218,11 +237,15 @@
   </ng-template>
   <div>
     <p>Link de LinkedIn</p>
-    <input pInputText placeholder="Ingrese su link de LinkedIn" class="w-full"/>
+    <input
+      pInputText
+      placeholder="Ingrese su link de LinkedIn"
+      class="w-full"
+    />
   </div>
   <div>
     <p>Link de GitHub</p>
-    <input pInputText placeholder="Ingrese su link de GitHub" class="w-full"/>
+    <input pInputText placeholder="Ingrese su link de GitHub" class="w-full" />
   </div>
   <ng-template pTemplate="footer">
     <div class="formgrid grid">
@@ -240,7 +263,7 @@
         <button
           pButton
           pRipple
-          label="Agregar"
+          label="Editar"
           icon="pi pi-check"
           class="p-button-success w-full"
         ></button>

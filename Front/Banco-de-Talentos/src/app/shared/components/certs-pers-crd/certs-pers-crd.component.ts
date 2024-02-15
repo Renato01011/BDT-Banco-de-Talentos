@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CertsPersCrdComponent implements OnInit {
 
+  addFileDialog: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
+
+  }
+
+  openAddFileDialog() {
+    this.addFileDialog = true;
+  }
+
+  hideAddFileDialog() {
+    this.addFileDialog = false;
   }
 
 }

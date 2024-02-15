@@ -1,7 +1,10 @@
 package com.fractal.bancodetalentos.service;
 
-import com.fractal.bancodetalentos.model.entity.BtTmTalento;
+import com.fractal.bancodetalentos.model.request.NewTalentReq;
+import com.fractal.bancodetalentos.model.response.PostResp;
 
 public interface TalentoService {
-    void delete(BtTmTalento talento);
+
+    PostResp addNewTalent(NewTalentReq newTalentRequest);
+
 }

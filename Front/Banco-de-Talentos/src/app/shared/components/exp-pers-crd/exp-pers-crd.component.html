@@ -38,6 +38,7 @@
         type="button"
         icon="pi pi-pencil"
         class="p-button-rounded p-button-secondary p-button-text"
+        (click)="openEditWorkExperienceDialog()"
       ></button>
     </div>
   </div>
@@ -61,31 +62,21 @@
   </ng-template>
   <div>
     <p>Empresa</p>
-    <input pInputText placeholder="Nombre de la empresa" class="w-full" />
-    <div class="pt-2">
-      <p-checkbox
-        [binary]="true"
-        inputId="binary"
-        label="Aquí en Fractal"
-      ></p-checkbox>
-    </div>
+    <input pInputText placeholder="Nombre de la empresa" class="w-full"/>
+    <p-checkbox [binary]="true" inputId="binary" label="Aquí en Fractal" class="mt-3"></p-checkbox>
     <p>Puesto</p>
-    <input pInputText placeholder="Puesto en la empresa" class="w-full" />
+    <input pInputText placeholder="Puesto en la empresa" class="w-full"/>
     <div class="formgrid grid">
-      <div class="field col">
-        <p>Año y mes de inicio</p>
-        <input pInputText class="w-full" />
-      </div>
-      <div class="field col">
-        <p>Año y mes fin</p>
-        <input pInputText class="w-full" />
-      </div>
+        <div class="field col">
+            <p>Año y mes de inicio</p>
+            <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
+        </div>
+        <div class="field col">
+            <p>Año y mes fin</p>
+            <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
+        </div>
     </div>
-    <p-checkbox
-      [binary]="true"
-      inputId="binary"
-      label="Hasta la actualidad"
-    ></p-checkbox>
+    <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
   </div>
   <ng-template pTemplate="footer">
     <div class="formgrid grid">
@@ -104,6 +95,65 @@
           pButton
           pRipple
           label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="editWorkExperienceDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '650px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Agrega una nueva experiencia</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>Describe y agrega tu nueva experiencia laboral.</p>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <p>Empresa</p>
+    <input pInputText placeholder="Nombre de la empresa" class="w-full"/>
+    <p-checkbox [binary]="true" inputId="binary" label="Aquí en Fractal" class="mt-3"></p-checkbox>
+    <p>Puesto</p>
+    <input pInputText placeholder="Puesto en la empresa" class="w-full"/>
+    <div class="formgrid grid">
+        <div class="field col">
+            <p>Año y mes de inicio</p>
+            <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
+        </div>
+        <div class="field col">
+            <p>Año y mes fin</p>
+            <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
+        </div>
+    </div>
+    <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideEditWorkExperienceDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Editar"
           icon="pi pi-check"
           class="p-button-success w-full"
         ></button>

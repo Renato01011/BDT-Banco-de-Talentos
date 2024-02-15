@@ -8,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class LangPersCrdComponent implements OnInit {
 
   rating: number = 0;
+
   newLanguageDialog: boolean = false;
+  editLanguageDialog: boolean = false;
+
   languages: any[] = [];
   levels: any[] = [];
 
@@ -25,6 +28,14 @@ export class LangPersCrdComponent implements OnInit {
       { name: 'Avanzado', code: '3' },
       { name: 'Nativo', code: '4' },
     ];
+  }
+
+  openEditLanguageDialog() {
+    this.editLanguageDialog = true;
+  }
+
+  hideEditLanguageDialog() {
+    this.editLanguageDialog = false;
   }
 
   openNewLanguageDialog() {

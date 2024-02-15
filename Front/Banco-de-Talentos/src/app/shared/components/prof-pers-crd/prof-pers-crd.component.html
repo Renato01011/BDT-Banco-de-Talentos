@@ -114,7 +114,7 @@
   <div class="flex flex-warp align-items-center justify-content-center">
     <button
       pButton
-      class="p-button-outlined border-500 w-full flex flex-column"
+      class="p-button-outlined border-300 w-full flex flex-column"
     >
       <i
         class="pi pi-cloud-upload px-2 pt-5"
@@ -147,7 +147,7 @@
         <button
           pButton
           pRipple
-          label="Agregar"
+          label="Editar"
           icon="pi pi-check"
           class="p-button-success w-full"
         ></button>
@@ -173,32 +173,24 @@
     </div>
   </ng-template>
   <div>
-    <div class="pb-1">
-      <p-toggleButton
-        onLabel="Soles"
-        offLabel="Soles"
-        onIcon="pi pi-check"
-        offIcon="pi pi-times"
-        [style]="{ width: '100%' }"
-      ></p-toggleButton>
-    </div>
-    <div class="pt-1">
-      <p-toggleButton
-        onLabel="Dolares"
-        offLabel="Dolares"
-        onIcon="pi pi-check"
-        offIcon="pi pi-times"
-        [style]="{ width: '100%' }"
-      ></p-toggleButton>
+    <div class="w-full">
+      <div *ngFor="let coin of coins" class="h-3rem w-full border-round border-1 border-300 mb-2 flex">
+        <div class="w-full pl-1 flex align-items-center justify-content-start">
+          <label [for]="coin.code" class="ml-2">{{ coin.name }}</label>
+        </div>
+        <div class="w-full pr-3 flex align-items-center justify-content-end">
+          <p-radioButton [inputId]="coin.code" name="coin" [value]="coin" [(ngModel)]="selectedCoin"></p-radioButton>
+        </div>
+      </div>
     </div>
     <div class="formgrid grid">
       <div class="field col">
         <p>Monto Inicial</p>
-        <input pInputText class="w-full" />
+        <p-inputNumber class="w-full" styleClass="w-full"></p-inputNumber>
       </div>
       <div class="field col">
         <p>Monto Final</p>
-        <input pInputText class="w-full" />
+        <p-inputNumber class="w-full" styleClass="w-full"></p-inputNumber>
       </div>
     </div>
   </div>
@@ -218,7 +210,7 @@
         <button
           pButton
           pRipple
-          label="Agregar"
+          label="Editar"
           icon="pi pi-check"
           class="p-button-success w-full"
         ></button>
@@ -271,7 +263,7 @@
         <button
           pButton
           pRipple
-          label="Agregar"
+          label="Editar"
           icon="pi pi-check"
           class="p-button-success w-full"
         ></button>

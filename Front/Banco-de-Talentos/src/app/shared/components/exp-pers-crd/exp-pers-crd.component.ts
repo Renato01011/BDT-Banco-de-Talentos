@@ -8,10 +8,19 @@ import { Component, OnInit } from '@angular/core';
 export class ExpPersCrdComponent implements OnInit {
 
   newWorkExperienceDialog: boolean = false;
+  editWorkExperienceDialog: boolean = false;
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  openEditWorkExperienceDialog() {
+    this.editWorkExperienceDialog = true;
+  }
+
+  hideEditWorkExperienceDialog() {
+    this.editWorkExperienceDialog = false;
+  }
 
   openNewWorkExperienceDialog() {
     this.newWorkExperienceDialog = true;

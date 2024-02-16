@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { MasterService } from 'src/app/core/services/master/master.service';
+
 @Component({
   selector: 'app-new-talent',
   templateUrl: './new-talent.component.html',
@@ -8,35 +10,28 @@ import { Router } from '@angular/router';
 })
 export class NewTalentComponent implements OnInit {
 
-  jobs: any[];
-  levels: any[];
-  languages: any[];
-  coins: any[];
+  profiles: any[] = [];
+  levels: any[] = [];
+  languages: any[] = [];
+  coins: any[] = [];
 
   selectedCoin: any = null;
 
-  constructor(private router: Router) {
-    
-    this.languages = [
-      { name: 'Ingles', code: 'in' },
-      { name: 'Español', code: 'es' }
-    ];
+  constructor(private router: Router, private masterService: MasterService) {
 
-    this.levels = [
-      { name: 'Básico', code: '0' },
-      { name: 'Intermedio', code: '1' },
-      { name: 'Avanzado', code: '2' },
-      { name: 'Nativo', code: '3' },
-    ]
+    this.masterService.getLanguages().subscribe(languages => {
+      this.languages = languages;
+    });
+    this.masterService.getLangProficiency().subscribe(levels => {
+      this.levels = levels;
+    });
+    this.masterService.getProfiles().subscribe(profiles => {
+      this.profiles = profiles;
+    });
+    this.masterService.getCurrencies().subscribe(coins => {
+      this.coins = coins;
+    });
 
-    this.jobs = [
-      { name: 'Full-stack Developer', code: '0' }
-    ];
-
-    this.coins = [
-      { name: 'Soles', code: '0' },
-      { name: 'Dolares', code: '1' }
-    ];
   }
 
   ngOnInit(): void {

@@ -4,7 +4,7 @@
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim neque
       harum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
       enim neque harum.
-      <span class="custom-cursor mx-2" (click)="openEditDescriptionDialog()">
+      <span class="cursor-pointer mx-2" (click)="openEditDescriptionDialog()">
         <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
       </span>
     </span>
@@ -29,11 +29,13 @@
   <div>
     <div class="h-7rem">
       <p>Descripción</p>
-      <input
-        pInputText
+      <textarea
+        rows="5"
+        cols="30"
+        pInputTextarea
         placeholder="Escribe un descripción"
         class="w-full h-5rem"
-      />
+      ></textarea>
     </div>
   </div>
   <ng-template pTemplate="footer">

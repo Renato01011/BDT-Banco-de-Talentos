@@ -1,7 +1,7 @@
 <div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
   <div class="w-12 p-1 flex align-items-center justify-content-between">
     <div class="flex align-items-center justify-content-center">
-      <span class="text-base font-medium">Educación</span>
+      <span class="font-semibold text-base text-600">Educación</span>
     </div>
     <div class="flex align-items-center justify-content-center">
       <button
@@ -13,34 +13,37 @@
       ></button>
     </div>
   </div>
-  <div class="w-2 py-1 flex align-items-center justify-content-center">
-    <p-avatar
-      image="./assets/users/1.jpg"
-      size="large"
-      shape="circle"
-    ></p-avatar>
-  </div>
-  <div class="w-8 p-1 flex align-items-center justify-content-center">
-    <div class="flex flex-column gap-2 w-full">
-      <div class="flex align-items-center font-semibold">
-        Pontificia Universidad Católica del Perú
-      </div>
-      <div class="flex align-items-center profile-detail text-sm">
-        Bachiller en Ingeniería de Sistemas 2015 - 2021
+  <div class="w-12 flex align-items-center surface-hover p-1 border-round-md">
+    <div class="w-2 py-1 flex align-items-center justify-content-center">
+      <p-avatar
+        image="./assets/users/1.jpg"
+        size="large"
+        shape="circle"
+      ></p-avatar>
+    </div>
+    <div class="w-8 p-1 flex align-items-center justify-content-center">
+      <div class="flex flex-column gap-2 w-full">
+        <div class="flex align-items-center font-semibold text-base text-800">
+          Pontificia Universidad Católica del Perú
+        </div>
+        <div class="flex align-items-center text-500 text-sm font-normal">
+          Bachiller en Ingeniería de Sistemas 2015 - 2021
+        </div>
       </div>
     </div>
-  </div>
-  <div class="w-2 py-1 flex align-items-center justify-content-center">
-    <div
-      class="flex align-items-center justify-content-center h-4rem border-round"
-    >
-      <button
-        pButton
-        pRipple
-        type="button"
-        icon="pi pi-pencil"
-        class="p-button-rounded p-button-secondary p-button-text"
-      ></button>
+    <div class="w-2 py-1 flex align-items-center justify-content-center">
+      <div
+        class="flex align-items-center justify-content-center h-4rem border-round"
+      >
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-secondary p-button-text"
+          (click)="openEditEducationalExperienceDialog()"
+        ></button>
+      </div>
     </div>
   </div>
 </div>
@@ -64,13 +67,12 @@
   <div>
     <p>Institución</p>
     <input pInputText placeholder="Nombre de la institución" class="w-full" />
-    <div class="pt-2">
-      <p-checkbox
-        [binary]="true"
-        inputId="binary"
-        label="Aquí en Fractal"
-      ></p-checkbox>
-    </div>
+    <p-checkbox
+      [binary]="true"
+      inputId="binary"
+      label="Aquí en Fractal"
+      class="mt-3"
+    ></p-checkbox>
     <p>Carrera</p>
     <input pInputText placeholder="Nombre de la carrera" class="w-full" />
     <p>Grado</p>
@@ -78,11 +80,23 @@
     <div class="formgrid grid">
       <div class="field col">
         <p>Año y mes de inicio</p>
-        <input pInputText class="w-full" />
+        <p-calendar
+          class="w-full"
+          styleClass="w-full"
+          dateFormat="mm/yy"
+          inputId="dateformat"
+          appendTo="body"
+        ></p-calendar>
       </div>
       <div class="field col">
         <p>Año y mes fin</p>
-        <input pInputText class="w-full" />
+        <p-calendar
+          class="w-full"
+          styleClass="w-full"
+          dateFormat="mm/yy"
+          inputId="dateformat"
+          appendTo="body"
+        ></p-calendar>
       </div>
     </div>
     <p-checkbox
@@ -108,6 +122,88 @@
           pButton
           pRipple
           label="Agregar"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="editEducationalExperienceDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '650px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Edita tu experiencia educativa</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>La vida esta llena de cambios. Edita tu experiencia educativa.</p>
+      </div>
+    </div>
+  </ng-template>
+  <div>
+    <p>Institución</p>
+    <input pInputText placeholder="Nombre de la institución" class="w-full" />
+    <p-checkbox
+      [binary]="true"
+      inputId="binary"
+      label="Aquí en Fractal"
+      class="mt-3"
+    ></p-checkbox>
+    <p>Carrera</p>
+    <input pInputText placeholder="Nombre de la carrera" class="w-full" />
+    <p>Grado</p>
+    <input pInputText placeholder="Grado de la carrera" class="w-full" />
+    <div class="formgrid grid">
+      <div class="field col">
+        <p>Año y mes de inicio</p>
+        <p-calendar
+          class="w-full"
+          styleClass="w-full"
+          dateFormat="mm/yy"
+          inputId="dateformat"
+          appendTo="body"
+        ></p-calendar>
+      </div>
+      <div class="field col">
+        <p>Año y mes fin</p>
+        <p-calendar
+          class="w-full"
+          styleClass="w-full"
+          dateFormat="mm/yy"
+          inputId="dateformat"
+          appendTo="body"
+        ></p-calendar>
+      </div>
+    </div>
+    <p-checkbox
+      [binary]="true"
+      inputId="binary"
+      label="Hasta la actualidad"
+    ></p-checkbox>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideEditEducationalExperienceDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Editar"
           icon="pi pi-check"
           class="p-button-success w-full"
         ></button>

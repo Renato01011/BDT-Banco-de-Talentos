@@ -25,6 +25,11 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { ImageModule } from 'primeng/image';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputMaskModule } from 'primeng/inputmask';
+import { CalendarModule } from 'primeng/calendar';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   exports: [
@@ -53,6 +58,11 @@ import { InputNumberModule } from 'primeng/inputnumber';
     DialogModule,
     ChipModule,
     InputNumberModule,
+    InputTextareaModule,
+    RadioButtonModule,
+    InputMaskModule,
+    CalendarModule,
+    CarouselModule,
   ],
 })
 export class MaterialModule {}

@@ -8,38 +8,39 @@ import { Router } from '@angular/router';
 })
 export class NewTalentComponent implements OnInit {
 
-  puestos: any[];
-  niveles: any[];
-  idiomas: any[];
-  tipoDeMoneda: any[];
+  jobs: any[];
+  levels: any[];
+  languages: any[];
+  coins: any[];
 
-  monedaSeleccionada: any = null;
+  selectedCoin: any = null;
 
   constructor(private router: Router) {
-    this.idiomas = [
+    
+    this.languages = [
       { name: 'Ingles', code: 'in' },
       { name: 'Español', code: 'es' }
     ];
 
-    this.niveles = [
+    this.levels = [
       { name: 'Básico', code: '0' },
       { name: 'Intermedio', code: '1' },
       { name: 'Avanzado', code: '2' },
       { name: 'Nativo', code: '3' },
     ]
 
-    this.puestos = [
+    this.jobs = [
       { name: 'Full-stack Developer', code: '0' }
     ];
 
-    this.tipoDeMoneda = [
+    this.coins = [
       { name: 'Soles', code: '0' },
       { name: 'Dolares', code: '1' }
     ];
   }
 
   ngOnInit(): void {
-    this.monedaSeleccionada = this.tipoDeMoneda[1];
+    
   }
 
   onVolver() {

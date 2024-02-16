@@ -17,8 +17,7 @@ import java.io.Serializable;
 public class BtTxMasterTalentoIdioma implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_MASTER_TALENTO_IDIOMA")
-    @SequenceGenerator(name = "SEQ_BT_ID_MASTER_TALENTO_IDIOMA", sequenceName = "SEQ_BT_ID_MASTER_TALENTO_IDIOMA", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_MASTER_TALENTO_IDIOMA")
     private Integer idMasterTalentoIdioma;
 

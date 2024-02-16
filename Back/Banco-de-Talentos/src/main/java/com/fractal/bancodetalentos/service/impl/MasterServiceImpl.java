@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<LanguageResp> getLanguage() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_LANGUAGES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_LANGUAGES");
         storedProcedureQuery.execute();
         List<Object[]> result = storedProcedureQuery.getResultList();
         List<LanguageResp> respList = new ArrayList<>();
@@ -40,7 +41,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<RoleResp> getRol() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_ROLES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_ROLES");
         storedProcedureQuery.execute();
         List<Object[]> list = storedProcedureQuery.getResultList();
         List<RoleResp> roleRespList = new ArrayList<>();
@@ -56,7 +57,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<CurrenciesResp> getCurrencies() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_CURRENCIES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_CURRENCIES");
         storedProcedureQuery.execute();
         List<Object[]> list = storedProcedureQuery.getResultList();
         List<CurrenciesResp> currenciesResps = new ArrayList<>();
@@ -72,7 +73,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<ProfileResp> getProfile() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_PROFILES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_PROFILES");
         storedProcedureQuery.execute();
         List<Object[]> list = storedProcedureQuery.getResultList();
         List<ProfileResp> profileResps = new ArrayList<>();
@@ -88,7 +89,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<LangProficiencyResp> getLangProficiency() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_LANG_PROFICIENCY").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_LANG_PROFICIENCY");
         storedProcedureQuery.execute();
         List<Object[]> list = storedProcedureQuery.getResultList();
         List<LangProficiencyResp> proficiencyResp = new ArrayList<>();
@@ -103,7 +104,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<CountryResp> getCountry() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("ADMIN.SP_PAISES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_COUNTRIES");
         storedProcedureQuery.execute();
         List<Object[]> result = storedProcedureQuery.getResultList();
         List<CountryResp> respList = new ArrayList<>();
@@ -120,9 +121,8 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public List<CityResp> getCityById(Integer countryId) {
         StoredProcedureQuery storedProcedureQuery = entityManager
-                .createStoredProcedureQuery("ADMIN.SP_CIUDADES")
+                .createStoredProcedureQuery("SP_CITIES")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(2, Class.class, ParameterMode.REF_CURSOR)
                 .setParameter(1, countryId);
         storedProcedureQuery.execute();
         List<Object[]> result = storedProcedureQuery.getResultList();

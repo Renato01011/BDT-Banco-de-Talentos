@@ -3,13 +3,15 @@ import { Router } from '@angular/router';
 import { MasterRespConst } from 'src/app/core/global/constants/master-resp.constants';
 import * as MasterModels from 'src/app/shared/models/interfaces/master.interfaces';
 
+import { MasterService } from 'src/app/core/services/master/master.service';
+
 @Component({
   selector: 'app-new-talent',
   templateUrl: './new-talent.component.html',
   styleUrls: ['./new-talent.component.scss']
 })
 export class NewTalentComponent implements OnInit {
-
+  
   profiles: MasterModels.ProfileModel[] = [];
   levels: MasterModels.LangProficiencyModel[] = [];
   languages: MasterModels.LanguageModel[] = [];

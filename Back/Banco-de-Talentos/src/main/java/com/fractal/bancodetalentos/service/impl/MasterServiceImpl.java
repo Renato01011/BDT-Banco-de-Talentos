@@ -1,6 +1,5 @@
 package com.fractal.bancodetalentos.service.impl;
 
-import com.fractal.bancodetalentos.model.entity.BtTmMaster;
 import com.fractal.bancodetalentos.model.response.*;
 import com.fractal.bancodetalentos.repository.BtTmMasterRepositorio;
 import com.fractal.bancodetalentos.service.MasterService;
@@ -32,7 +31,7 @@ public class MasterServiceImpl implements MasterService {
         List<LanguageResp> respList = new ArrayList<>();
         for (Object[] objects: result) {
             LanguageResp languageResp = new LanguageResp();
-            languageResp.setId((Integer) objects[0]);
+            languageResp.setId(((BigDecimal) objects[0]).intValue());
             languageResp.setName((String) objects[1]);
             languageResp.setCode((String) objects[2]);
             respList.add(languageResp);
@@ -41,19 +40,19 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public List<RolResp> getRol() {
+    public List<RoleResp> getRol() {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_ROLES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
         storedProcedureQuery.execute();
         List<Object[]> list = storedProcedureQuery.getResultList();
-        List<RolResp> rolRespList = new ArrayList<>();
+        List<RoleResp> roleRespList = new ArrayList<>();
         for (Object[] objects: list) {
-            RolResp rolResp = new RolResp();
-            rolResp.setId((Integer) objects[0]);
-            rolResp.setName((String) objects[1]);
-            rolResp.setCode((String) objects[2]);
-            rolRespList.add(rolResp);
+            RoleResp roleResp = new RoleResp();
+            roleResp.setId(((BigDecimal) objects[0]).intValue());
+            roleResp.setName((String) objects[1]);
+            roleResp.setCode((String) objects[2]);
+            roleRespList.add(roleResp);
         }
-        return rolRespList;
+        return roleRespList;
     }
 
     @Override
@@ -64,7 +63,7 @@ public class MasterServiceImpl implements MasterService {
         List<CurrenciesResp> currenciesResps = new ArrayList<>();
         for (Object[] objects: list) {
             CurrenciesResp currResp = new CurrenciesResp();
-            currResp.setId((Integer) objects[0]);
+            currResp.setId(((BigDecimal) objects[0]).intValue());
             currResp.setName((String) objects[1]);
             currResp.setCode((String) objects[2]);
             currenciesResps.add(currResp);
@@ -80,7 +79,7 @@ public class MasterServiceImpl implements MasterService {
         List<ProfileResp> profileResps = new ArrayList<>();
         for (Object[] objects: list) {
             ProfileResp profile = new ProfileResp();
-            profile.setId((Integer) objects[0]);
+            profile.setId(((BigDecimal) objects[0]).intValue());
             profile.setName((String) objects[1]);
             profile.setCode((String) objects[2]);
             profileResps.add(profile);
@@ -96,7 +95,7 @@ public class MasterServiceImpl implements MasterService {
         List<LangProficiencyResp> proficiencyResp = new ArrayList<>();
         for (Object[] objects: list) {
             LangProficiencyResp resp = new LangProficiencyResp();
-            resp.setId((Integer) objects[0]);
+            resp.setId(((BigDecimal) objects[0]).intValue());
             resp.setName((String) objects[1]);
             proficiencyResp.add(resp);
         }
@@ -111,7 +110,7 @@ public class MasterServiceImpl implements MasterService {
         List<CountryResp> respList = new ArrayList<>();
         for (Object[] objects: result) {
             CountryResp countryResp = new CountryResp();
-            countryResp.setId((Integer) objects[0]);
+            countryResp.setId(((BigDecimal) objects[0]).intValue());
             countryResp.setCountry((String) objects[1]);
             countryResp.setCode((String) objects[2]);
             respList.add(countryResp);
@@ -131,7 +130,7 @@ public class MasterServiceImpl implements MasterService {
         List<CityResp> respList = new ArrayList<>();
         for (Object[] objects: result) {
             CityResp cityResp = new CityResp();
-            cityResp.setId((Integer) objects[0]);
+            cityResp.setId(((BigDecimal) objects[0]).intValue());
             cityResp.setCity((String) objects[1]);
             respList.add(cityResp);
         }

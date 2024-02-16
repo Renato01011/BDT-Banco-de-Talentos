@@ -1,6 +1,5 @@
 package com.fractal.bancodetalentos.service.impl;
 
-import com.fractal.bancodetalentos.model.entity.BtTmMaster;
 import com.fractal.bancodetalentos.model.response.*;
 import com.fractal.bancodetalentos.repository.BtTmMasterRepositorio;
 import com.fractal.bancodetalentos.service.MasterService;
@@ -11,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,19 +39,19 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public List<RolResp> getRol() {
+    public List<RoleResp> getRol() {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_ROLES").registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR);
         storedProcedureQuery.execute();
         List<Object[]> list = storedProcedureQuery.getResultList();
-        List<RolResp> rolRespList = new ArrayList<>();
+        List<RoleResp> roleRespList = new ArrayList<>();
         for (Object[] objects: list) {
-            RolResp rolResp = new RolResp();
-            rolResp.setId((Integer) objects[0]);
-            rolResp.setName((String) objects[1]);
-            rolResp.setCode((String) objects[2]);
-            rolRespList.add(rolResp);
+            RoleResp roleResp = new RoleResp();
+            roleResp.setId((Integer) objects[0]);
+            roleResp.setName((String) objects[1]);
+            roleResp.setCode((String) objects[2]);
+            roleRespList.add(roleResp);
         }
-        return rolRespList;
+        return roleRespList;
     }
 
     @Override

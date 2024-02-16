@@ -6,11 +6,7 @@ import com.fractal.bancodetalentos.service.MasterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.ParameterMode;
-import javax.persistence.PersistenceContext;
-import javax.persistence.StoredProcedureQuery;
-import java.math.BigDecimal;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +21,8 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<LanguageResp> getLanguage() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_LANGUAGES");
-        storedProcedureQuery.execute();
-        List<Object[]> result = storedProcedureQuery.getResultList();
+        Query query = entityManager.createNativeQuery("CALL SP_GET_LANGUAGES");
+        List<Object[]> result = query.getResultList();
         List<LanguageResp> respList = new ArrayList<>();
         for (Object[] objects: result) {
             LanguageResp languageResp = new LanguageResp();
@@ -41,9 +36,8 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<RoleResp> getRol() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_ROLES");
-        storedProcedureQuery.execute();
-        List<Object[]> list = storedProcedureQuery.getResultList();
+        Query query = entityManager.createNativeQuery("CALL SP_GET_ROLES");
+        List<Object[]> list = query.getResultList();
         List<RoleResp> roleRespList = new ArrayList<>();
         for (Object[] objects: list) {
             RoleResp roleResp = new RoleResp();
@@ -57,9 +51,8 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<CurrenciesResp> getCurrencies() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_CURRENCIES");
-        storedProcedureQuery.execute();
-        List<Object[]> list = storedProcedureQuery.getResultList();
+        Query query = entityManager.createNativeQuery("CALL SP_GET_CURRENCIES");
+        List<Object[]> list = query.getResultList();
         List<CurrenciesResp> currenciesResps = new ArrayList<>();
         for (Object[] objects: list) {
             CurrenciesResp currResp = new CurrenciesResp();
@@ -73,9 +66,8 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<ProfileResp> getProfile() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_PROFILES");
-        storedProcedureQuery.execute();
-        List<Object[]> list = storedProcedureQuery.getResultList();
+        Query query = entityManager.createNativeQuery("CALL SP_GET_PROFILES");
+        List<Object[]> list = query.getResultList();
         List<ProfileResp> profileResps = new ArrayList<>();
         for (Object[] objects: list) {
             ProfileResp profile = new ProfileResp();
@@ -89,9 +81,8 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<LangProficiencyResp> getLangProficiency() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_LANG_PROFICIENCY");
-        storedProcedureQuery.execute();
-        List<Object[]> list = storedProcedureQuery.getResultList();
+        Query query = entityManager.createNativeQuery("CALL SP_GET_LANG_PROFICIENCY");
+        List<Object[]> list = query.getResultList();
         List<LangProficiencyResp> proficiencyResp = new ArrayList<>();
         for (Object[] objects: list) {
             LangProficiencyResp resp = new LangProficiencyResp();

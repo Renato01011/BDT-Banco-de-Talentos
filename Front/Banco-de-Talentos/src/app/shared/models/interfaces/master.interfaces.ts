@@ -37,3 +37,15 @@ export interface CityModel {
     id: number,
     city: string
 }
+
+export interface CountryCityModel {
+    id: number,
+    country: string,
+    code: string,
+    cities: [
+        {
+            id: number,
+            city: string
+        }
+    ]
+}

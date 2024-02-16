@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+<<<<<<< Updated upstream
+=======
+import { MasterRespConst } from 'src/app/core/global/constants/master-resp.constants';
+import * as MasterModels from 'src/app/shared/models/interfaces/master.interfaces';
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-new-talent',
@@ -8,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class NewTalentComponent implements OnInit {
 
+<<<<<<< Updated upstream
   jobs: any[];
   levels: any[];
   languages: any[];
@@ -38,9 +44,23 @@ export class NewTalentComponent implements OnInit {
       { name: 'Dolares', code: '1' }
     ];
   }
+=======
+  profiles: MasterModels.ProfileModel[] = [];
+  levels: MasterModels.LangProficiencyModel[] = [];
+  languages: MasterModels.LanguageModel[] = [];
+  coins: MasterModels.CurrenciesModel[] = [];
+
+  selectedCoin: any = null;
+
+  constructor(private router: Router) {}
+>>>>>>> Stashed changes
 
   ngOnInit(): void {
-    
+    this.languages = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_LANG) || '{}');
+    this.levels = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_PROFICIENCY) || '{}');
+    this.profiles = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_PROFILES) || '{}');
+    this.coins = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_CURRENCIES) || '{}');
+    console.log(JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_COUNTRY_CITY) || '{}'));
   }
 
   onVolver() {

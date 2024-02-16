@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MasterRespConst } from 'src/app/core/global/constants/master-resp.constants';
+import * as MasterModels from 'src/app/shared/models/interfaces/master.interfaces';
 
 import { MasterService } from 'src/app/core/services/master/master.service';
 
@@ -9,33 +11,21 @@ import { MasterService } from 'src/app/core/services/master/master.service';
   styleUrls: ['./new-talent.component.scss']
 })
 export class NewTalentComponent implements OnInit {
-
-  profiles: any[] = [];
-  levels: any[] = [];
-  languages: any[] = [];
-  coins: any[] = [];
+  
+  profiles: MasterModels.ProfileModel[] = [];
+  levels: MasterModels.LangProficiencyModel[] = [];
+  languages: MasterModels.LanguageModel[] = [];
+  coins: MasterModels.CurrenciesModel[] = [];
 
   selectedCoin: any = null;
 
-  constructor(private router: Router, private masterService: MasterService) {
-
-    this.masterService.getLanguages().subscribe(languages => {
-      this.languages = languages;
-    });
-    this.masterService.getLangProficiency().subscribe(levels => {
-      this.levels = levels;
-    });
-    this.masterService.getProfiles().subscribe(profiles => {
-      this.profiles = profiles;
-    });
-    this.masterService.getCurrencies().subscribe(coins => {
-      this.coins = coins;
-    });
-
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    
+    this.languages = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_LANG) || '{}');
+    this.levels = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_PROFICIENCY) || '{}');
+    this.profiles = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_PROFILES) || '{}');
+    this.coins = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_CURRENCIES) || '{}');
   }
 
   onVolver() {

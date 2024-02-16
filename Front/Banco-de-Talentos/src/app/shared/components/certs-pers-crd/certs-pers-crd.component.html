@@ -13,21 +13,26 @@
         <div class="h-9rem w-full py-1">
           <div class="border-round px-2">
             <div
-              class="w-full h-8rem border-round flex flex-column align-items-center justify-content-center"
+              class="w-full h-8rem border-round flex flex-column align-items-center"
             >
               <div class="h-6rem w-full border-round-top overflow-hidden">
                 <img src="./assets/users/1.jpg" [alt]="" class="file-image" />
               </div>
               <div
-                class="h-2rem w-full border-round-bottom surface-100 flex align-items-center justify-content-center"
+                class="h-2rem w-full border-round-bottom surface-100 flex align-items-center"
               >
                 <div
                   class="flex w-full flex-column align-items-center align-content-start"
                 >
                   <div
-                    class="w-12 border-round text-xs text-500 flex align-items-center pl-2"
+                    class="w-12 border-round text-xs text-500 flex align-items-center align-content-start pl-2"
                   >
-                    Certificado {{ product.name }}
+                    <div
+                      class="w-10rem flex align-items-center align-content-start white-space-nowrap overflow-hidden text-overflow-ellipsis"
+                    >
+                      Certificado
+                      {{ product.name }}
+                    </div>
                   </div>
                   <div
                     class="w-12 border-round text-xs text-500 flex align-items-center pl-2"
@@ -53,7 +58,7 @@
         style="font-size: 1.5rem; color: #708090"
       ></i>
       <span
-        class="px-3 pt-4 flex align-items-center justify-content-center font-bold border-round"
+        class="px-3 pt-4 flex align-items-center justify-content-center font-semibold border-round"
         style="color: #0b85c3"
         >Sube un archivo</span
       >

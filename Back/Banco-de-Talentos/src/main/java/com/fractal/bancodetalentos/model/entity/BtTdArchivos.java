@@ -18,8 +18,7 @@ public class BtTdArchivos implements Serializable {
 
     @Id
     @Column(name = "ID_ARCHIVO")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_ARCHIVOS")
-    @SequenceGenerator(name = "SEQ_BT_ID_ARCHIVOS", sequenceName = "SEQ_BT_ID_ARCHIVOS", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idArchivo;
 
     @Column(name = "NO_ARCHIVO")

@@ -18,8 +18,7 @@ import java.sql.Date;
 public class BtTdExperienciaEducativa implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BT_ID_EXPERIENCIA_EDUCATIVA")
-    @SequenceGenerator(name = "SEQ_BT_ID_EXPERIENCIA_EDUCATIVA", sequenceName = "SEQ_BT_ID_EXPERIENCIA_EDUCATIVA", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_EXPERIENCIA_EDUCATIVA")
     private Integer idExperienciaEducativa;
 

@@ -26,16 +26,16 @@ public class TalentoServiceImpl implements TalentoService {
     @Override
     public PostResp addNewTalent(NewTalentReq newTalentRequest) {
         StoredProcedureQuery storedProcedureQueryTalent = entityManager
-                .createStoredProcedureQuery("ADMIN.SP_ADD_TALENT")
+                .createStoredProcedureQuery("SP_ADD_TALENT")
                 .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(4, byte[].class, ParameterMode.IN)
                 .registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(6, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(7, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(8, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(9, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(7, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(8, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(9, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(10, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(11, Integer.class, ParameterMode.OUT)
                 .setParameter(1, newTalentRequest.getNombre())
@@ -43,17 +43,17 @@ public class TalentoServiceImpl implements TalentoService {
                 .setParameter(3, newTalentRequest.getApellidoMaterno())
                 .setParameter(4, newTalentRequest.getFotoDePerfil())
                 .setParameter(5, newTalentRequest.getDescripcion())
-                .setParameter(6, newTalentRequest.getLinkedin())
-                .setParameter(7, newTalentRequest.getGithub())
-                .setParameter(8, newTalentRequest.getMontoInicial())
-                .setParameter(9, newTalentRequest.getMontoFinal())
-                .setParameter(10, newTalentRequest.getCelular());
+                .setParameter(6, newTalentRequest.getMontoInicial())
+                .setParameter(7, newTalentRequest.getMontoFinal())
+                .setParameter(8, newTalentRequest.getCelular())
+                .setParameter(9, newTalentRequest.getLinkedin())
+                .setParameter(10, newTalentRequest.getGithub());
         storedProcedureQueryTalent.execute();
         Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(11);
         if (!newTalentRequest.getHabilidadesTecnicas().isEmpty()) {
             for (HabilidadesTecnicas habilidadesTecnicas: newTalentRequest.getHabilidadesTecnicas()) {
                 StoredProcedureQuery storedProcedureQueryHabilidadTecnica = entityManager
-                        .createStoredProcedureQuery("ADMIN.SP_HABILIDAD_TECNICA")
+                        .createStoredProcedureQuery("SP_ADD_HABILIDAD_TECNICA")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN)
@@ -66,7 +66,7 @@ public class TalentoServiceImpl implements TalentoService {
         if (!newTalentRequest.getHabilidadesBlandas().isEmpty()) {
             for (HabilidadesBlandas habilidadesBlandas: newTalentRequest.getHabilidadesBlandas()) {
                 StoredProcedureQuery storedProcedureQueryHabilidadBlanda = entityManager
-                        .createStoredProcedureQuery("ADMIN.SP_HABILIDAD_BLANDA")
+                        .createStoredProcedureQuery("SP_ADD_HABILIDAD_BLANDA")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)

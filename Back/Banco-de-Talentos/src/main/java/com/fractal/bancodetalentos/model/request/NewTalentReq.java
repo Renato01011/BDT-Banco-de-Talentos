@@ -20,7 +20,9 @@ public class NewTalentReq {
     private byte[] fotoDePerfil;
     private List<Documento> documentos;
     private String descripcion;
-    private String puestoActual;
+    private Integer idPuestoActual;
+    private Integer idPais;
+    private Integer idCiudad;
     private String linkedin;
     private String github;
     private String tipoMoneda;

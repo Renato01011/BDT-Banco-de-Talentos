@@ -2,17 +2,17 @@
   class="bg-white py-3 px-3 sm:px-6 shadow-3 flex align-items-center justify-content-between relative"
 >
   <img src="./assets/users/fractal-logo.png" alt="Logo" class="logo-image" />
-  <div class="profile-info" (click)="profileOP.toggle($event)">
+  <div class="flex align-items-center" (click)="profileOP.toggle($event)">
     <p-avatar
       image="./assets/users/2.jpg"
-      styleClass="mr-2"
       size="large"
       shape="circle"
-      class="pr-1"
     ></p-avatar>
-    <div class="flex flex-column hidden md:block">
-      <span class="font-semibold hidden md:block">Claudia Vasquez</span>
-      <span class="profile-role text-sm font-light hidden md:block">
+    <div class="flex flex-column hidden md:block px-3">
+      <span class="font-semibold text-base text-800 hidden md:block">
+        Claudia Vasquez
+      </span>
+      <span class="text-500 text-sm font-light hidden md:block">
         Reclutador
       </span>
     </div>

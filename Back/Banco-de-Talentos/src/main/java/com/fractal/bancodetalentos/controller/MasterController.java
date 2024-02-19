@@ -1,6 +1,5 @@
 package com.fractal.bancodetalentos.controller;
 
-import com.fractal.bancodetalentos.model.entity.BtTmMaster;
 import com.fractal.bancodetalentos.model.response.*;
 import com.fractal.bancodetalentos.service.MasterService;
 import lombok.RequiredArgsConstructor;
@@ -9,11 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/bdt/master")
 @RequiredArgsConstructor
 public class MasterController {
 
@@ -23,7 +21,7 @@ public class MasterController {
     public List<LanguageResp> find() { return masterService.getLanguage(); }
 
     @GetMapping("/roles")
-    public List<RolResp> findRol() { return masterService.getRol(); }
+    public List<RoleResp> findRol() { return masterService.getRol(); }
 
     @GetMapping("/currencies")
     public List<CurrenciesResp> findCurrencies() { return masterService.getCurrencies(); }
@@ -38,5 +36,5 @@ public class MasterController {
     public List<CountryResp> findCountry() { return masterService.getCountry(); }
 
     @GetMapping("/cities/{countryId}")
-    public List<CityResp> findCityById(@PathVariable BigDecimal countryId) { return masterService.getCityById(countryId); }
+    public List<CityResp> findCityById(@PathVariable Integer countryId) { return masterService.getCityById(countryId); }
 }

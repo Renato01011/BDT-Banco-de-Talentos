@@ -1,1 +1,130 @@
-<p>certs-pers-crd works!</p>
+<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+  <div class="w-12 sm:w-8 p-1 flex align-items-center justify-content-center">
+    <p-carousel
+      [value]="products"
+      [numVisible]="2"
+      [numScroll]="2"
+      [circular]="true"
+      [showIndicators]="false"
+      [responsiveOptions]="responsiveOptions"
+      class="w-full"
+    >
+      <ng-template let-product pTemplate="item">
+        <div class="h-9rem w-full py-1">
+          <div class="border-round px-2">
+            <div
+              class="w-full h-8rem border-round flex flex-column align-items-center"
+            >
+              <div class="h-6rem w-full border-round-top overflow-hidden">
+                <img src="./assets/users/1.jpg" [alt]="" class="file-image" />
+              </div>
+              <div
+                class="h-2rem w-full border-round-bottom surface-100 flex align-items-center"
+              >
+                <div
+                  class="flex w-full flex-column align-items-center align-content-start"
+                >
+                  <div
+                    class="w-12 border-round text-xs text-500 flex align-items-center align-content-start pl-2"
+                  >
+                    <div
+                      class="w-10rem flex align-items-center align-content-start white-space-nowrap overflow-hidden text-overflow-ellipsis"
+                    >
+                      Certificado
+                      {{ product.name }}
+                    </div>
+                  </div>
+                  <div
+                    class="w-12 border-round text-xs text-500 flex align-items-center pl-2"
+                  >
+                    PDF
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+  <div class="w-12 sm:w-4 py-1 flex align-items-center justify-content-center">
+    <button
+      pButton
+      class="p-button-outlined border-transparent h-8rem w-10 surface-50 flex flex-column"
+      (click)="openAddFileDialog()"
+    >
+      <i
+        class="pi pi-cloud-upload px-2 pt-3"
+        style="font-size: 1.5rem; color: #708090"
+      ></i>
+      <span
+        class="px-3 pt-4 flex align-items-center justify-content-center font-semibold border-round"
+        style="color: #0b85c3"
+        >Sube un archivo</span
+      >
+    </button>
+  </div>
+</div>
+<p-dialog
+  [(visible)]="addFileDialog"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '650px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column">
+      <div class="flex align-items-start justify-content-start h-3rem">
+        <h2>Agrega un archivo</h2>
+      </div>
+      <div class="flex align-items-start justify-content-start h-2rem">
+        <p>
+          Sube tu nuevo certificado, diploma o algún archivo que respalde tus
+          aptitudes.
+        </p>
+      </div>
+    </div>
+  </ng-template>
+  <div class="flex flex-warp align-items-center justify-content-center">
+    <button
+      pButton
+      class="p-button-outlined border-300 w-full flex flex-column"
+    >
+      <i
+        class="pi pi-cloud-upload px-2 pt-5"
+        style="font-size: 1.5rem; color: #708090"
+      ></i>
+      <span
+        class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
+        style="color: #0b85c3"
+        >Sube un archivo</span
+      >
+      <span
+        class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
+        >PDF</span
+      >
+    </button>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="formgrid grid">
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-outlined p-button-info w-full"
+          (click)="hideAddFileDialog()"
+        ></button>
+      </div>
+      <div class="field col">
+        <button
+          pButton
+          pRipple
+          label="Subir"
+          icon="pi pi-check"
+          class="p-button-success w-full"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

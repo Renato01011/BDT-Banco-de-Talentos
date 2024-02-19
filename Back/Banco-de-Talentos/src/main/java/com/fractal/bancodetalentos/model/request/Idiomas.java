@@ -12,4 +12,5 @@ import lombok.Setter;
 public class Idiomas {
     private Integer idiomaId;
     private Integer nivelId;
+    private Integer nuEstrellas;
 }

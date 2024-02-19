@@ -25,6 +25,13 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { ImageModule } from 'primeng/image';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputMaskModule } from 'primeng/inputmask';
+import { CalendarModule } from 'primeng/calendar';
+import { CarouselModule } from 'primeng/carousel';
+import { PasswordModule } from 'primeng/password';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   exports: [
@@ -53,6 +60,13 @@ import { InputNumberModule } from 'primeng/inputnumber';
     DialogModule,
     ChipModule,
     InputNumberModule,
+    InputTextareaModule,
+    RadioButtonModule,
+    InputMaskModule,
+    CalendarModule,
+    CarouselModule,
+    PasswordModule,
+    DividerModule,
   ],
 })
 export class MaterialModule {}

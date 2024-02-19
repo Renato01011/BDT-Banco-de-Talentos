@@ -68,7 +68,7 @@
                     <h3>Descripción</h3>
                     <textarea rows="5" cols="30" pInputTextarea placeholder="Descripción" class="w-full h-5rem"></textarea>
                 </div>
-                <div>
+                <div class="mt-4">
                     <h3>Puesto actual</h3>
                     <p-dropdown [options]="profiles" styleClass="w-full" class="w-full" placeholder="Puesto Actual" optionLabel="name" [showClear]="true" appendTo="body"></p-dropdown>
                 </div>
@@ -102,83 +102,104 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <h3>Habilidades tecnicas</h3>
-                    <p>Habilidad técnica</p>
+                <h3>Habilidades tecnicas</h3>
+                <div *ngFor="let ta of technicalHabilities; index as i">
+                    <p class="mt-0">Habilidad técnica</p>
                     <input pInputText placeholder="Nombre de la habilidad" class="w-full"/>
                     <p>Años de experiencia</p>
                     <p-inputNumber class="w-full" styleClass="w-full" placeholder="Nro. de años"></p-inputNumber>
-                    <div class="pt-2">
-                        <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text"></button>
-                    </div>
+                    <p-divider *ngIf="technicalHabilities.length > 1" align="center">
+                        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" (click)="DeleteTechnicalAbility(i)"></button>
+                    </p-divider>
                 </div>
-                <div>
-                    <h3>Habilidades blandas</h3>
+                <div class="mt-3">
+                    <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text" (click)="AddTechnicalAbility()"></button>
+                </div>
+                <h3>Habilidades blandas</h3>
+                <div *ngFor="let ss of softSkills; index as i">
                     <p>Habilidad blanda</p>
                     <input pInputText placeholder="Nombre de la habilidad" class="w-full"/>
-                    <div class="pt-2">
-                        <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text"></button>
+                    <p-divider *ngIf="softSkills.length > 1" align="center">
+                        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" (click)="DeleteSoftSkill(i)"></button>
+                    </p-divider>
+                </div>
+                <div class="mt-3">
+                    <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text" (click)="AddSoftSkill()"></button>
+                </div>
+                <h3>Experiencias laborales</h3>
+                <div>
+                    <div *ngFor="let we of workExperience; index as i">
+                        <p>Empresa</p>
+                        <input pInputText placeholder="Nombre de la empresa" class="w-full"/>
+                        <p-checkbox [binary]="true" inputId="binary" label="Aquí en Fractal" class="mt-3"></p-checkbox>
+                        <p>Puesto</p>
+                        <input pInputText placeholder="Puesto en la empresa" class="w-full"/>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <p>Año y mes de inicio</p>
+                                <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
+                            </div>
+                            <div class="field col">
+                                <p>Año y mes fin</p>
+                                <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+                        <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
+                        <p-divider *ngIf="workExperience.length > 1" align="center">
+                            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" (click)="DeleteWorkExperience(i)"></button>
+                        </p-divider>
+                    </div>
+                </div>
+                <div class="pt-3">
+                    <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text" (click)="AddWorkExperience()"></button>
+                </div>
+                <h3>Experiencias educativas</h3>
+                <div>
+                    <div *ngFor="let we of educationalExperience; index as i">
+                        <p>Institución</p>
+                        <input pInputText placeholder="Nombre de la institución" class="w-full"/>
+                        <p-checkbox [binary]="true" inputId="binary" label="Aquí en Fractal" class="mt-3"></p-checkbox>
+                        <p>Carrera</p>
+                        <input pInputText placeholder="Nombre de la carrera" class="w-full"/>
+                        <p>Grado</p>
+                        <input pInputText placeholder="Grado de la carrera" class="w-full"/>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <p>Año y mes de inicio</p>
+                                <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
+                            </div>
+                            <div class="field col">
+                                <p>Año y mes fin</p>
+                                <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
+                            </div>
+                        </div>
+                        <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
+                        <p-divider *ngIf="educationalExperience.length > 1" align="center">
+                            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" (click)="DeleteEducationalExperience(i)"></button>
+                        </p-divider>
                     </div>
                 </div>
                 <div>
-                    <h3>Experiencias laborales</h3>
-                    <p>Empresa</p>
-                    <input pInputText placeholder="Nombre de la empresa" class="w-full"/>
-                    <p-checkbox [binary]="true" inputId="binary" label="Aquí en Fractal" class="mt-3"></p-checkbox>
-                    <p>Puesto</p>
-                    <input pInputText placeholder="Puesto en la empresa" class="w-full"/>
-                    <div class="formgrid grid">
-                        <div class="field col">
-                            <p>Año y mes de inicio</p>
-                            <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
-                        </div>
-                        <div class="field col">
-                            <p>Año y mes fin</p>
-                            <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
-                        </div>
-                    </div>
-                    <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
-                    <div class="pt-3">
-                        <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text"></button>
-                    </div>
+                    <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text" (click)="AddEducationalExperience()"></button>
                 </div>
+                <h3>Idiomas</h3>
                 <div>
-                    <h3>Experiencias educativas</h3>
-                    <p>Institución</p>
-                    <input pInputText placeholder="Nombre de la institución" class="w-full"/>
-                    <p-checkbox [binary]="true" inputId="binary" label="Aquí en Fractal" class="mt-3"></p-checkbox>
-                    <p>Carrera</p>
-                    <input pInputText placeholder="Nombre de la carrera" class="w-full"/>
-                    <p>Grado</p>
-                    <input pInputText placeholder="Grado de la carrera" class="w-full"/>
-                    <div class="formgrid grid">
-                        <div class="field col">
-                            <p>Año y mes de inicio</p>
-                            <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
-                        </div>
-                        <div class="field col">
-                            <p>Año y mes fin</p>
-                            <p-calendar class="w-full" styleClass="w-full" dateFormat="mm/yy" inputId="dateformat" appendTo="body"></p-calendar>
-                        </div>
-                    </div>
-                    <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
-                    <div class="pt-3">
-                        <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text"></button>
-                    </div>
-                </div>
-                <div class="pb-5">
-                    <h3>Idiomas</h3>
-                    <p>Idioma</p>
-                    <p-dropdown [options]="languages" placeholder="Nombre del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full"></p-dropdown>
-                    <p>Nivel</p>
-                    <p-dropdown [options]="levels" placeholder="Nivel del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full"></p-dropdown>
+                    <div *ngFor="let we of knownLanguages; index as i">
+                        <p>Idioma</p>
+                        <p-dropdown [options]="languages" placeholder="Nombre del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full"></p-dropdown>
+                        <p>Nivel</p>
+                        <p-dropdown [options]="levels" placeholder="Nivel del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full"></p-dropdown>
 
-                    <div class="pt-4">
-                        <p-rating></p-rating>
+                        <div class="pt-4">
+                            <p-rating></p-rating>
+                        </div>
+                        <p-divider *ngIf="knownLanguages.length > 1" align="center">
+                            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" (click)="DeleteKnownLanguage(i)"></button>
+                        </p-divider>
                     </div>
-                    <div class="pt-3">
-                        <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text"></button>
-                    </div>
+                </div>
+                <div>
+                    <button pButton type="button" icon="pi pi-plus" label="Agregar más" class="p-button-text" (click)="AddKnownLanguage()"></button>
                 </div>
             </p-scrollPanel>
         </div>

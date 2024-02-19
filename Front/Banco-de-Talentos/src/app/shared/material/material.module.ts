@@ -30,6 +30,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CalendarModule } from 'primeng/calendar';
 import { CarouselModule } from 'primeng/carousel';
+import { PasswordModule } from 'primeng/password';
+
 
 @NgModule({
   exports: [
@@ -63,6 +65,7 @@ import { CarouselModule } from 'primeng/carousel';
     InputMaskModule,
     CalendarModule,
     CarouselModule,
+    PasswordModule,
   ],
 })
 export class MaterialModule {}

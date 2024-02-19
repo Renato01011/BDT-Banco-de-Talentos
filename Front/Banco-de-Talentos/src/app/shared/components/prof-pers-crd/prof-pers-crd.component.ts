@@ -7,7 +7,6 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./prof-pers-crd.component.scss'],
 })
 export class ProfPersCrdComponent implements OnInit {
-
   resume: MenuItem[] = [];
   coins: any[] = [];
   rating: number = 0;
@@ -21,19 +20,14 @@ export class ProfPersCrdComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-
     this.rating = 3;
 
     this.coins = [
       { name: 'Soles', code: '0' },
-      { name: 'Dolares', code: '1' }
+      { name: 'Dolares', code: '1' },
     ];
 
-    this.resume = [
-      { label: 'CV' }, 
-      { label: 'CV Fractal' }
-    ];
-
+    this.resume = [{ label: 'CV' }, { label: 'CV Fractal' }];
   }
 
   openEditProfilePicture() {

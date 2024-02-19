@@ -172,22 +172,25 @@
 
 <p-dialog
   [(visible)]="editSalaryDialog"
-  [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
 >
-  <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Modifica tu banda salarial</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Agrega el rango de tus expectativas salariales.</p>
-      </div>
+  <ng-template pTemplate="header" class="pb-0">
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Modifica tu banda salarial
+      </span>
     </div>
   </ng-template>
-  <div>
-    <div class="w-full">
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Agrega el rango de tus expectativas salariales.
+      </span>
+    </div>
+    <div class="w-12 flex flex-column align-items-center">
       <div
         *ngFor="let coin of coins"
         class="h-3rem w-full border-round border-1 border-300 mb-2 flex"
@@ -205,14 +208,31 @@
         </div>
       </div>
     </div>
-    <div class="formgrid grid">
-      <div class="field col">
-        <p>Monto Inicial</p>
-        <p-inputNumber class="w-full" styleClass="w-full"></p-inputNumber>
+    <div class="w-12 flex flex-wrap align-items-center">
+      <div class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pr-3">
+        <div class="w-12 flex flex-column justify-content-start mb-2">
+          <label for="inputNumber" class="block text-left mb-2"
+            >Monto Inicial</label
+          >
+          <p-inputNumber
+            inputId="inputNumber"
+            class="w-full"
+            styleClass="w-full"
+          ></p-inputNumber>
+          <small id="inputNumber" class="p-error block text-left">err</small>
+        </div>
       </div>
-      <div class="field col">
-        <p>Monto Final</p>
-        <p-inputNumber class="w-full" styleClass="w-full"></p-inputNumber>
+      <div class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pl-3">
+        <div class="w-12 flex flex-column justify-content-start mb-2">
+          <label for="inputNumber2" class="block text-left mb-2"
+            >Monto Final</label
+          >
+          <p-inputNumber
+            inputId="inputNumber2"
+            styleClass="w-12"
+          ></p-inputNumber>
+          <small id="inputNumber2" class="p-error block text-left">err</small>
+        </div>
       </div>
     </div>
   </div>

@@ -36,10 +36,10 @@
   </div>
   <div class="w-12 py-1 flex align-items-center justify-content-start">
     <div
-      class="flex align-items-center justify-content-center border-round text-500 hover:text-700 text-sm font-normal"
+      class="flex align-items-center justify-content-center border-round text-500 hover:text-700 text-sm font-medium cursor-pointer"
     >
-      <span class="cursor-pointer mx-4" (click)="openNewFeedbackDialog()">
-        <i class="pi pi-plus" style="font-size: 0.75rem"></i>
+      <span class="mx-4" (click)="openNewFeedbackDialog()">
+        <i class="pi pi-plus text-sm text-500 hover:text-700"></i>
         <span> Dar nuevo feedback</span>
       </span>
     </div>
@@ -90,7 +90,7 @@
           pRipple
           label="Cancelar"
           icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
+          class="p-button-outlined p-button-secondary w-full"
           (click)="hideNewFeedbackDialog()"
         ></button>
       </div>

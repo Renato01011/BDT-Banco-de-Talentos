@@ -11,7 +11,7 @@
           class="cursor-pointer text-500"
           (click)="openEditProfilePicture()"
         >
-          <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
+          <i class="pi pi-pencil text-sm text-500 hover:text-800"></i>
         </span>
       </div>
     </div>
@@ -38,18 +38,18 @@
           class="w-12 sm:w-7 border-round flex align-items-center justify-content-around profile-country-salary"
         >
           <span class="text-500 text-sm font-light">
-            <i class="pi pi-map-marker" style="font-size: 0.875rem"></i>
+            <i class="pi pi-map-marker text-sm text-800"></i>
             Lima, Peru
           </span>
           <span class="text-500 text-sm font-light">
-            <i class="pi pi-dollar" style="font-size: 0.875rem"></i>
+            <i class="pi pi-dollar text-sm text-800"></i>
             2500 - 3000
           </span>
           <span
             class="text-500 hover:text-700 text-sm font-light mx-1 cursor-pointer"
             (click)="openEditSalaryDialog()"
           >
-            <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
+            <i class="pi pi-pencil text-sm"></i>
           </span>
         </div>
       </div>
@@ -89,20 +89,20 @@
         class="w-12 border-round flex align-items-center justify-content-center sm:justify-content-end"
       >
         <a class="cursor-pointer px-2">
-          <span class="text-400">
-            <i class="pi pi-github" style="font-size: 1.5rem"></i>
+          <span class="text-400 hover:text-700">
+            <i class="pi pi-github text-xl sm:text-2xl"></i>
           </span>
         </a>
         <a class="cursor-pointer px-2">
-          <span class="text-400">
-            <i class="pi pi-linkedin" style="font-size: 1.5rem"></i>
+          <span class="text-400 hover:text-700">
+            <i class="pi pi-linkedin text-xl sm:text-2xl"></i>
           </span>
         </a>
         <span
           class="cursor-pointer text-500 hover:text-700 mx-2"
           (click)="openEditSocialMediaDialog()"
         >
-          <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
+          <i class="pi pi-pencil text-sm"></i>
         </span>
       </div>
     </div>
@@ -134,10 +134,7 @@
       pButton
       class="p-button-outlined border-300 w-full flex flex-column"
     >
-      <i
-        class="pi pi-cloud-upload px-2 pt-5"
-        style="font-size: 1.5rem; color: #708090"
-      ></i>
+      <i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"></i>
       <span
         class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
         style="color: #0b85c3"
@@ -157,7 +154,7 @@
           pRipple
           label="Cancelar"
           icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
+          class="p-button-outlined p-button-secondary w-full"
           (click)="hideEditProfilePicture()"
         ></button>
       </div>
@@ -249,7 +246,7 @@
           pRipple
           label="Cancelar"
           icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
+          class="p-button-outlined p-button-secondary w-full"
           (click)="hideEditSalaryDialog()"
         ></button>
       </div>
@@ -318,7 +315,7 @@
           pRipple
           label="Cancelar"
           icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
+          class="p-button-outlined p-button-secondary w-full"
           (click)="hideEditSocialMediaDialog()"
         ></button>
       </div>

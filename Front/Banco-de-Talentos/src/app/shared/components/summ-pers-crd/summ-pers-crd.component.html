@@ -1,6 +1,6 @@
 <div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
-  <div class="w-12 p-1 flex align-items-center profile-detail">
-    <span class="text-left text-sm">
+  <div class="w-12 p-1 flex align-items-center">
+    <span class="text-left text-sm text-500">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe enim neque
       harum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
       enim neque harum.
@@ -8,7 +8,7 @@
         class="cursor-pointer mx-2 text-500 hover:text-700"
         (click)="openEditDescriptionDialog()"
       >
-        <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
+        <i class="pi pi-pencil text-sm"></i>
       </span>
     </span>
   </div>
@@ -54,7 +54,7 @@
           pRipple
           label="Cancelar"
           icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
+          class="p-button-outlined p-button-secondary w-full"
           (click)="hideEditDescriptionDialog()"
         ></button>
       </div>

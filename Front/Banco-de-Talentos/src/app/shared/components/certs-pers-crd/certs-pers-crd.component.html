@@ -67,24 +67,26 @@
 </div>
 <p-dialog
   [(visible)]="addFileDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Agrega un archivo</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>
-          Sube tu nuevo certificado, diploma o algún archivo que respalde tus
-          aptitudes.
-        </p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Agrega un archivo
+      </span>
     </div>
   </ng-template>
-  <div class="flex flex-warp align-items-center justify-content-center">
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Sube tu nuevo certificado, diploma o algún archivo que respalde tus
+        aptitudes.
+      </span>
+    </div>
     <button
       pButton
       class="p-button-outlined border-300 w-full flex flex-column"

@@ -50,13 +50,10 @@
   <div class="w-12 sm:w-4 py-1 flex align-items-center justify-content-center">
     <button
       pButton
-      class="p-button-outlined border-transparent h-8rem w-10 surface-50 flex flex-column"
+      class="p-button-outlined border-transparent h-8rem w-10 surface-50 hover:surface-200 flex flex-column"
       (click)="openAddFileDialog()"
     >
-      <i
-        class="pi pi-cloud-upload px-2 pt-3"
-        style="font-size: 1.5rem; color: #708090"
-      ></i>
+      <i class="pi pi-cloud-upload px-2 pt-3 text-2xl text-bluegray-400"></i>
       <span
         class="px-3 pt-4 flex align-items-center justify-content-center font-semibold border-round"
         style="color: #0b85c3"
@@ -91,10 +88,7 @@
       pButton
       class="p-button-outlined border-300 w-full flex flex-column"
     >
-      <i
-        class="pi pi-cloud-upload px-2 pt-5"
-        style="font-size: 1.5rem; color: #708090"
-      ></i>
+      <i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"></i>
       <span
         class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
         style="color: #0b85c3"
@@ -114,7 +108,7 @@
           pRipple
           label="Cancelar"
           icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
+          class="p-button-outlined p-button-secondary w-full"
           (click)="hideAddFileDialog()"
         ></button>
       </div>

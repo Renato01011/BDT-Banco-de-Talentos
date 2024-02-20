@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pers-prof-crd.component.scss'],
 })
 export class PersProfCrdComponent implements OnInit {
-  rating: number = 0;
+  rating: number = 2;
   constructor() {}
 
   ngOnInit(): void {}

@@ -1,4 +1,28 @@
-:host ::ng-deep .p-button.custom-btn {
-  background: var(--gray-200);
-  color: var(--gray-800);
+:host ::ng-deep {
+  $primary-color: #009695;
+  $primary-hover-color: #007d7c;
+  $secondary-color: #f2f4f7;
+  $text-color: #ffffff;
+  $border-color: $primary-color;
+
+  .p-button,
+  .p-buttonset > .p-button,
+  .p-splitbutton > .p-button {
+    &.p-button-success {
+      color: $text-color;
+      background: $primary-color;
+      border: 1px solid $border-color;
+
+      &:enabled:hover {
+        background: $primary-hover-color;
+        border-color: $primary-hover-color;
+      }
+    }
+
+    &.p-button-secondary {
+      color: var(--gray-800);
+      background: $secondary-color;
+      border: 1px solid $secondary-color;
+    }
+  }
 }

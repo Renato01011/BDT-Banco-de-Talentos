@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Lob;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,5 +14,6 @@ import lombok.Setter;
 public class Documento {
     private String nombre;
     private String tipoArchivo;
+    @Lob
     private byte[] archivo;
 }

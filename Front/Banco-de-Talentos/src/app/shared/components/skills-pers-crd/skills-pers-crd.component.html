@@ -58,29 +58,48 @@
 </div>
 <p-dialog
   [(visible)]="technicalSkillsDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Agregar una nueva habilidad técnica</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Agrega tu nueva experiencia técnica</p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Agregar una nueva habilidad técnica
+      </span>
     </div>
   </ng-template>
-  <div>
-    <p>Habilidad técnica</p>
-    <input pInputText placeholder="Nombre de la habilidad" class="w-full" />
-    <p>Años de experiencia</p>
-    <p-inputNumber
-      class="w-full"
-      styleClass="w-full"
-      placeholder="Nro. de años"
-    ></p-inputNumber>
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Agrega tu nueva experiencia técnica.
+      </span>
+    </div>
+    <div class="w-12 flex flex-column justify-content-start mb-2">
+      <label for="inputLink" class="block text-left mb-2"
+        >Habilidad técnica</label
+      >
+      <input
+        pInputText
+        placeholder="Ingrese su habilidad técnica"
+        class="w-full"
+      />
+      <small id="inputLink" class="p-error block text-left">err</small>
+    </div>
+    <div class="w-12 flex flex-column justify-content-start mb-2">
+      <label for="inputNumber" class="block text-left mb-2"
+        >Años de experiencia</label
+      >
+      <p-inputNumber
+        inputId="inputNumber"
+        class="w-full"
+        styleClass="w-full"
+        placeholder="Nro. de años"
+      ></p-inputNumber>
+      <small id="inputNumber" class="p-error block text-left">err</small>
+    </div>
   </div>
   <ng-template pTemplate="footer">
     <div class="formgrid grid">
@@ -109,23 +128,32 @@
 
 <p-dialog
   [(visible)]="softSkillsDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Agregar una nueva habilidad blanda</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Agrega tu nueva experiencia blanda</p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Agregar una nueva habilidad blanda
+      </span>
     </div>
   </ng-template>
-  <div>
-    <h4>Habilidad blanda</h4>
-    <input pInputText placeholder="Nombre de la habilidad" class="w-full" />
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Agrega tu nueva experiencia blanda.
+      </span>
+    </div>
+    <div class="w-12 flex flex-column justify-content-start mb-2">
+      <label for="inputLink" class="block text-left mb-2"
+        >Habilidad blanda</label
+      >
+      <input pInputText placeholder="Nombre de la habilidad" class="w-full" />
+      <small id="inputLink" class="p-error block text-left">err</small>
+    </div>
   </div>
   <ng-template pTemplate="footer">
     <div class="formgrid grid">

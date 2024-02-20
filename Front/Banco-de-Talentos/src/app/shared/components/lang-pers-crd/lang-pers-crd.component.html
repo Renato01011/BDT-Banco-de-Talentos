@@ -13,7 +13,9 @@
       ></button>
     </div>
   </div>
-  <div class="w-12 flex align-items-center surface-hover p-1 border-round-md">
+  <div
+    class="w-12 flex align-items-center surface-hover p-1 mx-0 sm:mx-3 border-round-md"
+  >
     <div class="w-3 sm:w-2 py-1 flex align-items-center justify-content-center">
       <div class="flex flex-column gap-2">
         <div class="flex align-items-center font-semibold text-base text-800">
@@ -51,42 +53,52 @@
 
 <p-dialog
   [(visible)]="newLanguageDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Agrega una nuevo idioma</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Agrega un nuevo idioma aprendido.</p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Agrega una nuevo idioma
+      </span>
     </div>
   </ng-template>
-  <div>
-    <p>Idioma</p>
-    <p-dropdown
-      [options]="languages"
-      placeholder="Nombre del idioma"
-      optionLabel="name"
-      [showClear]="true"
-      appendTo="body"
-      class="w-full"
-      styleClass="w-full"
-    ></p-dropdown>
-    <p>Nivel</p>
-    <p-dropdown
-      [options]="levels"
-      placeholder="Nivel del idioma"
-      optionLabel="name"
-      [showClear]="true"
-      appendTo="body"
-      class="w-full"
-      styleClass="w-full"
-    ></p-dropdown>
-    <div class="pt-4">
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Agrega un nuevo idioma aprendido.
+      </span>
+    </div>
+    <div class="w-12 flex flex-column justify-content-start mb-2">
+      <label for="inputLang" class="block text-left mb-2">Idioma</label>
+      <p-dropdown
+        [options]="languages"
+        placeholder="Nombre del idioma"
+        optionLabel="name"
+        [showClear]="true"
+        class="w-full text-left"
+        styleClass="w-full"
+        appendTo="body"
+      ></p-dropdown>
+      <small id="inputLang" class="p-error block text-left">err</small>
+    </div>
+    <div class="w-12 flex flex-column justify-content-start mb-2">
+      <label for="inputLv" class="block text-left mb-2">Nivel</label>
+      <p-dropdown
+        [options]="levels"
+        placeholder="Nombre del idioma"
+        optionLabel="name"
+        [showClear]="true"
+        class="w-full text-left"
+        styleClass="w-full"
+        appendTo="body"
+      ></p-dropdown>
+      <small id="inputLv" class="p-error block text-left">err</small>
+    </div>
+    <div class="w-12 flex align-items-center justify-content-between">
       <p-rating></p-rating>
     </div>
   </div>
@@ -117,42 +129,58 @@
 
 <p-dialog
   [(visible)]="editLanguageDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
   [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Edita tu habilidad en el idioma</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Edita tu habilidad en el idioma.</p>
-      </div>
+    <div class="flex align-items-center justify-content-between w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Edita tu experiencia
+      </span>
+      <span
+        class="text-red-300 hover:text-red-500 text-sm font-light mx-1 cursor-pointer"
+      >
+        <i class="pi pi-trash"></i>
+      </span>
     </div>
   </ng-template>
-  <div>
-    <p>Idioma</p>
-    <p-dropdown
-      [options]="languages"
-      placeholder="Nombre del idioma"
-      optionLabel="name"
-      [showClear]="true"
-      appendTo="body"
-      class="w-full"
-      styleClass="w-full"
-    ></p-dropdown>
-    <p>Nivel</p>
-    <p-dropdown
-      [options]="levels"
-      placeholder="Nivel del idioma"
-      optionLabel="name"
-      [showClear]="true"
-      appendTo="body"
-      class="w-full"
-      styleClass="w-full"
-    ></p-dropdown>
-    <div class="pt-4">
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Edita tu habilidad en el idioma.
+      </span>
+    </div>
+    <div class="w-12 flex flex-column justify-content-start mb-2">
+      <label for="inputLang" class="block text-left mb-2">Idioma</label>
+      <p-dropdown
+        [options]="languages"
+        placeholder="Nombre del idioma"
+        optionLabel="name"
+        [showClear]="true"
+        class="w-full text-left"
+        styleClass="w-full"
+        appendTo="body"
+      ></p-dropdown>
+      <small id="inputLang" class="p-error block text-left">err</small>
+    </div>
+    <div class="w-12 flex flex-column justify-content-start mb-2">
+      <label for="inputLv" class="block text-left mb-2">Nivel</label>
+      <p-dropdown
+        [options]="levels"
+        placeholder="Nombre del idioma"
+        optionLabel="name"
+        [showClear]="true"
+        class="w-full text-left"
+        styleClass="w-full"
+        appendTo="body"
+      ></p-dropdown>
+      <small id="inputLv" class="p-error block text-left">err</small>
+    </div>
+    <div class="w-12 flex align-items-center justify-content-between">
       <p-rating></p-rating>
     </div>
   </div>

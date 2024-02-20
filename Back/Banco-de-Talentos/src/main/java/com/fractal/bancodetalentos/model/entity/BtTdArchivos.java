@@ -27,6 +27,7 @@ public class BtTdArchivos implements Serializable {
     @Column(name = "FL_TIPO_ARCHIVO")
     private String flTipoArchivo;
 
+    @Lob
     @Column(name = "AR_RCHIVO")
     private byte[] arArchivo;
 

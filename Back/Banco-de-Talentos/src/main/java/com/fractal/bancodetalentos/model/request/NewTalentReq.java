@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Lob;
 import java.sql.Date;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class NewTalentReq {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
+    @Lob
     private byte[] fotoDePerfil;
     private List<Documento> documentos;
     private String descripcion;

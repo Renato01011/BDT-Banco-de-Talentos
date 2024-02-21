@@ -145,10 +145,8 @@
         >PNG o JPG (max. 800x400px)</span
       >
     </button>
-  </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
+    <div class="w-12 flex flex-wrap pt-3">
+      <div class="w-6 p-2 pl-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
@@ -158,17 +156,18 @@
           (click)="hideEditProfilePicture()"
         ></button>
       </div>
-      <div class="field col">
+      <div class="w-6 p-2 pr-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
           label="Editar"
           icon="pi pi-check"
+          type="submit"
           class="p-button-success w-full"
         ></button>
       </div>
     </div>
-  </ng-template>
+  </div>
 </p-dialog>
 
 <p-dialog
@@ -237,10 +236,8 @@
         </div>
       </div>
     </div>
-  </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
+    <div class="w-12 flex flex-wrap pt-3">
+      <div class="w-6 p-2 pl-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
@@ -250,17 +247,18 @@
           (click)="hideEditSalaryDialog()"
         ></button>
       </div>
-      <div class="field col">
+      <div class="w-6 p-2 pr-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
           label="Editar"
           icon="pi pi-check"
+          type="submit"
           class="p-button-success w-full"
         ></button>
       </div>
     </div>
-  </ng-template>
+  </div>
 </p-dialog>
 
 <p-dialog
@@ -284,50 +282,66 @@
         Agrega y muestra tus medios sociales.
       </span>
     </div>
-    <div class="w-12 flex flex-column justify-content-start mb-2">
-      <label for="inputLink" class="block text-left mb-2"
-        >Link de LinkedIn</label
-      >
-      <input
-        pInputText
-        placeholder="Ingrese su link de LinkedIn"
-        class="w-full"
-      />
-      <small id="inputLink" class="p-error block text-left">err</small>
-    </div>
-    <div class="w-12 flex flex-column justify-content-start mb-2">
-      <label for="inputLink2" class="block text-left mb-2"
-        >Link de GitHub</label
-      >
-      <input
-        pInputText
-        placeholder="Ingrese su link de GitHub"
-        class="w-full"
-      />
-      <small id="inputLink2" class="p-error block text-left">err</small>
-    </div>
+    <form
+      [formGroup]="redSocForm"
+      (ngSubmit)="onSveRedSoc()"
+      autocomplete="off"
+      class="w-12 flex flex-column"
+    >
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label
+          for="inputLink"
+          class="block text-left mb-2 font-medium text-bluegray-800"
+          >Link de LinkedIn</label
+        >
+        <input pInputText formControlName="linkedin" class="w-full" />
+        <small
+          id="inputLink"
+          class="hidden"
+          [ngClass]="{ 'p-error block text-left': isValidField('linkedin') }"
+          >Ingrese su link de LinkedIn</small
+        >
+      </div>
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label
+          for="inputLink2"
+          class="block text-left mb-2 font-medium text-bluegray-800"
+          >Link de GitHub</label
+        >
+        <input pInputText formControlName="github" class="w-full" />
+        <small
+          id="inputLink2"
+          class="hidden"
+          [ngClass]="{ 'p-error block text-left': isValidField('github') }"
+          >Ingrese su link de GitHub</small
+        >
+      </div>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideEditSocialMediaDialog()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Editar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
+      </div>
+    </form>
   </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-secondary w-full"
-          (click)="hideEditSocialMediaDialog()"
-        ></button>
-      </div>
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Editar"
-          icon="pi pi-check"
-          class="p-button-success w-full"
-        ></button>
-      </div>
-    </div>
-  </ng-template>
 </p-dialog>

@@ -81,10 +81,8 @@
         class="w-full h-auto"
       ></textarea>
     </div>
-  </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
+    <div class="w-12 flex flex-wrap pt-3">
+      <div class="w-6 p-2 pl-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
@@ -94,15 +92,16 @@
           (click)="hideNewFeedbackDialog()"
         ></button>
       </div>
-      <div class="field col">
+      <div class="w-6 p-2 pr-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
-          label="Agregar"
+          label="Editar"
           icon="pi pi-check"
+          type="submit"
           class="p-button-success w-full"
         ></button>
       </div>
     </div>
-  </ng-template>
+  </div>
 </p-dialog>

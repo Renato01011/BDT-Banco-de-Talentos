@@ -1,8 +1,12 @@
 package com.fractal.bancodetalentos.service;
 
-import com.fractal.bancodetalentos.model.entity.BtTdHabilidadTecnica;
+import com.fractal.bancodetalentos.model.response.TecSkillsResp;
+
+import java.util.List;
 
 public interface HabilidadTecnicaService {
 
-    void delete(BtTdHabilidadTecnica habilidadTecnica);
+
+    List<TecSkillsResp> getTecSkillsResp();
+
 }

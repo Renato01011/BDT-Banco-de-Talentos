@@ -133,10 +133,8 @@
         label="Hasta la actualidad"
       ></p-checkbox>
     </div>
-  </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
+    <div class="w-12 flex flex-wrap pt-3">
+      <div class="w-6 p-2 pl-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
@@ -146,17 +144,18 @@
           (click)="hideNewEducationalExperienceDialog()"
         ></button>
       </div>
-      <div class="field col">
+      <div class="w-6 p-2 pr-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
-          label="Agregar"
+          label="Editar"
           icon="pi pi-check"
+          type="submit"
           class="p-button-success w-full"
         ></button>
       </div>
     </div>
-  </ng-template>
+  </div>
 </p-dialog>
 
 <p-dialog
@@ -239,17 +238,15 @@
         <small id="inputNumber2" class="p-error block text-left">err</small>
       </div>
     </div>
-  </div>
-  <div class="w-12 flex flex-column justify-content-start mb-2">
-    <p-checkbox
-      [binary]="true"
-      inputId="binary"
-      label="Hasta la actualidad"
-    ></p-checkbox>
-  </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
+    <div class="w-12 flex flex-column justify-content-start mb-2">
+      <p-checkbox
+        [binary]="true"
+        inputId="binary"
+        label="Hasta la actualidad"
+      ></p-checkbox>
+    </div>
+    <div class="w-12 flex flex-wrap pt-3">
+      <div class="w-6 p-2 pl-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
@@ -259,15 +256,16 @@
           (click)="hideEditEducationalExperienceDialog()"
         ></button>
       </div>
-      <div class="field col">
+      <div class="w-6 p-2 pr-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
           label="Editar"
           icon="pi pi-check"
+          type="submit"
           class="p-button-success w-full"
         ></button>
       </div>
     </div>
-  </ng-template>
+  </div>
 </p-dialog>

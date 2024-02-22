@@ -13,7 +13,7 @@
     <div
       class="w-12 sm:w-8 font-bold p-2 flex flex-wrap align-items-center justify-content-center sm:justify-content-between"
     >
-      <div class="mx-2 mb-2 md:mb-0">
+      <div class="mx-1 mb-2 md:mb-0">
         <p-overlayPanel #hbd [style]="{ width: '300px' }">
           <ng-template pTemplate>
             <div class="py-2">
@@ -40,12 +40,31 @@
           (click)="hbd.toggle($event)"
         ></p-button>
       </div>
-      <div class="mx-2 mb-2 md:mb-0">
-        <p-overlayPanel #english [style]="{ width: '180px' }">
+      <div class="mx-1 mb-2 md:mb-0">
+        <p-overlayPanel #idiomaOv [style]="{ width: '180px' }">
           <ng-template pTemplate>
             <div class="field-checkbox">
               <p-listbox
-                [options]="englishLevel"
+                [options]="language"
+                optionLabel="name"
+                [style]="{ border: 'none' }"
+              ></p-listbox>
+            </div>
+          </ng-template>
+        </p-overlayPanel>
+
+        <p-button
+          label="Idioma"
+          styleClass="p-button-sm p-button-rounded p-button-secondary"
+          (click)="idiomaOv.toggle($event)"
+        ></p-button>
+      </div>
+      <div class="mx-1 mb-2 md:mb-0">
+        <p-overlayPanel #levelOv [style]="{ width: '180px' }">
+          <ng-template pTemplate>
+            <div class="field-checkbox">
+              <p-listbox
+                [options]="level"
                 [(ngModel)]="selectedEnglishLevel"
                 optionLabel="name"
                 [style]="{ border: 'none' }"
@@ -55,12 +74,12 @@
         </p-overlayPanel>
 
         <p-button
-          label="Nivel de inglés"
+          label="Nivel"
           styleClass="p-button-sm p-button-rounded p-button-secondary"
-          (click)="english.toggle($event)"
+          (click)="levelOv.toggle($event)"
         ></p-button>
       </div>
-      <div class="mx-2 mb-2 md:mb-0">
+      <div class="mx-1 mb-2 md:mb-0">
         <p-overlayPanel #favorite [style]="{ width: '180px' }">
           <ng-template pTemplate>
             <div class="field-checkbox">
@@ -80,7 +99,7 @@
           (click)="favorite.toggle($event)"
         ></p-button>
       </div>
-      <div class="mx-2 mb-2 md:mb-0">
+      <div class="mx-1 mb-2 md:mb-0">
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input
@@ -91,7 +110,7 @@
           />
         </span>
       </div>
-      <div class="mx-2 mb-2 md:mb-0">
+      <div class="mx-1 mb-2 md:mb-0">
         <p-button
           label="Buscar"
           styleClass="p-button-sm p-button-success"

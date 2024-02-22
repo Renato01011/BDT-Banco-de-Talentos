@@ -13,6 +13,10 @@ interface English {
   name: string;
   code: string;
 }
+interface Language {
+  name: string;
+  code: string;
+}
 
 @Component({
   selector: 'shared-control-panel',
@@ -26,7 +30,10 @@ export class ControlPanelComponent implements OnInit {
   favorites: Favorite[] = [];
   selectedFavorite: string[] = [];
 
-  englishLevel: English[] = [];
+  level: English[] = [];
+
+  language: Language[] = [];
+
   selectedEnglishLevel: string[] = [];
 
   constructor(private router: Router) {}
@@ -39,7 +46,7 @@ export class ControlPanelComponent implements OnInit {
       { name: 'Data Structure', code: '4' },
       { name: 'Node.js', code: '5' },
     ];
-    this.englishLevel = [
+    this.level = [
       { name: 'Básico', code: '1' },
       { name: 'Intermedio', code: '2' },
       { name: 'Avanzado', code: '3' },
@@ -48,6 +55,10 @@ export class ControlPanelComponent implements OnInit {
     this.favorites = [
       { name: 'Mis favoritos', code: '1' },
       { name: 'Backups', code: '2' },
+    ];
+    this.language = [
+      { name: 'Español', code: '1' },
+      { name: 'Ingles', code: '2' },
     ];
   }
 

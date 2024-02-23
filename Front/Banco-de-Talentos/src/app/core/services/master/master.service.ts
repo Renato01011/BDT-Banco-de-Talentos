@@ -38,7 +38,7 @@ export class MasterService {
   }
 
   getCities(id: number): Observable<MasterModels.CityModel[]> {
-    return this.httpClient.get<MasterModels.CityModel[]>(UrlConstants.URL_REQ_CITIES + '/' + id);
+    return this.httpClient.get<MasterModels.CityModel[]>(UrlConstants.URL_REQ_CITIES_1 + id + UrlConstants.URL_REQ_CITIES_2);
   }
 
 }

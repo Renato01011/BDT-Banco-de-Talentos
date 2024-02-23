@@ -20,10 +20,9 @@ public class BancoDeTalentosApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedOrigins("http://localhost:4200")
-						.allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS", "HEAD")
+						.allowedMethods("*")
 						.maxAge(3600)
-						.allowedHeaders("Requestor-Type")
-						.exposedHeaders("X-Get-Header");
+						.allowedHeaders("*");
 			}
 		};
 	}

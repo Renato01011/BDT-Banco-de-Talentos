@@ -32,13 +32,16 @@ export class ProfPersCrdComponent implements OnInit {
     github: ['https://github.com/usuario', [Validators.pattern(gitHubRegEx)]],
   });
 
+  public salaryForm: FormGroup = this.fb.group({
+    currency: ['Soles', [Validators.required]],
+    iAmount: ['', [Validators.required]],
+    fAmount: ['', [Validators.required]],
+  });
+
   ngOnInit(): void {
     this.rating = 3;
 
-    this.coins = [
-      { name: 'Soles', code: '0' },
-      { name: 'Dolares', code: '1' },
-    ];
+    this.coins = [{ name: 'Soles' }, { name: 'Dolares' }];
 
     this.resume = [{ label: 'CV' }, { label: 'CV Fractal' }];
   }
@@ -47,8 +50,20 @@ export class ProfPersCrdComponent implements OnInit {
     return this.fValidator.isValidField(this.redSocForm, field);
   }
 
+  isValidSalaryField(field: string) {
+    return this.fValidator.isValidField(this.salaryForm, field);
+  }
+
+  onSveSalary() {
+    console.log(this.salaryForm.value);
+  }
+
   onSveRedSoc() {
     console.log(this.redSocForm.value);
+  }
+
+  onPhotoUpload(event: any) {
+    console.log('Upload');
   }
 
   openEditProfilePicture() {

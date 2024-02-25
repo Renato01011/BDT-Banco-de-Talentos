@@ -133,6 +133,7 @@
     <button
       pButton
       class="p-button-outlined border-300 w-full flex flex-column"
+      (click)="photoUpload.click()"
     >
       <i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"></i>
       <span
@@ -144,6 +145,13 @@
         class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
         >PNG o JPG (max. 800x400px)</span
       >
+      <input
+        #photoUpload
+        type="file"
+        accept=".png, .jpg, .jpeg"
+        style="display: none"
+        (change)="onPhotoUpload($event)"
+      />
     </button>
     <div class="w-12 flex flex-wrap pt-3">
       <div class="w-6 p-2 pl-0 flex align-items-center justify-content-center">
@@ -191,73 +199,114 @@
         Agrega el rango de tus expectativas salariales.
       </span>
     </div>
-    <div class="w-12 flex flex-column align-items-center">
-      <div
-        *ngFor="let coin of coins"
-        class="h-3rem w-full border-round border-1 border-300 mb-2 flex"
-      >
-        <div class="w-full pl-1 flex align-items-center justify-content-start">
-          <label [for]="coin.code" class="ml-2">{{ coin.name }}</label>
-        </div>
-        <div class="w-full pr-3 flex align-items-center justify-content-end">
-          <p-radioButton
-            [inputId]="coin.code"
-            name="coin"
-            [value]="coin"
-            [(ngModel)]="selectedCoin"
-          ></p-radioButton>
-        </div>
-      </div>
-    </div>
-    <div class="w-12 flex flex-wrap align-items-center">
-      <div class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pr-3">
-        <div class="w-12 flex flex-column justify-content-start mb-2">
-          <label for="inputNumber" class="block text-left mb-2"
-            >Monto Inicial</label
+    <form
+      class="w-12 flex flex-column"
+      [formGroup]="salaryForm"
+      (ngSubmit)="onSveSalary()"
+      autocomplete="off"
+    >
+      <div class="w-12 flex flex-column align-items-center">
+        <div
+          *ngFor="let coin of coins"
+          class="h-3rem w-full border-round border-1 border-300 mb-2 flex"
+          [ngClass]="{
+            'border-primary border-2 bg-indigo-50':
+              coin.name == salaryForm.controls['currency'].value
+          }"
+        >
+          <div
+            class="w-full pl-1 flex align-items-center justify-content-start"
           >
-          <p-inputNumber
-            inputId="inputNumber"
-            class="w-full"
-            styleClass="w-full"
-          ></p-inputNumber>
-          <small id="inputNumber" class="p-error block text-left">err</small>
+            <label [for]="coin.name" class="ml-2">{{ coin.name }}</label>
+          </div>
+          <div class="w-full pr-3 flex align-items-center justify-content-end">
+            <p-radioButton
+              [inputId]="coin.name"
+              name="currency"
+              [value]="coin.name"
+              formControlName="currency"
+            ></p-radioButton>
+          </div>
         </div>
       </div>
-      <div class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pl-3">
-        <div class="w-12 flex flex-column justify-content-start mb-2">
-          <label for="inputNumber2" class="block text-left mb-2"
-            >Monto Final</label
-          >
-          <p-inputNumber
-            inputId="inputNumber2"
-            styleClass="w-12"
-          ></p-inputNumber>
-          <small id="inputNumber2" class="p-error block text-left">err</small>
+      <div class="w-12 flex flex-wrap align-items-center">
+        <div
+          class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pr-3"
+        >
+          <div class="w-12 flex flex-column justify-content-start mb-2">
+            <label
+              for="inputNumber"
+              class="block text-left mb-2 font-medium text-bluegray-800"
+              >Monto Inicial</label
+            >
+            <p-inputNumber
+              inputId="inputNumber"
+              class="w-full"
+              styleClass="w-full"
+              formControlName="iAmount"
+            ></p-inputNumber>
+            <small
+              id="inputNumber"
+              class="hidden"
+              [ngClass]="{
+                'p-error block text-left': isValidSalaryField('iAmount')
+              }"
+              >Este campo no puede estar vacío.</small
+            >
+          </div>
+        </div>
+        <div
+          class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pl-3"
+        >
+          <div class="w-12 flex flex-column justify-content-start mb-2">
+            <label
+              for="inputNumber2"
+              class="block text-left mb-2 font-medium text-bluegray-800"
+              >Monto Final</label
+            >
+            <p-inputNumber
+              inputId="inputNumber2"
+              styleClass="w-12"
+              formControlName="fAmount"
+            ></p-inputNumber>
+            <small
+              id="inputNumber2"
+              class="hidden"
+              [ngClass]="{
+                'p-error block text-left': isValidSalaryField('fAmount')
+              }"
+              >Este campo no puede estar vacío.</small
+            >
+          </div>
         </div>
       </div>
-    </div>
-    <div class="w-12 flex flex-wrap pt-3">
-      <div class="w-6 p-2 pl-0 flex align-items-center justify-content-center">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-secondary w-full"
-          (click)="hideEditSalaryDialog()"
-        ></button>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideEditSalaryDialog()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Editar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
       </div>
-      <div class="w-6 p-2 pr-0 flex align-items-center justify-content-center">
-        <button
-          pButton
-          pRipple
-          label="Editar"
-          icon="pi pi-check"
-          type="submit"
-          class="p-button-success w-full"
-        ></button>
-      </div>
-    </div>
+    </form>
   </div>
 </p-dialog>
 

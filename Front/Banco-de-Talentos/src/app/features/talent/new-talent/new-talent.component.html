@@ -113,7 +113,7 @@
                             <p class="mt-0">Habilidad técnica</p>
                             <input pInputText placeholder="Nombre de la habilidad" class="w-full" formControlName="name" [ngClass]="{ 'ng-invalid ng-dirty': ta.get('name')?.errors && ta.get('name')?.touched }"/>
                             <p>Años de experiencia</p>
-                            <p-inputNumber class="w-full" styleClass="w-full" placeholder="Nro. de años" formControlName="years" [ngClass]="{ 'ng-invalid ng-dirty': ta.get('years')?.errors && ta.get('years')?.touched }"></p-inputNumber>
+                            <p-inputNumber [minFractionDigits]="1" class="w-full" styleClass="w-full" placeholder="Nro. de años" formControlName="years" [ngClass]="{ 'ng-invalid ng-dirty': ta.get('years')?.errors && ta.get('years')?.touched }"></p-inputNumber>
                             <p-divider *ngIf="getTechnicalAbilities().length > 1" align="center">
                                 <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" (click)="DeleteTechnicalAbility(i)"></button>
                             </p-divider>
@@ -146,11 +146,11 @@
                             <div class="formgrid grid">
                                 <div class="field col">
                                     <p>Año y mes de inicio</p>
-                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" inputId="dateformat" appendTo="body" formControlName="initialDate" [ngClass]="{ 'ng-invalid ng-dirty': we.get('initialDate')?.errors && we.get('initialDate')?.touched }"></p-calendar>
+                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" inputId="dateformat" appendTo="body" formControlName="initialDate" [ngClass]="{ 'ng-invalid ng-dirty': we.get('initialDate')?.errors && we.get('initialDate')?.touched }"></p-calendar>
                                 </div>
                                 <div class="field col">
                                     <p>Año y mes fin</p>
-                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" inputId="dateformat" appendTo="body" formControlName="finalDate" [ngClass]="{ 'ng-invalid ng-dirty': we.get('finalDate')?.errors && we.get('finalDate')?.touched }"></p-calendar>
+                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" inputId="dateformat" appendTo="body" formControlName="finalDate" [ngClass]="{ 'ng-invalid ng-dirty': we.get('finalDate')?.errors && we.get('finalDate')?.touched }"></p-calendar>
                                 </div>
                             </div>
                             <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
@@ -175,11 +175,11 @@
                             <div class="formgrid grid">
                                 <div class="field col">
                                     <p>Año y mes de inicio</p>
-                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" inputId="dateformat" appendTo="body" formControlName="initialDate" [ngClass]="{ 'ng-invalid ng-dirty': ee.get('initialDate')?.errors && ee.get('initialDate')?.touched }"></p-calendar>
+                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" inputId="dateformat" appendTo="body" formControlName="initialDate" [ngClass]="{ 'ng-invalid ng-dirty': ee.get('initialDate')?.errors && ee.get('initialDate')?.touched }"></p-calendar>
                                 </div>
                                 <div class="field col">
                                     <p>Año y mes fin</p>
-                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" inputId="dateformat" appendTo="body" formControlName="finalDate" [ngClass]="{ 'ng-invalid ng-dirty': ee.get('finalDate')?.errors && ee.get('finalDate')?.touched }"></p-calendar>
+                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" inputId="dateformat" appendTo="body" formControlName="finalDate" [ngClass]="{ 'ng-invalid ng-dirty': ee.get('finalDate')?.errors && ee.get('finalDate')?.touched }"></p-calendar>
                                 </div>
                             </div>
                             <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad"></p-checkbox>
@@ -201,6 +201,7 @@
 
                             <div class="pt-4">
                                 <p-rating formControlName="starCount"></p-rating>
+                                <small *ngIf="kl.get('starCount')?.errors && kl.get('starCount')?.touched" style="color: #ef4444">Agregar un valor de estrellas</small>
                             </div>
                             <p-divider *ngIf="getKnownLanguages().length > 1" align="center">
                                 <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" (click)="DeleteKnownLanguage(i)"></button>

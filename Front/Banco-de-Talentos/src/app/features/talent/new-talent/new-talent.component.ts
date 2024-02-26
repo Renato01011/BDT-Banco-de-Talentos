@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observer } from 'rxjs';
 
 import { MasterRespConst } from 'src/app/core/global/constants/master-resp.constants';
 import * as MasterModels from 'src/app/shared/models/interfaces/master.interfaces';
@@ -8,6 +9,11 @@ import * as MasterModels from 'src/app/shared/models/interfaces/master.interface
 import { FrmValService } from 'src/app/shared/service/frm-val.service';
 import { TalentService } from 'src/app/core/services/talent/talent.service';
 import * as TalentModels from 'src/app/shared/models/interfaces/talent.interfaces';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
+
+const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
+const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
 
 @Component({
   selector: 'app-new-talent',
@@ -15,6 +21,12 @@ import * as TalentModels from 'src/app/shared/models/interfaces/talent.interface
   styleUrls: ['./new-talent.component.scss']
 })
 export class NewTalentComponent implements OnInit, OnDestroy {
+
+  observer: Observer<any> = {
+    next: (value) => console.log('[next]:', value),
+    error: (error) => console.warn('[error]:', error),
+    complete: () => this.loaderService.hideLoader(),
+  };
   
   profiles: MasterModels.ProfileModel[] = [];
   levels: MasterModels.LangProficiencyModel[] = [];
@@ -33,42 +45,42 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   photoUploaded: boolean = false;
 
   newTalentForm = this.formBuilder.group({
-    names: ['', [Validators.required]],
-    surName: ['', [Validators.required]],
-    secondSurName: ['', [Validators.required]],
+    names: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+    surName: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+    secondSurName: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
     cv: [, [Validators.required]],
     profilePicture: [, [Validators.required]],
-    description: ['', [Validators.required]],
-    profile: [null, [Validators.required, Validators.nullValidator]],
-    linkedin: ['', [Validators.required]],
-    github: ['', [Validators.required]],
+    description: ['', [Validators.required, Validators.minLength(10), Validators.max(200)]],
+    profile: [null, [Validators.required]],
+    linkedin: ['', [Validators.required, Validators.pattern(linkedInRegEx)]],
+    github: ['', [Validators.required, Validators.pattern(gitHubRegEx)]],
     coin: ['', [Validators.required]],
     initialAmount: [, [Validators.required]],
     finalAmount: [, [Validators.required]],
     technicalAbilities: this.formBuilder.array([
       this.formBuilder.group({
-        name: ['', [Validators.required]],
+        name: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
         years: [, [Validators.required]]
       })
     ]),
     softSkills: this.formBuilder.array([
       this.formBuilder.group({
-        name: ['', [Validators.required]]
+        name: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]]
       })
     ]),
     workExperience: this.formBuilder.array([
       this.formBuilder.group({
-        firm: ['', [Validators.required]],
-        job: ['', [Validators.required]],
+        firm: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+        job: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
         initialDate: [, [Validators.required]],
         finalDate: [, [Validators.required]],
       })
     ]),
     educationalExperience: this.formBuilder.array([
       this.formBuilder.group({
-        institution: ['', [Validators.required]],
-        major: ['', [Validators.required]],
-        degree: ['', [Validators.required]],
+        institution: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+        major: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+        degree: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
         initialDate: [, [Validators.required]],
         finalDate: [, [Validators.required]],
       })
@@ -82,7 +94,14 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     ]),
   });
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private formValidator: FrmValService, private talentService: TalentService) {}
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private formValidator: FrmValService,
+    private talentService: TalentService,
+    private loaderService: LoaderService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.languages = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_LANG) || '{}');
@@ -181,27 +200,45 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/home/dashboard/list');
   }
 
-  onPhotoUpload(event: any) {
+  async onPhotoUpload(event: any) {
     const photo: File = event.target.files[0];
     if (photo) {
-      this.photoUploaded = true;
-      //this.photo = photo;
-      const photoReader = new FileReader();
-      photoReader.readAsDataURL(photo);
-      photoReader.onloadend = () => {
-        this.base64photo = photoReader.result as string;
+      if (photo.type == "image/jpeg" || photo.type == "image/png") {
+        const bmp = await createImageBitmap(photo);
+        const { width, height } = bmp;
+        bmp.close();
+        if (width > 800 || height > 400) {
+          this.toastService.addProperties('error', "Ocurrio un error", "Las dimensiones de la imagen son demasiado grandes");
+          return;
+        }
+        this.photoUploaded = true;
+        //this.photo = photo;
+        const photoReader = new FileReader();
+        photoReader.readAsDataURL(photo);
+        photoReader.onloadend = () => {
+          this.base64photo = photoReader.result as string;
+        }
+        this.photoText = "Archivo Correctamente Subido";
+        this.photoDetailsText = photo.name;
       }
-      this.photoText = "Archivo Correctamente Subido";
-      this.photoDetailsText = photo.name;
+      else {
+        this.toastService.addProperties('error', "Ocurrio un error", "Imagen no es PNG o JPG");
+        return;
+      }
     }
     else {
       this.photoText = "Error al Subir";
+      this.toastService.addProperties('error', "Ocurrio un error", "Error al subir imagen, vuelva a intentar");
     }
   }
 
   onFileUpload(event: any) {
     const file: File = event.target.files[0];
     if (file) {
+      if (file.type != "application/pdf") {
+        this.toastService.addProperties('error', "Ocurrio un error", "Documento no es PDF");
+        return;
+      }
       this.fileUploaded = true;
       //this.file = file;
       const fileReader = new FileReader();
@@ -213,7 +250,8 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       this.fileDetailsText = file.name;
     }
     else {
-      this.fileText = "Error al Subir";
+      //this.fileText = "Error al Subir";
+      this.toastService.addProperties('error', "Ocurrio un error", "Error al subir PDF, vuelva a intentar");
     }
   }
 
@@ -295,8 +333,9 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   }
 
   AddTalent() {
-    console.log(this.newTalentForm.value);
+    //console.log(this.newTalentForm.value);
     if (this.newTalentForm.valid) {
+      this.loaderService.showLoader();
       let newtalent: TalentModels.NewTalentModel = {
         nombre: this.newTalentForm.get('names')?.value,
         apellidoPaterno: this.newTalentForm.get('surName')?.value,
@@ -325,9 +364,21 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         experienciasEducativas: this.getEducationalExperienceArrayValues(),
         idiomas: this.getLanguagesArrayValues(),
       };
-      this.talentService.postNewTalent(newtalent).subscribe(response => console.log(response)); 
+      this.talentService.postNewTalent(newtalent).subscribe(
+        (response) => {
+          console.log(response);
+          this.loaderService.hideLoader();
+          this.toastService.addProperties('success', "Éxito", response.message);
+          this.router.navigateByUrl('/home/dashboard/list');
+          
+        },
+        (error) => {
+          this.loaderService.hideLoader();
+          this.toastService.addProperties('error', "Ocurrio un error", error.message);
+        }); 
     }
     else {
+      this.toastService.addProperties('error', "Ocurrió un problema", "Revise los campos ingresados");
       this.ValidateAllFormFields(this.newTalentForm);
     }
   }

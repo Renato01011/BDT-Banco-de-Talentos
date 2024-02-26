@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observer } from 'rxjs';
+import { Observer, switchMap, tap } from 'rxjs';
 
 import { MasterRespConst } from 'src/app/core/global/constants/master-resp.constants';
 import * as MasterModels from 'src/app/shared/models/interfaces/master.interfaces';
@@ -11,6 +11,7 @@ import { TalentService } from 'src/app/core/services/talent/talent.service';
 import * as TalentModels from 'src/app/shared/models/interfaces/talent.interfaces';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { MasterService } from 'src/app/core/services/master/master.service';
 
 const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
 const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
@@ -32,6 +33,8 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   levels: MasterModels.LangProficiencyModel[] = [];
   languages: MasterModels.LanguageModel[] = [];
   coins: MasterModels.CurrenciesModel[] = [];
+  countries: MasterModels.CountryModel[] = [];
+  cities: MasterModels.CityModel[] = [];
 
   fileText: string = "Curriculum Vitae";
   fileDetailsText: string = "PDF (max. 800x400px)";
@@ -50,6 +53,9 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     secondSurName: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
     cv: [, [Validators.required]],
     profilePicture: [, [Validators.required]],
+    country: [, [Validators.required]],
+    city: [, [Validators.required]],
+    phone: ['', [Validators.required]],
     description: ['', [Validators.required, Validators.minLength(10), Validators.max(200)]],
     profile: [null, [Validators.required]],
     linkedin: ['', [Validators.required, Validators.pattern(linkedInRegEx)]],
@@ -72,8 +78,10 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       this.formBuilder.group({
         firm: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
         job: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+        flagOnFractal: [false],
         initialDate: [, [Validators.required]],
         finalDate: [, [Validators.required]],
+        flagCurrently: [false],
       })
     ]),
     educationalExperience: this.formBuilder.array([
@@ -81,8 +89,10 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         institution: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
         major: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
         degree: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+        flagOnFractal: [false],
         initialDate: [, [Validators.required]],
         finalDate: [, [Validators.required]],
+        flagCurrently: [false],
       })
     ]),
     knownLanguages: this.formBuilder.array([
@@ -98,6 +108,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     private router: Router,
     private formBuilder: FormBuilder,
     private formValidator: FrmValService,
+    private masterService: MasterService,
     private talentService: TalentService,
     private loaderService: LoaderService,
     private toastService: ToastService
@@ -108,6 +119,8 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     this.levels = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_PROFICIENCY) || '{}');
     this.profiles = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_PROFILES) || '{}');
     this.coins = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_CURRENCIES) || '{}');
+    this.countries = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_COUNTRIES) || '{}');
+    this.onCountryChange();
   }
 
   ngOnDestroy(): void { }
@@ -144,10 +157,12 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   AddWorkExperience() {
     (this.newTalentForm.get('workExperience') as FormArray).push(
       this.formBuilder.group({
-        firm: ['', [Validators.required]],
-        job: ['', [Validators.required]],
+        firm: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+        job: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+        flagOnFractal: [false],
         initialDate: [, [Validators.required]],
         finalDate: [, [Validators.required]],
+        flagCurrently: [false],
       })
     );
   }
@@ -161,11 +176,13 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   AddEducationalExperience() {
     (this.newTalentForm.get('educationalExperience') as FormArray).push(
       this.formBuilder.group({
-        institution: ['', [Validators.required]],
-        major: ['', [Validators.required]],
-        degree: ['', [Validators.required]],
+        institution: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+        major: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+        degree: ['', [Validators.required, Validators.minLength(2), Validators.max(20)]],
+        flagOnFractal: [false],
         initialDate: [, [Validators.required]],
         finalDate: [, [Validators.required]],
+        flagCurrently: [false],
       })
     );
   }
@@ -332,6 +349,42 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     return objectArray;
   }
 
+  onCountryChange() {
+    this.newTalentForm.get("country")!.valueChanges.pipe(
+      switchMap((country) => this.masterService.getCities(country.id))
+    ).subscribe((cities) => this.cities = cities);
+  }
+
+  OnFractalEducationCheckboxChange(abstractControl: AbstractControl) {
+    let formGroup = abstractControl as FormGroup;
+    if (formGroup.get("flagOnFractal")?.value) {
+      formGroup.controls["institution"].setValue('Fractal');
+    }
+    else {
+      formGroup.controls["institution"].setValue('');
+    }
+  }
+
+  OnFractalWorkCheckboxChange(abstractControl: AbstractControl) {
+    let formGroup = abstractControl as FormGroup;
+    if (formGroup.get("flagOnFractal")?.value) {
+      formGroup.controls["firm"].setValue('Fractal');
+    }
+    else {
+      formGroup.controls["firm"].setValue('');
+    }
+  }
+
+  OnCurrentlyCheckboxChange(abstractControl: AbstractControl) {
+    let formGroup = abstractControl as FormGroup;
+    if (formGroup.get("flagCurrently")?.value) {
+      formGroup.controls["finalDate"].setValue(new Date());
+    }
+    else {
+      formGroup.controls["finalDate"].setValue(null);
+    }
+  }
+
   AddTalent() {
     //console.log(this.newTalentForm.value);
     if (this.newTalentForm.valid) {
@@ -350,21 +403,22 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         ],
         descripcion: this.newTalentForm.get('description')?.value,
         idPuestoActual: this.newTalentForm.get('profile')?.value.id,
-        idPais: 1,
-        idCiudad: 1,
+        idPais: this.newTalentForm.get('country')?.value.id,
+        idCiudad: this.newTalentForm.get('city')?.value.id,
         linkedin: this.newTalentForm.get('linkedin')?.value,
         github: this.newTalentForm.get('github')?.value,
         tipoMoneda: this.newTalentForm.get('coin')?.value.id,
         montoInicial: this.newTalentForm.get('initialAmount')?.value,
         montoFinal: this.newTalentForm.get('finalAmount')?.value,
-        celular: "999999999",
+        celular: this.newTalentForm.get("phone")?.value,
         habilidadesTecnicas: this.getTechnicalAbilitiesArrayValues(),
         habilidadesBlandas: this.getSoftSkillsArrayValues(),
         experienciasLaborales: this.getWorkExperienceArrayValues(),
         experienciasEducativas: this.getEducationalExperienceArrayValues(),
         idiomas: this.getLanguagesArrayValues(),
       };
-      this.talentService.postNewTalent(newtalent).subscribe(
+      console.log(newtalent);
+      /*this.talentService.postNewTalent(newtalent).subscribe(
         (response) => {
           console.log(response);
           this.loaderService.hideLoader();
@@ -375,7 +429,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         (error) => {
           this.loaderService.hideLoader();
           this.toastService.addProperties('error', "Ocurrio un error", error.message);
-        }); 
+        });*/
     }
     else {
       this.toastService.addProperties('error', "Ocurrió un problema", "Revise los campos ingresados");

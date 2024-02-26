@@ -7,10 +7,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+
+  mobile: boolean = false;
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    console.log('');
+    if (window.screen.width < 1000) {
+      this.mobile = true;
+    }
+    window.onresize = () => this.mobile = window.innerWidth < 1000;
   }
 
   onLogin() {

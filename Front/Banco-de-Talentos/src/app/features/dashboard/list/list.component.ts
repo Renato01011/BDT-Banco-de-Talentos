@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Observer, interval, takeUntil, timer } from 'rxjs';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
+import { ToastService } from '../../../core/services/toast/toast.service';
 
 @Component({
   selector: 'app-list',
@@ -10,7 +11,11 @@ import { LoaderService } from 'src/app/core/services/loader/loader.service';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
-  constructor(private router: Router, private loaderService: LoaderService) {}
+  constructor(
+    private router: Router,
+    private loaderService: LoaderService,
+    private toastService: ToastService
+  ) {}
 
   observer: Observer<any> = {
     next: (value) => console.log('[next]:', value),
@@ -23,5 +28,7 @@ export class ListComponent implements OnInit {
     // const interval$ = interval(1000);
     // const cancel$ = timer(1500);
     // const subs = interval$.pipe(takeUntil(cancel$)).subscribe(this.observer);
+
+    this.toastService.addProperties('info', 'Info', '🥳');
   }
 }

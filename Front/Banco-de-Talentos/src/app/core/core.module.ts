@@ -50,21 +50,9 @@ export class CoreModule implements OnInit {
     });
 
     this.masterService.getCountries().subscribe((countries) => {
-      let countryCityList: any[] = [];
-      countries.forEach((country) => {
-        this.masterService.getCities(country.id).subscribe((city) => {
-          countryCityList.push({
-            id: country.id,
-            country: country.country,
-            code: country.code,
-            cities: city,
-          });
-        });
-      });
-      console.log(countryCityList);
       sessionStorage.setItem(
-        MasterRespConst.STORAGE_CURRENT_COUNTRY_CITY,
-        JSON.stringify(countryCityList)
+        MasterRespConst.STORAGE_CURRENT_COUNTRIES,
+        JSON.stringify(countries)
       );
     });
   }

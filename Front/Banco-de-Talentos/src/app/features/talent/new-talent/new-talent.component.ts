@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observer, switchMap, tap } from 'rxjs';
+import { switchMap } from 'rxjs';
 
 import { MasterRespConst } from 'src/app/core/global/constants/master-resp.constants';
 import * as MasterModels from 'src/app/shared/models/interfaces/master.interfaces';
@@ -22,12 +22,6 @@ const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
   styleUrls: ['./new-talent.component.scss']
 })
 export class NewTalentComponent implements OnInit, OnDestroy {
-
-  observer: Observer<any> = {
-    next: (value) => console.log('[next]:', value),
-    error: (error) => console.warn('[error]:', error),
-    complete: () => this.loaderService.hideLoader(),
-  };
   
   profiles: MasterModels.ProfileModel[] = [];
   levels: MasterModels.LangProficiencyModel[] = [];
@@ -121,6 +115,8 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     this.coins = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_CURRENCIES) || '{}');
     this.countries = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_COUNTRIES) || '{}');
     this.onCountryChange();
+    this.OnFinalSalaryInput();
+    this.OnInitialSalaryInput();
   }
 
   ngOnDestroy(): void { }
@@ -252,6 +248,10 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   onFileUpload(event: any) {
     const file: File = event.target.files[0];
     if (file) {
+      if (file.size > 50000000) {
+        this.toastService.addProperties('error', "Ocurrio un error", "Documento es demasiado pesado");
+        return;
+      }
       if (file.type != "application/pdf") {
         this.toastService.addProperties('error', "Ocurrio un error", "Documento no es PDF");
         return;
@@ -358,9 +358,11 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   OnFractalEducationCheckboxChange(abstractControl: AbstractControl) {
     let formGroup = abstractControl as FormGroup;
     if (formGroup.get("flagOnFractal")?.value) {
+      formGroup.controls["institution"].disable();
       formGroup.controls["institution"].setValue('Fractal');
     }
     else {
+      formGroup.controls["institution"].enable();
       formGroup.controls["institution"].setValue('');
     }
   }
@@ -368,9 +370,11 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   OnFractalWorkCheckboxChange(abstractControl: AbstractControl) {
     let formGroup = abstractControl as FormGroup;
     if (formGroup.get("flagOnFractal")?.value) {
+      formGroup.controls["firm"].disable();
       formGroup.controls["firm"].setValue('Fractal');
     }
     else {
+      formGroup.controls["firm"].enable();
       formGroup.controls["firm"].setValue('');
     }
   }
@@ -378,10 +382,58 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   OnCurrentlyCheckboxChange(abstractControl: AbstractControl) {
     let formGroup = abstractControl as FormGroup;
     if (formGroup.get("flagCurrently")?.value) {
+      formGroup.controls["finalDate"].disable();
       formGroup.controls["finalDate"].setValue(new Date());
     }
     else {
+      formGroup.controls["finalDate"].enable();
       formGroup.controls["finalDate"].setValue(null);
+    }
+  }
+
+  OnCountryChange() {
+    this.newTalentForm.controls["city"].setValue(null);
+  }
+
+  OnLanguageChange(abstractControl: AbstractControl) {
+    let formGroup = abstractControl as FormGroup;
+    formGroup.controls['level'].setValue(null);
+    formGroup.controls['starCount'].setValue(null);
+  }
+
+  OnInitialSalaryInput() {
+    this.newTalentForm.get("initialAmount")!.valueChanges.subscribe((value: number) => {
+      if (this.newTalentForm.get("initialAmount")?.value == null) { return; }
+      if (this.newTalentForm.get('finalAmount')?.value != null && value > this.newTalentForm.get('finalAmount')?.value) {
+        this.newTalentForm.controls['initialAmount'].setValue(null);
+        this.toastService.addProperties('error', "Ocurrio un error", "Cantidad incial no puede ser mayor que cantidad final");
+      }
+    });
+  }
+
+  OnFinalSalaryInput() {
+    this.newTalentForm.get("finalAmount")!.valueChanges.subscribe((value: number) => {
+      if (this.newTalentForm.get("finalAmount")?.value == null) { return; }
+      if (this.newTalentForm.get('initialAmount')?.value != null && this.newTalentForm.get('initialAmount')?.value > value) {
+        this.newTalentForm.controls['finalAmount'].setValue(null);
+        this.toastService.addProperties('error', "Ocurrio un error", "Cantidad final no puede ser menor que cantidad inicial");
+      }
+    });
+  }
+
+  OnInitialDateSelect(abstractControl: AbstractControl) {
+    let formGroup = abstractControl as FormGroup;
+    if (formGroup.get('finalDate')?.value != null && formGroup.get('finalDate')?.value < formGroup.get('initialDate')?.value) {
+      formGroup.controls['initialDate'].setValue(null);
+      this.toastService.addProperties('error', "Ocurrio un error", "Fecha inicial no puede ser mayor a fecha final");
+    }
+  }
+
+  OnFinalDateSelect(abstractControl: AbstractControl) {
+    let formGroup = abstractControl as FormGroup;
+    if (formGroup.get('initialDate')?.value != null && formGroup.get('finalDate')?.value < formGroup.get('initialDate')?.value) {
+      formGroup.controls['finalDate'].setValue(null);
+      this.toastService.addProperties('error', "Ocurrio un error", "Fecha final no puede ser menor a fecha inicial");
     }
   }
 
@@ -417,8 +469,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         experienciasEducativas: this.getEducationalExperienceArrayValues(),
         idiomas: this.getLanguagesArrayValues(),
       };
-      console.log(newtalent);
-      /*this.talentService.postNewTalent(newtalent).subscribe(
+      this.talentService.postNewTalent(newtalent).subscribe(
         (response) => {
           console.log(response);
           this.loaderService.hideLoader();
@@ -429,7 +480,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         (error) => {
           this.loaderService.hideLoader();
           this.toastService.addProperties('error', "Ocurrio un error", error.message);
-        });*/
+        });
     }
     else {
       this.toastService.addProperties('error', "Ocurrió un problema", "Revise los campos ingresados");

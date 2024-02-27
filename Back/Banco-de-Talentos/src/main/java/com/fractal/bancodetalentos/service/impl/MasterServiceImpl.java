@@ -95,7 +95,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<CountryResp> getCountry() {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_COUNTRIES");
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_GET_COUNTRIES");
         storedProcedureQuery.execute();
         List<Object[]> result = storedProcedureQuery.getResultList();
         List<CountryResp> respList = new ArrayList<>();
@@ -104,6 +104,7 @@ public class MasterServiceImpl implements MasterService {
             countryResp.setId((Integer) objects[0]);
             countryResp.setCountry((String) objects[1]);
             countryResp.setCode((String) objects[2]);
+            countryResp.setCallingCode((String) objects[3]);
             respList.add(countryResp);
         }
         return respList;
@@ -112,7 +113,7 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public List<CityResp> getCityById(Integer countryId) {
         StoredProcedureQuery storedProcedureQuery = entityManager
-                .createStoredProcedureQuery("SP_CITIES")
+                .createStoredProcedureQuery("SP_GET_CITIES")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .setParameter(1, countryId);
         storedProcedureQuery.execute();

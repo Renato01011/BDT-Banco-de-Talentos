@@ -22,7 +22,7 @@ const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
   styleUrls: ['./new-talent.component.scss']
 })
 export class NewTalentComponent implements OnInit, OnDestroy {
-  
+
   profiles: MasterModels.ProfileModel[] = [];
   levels: MasterModels.LangProficiencyModel[] = [];
   languages: MasterModels.LanguageModel[] = [];
@@ -277,7 +277,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
-      } 
+      }
       else if (control instanceof FormGroup) {
         this.ValidateAllFormFields(control);
       }
@@ -475,7 +475,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
           this.loaderService.hideLoader();
           this.toastService.addProperties('success', "Éxito", response.message);
           this.router.navigateByUrl('/home/dashboard/list');
-          
+
         },
         (error) => {
           this.loaderService.hideLoader();

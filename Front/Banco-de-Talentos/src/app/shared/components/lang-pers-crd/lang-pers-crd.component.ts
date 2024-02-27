@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FrmValService } from '../../service/frm-val.service';
 
 @Component({
   selector: 'shared-lang-pers-crd',
@@ -6,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lang-pers-crd.component.scss'],
 })
 export class LangPersCrdComponent implements OnInit {
-
   rating: number = 0;
 
   newLanguageDialog: boolean = false;
@@ -15,12 +16,24 @@ export class LangPersCrdComponent implements OnInit {
   languages: any[] = [];
   levels: any[] = [];
 
-  constructor() {}
+  constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
+
+  public newLanguageForm: FormGroup = this.fb.group({
+    languages: ['', [Validators.required]],
+    proficiency: ['', [Validators.required]],
+    rating: ['', [Validators.required]],
+  });
+
+  public editLanguageForm: FormGroup = this.fb.group({
+    editLanguages: ['', [Validators.required]],
+    editProficiency: ['', [Validators.required]],
+    editRating: ['', [Validators.required]],
+  });
 
   ngOnInit(): void {
     this.languages = [
       { name: 'Ingles', code: 'in' },
-      { name: 'Español', code: 'es' }
+      { name: 'Español', code: 'es' },
     ];
     this.levels = [
       { name: 'Básico', code: '1' },
@@ -28,6 +41,30 @@ export class LangPersCrdComponent implements OnInit {
       { name: 'Avanzado', code: '3' },
       { name: 'Nativo', code: '4' },
     ];
+  }
+
+  isValidField(field: string) {
+    return this.fValidator.isValidField(this.newLanguageForm, field);
+  }
+
+  onSveNewLanguageForm() {
+    console.log(this.newLanguageForm.value);
+  }
+
+  OnLanguageChange() {
+    this.newLanguageForm.controls['proficiency'].setValue(null);
+  }
+
+  isValidEditLangField(field: string) {
+    return this.fValidator.isValidField(this.editLanguageForm, field);
+  }
+
+  onSveEditLangForm() {
+    console.log(this.editLanguageForm.value);
+  }
+
+  OnEditLangChange() {
+    this.editLanguageForm.controls['editProficiency'].setValue(null);
   }
 
   openEditLanguageDialog() {
@@ -45,5 +82,4 @@ export class LangPersCrdComponent implements OnInit {
   hideNewLanguageDialog() {
     this.newLanguageDialog = false;
   }
-
 }

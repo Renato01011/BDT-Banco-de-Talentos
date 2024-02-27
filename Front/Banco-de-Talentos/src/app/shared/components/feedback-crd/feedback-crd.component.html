@@ -73,7 +73,7 @@
       (ngSubmit)="onSveFeedBkForm()"
       autocomplete="off"
     >
-      <div class="w-12 flex flex-column align-items-center">
+      <div class="w-12 flex flex-column align-items-center pb-2">
         <div class="w-12 flex align-items-center justify-content-between">
           <p-rating formControlName="rating"></p-rating>
         </div>
@@ -87,7 +87,11 @@
         </div>
       </div>
       <div class="w-12 flex flex-column justify-content-start h-9rem">
-        <label for="inputComment" class="block text-left mb-2">Feedback</label>
+        <label
+          for="inputComment"
+          class="block text-left mb-2 font-medium text-bluegray-800 font-medium text-bluegray-800"
+          >Feedback</label
+        >
         <textarea
           rows="5"
           cols="30"

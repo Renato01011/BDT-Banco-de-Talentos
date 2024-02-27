@@ -46,7 +46,7 @@
                     <div>
                         <h3>Locación</h3>
                         <p class="subHeaderText">País</p>
-                        <p-dropdown [options]="countries" styleClass="w-full" class="w-full" placeholder="País" optionLabel="country" [showClear]="true" appendTo="body" formControlName="country" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('country') }"></p-dropdown>
+                        <p-dropdown [options]="countries" styleClass="w-full" class="w-full" placeholder="País" optionLabel="country" [showClear]="true" appendTo="body" formControlName="country" (onChange)="OnCountryChange()" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('country') }"></p-dropdown>
                         <p class="subHeaderText" *ngIf="newTalentForm.get('country')?.value != null">Ciudad</p>
                         <p-dropdown *ngIf="newTalentForm.get('country')?.value != null" [options]="cities" styleClass="w-full" class="w-full" placeholder="Ciudad" optionLabel="city" [showClear]="true" appendTo="body" formControlName="city" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('city') }"></p-dropdown>
                     </div>
@@ -155,11 +155,11 @@
                             <div class="formgrid grid">
                                 <div class="field col">
                                     <p class="subHeaderText">Año y mes de inicio</p>
-                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" inputId="dateformat" appendTo="body" formControlName="initialDate" [ngClass]="{ 'ng-invalid ng-dirty': we.get('initialDate')?.errors && we.get('initialDate')?.touched }"></p-calendar>
+                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" [readonlyInput]="true" inputId="dateformat" appendTo="body" formControlName="initialDate" (onSelect)="OnInitialDateSelect(we)" [ngClass]="{ 'ng-invalid ng-dirty': we.get('initialDate')?.errors && we.get('initialDate')?.touched }"></p-calendar>
                                 </div>
                                 <div class="field col">
                                     <p class="subHeaderText">Año y mes fin</p>
-                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" inputId="dateformat" appendTo="body" formControlName="finalDate" [ngClass]="{ 'ng-invalid ng-dirty': we.get('finalDate')?.errors && we.get('finalDate')?.touched }"></p-calendar>
+                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" [readonlyInput]="true" inputId="dateformat" appendTo="body" formControlName="finalDate" (onSelect)="OnFinalDateSelect(we)" [ngClass]="{ 'ng-invalid ng-dirty': we.get('finalDate')?.errors && we.get('finalDate')?.touched }"></p-calendar>
                                 </div>
                             </div>
                             <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad" formControlName="flagCurrently" (onChange)="OnCurrentlyCheckboxChange(we)"></p-checkbox>
@@ -184,11 +184,11 @@
                             <div class="formgrid grid">
                                 <div class="field col">
                                     <p class="subHeaderText">Año y mes de inicio</p>
-                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" inputId="dateformat" appendTo="body" formControlName="initialDate" [ngClass]="{ 'ng-invalid ng-dirty': ee.get('initialDate')?.errors && ee.get('initialDate')?.touched }"></p-calendar>
+                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" [readonlyInput]="true" inputId="dateformat" appendTo="body" formControlName="initialDate" (onSelect)="OnInitialDateSelect(ee)" [ngClass]="{ 'ng-invalid ng-dirty': ee.get('initialDate')?.errors && ee.get('initialDate')?.touched }"></p-calendar>
                                 </div>
                                 <div class="field col">
                                     <p class="subHeaderText">Año y mes fin</p>
-                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" inputId="dateformat" appendTo="body" formControlName="finalDate" [ngClass]="{ 'ng-invalid ng-dirty': ee.get('finalDate')?.errors && ee.get('finalDate')?.touched }"></p-calendar>
+                                    <p-calendar class="w-full" styleClass="w-full" dateFormat="mm / yy" placeholder="MM / YYYY" [readonlyInput]="true" inputId="dateformat" appendTo="body" formControlName="finalDate" (onSelect)="OnFinalDateSelect(ee)" [ngClass]="{ 'ng-invalid ng-dirty': ee.get('finalDate')?.errors && ee.get('finalDate')?.touched }"></p-calendar>
                                 </div>
                             </div>
                             <p-checkbox [binary]="true" inputId="binary" label="Hasta la actualidad" formControlName="flagCurrently" (onChange)="OnCurrentlyCheckboxChange(ee)"></p-checkbox>
@@ -204,7 +204,7 @@
                     <div formArrayName="knownLanguages">
                         <div *ngFor="let kl of getKnownLanguages(); index as i" formGroupName="{{i}}">
                             <p class="subHeaderText">Idioma</p>
-                            <p-dropdown [options]="languages" placeholder="Nombre del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full" formControlName="language" [ngClass]="{ 'ng-invalid ng-dirty': kl.get('language')?.errors && kl.get('language')?.touched }"></p-dropdown>
+                            <p-dropdown [options]="languages" placeholder="Nombre del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full" formControlName="language" (onChange)="OnLanguageChange(kl)" [ngClass]="{ 'ng-invalid ng-dirty': kl.get('language')?.errors && kl.get('language')?.touched }"></p-dropdown>
                             <p class="subHeaderText">Nivel</p>
                             <p-dropdown [options]="levels" placeholder="Nivel del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full" formControlName="level" [ngClass]="{ 'ng-invalid ng-dirty': kl.get('level')?.errors && kl.get('level')?.touched }"></p-dropdown>
 

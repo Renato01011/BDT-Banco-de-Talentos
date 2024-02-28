@@ -30,7 +30,8 @@ export interface LangProficiencyModel {
 export interface CountryModel {
     id: number,
     country: string,
-    code: string
+    code: string,
+    callingCode: string
 }
 
 export interface CityModel {
@@ -42,6 +43,7 @@ export interface CountryCityModel {
     id: number,
     country: string,
     code: string,
+    callingCode: string,
     cities: [
         {
             id: number,

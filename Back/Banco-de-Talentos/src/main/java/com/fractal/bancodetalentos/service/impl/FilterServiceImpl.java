@@ -24,20 +24,23 @@ public class FilterServiceImpl implements FilterService {
                 .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
                 .setParameter(1, filterTalentReq.getHabilities())
                 .setParameter(2, filterTalentReq.getLanguageIds())
-                .setParameter(3, filterTalentReq.getLevelIds());
+                .setParameter(3, filterTalentReq.getLevelIds())
+                .setParameter(4, filterTalentReq.getNameJobTitle());
         storedProcedureQueryFilterTalent.execute();
         List<Object[]> result = storedProcedureQueryFilterTalent.getResultList();
         List<FilterTalentoResp> respList = new ArrayList<>();
         for (Object[] objects: result) {
             FilterTalentoResp filterTalentResp = new FilterTalentoResp();
             filterTalentResp.setId((Integer) objects[0]);
-            filterTalentResp.setName((String) objects[1]);
-            filterTalentResp.setInitialSalary((Integer) objects[2]);
-            filterTalentResp.setFinalSalary((Integer) objects[3]);
-            filterTalentResp.setLocation((String) objects[4]);
-            filterTalentResp.setAvgRating((Integer) objects[5]);
+            filterTalentResp.setImage((byte[]) objects[1]);
+            filterTalentResp.setNameJobTitle((String) objects[2]);
+            filterTalentResp.setInitialSalary((Integer) objects[3]);
+            filterTalentResp.setFinalSalary((Integer) objects[4]);
+            filterTalentResp.setLocation((String) objects[5]);
+            filterTalentResp.setAvgRating((Integer) objects[6]);
             respList.add(filterTalentResp);
         }
         return respList;

@@ -44,15 +44,19 @@
                         <input pInputText placeholder="Apellido materno" class="w-full" formControlName="secondSurName" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('secondSurName') }"/>
                     </div>
                     <div>
-                        <h3>Locación</h3>
+                        <h3 class="headerText">Locación</h3>
                         <p class="subHeaderText">País</p>
-                        <p-dropdown [options]="countries" styleClass="w-full" class="w-full" placeholder="País" optionLabel="country" [showClear]="true" appendTo="body" formControlName="country" (onChange)="OnCountryChange()" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('country') }"></p-dropdown>
+                        <p-dropdown [options]="countries" styleClass="w-full" class="w-full" placeholder="País" optionLabel="country" [showClear]="false" appendTo="body" formControlName="country" (onChange)="OnCountryChange()" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('country') }"></p-dropdown>
                         <p class="subHeaderText" *ngIf="newTalentForm.get('country')?.value != null">Ciudad</p>
-                        <p-dropdown *ngIf="newTalentForm.get('country')?.value != null" [options]="cities" styleClass="w-full" class="w-full" placeholder="Ciudad" optionLabel="city" [showClear]="true" appendTo="body" formControlName="city" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('city') }"></p-dropdown>
+                        <p-dropdown *ngIf="newTalentForm.get('country')?.value != null" [options]="cities" styleClass="w-full" class="w-full" placeholder="Ciudad" optionLabel="city" [showClear]="false" appendTo="body" formControlName="city" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('city') }"></p-dropdown>
                     </div>
                     <div>
-                        <h3>Telefono</h3>
-                        <p-inputMask class="w-full" styleClass="w-full" mask="999-999-999" placeholder="999-999-999" formControlName="phone" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('country') }"></p-inputMask>
+                        <h3 class="headerText">Telefono</h3>
+                        <p-dropdown [options]="countries" styleClass="w-full mb-2" class="w-full mb-2" placeholder="Codigo de País" optionLabel="country" [showClear]="false" appendTo="body" formControlName="callingCode" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('callingCode') }"></p-dropdown>
+                        <div class="h-3rem p-inputgroup">
+                            <span class="p-inputgroup-addon w-5rem pr-0">{{ newTalentForm.get("callingCode")?.value == null ? "" : newTalentForm.get("callingCode")?.value.callingCode }}</span>
+                            <p-inputMask [style]="{ 'border-radius': '0', 'border-top-right-radius': '0.375rem', 'border-bottom-right-radius': '0.375rem' }" class="w-full h-full" styleClass="w-full h-full" mask="999-999-999" placeholder="999-999-999" formControlName="phone" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('phone') }"></p-inputMask>
+                        </div>
                     </div>
                     <div>
                         <h3 class="headerText">Curriculum Vitae</h3>
@@ -84,7 +88,7 @@
                     </div>
                     <div class="mt-4">
                         <h3 class="headerText">Puesto actual</h3>
-                        <p-dropdown [options]="profiles" styleClass="w-full" class="w-full" placeholder="Puesto Actual" optionLabel="name" [showClear]="true" appendTo="body" formControlName="profile" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('profile') }"></p-dropdown>
+                        <p-dropdown [options]="profiles" styleClass="w-full" class="w-full" placeholder="Puesto Actual" optionLabel="name" [showClear]="false" appendTo="body" formControlName="profile" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('profile') }"></p-dropdown>
                     </div>
                     <div class="pt-1">
                         <h3 class="headerText">Medios Sociales</h3>
@@ -204,9 +208,9 @@
                     <div formArrayName="knownLanguages">
                         <div *ngFor="let kl of getKnownLanguages(); index as i" formGroupName="{{i}}">
                             <p class="subHeaderText">Idioma</p>
-                            <p-dropdown [options]="languages" placeholder="Nombre del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full" formControlName="language" (onChange)="OnLanguageChange(kl)" [ngClass]="{ 'ng-invalid ng-dirty': kl.get('language')?.errors && kl.get('language')?.touched }"></p-dropdown>
+                            <p-dropdown [options]="languages" placeholder="Nombre del idioma" optionLabel="name" [showClear]="false" appendTo="body" class="w-full" styleClass="w-full" formControlName="language" (onChange)="OnLanguageChange(kl)" [ngClass]="{ 'ng-invalid ng-dirty': kl.get('language')?.errors && kl.get('language')?.touched }"></p-dropdown>
                             <p class="subHeaderText">Nivel</p>
-                            <p-dropdown [options]="levels" placeholder="Nivel del idioma" optionLabel="name" [showClear]="true" appendTo="body" class="w-full" styleClass="w-full" formControlName="level" [ngClass]="{ 'ng-invalid ng-dirty': kl.get('level')?.errors && kl.get('level')?.touched }"></p-dropdown>
+                            <p-dropdown [options]="levels" placeholder="Nivel del idioma" optionLabel="name" [showClear]="false" appendTo="body" class="w-full" styleClass="w-full" formControlName="level" [ngClass]="{ 'ng-invalid ng-dirty': kl.get('level')?.errors && kl.get('level')?.touched }"></p-dropdown>
 
                             <div class="pt-4">
                                 <p-rating formControlName="starCount" [cancel]="false"></p-rating>

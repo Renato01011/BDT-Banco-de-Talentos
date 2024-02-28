@@ -49,6 +49,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     profilePicture: [, [Validators.required]],
     country: [, [Validators.required]],
     city: [, [Validators.required]],
+    callingCode: [, [Validators.required]],
     phone: ['', [Validators.required]],
     description: ['', [Validators.required, Validators.minLength(10), Validators.max(200)]],
     profile: [null, [Validators.required]],
@@ -114,7 +115,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     this.profiles = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_PROFILES) || '{}');
     this.coins = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_CURRENCIES) || '{}');
     this.countries = JSON.parse(sessionStorage.getItem(MasterRespConst.STORAGE_CURRENT_COUNTRIES) || '{}');
-    this.onCountryChange();
+    this.OnCountryChangeGetData();
     this.OnFinalSalaryInput();
     this.OnInitialSalaryInput();
   }
@@ -349,9 +350,9 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     return objectArray;
   }
 
-  onCountryChange() {
+  OnCountryChangeGetData() {
     this.newTalentForm.get("country")!.valueChanges.pipe(
-      switchMap((country) => this.masterService.getCities(country.id))
+      switchMap((country) => this.masterService.getCities(country.id)),
     ).subscribe((cities) => this.cities = cities);
   }
 
@@ -462,7 +463,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         tipoMoneda: this.newTalentForm.get('coin')?.value.id,
         montoInicial: this.newTalentForm.get('initialAmount')?.value,
         montoFinal: this.newTalentForm.get('finalAmount')?.value,
-        celular: this.newTalentForm.get("phone")?.value,
+        celular: this.newTalentForm.get("callingCode")?.value.callingCode + ' ' + this.newTalentForm.get("phone")?.value,
         habilidadesTecnicas: this.getTechnicalAbilitiesArrayValues(),
         habilidadesBlandas: this.getSoftSkillsArrayValues(),
         experienciasLaborales: this.getWorkExperienceArrayValues(),
@@ -480,7 +481,8 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         (error) => {
           this.loaderService.hideLoader();
           this.toastService.addProperties('error', "Ocurrio un error", error.message);
-        });
+        }
+      );
     }
     else {
       this.toastService.addProperties('error', "Ocurrió un problema", "Revise los campos ingresados");

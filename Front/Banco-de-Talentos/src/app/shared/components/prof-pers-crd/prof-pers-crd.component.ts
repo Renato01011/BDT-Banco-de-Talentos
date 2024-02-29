@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
-import { FrmValService } from '../../service/frm-val.service';
+import { FrmValService } from '../../service/frmVal/frm-val.service';
+import { MasterService } from 'src/app/core/services/master/master.service';
+import { CurrenciesModel } from '../../models/interfaces/master.interfaces';
 
 const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
 const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
@@ -13,8 +15,9 @@ const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
 })
 export class ProfPersCrdComponent implements OnInit {
   resume: MenuItem[] = [];
-  coins: any[] = [];
   rating: number = 0;
+
+  coins: CurrenciesModel[] = [];
 
   selectedCoin: any = null;
 
@@ -22,7 +25,11 @@ export class ProfPersCrdComponent implements OnInit {
   editProfilePicture: boolean = false;
   editSalaryDialog: boolean = false;
 
-  constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
+  constructor(
+    private fb: FormBuilder,
+    private fValidator: FrmValService,
+    private masterService: MasterService
+  ) {}
 
   public redSocForm: FormGroup = this.fb.group({
     linkedin: [
@@ -33,7 +40,7 @@ export class ProfPersCrdComponent implements OnInit {
   });
 
   public salaryForm: FormGroup = this.fb.group({
-    currency: ['Soles', [Validators.required]],
+    currency: ['', [Validators.required]],
     iAmount: ['', [Validators.required]],
     fAmount: ['', [Validators.required]],
   });
@@ -41,9 +48,37 @@ export class ProfPersCrdComponent implements OnInit {
   ngOnInit(): void {
     this.rating = 3;
 
-    this.coins = [{ name: 'Soles' }, { name: 'Dolares' }];
-
     this.resume = [{ label: 'CV' }, { label: 'CV Fractal' }];
+    this.checkCurrencies();
+  }
+
+  private getCurrencies(): void {
+    this.masterService.getCurrencies().subscribe({
+      next: (skills) => {
+        this.coins = skills;
+      },
+    });
+  }
+
+  public get isCurrencyListEmpty(): boolean {
+    return !this.coins || this.coins.length === 0;
+  }
+
+  private get isCacheCurrenciesEmpty(): boolean {
+    return (
+      !this.masterService.cacheStorage.byCurrency.currencies ||
+      this.masterService.cacheStorage.byCurrency.currencies.length === 0
+    );
+  }
+
+  private checkCurrencies(): void {
+    if (this.isCacheCurrenciesEmpty) {
+      this.getCurrencies();
+    } else {
+      const cacheCurrencies =
+        this.masterService.cacheStorage.byCurrency.currencies;
+      this.coins = cacheCurrencies;
+    }
   }
 
   isValidField(field: string) {
@@ -87,6 +122,7 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   hideEditSalaryDialog() {
+    this.salaryForm.reset();
     this.editSalaryDialog = false;
   }
 }

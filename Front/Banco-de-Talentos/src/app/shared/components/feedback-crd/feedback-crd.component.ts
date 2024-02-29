@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FrmValService } from '../../service/frm-val.service';
+import { FrmValService } from '../../service/frmVal/frm-val.service';
 
 @Component({
   selector: 'shared-feedback-crd',

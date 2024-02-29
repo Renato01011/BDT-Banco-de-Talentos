@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FrmValService } from '../../service/frm-val.service';
+import { FrmValService } from '../../service/frmVal/frm-val.service';
 
 const yearExpRegEx = '^(?:[0-9]|1[0-9]|20)$';
 

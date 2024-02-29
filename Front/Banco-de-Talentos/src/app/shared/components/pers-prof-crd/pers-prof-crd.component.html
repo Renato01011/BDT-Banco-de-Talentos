@@ -1,9 +1,10 @@
 <div
   class="surface-section hover:surface-hover flex border-round-lg p-2 my-2 w-full cursor-pointer"
+  *ngFor="let item of talents | slice : 0 : 7"
 >
   <div class="w-3 p-2 flex align-items-center justify-content-center">
     <p-avatar
-      image="./assets/users/1.jpg"
+      [image]="item.image | base64ToImage"
       size="xlarge"
       shape="circle"
     ></p-avatar>
@@ -12,15 +13,17 @@
     <div class="flex flex-column flex-wrap w-full gap-1">
       <div class="border-round flex align-items-center justify-content-start">
         <span class="font-semibold text-base text-800">
-          Juan Lopez Martinez
+          {{ item.nameJobTitle | extractFullName }}
         </span>
       </div>
       <div class="border-round flex align-items-center justify-content-start">
-        <span class="text-500 text-sm font-light"> Full-stack developer </span>
+        <span class="text-500 text-sm font-light">
+          {{ item.nameJobTitle | extractJobPosition }}
+        </span>
       </div>
       <div class="border-round flex align-items-center justify-content-between">
         <p-rating
-          [(ngModel)]="rating"
+          [(ngModel)]="item.avgRating"
           [stars]="5"
           [cancel]="false"
           [readonly]="true"
@@ -29,11 +32,11 @@
       <div class="border-round flex align-items-center justify-content-between">
         <span class="text-500 text-sm font-light">
           <i class="pi pi-map-marker text-sm text-800"></i>
-          Lima, Peru
+          {{ item.location | titlecase }}
         </span>
         <span class="text-500 text-sm font-light">
           <i class="pi pi-dollar text-sm text-800"></i>
-          2500 - 3000
+          {{ item.initialSalary }} - {{ item.finalSalary }}
         </span>
       </div>
     </div>

@@ -35,4 +35,5 @@ public class TalentResp {
     private List<LanguageLevelResp> LanguageLevels;
     private List<DocumentResp> documents;
     private List<MasterTalentResp> miscData;
+    private List<FeedbackResp> feedbacks;
 }

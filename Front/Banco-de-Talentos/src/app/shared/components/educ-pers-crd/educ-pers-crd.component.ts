@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
+import { EducationalExperience } from '../../models/interfaces/talentResp.interfaces';
 
 @Component({
   selector: 'shared-educ-pers-crd',
@@ -8,6 +9,9 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
   styleUrls: ['./educ-pers-crd.component.scss'],
 })
 export class EducPersCrdComponent implements OnInit {
+  @Input()
+  educExp: EducationalExperience[] = [];
+
   newEducationalExperienceDialog: boolean = false;
   editEducationalExperienceDialog: boolean = false;
 

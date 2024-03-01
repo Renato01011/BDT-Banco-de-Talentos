@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Document } from '../../models/interfaces/talentResp.interfaces';
 
 @Component({
   selector: 'shared-certs-pers-crd',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./certs-pers-crd.component.scss'],
 })
 export class CertsPersCrdComponent implements OnInit {
+  @Input()
+  documents: Document[] = [];
+
   addFileDialog: boolean = false;
 
   responsiveOptions: any[] = [];
-  products: any[] = [];
 
   constructor() {}
 
@@ -25,26 +28,6 @@ export class CertsPersCrdComponent implements OnInit {
         breakpoint: '560px',
         numVisible: 1,
         numScroll: 1,
-      },
-    ];
-    this.products = [
-      {
-        name: '1',
-      },
-      {
-        name: '2',
-      },
-      {
-        name: '3',
-      },
-      {
-        name: '4',
-      },
-      {
-        name: '5',
-      },
-      {
-        name: '6',
       },
     ];
   }

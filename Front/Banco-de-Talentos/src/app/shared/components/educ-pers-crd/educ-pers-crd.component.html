@@ -14,11 +14,12 @@
     </div>
   </div>
   <div
-    class="w-12 flex align-items-center surface-hover p-1 mx-0 sm:mx-3 border-round-md"
+    class="w-12 flex align-items-center surface-hover border-round-md p-1 mx-0 sm:mx-3 my-1"
+    *ngFor="let item of educExp"
   >
     <div class="w-2 py-1 flex align-items-center justify-content-center">
       <p-avatar
-        image="./assets/users/1.jpg"
+        image="./assets/users/no-images.jpeg"
         size="large"
         shape="circle"
       ></p-avatar>
@@ -26,10 +27,13 @@
     <div class="w-8 p-1 flex align-items-center justify-content-center">
       <div class="flex flex-column gap-2 w-full">
         <div class="flex align-items-center font-semibold text-base text-800">
-          Pontificia Universidad Católica del Perú
+          {{ item.institution }}
         </div>
         <div class="flex align-items-center text-500 text-sm font-normal">
-          Bachiller en Ingeniería de Sistemas 2015 - 2021
+          {{ item.degree }}
+          {{ item.major }}
+          {{ item.initialDate | extractYear }} -
+          {{ item.finalDate | extractYear }}
         </div>
       </div>
     </div>

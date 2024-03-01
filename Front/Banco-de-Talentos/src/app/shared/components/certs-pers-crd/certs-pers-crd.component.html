@@ -1,7 +1,7 @@
 <div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
   <div class="w-12 sm:w-8 p-1 flex align-items-center justify-content-center">
     <p-carousel
-      [value]="products"
+      [value]="documents"
       [numVisible]="2"
       [numScroll]="2"
       [circular]="true"
@@ -31,13 +31,13 @@
                       class="w-10rem flex align-items-center align-content-start white-space-nowrap overflow-hidden text-overflow-ellipsis"
                     >
                       Certificado
-                      {{ product.name }}
+                      {{ product.documentName }}
                     </div>
                   </div>
                   <div
                     class="w-12 border-round text-xs text-500 flex align-items-center pl-2"
                   >
-                    PDF
+                    {{ product.documentType }}
                   </div>
                 </div>
               </div>

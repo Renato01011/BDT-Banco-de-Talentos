@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
+import { WorkExperience } from '../../models/interfaces/talentResp.interfaces';
 
 @Component({
   selector: 'shared-exp-pers-crd',
@@ -8,6 +9,9 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
   styleUrls: ['./exp-pers-crd.component.scss'],
 })
 export class ExpPersCrdComponent implements OnInit {
+  @Input()
+  workExp: WorkExperience[] = [];
+
   newWorkExperienceDialog: boolean = false;
   editWorkExperienceDialog: boolean = false;
 
@@ -103,5 +107,14 @@ export class ExpPersCrdComponent implements OnInit {
   hideNewWorkExperienceDialog() {
     this.newExpForm.reset();
     this.newWorkExperienceDialog = false;
+  }
+
+  public expYear(initialDate: string, finalDate: string): number {
+    const startDate = new Date(initialDate);
+    const endDate = new Date(finalDate);
+    const difference = endDate.getTime() - startDate.getTime();
+    const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25;
+    const years = difference / millisecondsInYear;
+    return Math.floor(years);
   }
 }

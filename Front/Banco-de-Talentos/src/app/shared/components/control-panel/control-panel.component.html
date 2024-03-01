@@ -41,26 +41,7 @@
           [disabled]="isSkillsListEmpty"
         ></p-button>
       </div>
-      <div class="mx-1 mb-2 md:mb-0">
-        <p-overlayPanel #languageOP [style]="{ width: '180px' }">
-          <ng-template pTemplate>
-            <p-listbox
-              [options]="language"
-              optionLabel="name"
-              optionValue="id"
-              [(ngModel)]="selectedIdLanguage"
-              styleClass="border-none"
-            ></p-listbox>
-          </ng-template>
-        </p-overlayPanel>
 
-        <p-button
-          label="Idioma"
-          styleClass="p-button-sm p-button-rounded p-button-secondary"
-          (click)="isLanguageListEmpty ? null : languageOP.toggle($event)"
-          [disabled]="isLanguageListEmpty"
-        ></p-button>
-      </div>
       <div class="mx-1 mb-2 md:mb-0">
         <p-overlayPanel #proficiencyOP [style]="{ width: '180px' }">
           <ng-template pTemplate>
@@ -75,12 +56,13 @@
         </p-overlayPanel>
 
         <p-button
-          label="Nivel"
+          label="Nivel de inglés"
           styleClass="p-button-sm p-button-rounded p-button-secondary"
           (click)="isProficiencyListEmpty ? null : proficiencyOP.toggle($event)"
           [disabled]="isProficiencyListEmpty"
         ></p-button>
       </div>
+
       <div class="mx-1 mb-2 md:mb-0">
         <p-overlayPanel #favorite [style]="{ width: '180px' }">
           <ng-template pTemplate>

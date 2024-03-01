@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { FilterService } from '../../../core/services/filter/filter.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
 import { FilterResponse } from '../../models/interfaces/filterResp.interfaces';
 
 @Component({
@@ -11,5 +11,15 @@ export class PersProfCrdComponent {
   @Input()
   talents: FilterResponse[] = [];
 
-  constructor(private filterService: FilterService) {}
+  @Input()
+  selId?: number;
+
+  @Output()
+  public talentId = new EventEmitter<number>();
+
+  constructor() {}
+
+  emitTalentId(id: number) {
+    this.talentId.emit(id);
+  }
 }

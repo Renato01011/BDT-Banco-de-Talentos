@@ -44,8 +44,8 @@ public class NewTalentReq {
     private String linkedin;
     @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
     private String github;
-    @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
-    private String tipoMoneda;
+    @NotNull(message = "Este campo no puede ser nulo")
+    private Integer idTipoMoneda;
     @NotNull(message = "Este campo no puede ser nulo")
     @Min(value = 0,  message = "Debe ser un numero positivo o cero")
     private Integer montoInicial;

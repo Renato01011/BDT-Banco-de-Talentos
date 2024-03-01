@@ -16,7 +16,7 @@ export interface NewTalentModel {
     idCiudad: number,
     linkedin: string,
     github: string,
-    tipoMoneda: string,
+    idTipoMoneda: string,
     montoInicial: number,
     montoFinal: number,
     celular: string,

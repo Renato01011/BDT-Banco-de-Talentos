@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FrmValService } from '../../service/frmVal/frm-val.service';
+
+const yearExpRegEx = '^(?:[0-9]|1[0-9]|20)$';
+
 interface Favorite {
   name: string;
   code: string;
@@ -19,7 +24,16 @@ export class SkillsPersCrdComponent implements OnInit {
   technicalSkillsDialog: boolean = false;
   softSkillsDialog: boolean = false;
 
-  constructor() {}
+  constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
+
+  public techSkForm: FormGroup = this.fb.group({
+    name: ['', [Validators.required]],
+    yearExp: ['', [Validators.required, Validators.pattern(yearExpRegEx)]],
+  });
+
+  public softSkForm: FormGroup = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(4)]],
+  });
 
   ngOnInit(): void {
     this.technicalSkills = [
@@ -38,6 +52,22 @@ export class SkillsPersCrdComponent implements OnInit {
       { name: 'Resolución de problemas' },
       { name: 'Adaptabilidad' },
     ];
+  }
+
+  onSveTechSkForm() {
+    console.log(this.techSkForm.value);
+  }
+
+  onSveSoftSkForm() {
+    console.log(this.techSkForm.value);
+  }
+
+  isValidField(field: string) {
+    return this.fValidator.isValidField(this.techSkForm, field);
+  }
+
+  isValidSoftField(field: string) {
+    return this.fValidator.isValidField(this.softSkForm, field);
   }
 
   crearNuevoArray(): { name: string }[] {

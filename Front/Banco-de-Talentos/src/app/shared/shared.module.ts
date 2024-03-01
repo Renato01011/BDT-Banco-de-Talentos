@@ -13,6 +13,7 @@ import { ExpPersCrdComponent } from './components/exp-pers-crd/exp-pers-crd.comp
 import { EducPersCrdComponent } from './components/educ-pers-crd/educ-pers-crd.component';
 import { LangPersCrdComponent } from './components/lang-pers-crd/lang-pers-crd.component';
 import { FeedbackCrdComponent } from './components/feedback-crd/feedback-crd.component';
+import { PipesModule } from '../core/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,13 @@ import { FeedbackCrdComponent } from './components/feedback-crd/feedback-crd.com
     LangPersCrdComponent,
     FeedbackCrdComponent,
   ],
-  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    PipesModule,
+  ],
   exports: [
     HeaderComponent,
     ControlPanelComponent,

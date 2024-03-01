@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FrmValService } from '../../service/frmVal/frm-val.service';
+import { MasterService } from 'src/app/core/services/master/master.service';
+import {
+  LangProficiencyModel,
+  LanguageModel,
+} from '../../models/interfaces/master.interfaces';
 
 @Component({
   selector: 'shared-lang-pers-crd',
@@ -6,28 +13,71 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lang-pers-crd.component.scss'],
 })
 export class LangPersCrdComponent implements OnInit {
-
   rating: number = 0;
 
   newLanguageDialog: boolean = false;
   editLanguageDialog: boolean = false;
 
-  languages: any[] = [];
-  levels: any[] = [];
+  language: LanguageModel[] = [];
 
-  constructor() {}
+  proficiency: LangProficiencyModel[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private fValidator: FrmValService,
+    private masterService: MasterService
+  ) {}
+
+  public newLanguageForm: FormGroup = this.fb.group({
+    languages: ['', [Validators.required]],
+    proficiency: ['', [Validators.required]],
+    rating: ['', [Validators.required]],
+  });
+
+  public editLanguageForm: FormGroup = this.fb.group({
+    editLanguages: ['', [Validators.required]],
+    editProficiency: ['', [Validators.required]],
+    editRating: ['', [Validators.required]],
+  });
 
   ngOnInit(): void {
-    this.languages = [
-      { name: 'Ingles', code: 'in' },
-      { name: 'Español', code: 'es' }
-    ];
-    this.levels = [
-      { name: 'Básico', code: '1' },
-      { name: 'Intermedio', code: '2' },
-      { name: 'Avanzado', code: '3' },
-      { name: 'Nativo', code: '4' },
-    ];
+    this.language = this.uploadLanguages;
+    this.proficiency = this.uploadProficiency;
+  }
+
+  private get uploadLanguages(): LanguageModel[] {
+    const cacheLanguages = this.masterService.cacheStorage.byLanguage.languages;
+    return cacheLanguages;
+  }
+
+  public get uploadProficiency(): LangProficiencyModel[] {
+    const cacheProficiencies =
+      this.masterService.cacheStorage.byLangProficiency.proficiencies;
+    return cacheProficiencies;
+  }
+
+  isValidField(field: string) {
+    return this.fValidator.isValidField(this.newLanguageForm, field);
+  }
+
+  onSveNewLanguageForm() {
+    console.log(this.newLanguageForm.value);
+  }
+
+  OnLanguageChange() {
+    this.newLanguageForm.controls['proficiency'].setValue(null);
+  }
+
+  isValidEditLangField(field: string) {
+    return this.fValidator.isValidField(this.editLanguageForm, field);
+  }
+
+  onSveEditLangForm() {
+    console.log(this.editLanguageForm.value);
+  }
+
+  OnEditLangChange() {
+    this.editLanguageForm.controls['editProficiency'].setValue(null);
   }
 
   openEditLanguageDialog() {
@@ -45,5 +95,4 @@ export class LangPersCrdComponent implements OnInit {
   hideNewLanguageDialog() {
     this.newLanguageDialog = false;
   }
-
 }

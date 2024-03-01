@@ -1,25 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
+import {
+  SoftSkill,
+  TechnicalAbility,
+} from '../../models/interfaces/talentResp.interfaces';
 
 const yearExpRegEx = '^(?:[0-9]|1[0-9]|20)$';
 
-interface Favorite {
-  name: string;
-  code: string;
-}
-interface Soft {
-  name: string;
-}
 @Component({
   selector: 'shared-skills-pers-crd',
   templateUrl: './skills-pers-crd.component.html',
   styleUrls: ['./skills-pers-crd.component.scss'],
 })
 export class SkillsPersCrdComponent implements OnInit {
-  technicalSkills: Favorite[] = [];
-  inlineTechnicalSkills: any[] = [];
-  softSkills: Soft[] = [];
+  @Input()
+  softSkills: SoftSkill[] = [];
+  @Input()
+  techSkills: TechnicalAbility[] = [];
+
+  inlineTechnicalSkills: { name: string }[] = [];
 
   technicalSkillsDialog: boolean = false;
   softSkillsDialog: boolean = false;
@@ -35,24 +35,7 @@ export class SkillsPersCrdComponent implements OnInit {
     name: ['', [Validators.required, Validators.minLength(4)]],
   });
 
-  ngOnInit(): void {
-    this.technicalSkills = [
-      { name: 'Docker', code: '1.3' },
-      { name: 'Express', code: '2' },
-      { name: 'Github', code: '3.5' },
-      { name: 'Data Structure', code: '4' },
-      { name: 'SQL', code: '4' },
-      { name: 'NoSQL', code: '4' },
-      { name: 'Node.js', code: '5' },
-    ];
-    this.inlineTechnicalSkills = this.crearNuevoArray();
-    this.softSkills = [
-      { name: 'Trabajo en equipo' },
-      { name: 'Empatía' },
-      { name: 'Resolución de problemas' },
-      { name: 'Adaptabilidad' },
-    ];
-  }
+  ngOnInit(): void {}
 
   onSveTechSkForm() {
     console.log(this.techSkForm.value);
@@ -70,9 +53,9 @@ export class SkillsPersCrdComponent implements OnInit {
     return this.fValidator.isValidField(this.softSkForm, field);
   }
 
-  crearNuevoArray(): { name: string }[] {
-    const newArray = this.technicalSkills.map((skill) => ({
-      name: `${skill.name} - ${skill.code}`,
+  public get inLineTechSkills(): { name: string }[] {
+    const newArray = this.techSkills.map((skill) => ({
+      name: `${skill.name} - ${skill.years}`,
     }));
     return newArray;
   }

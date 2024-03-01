@@ -1,6 +1,10 @@
 <div
-  class="surface-section hover:surface-hover flex border-round-lg p-2 my-2 w-full cursor-pointer"
+  class="hover:surface-hover flex border-round-lg p-2 my-2 w-full cursor-pointer"
   *ngFor="let item of talents | slice : 0 : 7"
+  (click)="emitTalentId(item.id)"
+  [ngClass]="{
+    'border-teal-200 border-1 bg-teal-200': item.id == selId
+  }"
 >
   <div class="w-3 p-2 flex align-items-center justify-content-center">
     <p-avatar

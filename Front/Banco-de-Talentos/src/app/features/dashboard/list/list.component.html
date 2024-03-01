@@ -11,7 +11,11 @@
         <p-scrollPanel
           [style]="{ width: '100%', height: 'calc(100vh - 190px)' }"
         >
-          <shared-pers-prof-crd [talents]="talents"></shared-pers-prof-crd>
+          <shared-pers-prof-crd
+            [talents]="talents"
+            (talentId)="searchByTalentId($event)"
+            [selId]="selId"
+          ></shared-pers-prof-crd>
         </p-scrollPanel>
       </div>
     </div>
@@ -24,13 +28,24 @@
         <p-scrollPanel
           [style]="{ width: '100%', height: 'calc(100vh - 190px)' }"
         >
-          <shared-prof-pers-crd></shared-prof-pers-crd>
-          <shared-certs-pers-crd></shared-certs-pers-crd>
-          <shared-skills-pers-crd></shared-skills-pers-crd>
-          <shared-summ-pers-crd></shared-summ-pers-crd>
-          <shared-exp-pers-crd></shared-exp-pers-crd>
-          <shared-educ-pers-crd></shared-educ-pers-crd>
-          <shared-lang-pers-crd></shared-lang-pers-crd>
+          <shared-prof-pers-crd
+            [customTalent]="customTalent"
+          ></shared-prof-pers-crd>
+          <shared-certs-pers-crd
+            [documents]="documents"
+          ></shared-certs-pers-crd>
+          <shared-skills-pers-crd
+            [softSkills]="softSkills"
+            [techSkills]="techSkills"
+          ></shared-skills-pers-crd>
+          <shared-summ-pers-crd
+            [description]="description"
+          ></shared-summ-pers-crd>
+          <shared-exp-pers-crd [workExp]="workExp"></shared-exp-pers-crd>
+          <shared-educ-pers-crd [educExp]="educExp"></shared-educ-pers-crd>
+          <shared-lang-pers-crd
+            [langProficiency]="langProficiency"
+          ></shared-lang-pers-crd>
           <shared-feedback-crd></shared-feedback-crd>
         </p-scrollPanel>
       </div>

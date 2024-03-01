@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { MasterService } from 'src/app/core/services/master/master.service';
@@ -6,6 +6,7 @@ import {
   LangProficiencyModel,
   LanguageModel,
 } from '../../models/interfaces/master.interfaces';
+import { LanguageLevel } from '../../models/interfaces/talentResp.interfaces';
 
 @Component({
   selector: 'shared-lang-pers-crd',
@@ -13,7 +14,8 @@ import {
   styleUrls: ['./lang-pers-crd.component.scss'],
 })
 export class LangPersCrdComponent implements OnInit {
-  rating: number = 0;
+  @Input()
+  langProficiency: LanguageLevel[] = [];
 
   newLanguageDialog: boolean = false;
   editLanguageDialog: boolean = false;

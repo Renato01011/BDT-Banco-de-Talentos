@@ -13,7 +13,9 @@
       ></button>
     </div>
   </div>
-  <div class="w-12 flex align-items-center surface-hover p-1 border-round-md">
+  <div
+    class="w-12 flex align-items-center surface-hover p-1 mx-0 sm:mx-3 border-round-md"
+  >
     <div class="w-3 sm:w-2 py-1 flex align-items-center justify-content-center">
       <div class="flex flex-column gap-2">
         <div class="flex align-items-center font-semibold text-base text-800">
@@ -51,132 +53,234 @@
 
 <p-dialog
   [(visible)]="newLanguageDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Agrega una nuevo idioma</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Agrega un nuevo idioma aprendido.</p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Agrega una nuevo idioma
+      </span>
     </div>
   </ng-template>
-  <div>
-    <p>Idioma</p>
-    <p-dropdown
-      [options]="languages"
-      placeholder="Nombre del idioma"
-      optionLabel="name"
-      [showClear]="true"
-      appendTo="body"
-      class="w-full"
-      styleClass="w-full"
-    ></p-dropdown>
-    <p>Nivel</p>
-    <p-dropdown
-      [options]="levels"
-      placeholder="Nivel del idioma"
-      optionLabel="name"
-      [showClear]="true"
-      appendTo="body"
-      class="w-full"
-      styleClass="w-full"
-    ></p-dropdown>
-    <div class="pt-4">
-      <p-rating></p-rating>
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Agrega un nuevo idioma aprendido.
+      </span>
     </div>
+    <form
+      class="w-12 flex flex-column"
+      [formGroup]="newLanguageForm"
+      autocomplete="off"
+      (ngSubmit)="onSveNewLanguageForm()"
+    >
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label for="languages" class="block text-left mb-2">Idioma</label>
+        <p-dropdown
+          [options]="language"
+          [showClear]="true"
+          placeholder="Nombre del idioma"
+          optionLabel="name"
+          optionValue="name"
+          appendTo="body"
+          class="w-full text-left"
+          styleClass="w-full"
+          formControlName="languages"
+          (onChange)="OnLanguageChange()"
+        ></p-dropdown>
+        <small
+          id="languages"
+          class="hidden"
+          [ngClass]="{ 'p-error block text-left': isValidField('languages') }"
+          >Este campo es obligatorio.</small
+        >
+      </div>
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label for="proficiency" class="block text-left mb-2">Nivel</label>
+        <p-dropdown
+          [options]="proficiency"
+          [showClear]="true"
+          placeholder="Nombre del idioma"
+          optionLabel="name"
+          optionValue="name"
+          appendTo="body"
+          class="w-full text-left"
+          styleClass="w-full"
+          formControlName="proficiency"
+        ></p-dropdown>
+        <small
+          id="proficiency"
+          class="hidden"
+          [ngClass]="{ 'p-error block text-left': isValidField('proficiency') }"
+          >Este campo es obligatorio.</small
+        >
+      </div>
+      <div class="w-12 flex flex-column align-items-center py-2">
+        <div class="w-12 flex align-items-center justify-content-between">
+          <p-rating formControlName="rating"></p-rating>
+        </div>
+        <div class="w-12 flex align-items-center">
+          <small
+            id="rating"
+            class="hidden"
+            [ngClass]="{ 'p-error block text-left': isValidField('rating') }"
+            >Por favor, completa este campo.</small
+          >
+        </div>
+      </div>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideNewLanguageDialog()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Editar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
+      </div>
+    </form>
   </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
-          (click)="hideNewLanguageDialog()"
-        ></button>
-      </div>
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Agregar"
-          icon="pi pi-check"
-          class="p-button-success w-full"
-        ></button>
-      </div>
-    </div>
-  </ng-template>
 </p-dialog>
 
 <p-dialog
   [(visible)]="editLanguageDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
   [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Edita tu habilidad en el idioma</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Edita tu habilidad en el idioma.</p>
-      </div>
+    <div class="flex align-items-center justify-content-between w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Edita tu experiencia
+      </span>
+      <span
+        class="text-red-300 hover:text-red-500 text-sm font-light mx-1 cursor-pointer"
+      >
+        <i class="pi pi-trash"></i>
+      </span>
     </div>
   </ng-template>
-  <div>
-    <p>Idioma</p>
-    <p-dropdown
-      [options]="languages"
-      placeholder="Nombre del idioma"
-      optionLabel="name"
-      [showClear]="true"
-      appendTo="body"
-      class="w-full"
-      styleClass="w-full"
-    ></p-dropdown>
-    <p>Nivel</p>
-    <p-dropdown
-      [options]="levels"
-      placeholder="Nivel del idioma"
-      optionLabel="name"
-      [showClear]="true"
-      appendTo="body"
-      class="w-full"
-      styleClass="w-full"
-    ></p-dropdown>
-    <div class="pt-4">
-      <p-rating></p-rating>
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Edita tu habilidad en el idioma.
+      </span>
     </div>
+    <form
+      class="w-12 flex flex-column"
+      [formGroup]="editLanguageForm"
+      autocomplete="off"
+      (ngSubmit)="onSveEditLangForm()"
+    >
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label for="editLanguages" class="block text-left mb-2">Idioma</label>
+        <p-dropdown
+          [options]="language"
+          [showClear]="true"
+          placeholder="Nombre del idioma"
+          optionLabel="name"
+          optionValue="name"
+          appendTo="body"
+          class="w-full text-left"
+          styleClass="w-full"
+          formControlName="editLanguages"
+          (onChange)="OnEditLangChange()"
+        ></p-dropdown>
+        <small
+          id="editLanguages"
+          class="hidden"
+          [ngClass]="{
+            'p-error block text-left': isValidEditLangField('editLanguages')
+          }"
+          >Este campo es obligatorio.</small
+        >
+      </div>
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label for="editProficiency" class="block text-left mb-2">Nivel</label>
+        <p-dropdown
+          [options]="proficiency"
+          [showClear]="true"
+          placeholder="Nombre del idioma"
+          optionLabel="name"
+          optionValue="name"
+          appendTo="body"
+          class="w-full text-left"
+          styleClass="w-full"
+          formControlName="editProficiency"
+        ></p-dropdown>
+        <small
+          id="editProficiency"
+          class="hidden"
+          [ngClass]="{
+            'p-error block text-left': isValidEditLangField('editProficiency')
+          }"
+          >Este campo es obligatorio.</small
+        >
+      </div>
+      <div class="w-12 flex flex-column align-items-center py-2">
+        <div class="w-12 flex align-items-center justify-content-between">
+          <p-rating formControlName="editRating"></p-rating>
+        </div>
+        <div class="w-12 flex align-items-center">
+          <small
+            id="editRating"
+            class="hidden"
+            [ngClass]="{
+              'p-error block text-left': isValidEditLangField('editRating')
+            }"
+            >Por favor, completa este campo.</small
+          >
+        </div>
+      </div>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideEditLanguageDialog()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Editar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
+      </div>
+    </form>
   </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
-          (click)="hideEditLanguageDialog()"
-        ></button>
-      </div>
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Editar"
-          icon="pi pi-check"
-          class="p-button-success w-full"
-        ></button>
-      </div>
-    </div>
-  </ng-template>
 </p-dialog>

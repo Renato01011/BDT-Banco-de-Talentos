@@ -32,6 +32,7 @@ public class BtTmTalento implements Serializable {
     @Column(name = "AP_APELLIDO_MATERNO")
     private String apApellidoMaterno;
 
+    @Lob
     @Column(name = "IM_IMAGEN")
     private byte[] imImagen;
 

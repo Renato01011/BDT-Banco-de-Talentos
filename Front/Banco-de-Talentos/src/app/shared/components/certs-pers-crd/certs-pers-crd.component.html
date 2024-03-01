@@ -50,13 +50,10 @@
   <div class="w-12 sm:w-4 py-1 flex align-items-center justify-content-center">
     <button
       pButton
-      class="p-button-outlined border-transparent h-8rem w-10 surface-50 flex flex-column"
+      class="p-button-outlined border-transparent h-8rem w-10 surface-50 hover:surface-200 flex flex-column"
       (click)="openAddFileDialog()"
     >
-      <i
-        class="pi pi-cloud-upload px-2 pt-3"
-        style="font-size: 1.5rem; color: #708090"
-      ></i>
+      <i class="pi pi-cloud-upload px-2 pt-3 text-2xl text-bluegray-400"></i>
       <span
         class="px-3 pt-4 flex align-items-center justify-content-center font-semibold border-round"
         style="color: #0b85c3"
@@ -67,32 +64,32 @@
 </div>
 <p-dialog
   [(visible)]="addFileDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Agrega un archivo</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>
-          Sube tu nuevo certificado, diploma o algún archivo que respalde tus
-          aptitudes.
-        </p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Agrega un archivo
+      </span>
     </div>
   </ng-template>
-  <div class="flex flex-warp align-items-center justify-content-center">
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Sube tu nuevo certificado, diploma o algún archivo que respalde tus
+        aptitudes.
+      </span>
+    </div>
     <button
       pButton
       class="p-button-outlined border-300 w-full flex flex-column"
+      (click)="fileUpload.click()"
     >
-      <i
-        class="pi pi-cloud-upload px-2 pt-5"
-        style="font-size: 1.5rem; color: #708090"
-      ></i>
+      <i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"></i>
       <span
         class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
         style="color: #0b85c3"
@@ -102,29 +99,29 @@
         class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
         >PDF</span
       >
+      <input #fileUpload accept=".pdf" type="file" style="display: none" />
     </button>
-  </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
+    <div class="w-12 flex flex-wrap pt-3">
+      <div class="w-6 p-2 pl-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
           label="Cancelar"
           icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
+          class="p-button-outlined p-button-secondary w-full"
           (click)="hideAddFileDialog()"
         ></button>
       </div>
-      <div class="field col">
+      <div class="w-6 p-2 pr-0 flex align-items-center justify-content-center">
         <button
           pButton
           pRipple
-          label="Subir"
+          label="Editar"
           icon="pi pi-check"
+          type="submit"
           class="p-button-success w-full"
         ></button>
       </div>
     </div>
-  </ng-template>
+  </div>
 </p-dialog>

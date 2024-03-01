@@ -1,9 +1,10 @@
 <div
   class="surface-section hover:surface-hover flex border-round-lg p-2 my-2 w-full cursor-pointer"
+  *ngFor="let item of talents | slice : 0 : 7"
 >
   <div class="w-3 p-2 flex align-items-center justify-content-center">
     <p-avatar
-      image="./assets/users/1.jpg"
+      [image]="item.image | base64ToImage"
       size="xlarge"
       shape="circle"
     ></p-avatar>
@@ -12,15 +13,17 @@
     <div class="flex flex-column flex-wrap w-full gap-1">
       <div class="border-round flex align-items-center justify-content-start">
         <span class="font-semibold text-base text-800">
-          Juan Lopez Martinez
+          {{ item.nameJobTitle | extractFullName }}
         </span>
       </div>
       <div class="border-round flex align-items-center justify-content-start">
-        <span class="text-500 text-sm font-light"> Full-stack developer </span>
+        <span class="text-500 text-sm font-light">
+          {{ item.nameJobTitle | extractJobPosition }}
+        </span>
       </div>
       <div class="border-round flex align-items-center justify-content-between">
         <p-rating
-          [(ngModel)]="rating"
+          [(ngModel)]="item.avgRating"
           [stars]="5"
           [cancel]="false"
           [readonly]="true"
@@ -28,19 +31,19 @@
       </div>
       <div class="border-round flex align-items-center justify-content-between">
         <span class="text-500 text-sm font-light">
-          <i class="pi pi-map-marker" style="font-size: 0.875rem"></i>
-          Lima, Peru
+          <i class="pi pi-map-marker text-sm text-800"></i>
+          {{ item.location | titlecase }}
         </span>
         <span class="text-500 text-sm font-light">
-          <i class="pi pi-dollar" style="font-size: 0.875rem"></i>
-          2500 - 3000
+          <i class="pi pi-dollar text-sm text-800"></i>
+          {{ item.initialSalary }} - {{ item.finalSalary }}
         </span>
       </div>
     </div>
   </div>
   <div class="w-2 p-2 flex align-content-start justify-content-center">
     <span class="heart-icon">
-      <i class="pi pi-heart-fill" style="font-size: 1.25rem"></i>
+      <i class="pi pi-heart-fill text-xl"></i>
     </span>
   </div>
 </div>

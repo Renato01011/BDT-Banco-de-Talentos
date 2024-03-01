@@ -18,4 +18,8 @@ export class UrlConstants {
   public static readonly URL_REQ_CITIES_2 = '/cities';
   public static readonly URL_POST_TALENT =
     environment.host + environment.context + '/talent/new-talent';
+  public static readonly URL_REQ_TEC_SKILL =
+    environment.host + environment.context + '/tech/skills';
+  public static readonly URL_REQ_FILTER =
+    environment.host + environment.context + '/filter/filter-talent';
 }

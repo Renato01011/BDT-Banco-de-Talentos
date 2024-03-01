@@ -2,16 +2,51 @@
   height: calc(100vh - 180px);
 }
 
-:host ::ng-deep .p-chip.custom-chip {
-  background: var(--blue-50);
-  color: var(--blue-600);
-}
+:host ::ng-deep {
+  $chip-font-size: 0.875rem;
+  .p-chip {
+    &.custom-chip {
+      background: var(--blue-50);
+      color: var(--blue-600);
+    }
 
-:host ::ng-deep .p-chip.custom-red-chip {
-  background: var(--pink-50);
-  color: var(--pink-500);
-}
+    &.custom-red-chip {
+      background: var(--pink-50);
+      color: var(--pink-500);
+    }
 
-:host ::ng-deep .p-chip-text {
-  font-size: 0.875rem;
+    &-text {
+      font-size: $chip-font-size;
+    }
+  }
+  $primary-color: #009695;
+  $primary-hover-color: #007d7c;
+  $text-color: #ffffff;
+  $border-color: $primary-color;
+
+  .p-button,
+  .p-buttonset > .p-button,
+  .p-splitbutton > .p-button {
+    &.p-button-success {
+      color: $text-color;
+      background: $primary-color;
+      border: 1px solid $border-color;
+
+      &:enabled:hover {
+        background: $primary-hover-color;
+        border-color: $primary-hover-color;
+      }
+    }
+  }
+  .p-rating .p-rating-icon {
+    color: #faab34;
+  }
+
+  .p-rating .p-rating-icon.pi-star-fill {
+    color: #faab34;
+  }
+
+  .p-rating .p-rating-icon.p-rating-cancel {
+    color: #ef4444;
+  }
 }

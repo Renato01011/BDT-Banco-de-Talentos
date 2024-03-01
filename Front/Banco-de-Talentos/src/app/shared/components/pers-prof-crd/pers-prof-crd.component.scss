@@ -1,3 +1,10 @@
 .heart-icon {
   color: #c11574;
 }
+
+:host ::ng-deep {
+  .p-rating .p-rating-icon,
+  .p-rating .p-rating-icon.pi-star-fill {
+    color: #faab34;
+  }
+}

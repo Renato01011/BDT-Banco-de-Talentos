@@ -264,6 +264,14 @@ public class TalentoServiceImpl implements TalentoService {
         storedProcedureQueryMasterTalent.execute();
         List<Object[]> masterTalent = storedProcedureQueryMasterTalent.getResultList();
 
+        // -- Feedbacks --
+        StoredProcedureQuery storedProcedureQueryFeedbacks = entityManager
+                .createStoredProcedureQuery("SP_GET_TALENT_FEEDBACKS")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .setParameter(1, id);
+        storedProcedureQueryFeedbacks.execute();
+        List<Object[]> feedbacks = storedProcedureQueryFeedbacks.getResultList();
+
         // -- -- Filling Response -- --
         TalentResp talentResp = new TalentResp();
 
@@ -373,6 +381,17 @@ public class TalentoServiceImpl implements TalentoService {
             masterTalentList.add(masterTalentTemp);
         }
         talentResp.setMiscData(masterTalentList);
+
+        // -- Feedbacks --
+        List<FeedbackResp> feedbackList = new ArrayList<>();
+        for (Object[] objects: feedbacks) {
+            FeedbackResp feedback = new FeedbackResp();
+            feedback.setIdFeedback((Integer) objects[0]);
+            feedback.setStarCount((Integer) objects[1]);
+            feedback.setDescription((String) objects[2]);
+            feedbackList.add(feedback);
+        }
+        talentResp.setFeedbacks(feedbackList);
 
         return talentResp;
     }

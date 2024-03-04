@@ -1,5 +1,6 @@
 package com.fractal.bancodetalentos.handler;
 
+import com.fractal.bancodetalentos.exception.DuplicatedDataException;
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.dto.ErrorDTO;
 import com.fractal.bancodetalentos.model.dto.ValidationErrDTO;
@@ -33,5 +34,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             errDTOS.add(new ValidationErrDTO(nameField, message));
         });
         return new ResponseEntity<>(errDTOS, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DuplicatedDataException.class)
+    public ResponseEntity<ErrorDTO> handlerDuplicatedDataException(DuplicatedDataException exception, WebRequest webRequest) {
+        ErrorDTO errorDTO = ErrorDTO.builder().timestamp(new Date()).status(400).error("BAD_REQUEST").message(exception.getMessage()).path(webRequest.getDescription(false).replace("uri=","")).build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 }

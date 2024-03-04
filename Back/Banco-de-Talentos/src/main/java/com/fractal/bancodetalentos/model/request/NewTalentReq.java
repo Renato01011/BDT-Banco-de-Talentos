@@ -6,10 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Lob;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 import java.util.List;
 
@@ -30,7 +28,8 @@ public class NewTalentReq {
     @Size(min = 1, message = "Este campo no puede estar vacío")
     @Lob
     private byte[] fotoDePerfil;
-
+    @Valid
+    @NotEmpty
     private List<Documento> documentos;
     @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
     private String descripcion;
@@ -54,15 +53,20 @@ public class NewTalentReq {
     private Integer montoFinal;
     @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
     private String celular;
-
+    @Valid
+    @NotEmpty
     private List<HabilidadesTecnicas> habilidadesTecnicas;
-
+    @Valid
+    @NotEmpty
     private List<HabilidadesBlandas> habilidadesBlandas;
-
+    @Valid
+    @NotEmpty
     private List<ExperienciasLaborales> experienciasLaborales;
-
+    @Valid
+    @NotEmpty
     private List<ExperienciasEducativas> experienciasEducativas;
-
+    @Valid
+    @NotEmpty
     private List<Idiomas> idiomas;
 
 }

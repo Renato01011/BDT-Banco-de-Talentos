@@ -1,7 +1,10 @@
 package com.fractal.bancodetalentos.service;
 
-import com.fractal.bancodetalentos.model.entity.BtTxMasterTalentoIdioma;
+import com.fractal.bancodetalentos.model.request.Idiomas;
+
+import java.util.Map;
 
 public interface MasterTalentoIdiomaService {
-    void delete(BtTxMasterTalentoIdioma talentoIdioma);
+
+    Map<String, String> addNewLanguage(Idiomas idiomas, Integer id);
 }

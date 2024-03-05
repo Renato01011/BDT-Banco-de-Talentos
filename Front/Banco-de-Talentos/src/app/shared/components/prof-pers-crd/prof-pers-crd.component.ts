@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { MasterService } from 'src/app/core/services/master/master.service';
 import { CurrenciesModel } from '../../models/interfaces/master.interfaces';
+import { CustomTalent } from '../../models/interfaces/customTalent.interfaces';
 
 const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
 const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
@@ -14,12 +15,12 @@ const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
   styleUrls: ['./prof-pers-crd.component.scss'],
 })
 export class ProfPersCrdComponent implements OnInit {
+  @Input()
+  customTalent?: CustomTalent;
+
   resume: MenuItem[] = [];
-  rating: number = 0;
 
   coins: CurrenciesModel[] = [];
-
-  selectedCoin: any = null;
 
   editSocialMediaDialog: boolean = false;
   editProfilePicture: boolean = false;
@@ -46,8 +47,6 @@ export class ProfPersCrdComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.rating = 3;
-
     this.resume = [{ label: 'CV' }, { label: 'CV Fractal' }];
     this.checkCurrencies();
   }
@@ -124,5 +123,39 @@ export class ProfPersCrdComponent implements OnInit {
   hideEditSalaryDialog() {
     this.salaryForm.reset();
     this.editSalaryDialog = false;
+  }
+
+  public get countryCity(): { country: string; city: string } {
+    const result = { country: '', city: '' };
+    if (!this.customTalent?.miscData) return result;
+    const { miscData } = this.customTalent;
+    const data = miscData.filter(
+      (item) => item.name === 'PAIS' || item.name === 'CIUDAD'
+    );
+    for (const item of data) {
+      if (item.name === 'PAIS') {
+        result.country = item.description;
+      } else if (item.name === 'CIUDAD') {
+        result.city = item.description;
+      }
+    }
+    return result;
+  }
+
+  public get workAs(): { name: string } {
+    const result = { name: '' };
+    if (!this.customTalent?.miscData) return result;
+    const { miscData } = this.customTalent;
+    const perfil = miscData.find((item) => item.name === 'PERFIL') ?? {
+      description: '',
+    };
+    result.name = perfil.description;
+    return result;
+  }
+
+  public get totFeedbacks(): number {
+    const result = 0;
+    if (!this.customTalent?.feedbacks) return result;
+    return this.customTalent.feedbacks.length;
   }
 }

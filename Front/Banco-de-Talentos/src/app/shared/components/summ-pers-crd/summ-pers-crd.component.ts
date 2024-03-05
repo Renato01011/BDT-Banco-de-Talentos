@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 
@@ -8,6 +8,9 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
   styleUrls: ['./summ-pers-crd.component.scss'],
 })
 export class SummPersCrdComponent implements OnInit {
+  @Input()
+  description: string = '';
+
   editDescriptionDialog: boolean = false;
 
   constructor(private fb: FormBuilder, private fValidator: FrmValService) {}

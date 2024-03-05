@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'base64ToImage',
 })
 export class Base64ToImagePipe implements PipeTransform {
-  transform(base64String: string): string {
+  transform(base64String: string | undefined): string {
     if (!base64String || base64String.trim() === '') {
       return './assets/users/no-images.jpeg';
     } else {

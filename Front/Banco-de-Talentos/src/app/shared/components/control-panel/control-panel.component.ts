@@ -50,12 +50,19 @@ export class ControlPanelComponent implements OnInit {
   }
 
   emitFilter() {
-    const habilidadesString = this.selectedTechSks.join(', ');
-    this.filterReq.habilities = habilidadesString;
-    this.filterReq.languageIds = this.selectedIdLanguage;
-    this.filterReq.levelIds = this.selectedIdProficiency;
+    const skillsStr = this.selectedTechSks.join(', ');
+    this.filterReq.habilities = skillsStr;
+    this.filterReq.languageIds =
+      `${this.selectedIdProficiency}` === '' ? '' : '2';
+    this.filterReq.levelIds = `${this.selectedIdProficiency}`;
     this.filterReq.nameJobTitle = this.term;
     this.onFilterReqVal.emit(this.filterReq);
+    this.resetFilterField();
+  }
+
+  private resetFilterField() {
+    this.selectedIdLanguage = '';
+    this.selectedIdProficiency = '';
   }
 
   onNewTalent() {
@@ -66,9 +73,6 @@ export class ControlPanelComponent implements OnInit {
     this.masterService.getTechSkills().subscribe({
       next: (skills) => {
         this.skills = skills;
-      },
-      error: () => {
-        console.log('error');
       },
     });
   }
@@ -125,10 +129,6 @@ export class ControlPanelComponent implements OnInit {
         this.masterService.cacheStorage.byLanguage.languages;
       this.language = cacheLanguages;
     }
-  }
-
-  public get isLanguageListEmpty(): boolean {
-    return !this.language || this.language.length === 0;
   }
 
   private get isCacheProficiencyEmpty(): boolean {

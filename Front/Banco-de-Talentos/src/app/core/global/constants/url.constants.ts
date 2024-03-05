@@ -22,4 +22,6 @@ export class UrlConstants {
     environment.host + environment.context + '/tech/skills';
   public static readonly URL_REQ_FILTER =
     environment.host + environment.context + '/filter/filter-talent';
+  public static readonly URL_REQ_SRCH_BY_ID =
+    environment.host + environment.context + '/talent/get-talent';
 }

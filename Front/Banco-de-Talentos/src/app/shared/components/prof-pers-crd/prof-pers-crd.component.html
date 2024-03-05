@@ -3,9 +3,13 @@
     <div
       class="relative w-4rem sm:w-6rem h-4rem sm:h-6rem border-circle bg-center bg-cover"
       style="background-image: url('./assets/users/1.jpg')"
+      [ngStyle]="{
+        'background-image':
+          'url(' + (customTalent?.profilePicture | base64ToImage) + ')'
+      }"
     >
       <div
-        class="absolute bottom-0 right-0 bg-white shadow-2 hover:shadow-5 flex align-items-center justify-content-center w-2rem sm:w-3rem h-2rem sm:h-3rem border-circle"
+        class="absolute bottom-0 right-0 bg-white shadow-2 hover:shadow-5 flex align-items-center justify-content-center w-2rem h-2rem border-circle"
       >
         <span
           class="cursor-pointer text-500"
@@ -22,8 +26,9 @@
         class="border-round flex align-items-center sm:justify-content-start justify-content-between"
       >
         <span class="font-semibold text-base text-800"
-          >Juan Lopez Martinez</span
-        >
+          >{{ customTalent?.name }} {{ customTalent?.surname }}
+          {{ customTalent?.secondSurname }}
+        </span>
         <span class="cursor-pointer mx-2 heart-icon">
           <i class="pi pi-heart"></i>
         </span>
@@ -32,18 +37,19 @@
         <div
           class="w-12 sm:w-5 border-round flex align-items-center justify-content-start"
         >
-          <span class="text-500 text-sm font-light">Full-stack developer</span>
+          <span class="text-500 text-sm font-light">{{ workAs.name }}</span>
         </div>
         <div
           class="w-12 sm:w-7 border-round flex align-items-center justify-content-around profile-country-salary"
         >
           <span class="text-500 text-sm font-light">
             <i class="pi pi-map-marker text-sm text-800"></i>
-            Lima, Peru
+            {{ countryCity.city | titlecase }},
+            {{ countryCity.country | titlecase }}
           </span>
           <span class="text-500 text-sm font-light">
             <i class="pi pi-dollar text-sm text-800"></i>
-            2500 - 3000
+            {{ customTalent?.initialSalary }} - {{ customTalent?.finalSalary }}
           </span>
           <span
             class="text-500 hover:text-700 text-sm font-light mx-1 cursor-pointer"
@@ -57,13 +63,13 @@
         class="border-round flex align-items-center sm:justify-content-start justify-content-between"
       >
         <p-rating
-          [(ngModel)]="rating"
+          [ngModel]="customTalent?.avgRating"
           [stars]="5"
           [cancel]="false"
           [readonly]="true"
         ></p-rating>
         <span class="mx-2 text-500 text-sm font-light"
-          >{{ rating }} feedbacks
+          >{{ totFeedbacks }} feedbacks
         </span>
       </div>
     </div>
@@ -88,12 +94,20 @@
       <div
         class="w-12 border-round flex align-items-center justify-content-center sm:justify-content-end"
       >
-        <a class="cursor-pointer px-2">
+        <a
+          class="cursor-pointer px-2"
+          [href]="customTalent?.github"
+          target="_blank"
+        >
           <span class="text-400 hover:text-700">
             <i class="pi pi-github text-xl sm:text-2xl"></i>
           </span>
         </a>
-        <a class="cursor-pointer px-2">
+        <a
+          class="cursor-pointer px-2"
+          [href]="customTalent?.linkedin"
+          target="_blank"
+        >
           <span class="text-400 hover:text-700">
             <i class="pi pi-linkedin text-xl sm:text-2xl"></i>
           </span>

@@ -1,5 +1,6 @@
 package com.fractal.bancodetalentos.service.impl;
 
+import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.request.*;
 import com.fractal.bancodetalentos.model.response.*;
 //import com.fractal.bancodetalentos.repository.BtTmTalentoRepositorio;
@@ -25,7 +26,7 @@ public class TalentoServiceImpl implements TalentoService {
     private final EntityManager entityManager;
 
     @Override
-    public PostResp addNewTalent(NewTalentReq newTalentRequest) {
+    public GeneralResp addNewTalent(NewTalentReq newTalentRequest) {
 
         // -- Talento --
         StoredProcedureQuery storedProcedureQueryTalent = entityManager
@@ -192,7 +193,7 @@ public class TalentoServiceImpl implements TalentoService {
                 .setParameter(2, newTalentRequest.getIdTipoMoneda());
         storedProcedureQueryMoneda.execute();
 
-        PostResp temp = new PostResp();
+        GeneralResp temp = new GeneralResp();
         temp.setCode(200);
         temp.setMessage("Correctly Added");
         return temp;
@@ -394,5 +395,117 @@ public class TalentoServiceImpl implements TalentoService {
         talentResp.setFeedbacks(feedbackList);
 
         return talentResp;
+    }
+
+    @Override
+    public GeneralResp putDescription(Integer id, DescriptionReq descriptionReq) {
+        StoredProcedureQuery storedProcedureQueryCheckTalent = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, id);
+        storedProcedureQueryCheckTalent.execute();
+        Integer exists = (Integer) storedProcedureQueryCheckTalent.getOutputParameterValue(2);
+
+        if (exists == 0) {
+            throw new ResourceNotFoundException("Talent", "id", id);
+        }
+
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createStoredProcedureQuery("SP_EDIT_DESCRIPTION")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+                .setParameter(1, id)
+                .setParameter(2, descriptionReq.getDescription());
+        storedProcedureQuery.execute();
+
+        GeneralResp temp = new GeneralResp();
+        temp.setCode(200);
+        temp.setMessage("Correctly Updated");
+        return temp;
+    }
+
+    @Override
+    public GeneralResp putProfilePicture(Integer id, ProfilePictureReq profilePictureReq) {
+        StoredProcedureQuery storedProcedureQueryCheckTalent = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, id);
+        storedProcedureQueryCheckTalent.execute();
+        Integer exists = (Integer) storedProcedureQueryCheckTalent.getOutputParameterValue(2);
+
+        if (exists == 0) {
+            throw new ResourceNotFoundException("Talent", "id", id);
+        }
+
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createStoredProcedureQuery("SP_EDIT_PROFILE_PICTURE")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, byte[].class, ParameterMode.IN)
+                .setParameter(1, id)
+                .setParameter(2, profilePictureReq.getProfilePicture());
+        storedProcedureQuery.execute();
+
+        GeneralResp temp = new GeneralResp();
+        temp.setCode(200);
+        temp.setMessage("Correctly Updated");
+        return temp;
+    }
+
+    @Override
+    public GeneralResp putSalary(Integer id, SalaryReq salaryReq) {
+        StoredProcedureQuery storedProcedureQueryCheckTalent = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, id);
+        storedProcedureQueryCheckTalent.execute();
+        Integer exists = (Integer) storedProcedureQueryCheckTalent.getOutputParameterValue(2);
+
+        if (exists == 0) {
+            throw new ResourceNotFoundException("Talent", "id", id);
+        }
+
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createStoredProcedureQuery("SP_EDIT_SALARY")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN)
+                .setParameter(1, id)
+                .setParameter(2, salaryReq.getInitialSalary())
+                .setParameter(3, salaryReq.getFinalSalary());
+        storedProcedureQuery.execute();
+
+        GeneralResp temp = new GeneralResp();
+        temp.setCode(200);
+        temp.setMessage("Correctly Updated");
+        return temp;
+    }
+
+    @Override
+    public GeneralResp putSocialLinks(Integer id, SocialLinksReq socialLinksReq) {
+        StoredProcedureQuery storedProcedureQueryCheckTalent = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, id);
+        storedProcedureQueryCheckTalent.execute();
+        Integer exists = (Integer) storedProcedureQueryCheckTalent.getOutputParameterValue(2);
+
+        if (exists == 0) {
+            throw new ResourceNotFoundException("Talent", "id", id);
+        }
+
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createStoredProcedureQuery("SP_EDIT_SOCIAL_LINKS")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
+                .setParameter(1, id)
+                .setParameter(2, socialLinksReq.getLinkedin())
+                .setParameter(3, socialLinksReq.getGithub());
+        storedProcedureQuery.execute();
+
+        GeneralResp temp = new GeneralResp();
+        temp.setCode(200);
+        temp.setMessage("Correctly Updated");
+        return temp;
     }
 }

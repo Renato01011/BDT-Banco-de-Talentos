@@ -3,6 +3,7 @@ package com.fractal.bancodetalentos.service.impl;
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.entity.BtTdExperienciaLaboral;
 import com.fractal.bancodetalentos.model.request.ExperienciasLaborales;
+import com.fractal.bancodetalentos.model.response.GeneralResp;
 import com.fractal.bancodetalentos.service.ExperienciaLaboralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,39 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
         resp.put("message", "CREATED");
 
         return resp;
+    }
+
+    @Override
+    public GeneralResp putWorkExp(Integer idTalent, Integer idWorkExp, ExperienciasLaborales experienciasLaborales) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, idTalent);
+        storedProcedureQuery.execute();
+        Integer exists = (Integer) storedProcedureQuery.getOutputParameterValue(2);
+
+        if (exists == 0) {
+            throw new ResourceNotFoundException("Talent", "id", idTalent);
+        }
+
+        StoredProcedureQuery storedProcedureQueryExperienciasLaborales = entityManager
+                .createStoredProcedureQuery("SP_EDIT_WORK_EXPERIENCE")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(4, Date.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
+                .setParameter(1, idWorkExp)
+                .setParameter(2, experienciasLaborales.getEmpresa())
+                .setParameter(3, experienciasLaborales.getPuesto())
+                .setParameter(4, experienciasLaborales.getFechaInicio())
+                .setParameter(5, experienciasLaborales.getFechaFin());
+        storedProcedureQueryExperienciasLaborales.execute();
+
+        GeneralResp generalResp = new GeneralResp();
+        generalResp.setCode(200);
+        generalResp.setMessage("Correctly Updated");
+
+        return generalResp;
     }
 }

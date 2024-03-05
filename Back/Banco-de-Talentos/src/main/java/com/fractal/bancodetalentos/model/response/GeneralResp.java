@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostResp {
+public class GeneralResp {
     private Integer code;
     private String message;
 }

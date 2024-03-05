@@ -13,8 +13,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SalaryReq {
-    @NotNull(message = "Este campo no puede ser nulo")
     private Integer initialSalary;
-    @NotNull(message = "Este campo no puede ser nulo")
     private Integer finalSalary;
 }

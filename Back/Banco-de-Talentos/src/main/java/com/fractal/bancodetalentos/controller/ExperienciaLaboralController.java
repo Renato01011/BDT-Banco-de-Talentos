@@ -1,6 +1,7 @@
 package com.fractal.bancodetalentos.controller;
 
 import com.fractal.bancodetalentos.model.request.ExperienciasLaborales;
+import com.fractal.bancodetalentos.model.response.GeneralResp;
 import com.fractal.bancodetalentos.service.ExperienciaLaboralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,5 +22,11 @@ public class ExperienciaLaboralController {
     public ResponseEntity<Map<String, String>> addNewWorkExp(@PathVariable Integer id, @Valid @RequestBody ExperienciasLaborales laborales) {
         Map<String, String> resp = laboralService.addNewWorkExp(laborales, id);
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{idTalent}/{idWorkExp}")
+    public ResponseEntity<GeneralResp> putWorkExp(@PathVariable Integer idTalent, @PathVariable Integer idWorkExp, @Valid @RequestBody ExperienciasLaborales experienciasLaborales) {
+        GeneralResp generalResp = laboralService.putWorkExp(idTalent, idWorkExp, experienciasLaborales);
+        return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 }

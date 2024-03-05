@@ -3,6 +3,7 @@ package com.fractal.bancodetalentos.service.impl;
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.entity.BtTdExperienciaEducativa;
 import com.fractal.bancodetalentos.model.request.ExperienciasEducativas;
+import com.fractal.bancodetalentos.model.response.GeneralResp;
 import com.fractal.bancodetalentos.service.ExperienciaEducativaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,42 @@ public class ExperienciaEducativaServiceImpl implements ExperienciaEducativaServ
         resp.put("message", "CREATED");
 
         return resp;
+    }
+
+    @Override
+    public GeneralResp putEducExp(Integer idTalent, Integer idEducExp, ExperienciasEducativas experienciasEducativas) {
+
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, idTalent);
+        storedProcedureQuery.execute();
+        Integer exists = (Integer) storedProcedureQuery.getOutputParameterValue(2);
+
+        if (exists == 0) {
+            throw new ResourceNotFoundException("Talent", "id", idTalent);
+        }
+
+        StoredProcedureQuery storedProcedureQueryExperienciasEducativas = entityManager
+                .createStoredProcedureQuery("SP_EDIT_EDUCATIONAL_EXPERIENCE")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(6, Date.class, ParameterMode.IN)
+                .setParameter(1, idEducExp)
+                .setParameter(2, experienciasEducativas.getInstitucion())
+                .setParameter(3, experienciasEducativas.getCarrera())
+                .setParameter(4, experienciasEducativas.getGrado())
+                .setParameter(5, experienciasEducativas.getFechaInicio())
+                .setParameter(6, experienciasEducativas.getFechaFin());
+        storedProcedureQueryExperienciasEducativas.execute();
+
+        GeneralResp generalResp = new GeneralResp();
+        generalResp.setCode(200);
+        generalResp.setMessage("Correctly Updated");
+
+        return generalResp;
     }
 }

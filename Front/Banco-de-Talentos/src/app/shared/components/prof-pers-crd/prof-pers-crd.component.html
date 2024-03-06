@@ -231,7 +231,9 @@
           <div
             class="w-full pl-1 flex align-items-center justify-content-start"
           >
-            <label [for]="coin.name" class="ml-2">{{ coin.name }}</label>
+            <label [for]="coin.name" class="ml-2">{{
+              coin.name | titlecase
+            }}</label>
           </div>
           <div class="w-full pr-3 flex align-items-center justify-content-end">
             <p-radioButton

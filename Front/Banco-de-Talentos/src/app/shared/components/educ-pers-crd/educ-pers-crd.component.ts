@@ -93,7 +93,20 @@ export class EducPersCrdComponent implements OnInit {
     console.log(this.newEducForm.value);
   }
 
-  openEditEducationalExperienceDialog() {
+  openEditEducationalExperienceDialog(id: number) {
+    const resp = this.findEducExpById(id);
+    const editName = resp.institution;
+    const editCareer = resp.major;
+    const editDegree = resp.degree;
+    const editStDate = new Date(resp.initialDate);
+    const editEdDate = new Date(resp.finalDate);
+    this.editEducForm.reset({
+      editName,
+      editCareer,
+      editDegree,
+      editStDate,
+      editEdDate,
+    });
     this.editEducationalExperienceDialog = true;
   }
 
@@ -109,5 +122,12 @@ export class EducPersCrdComponent implements OnInit {
   hideNewEducationalExperienceDialog() {
     this.newEducForm.reset();
     this.newEducationalExperienceDialog = false;
+  }
+
+  private findEducExpById(id: number): EducationalExperience {
+    const educExp = this.educExp.find(
+      (exp) => exp.idEducationalExperience === id
+    )!;
+    return educExp;
   }
 }

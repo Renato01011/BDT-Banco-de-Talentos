@@ -16,7 +16,7 @@ const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
 })
 export class ProfPersCrdComponent implements OnInit {
   @Input()
-  customTalent?: CustomTalent;
+  public customTalent?: CustomTalent;
 
   resume: MenuItem[] = [];
 
@@ -33,11 +33,8 @@ export class ProfPersCrdComponent implements OnInit {
   ) {}
 
   public redSocForm: FormGroup = this.fb.group({
-    linkedin: [
-      'https://www.linkedin.com/in/username',
-      [Validators.pattern(linkedInRegEx)],
-    ],
-    github: ['https://github.com/usuario', [Validators.pattern(gitHubRegEx)]],
+    linkedin: ['', [Validators.pattern(linkedInRegEx)]],
+    github: ['', [Validators.pattern(gitHubRegEx)]],
   });
 
   public salaryForm: FormGroup = this.fb.group({
@@ -109,6 +106,9 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   openEditSocialMediaDialog() {
+    const linkedin = this.customTalent?.linkedin ?? '';
+    const github = this.customTalent?.github ?? '';
+    this.redSocForm.reset({ linkedin, github });
     this.editSocialMediaDialog = true;
   }
 
@@ -117,6 +117,11 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   openEditSalaryDialog() {
+    console.log(this.customTalent);
+    const currency = this.coin.currency;
+    const iAmount = this.customTalent?.initialSalary ?? '';
+    const fAmount = this.customTalent?.finalSalary ?? '';
+    this.salaryForm.reset({ currency, iAmount, fAmount });
     this.editSalaryDialog = true;
   }
 
@@ -157,5 +162,17 @@ export class ProfPersCrdComponent implements OnInit {
     const result = 0;
     if (!this.customTalent?.feedbacks) return result;
     return this.customTalent.feedbacks.length;
+  }
+
+  public get coin(): { id: number; currency: string } {
+    const result = { id: 0, currency: '' };
+    if (!this.customTalent?.miscData) return result;
+    const { miscData } = this.customTalent;
+    const curr = miscData.find((item) => item.name === 'MONEDA');
+    if (curr) {
+      return { id: curr.id, currency: curr.description };
+    } else {
+      return { id: 0, currency: '' };
+    }
   }
 }

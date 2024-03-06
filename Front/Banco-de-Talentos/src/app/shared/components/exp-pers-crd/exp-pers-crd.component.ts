@@ -91,7 +91,13 @@ export class ExpPersCrdComponent implements OnInit {
     console.log(this.newExpForm.value);
   }
 
-  openEditWorkExperienceDialog() {
+  openEditWorkExperienceDialog(id: number) {
+    const resp = this.findWorkExpById(id);
+    const editCompany = resp.firm;
+    const editJob = resp.jobTitle;
+    const editDate = new Date(resp.intialDate);
+    const editEndDate = new Date(resp.finalDate);
+    this.editExpForm.reset({ editCompany, editJob, editDate, editEndDate });
     this.editWorkExperienceDialog = true;
   }
 
@@ -116,5 +122,10 @@ export class ExpPersCrdComponent implements OnInit {
     const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25;
     const years = difference / millisecondsInYear;
     return Math.floor(years);
+  }
+
+  private findWorkExpById(id: number): WorkExperience {
+    const workExp = this.workExp.find((exp) => exp.idWorkExperience === id)!;
+    return workExp;
   }
 }

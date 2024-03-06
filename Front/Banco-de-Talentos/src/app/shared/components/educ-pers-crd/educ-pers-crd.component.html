@@ -47,7 +47,9 @@
           type="button"
           icon="pi pi-pencil"
           class="p-button-rounded p-button-secondary p-button-text"
-          (click)="openEditEducationalExperienceDialog()"
+          (click)="
+            openEditEducationalExperienceDialog(item.idEducationalExperience)
+          "
         ></button>
       </div>
     </div>

@@ -30,6 +30,8 @@ export class SummPersCrdComponent implements OnInit {
   }
 
   openEditDescriptionDialog() {
+    const description = this.description;
+    this.summForm.reset({ description });
     this.editDescriptionDialog = true;
   }
 

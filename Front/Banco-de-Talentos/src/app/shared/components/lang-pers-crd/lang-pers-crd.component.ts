@@ -82,7 +82,18 @@ export class LangPersCrdComponent implements OnInit {
     this.editLanguageForm.controls['editProficiency'].setValue(null);
   }
 
-  openEditLanguageDialog() {
+  openEditLanguageDialog(id: number) {
+    console.log(this.langProficiency);
+    const resp = this.findLangById(id);
+    console.log(resp);
+    const editLanguages = resp.languageName;
+    const editProficiency = resp.proficiency;
+    const editRating = resp.starCount;
+    this.editLanguageForm.reset({
+      editLanguages,
+      editProficiency,
+      editRating,
+    });
     this.editLanguageDialog = true;
   }
 
@@ -96,5 +107,12 @@ export class LangPersCrdComponent implements OnInit {
 
   hideNewLanguageDialog() {
     this.newLanguageDialog = false;
+  }
+
+  private findLangById(id: number): LanguageLevel {
+    const lang = this.langProficiency.find(
+      (lang) => lang.idTalentLanguage === id
+    )!;
+    return lang;
   }
 }

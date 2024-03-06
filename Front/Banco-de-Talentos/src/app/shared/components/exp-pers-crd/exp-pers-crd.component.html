@@ -48,7 +48,7 @@
           type="button"
           icon="pi pi-pencil"
           class="p-button-rounded p-button-secondary p-button-text"
-          (click)="openEditWorkExperienceDialog()"
+          (click)="openEditWorkExperienceDialog(item.idWorkExperience)"
         ></button>
       </div>
     </div>
@@ -131,7 +131,7 @@
       </div>
       <div class="w-12 flex flex-wrap align-items-center pt-2">
         <div class="w-12 sm:w-6 flex flex-column align-items-center md:pr-3">
-          <div class="w-12 flex flex-column justify-content-start">
+          <div class="w-12 flex flex-column align-content-start mb-2">
             <label
               for="eDate"
               class="block text-left mb-2 font-medium text-bluegray-800"
@@ -155,7 +155,7 @@
           </div>
         </div>
         <div class="w-12 sm:w-6 flex flex-column align-items-center md:pl-3">
-          <div class="w-12 flex flex-column justify-content-start">
+          <div class="w-12 flex flex-column align-content-start mb-2">
             <label
               for="eDate"
               class="block text-left mb-2 font-medium text-bluegray-800"
@@ -300,9 +300,9 @@
           >Este campo es obligatorio.</small
         >
       </div>
-      <div class="w-12 flex flex-wrap align-items-center">
+      <div class="w-12 flex flex-wrap align-items-center pt-2">
         <div class="w-12 sm:w-6 flex flex-column align-items-center md:pr-3">
-          <div class="w-12 flex flex-column justify-content-start">
+          <div class="w-12 flex flex-column align-content-start mb-2">
             <label
               for="editDate"
               class="block text-left mb-2 font-medium text-bluegray-800"
@@ -327,7 +327,7 @@
           </div>
         </div>
         <div class="w-12 sm:w-6 flex flex-column align-items-center md:pl-3">
-          <div class="w-12 flex flex-column justify-content-start mb-2">
+          <div class="w-12 flex flex-column align-content-start mb-2">
             <label
               for="editEndDate"
               class="block text-left mb-2 font-medium text-bluegray-800"

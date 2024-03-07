@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { WorkExperience } from '../../models/interfaces/talentResp.interfaces';
+import { AddInfoService } from '../../service/addInfo/add-info.service';
 
 @Component({
   selector: 'shared-exp-pers-crd',
@@ -13,11 +14,17 @@ export class ExpPersCrdComponent implements OnInit {
   public workExp: WorkExperience[] = [];
   @Input()
   public selectedId?: number;
+  @Output()
+  public talentId = new EventEmitter<number>();
 
   public newWorkExperienceDialog: boolean = false;
   public editWorkExperienceDialog: boolean = false;
 
-  constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
+  constructor(
+    private fb: FormBuilder,
+    private fValidator: FrmValService,
+    private addInfoService: AddInfoService
+  ) {}
 
   public newExpForm: FormGroup = this.fb.group({
     company: ['', [Validators.required]],
@@ -50,7 +57,21 @@ export class ExpPersCrdComponent implements OnInit {
   public onSveNewExp() {
     if (!this.onSaveForm(this.newExpForm)) return;
     if (!this.selectedId) return;
-    console.log(this.newExpForm.value);
+    console.log(this.newExpForm.getRawValue());
+    const { company, job, sDate, eDate } = this.newExpForm.getRawValue();
+    const body = {
+      empresa: company,
+      puesto: job,
+      fechaInicio: sDate,
+      fechaFin: eDate,
+    };
+    this.addInfoService.addWorkExp(body, this.selectedId).subscribe({
+      next: (resp) => {
+        console.log(resp.message);
+        this.talentId.emit(Number(resp.id));
+        this.hideNewWorkExperienceDialog();
+      },
+    });
   }
 
   public onSveEditedExp() {

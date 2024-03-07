@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Document } from '../../models/interfaces/talentResp.interfaces';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
@@ -13,6 +13,8 @@ export class CertsPersCrdComponent implements OnInit {
   public documents: Document[] = [];
   @Input()
   public selectedId?: number;
+  @Output()
+  public talentId = new EventEmitter<number>();
 
   public addFileDialog: boolean = false;
 
@@ -56,6 +58,7 @@ export class CertsPersCrdComponent implements OnInit {
     if (!this.onSaveForm(this.fileForm)) return;
     if (!this.selectedId) return;
     console.log(this.fileForm.value);
+    //this.talentId.emit(Number(resp.id));
   }
 
   public isValidFileField(field: string) {

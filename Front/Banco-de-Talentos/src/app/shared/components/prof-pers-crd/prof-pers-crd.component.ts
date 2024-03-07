@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
@@ -19,6 +19,8 @@ export class ProfPersCrdComponent implements OnInit {
   public customTalent?: CustomTalent;
   @Input()
   public selectedId?: number;
+  @Output()
+  public talentId = new EventEmitter<number>();
 
   public resume: MenuItem[] = [];
   public coins: CurrenciesModel[] = [];
@@ -76,18 +78,21 @@ export class ProfPersCrdComponent implements OnInit {
     if (!this.onSaveForm(this.profileForm)) return;
     if (!this.selectedId) return;
     console.log(this.profileForm.value);
+    //this.talentId.emit(Number(resp.id));
   }
 
   public onSveSalary() {
     if (!this.onSaveForm(this.salaryForm)) return;
     if (!this.selectedId) return;
     console.log(this.salaryForm.value);
+    //this.talentId.emit(Number(resp.id));
   }
 
   public onSveRedSoc() {
     if (!this.onSaveForm(this.redSocForm)) return;
     if (!this.selectedId) return;
     console.log(this.redSocForm.value);
+    //this.talentId.emit(Number(resp.id));
   }
 
   public isValidProfileField(field: string) {

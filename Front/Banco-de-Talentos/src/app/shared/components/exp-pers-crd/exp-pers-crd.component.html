@@ -141,10 +141,11 @@
               class="w-full"
               styleClass="w-full"
               dateFormat="mm/yy"
+              view="month"
               inputId="sDate"
-              dataType="string"
               appendTo="body"
               formControlName="sDate"
+              [readonlyInput]="true"
             ></p-calendar>
             <small
               id="eDate"
@@ -165,10 +166,11 @@
               class="w-full"
               styleClass="w-full"
               dateFormat="mm/yy"
+              view="month"
               inputId="eDate"
-              dataType="string"
               appendTo="body"
               formControlName="eDate"
+              [readonlyInput]="true"
             ></p-calendar>
             <small
               id="eDate"
@@ -313,6 +315,7 @@
               class="w-full"
               styleClass="w-full"
               dateFormat="mm/yy"
+              view="month"
               inputId="dateformat"
               appendTo="body"
               formControlName="editDate"
@@ -338,6 +341,7 @@
               class="w-full"
               styleClass="w-full"
               dateFormat="mm/yy"
+              view="month"
               inputId="dateformat"
               appendTo="body"
               formControlName="editEndDate"

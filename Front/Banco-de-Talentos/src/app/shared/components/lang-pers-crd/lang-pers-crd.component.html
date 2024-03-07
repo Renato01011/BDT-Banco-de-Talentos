@@ -75,8 +75,8 @@
     </div>
     <form
       class="w-12 flex flex-column"
-      [formGroup]="newLanguageForm"
       autocomplete="off"
+      [formGroup]="newLanguageForm"
       (ngSubmit)="onSveNewLanguageForm()"
     >
       <div class="w-12 flex flex-column justify-content-start mb-2">
@@ -86,7 +86,7 @@
           [showClear]="true"
           placeholder="Nombre del idioma"
           optionLabel="name"
-          optionValue="name"
+          optionValue="id"
           appendTo="body"
           class="w-full text-left"
           styleClass="w-full"
@@ -107,7 +107,7 @@
           [showClear]="true"
           placeholder="Nombre del idioma"
           optionLabel="name"
-          optionValue="name"
+          optionValue="id"
           appendTo="body"
           class="w-full text-left"
           styleClass="w-full"
@@ -142,6 +142,7 @@
             pRipple
             label="Cancelar"
             icon="pi pi-times"
+            type="button"
             class="p-button-outlined p-button-secondary w-full"
             (click)="hideNewLanguageDialog()"
           ></button>
@@ -192,8 +193,8 @@
     </div>
     <form
       class="w-12 flex flex-column"
-      [formGroup]="editLanguageForm"
       autocomplete="off"
+      [formGroup]="editLanguageForm"
       (ngSubmit)="onSveEditLangForm()"
     >
       <div class="w-12 flex flex-column justify-content-start mb-2">
@@ -265,6 +266,7 @@
             pRipple
             label="Cancelar"
             icon="pi pi-times"
+            type="button"
             class="p-button-outlined p-button-secondary w-full"
             (click)="hideEditLanguageDialog()"
           ></button>

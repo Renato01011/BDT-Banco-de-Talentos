@@ -18,13 +18,12 @@ export class ProfPersCrdComponent implements OnInit {
   @Input()
   public customTalent?: CustomTalent;
 
-  resume: MenuItem[] = [];
+  public resume: MenuItem[] = [];
+  public coins: CurrenciesModel[] = [];
 
-  coins: CurrenciesModel[] = [];
-
-  editSocialMediaDialog: boolean = false;
-  editProfilePicture: boolean = false;
-  editSalaryDialog: boolean = false;
+  public editSocialMediaDialog: boolean = false;
+  public editProfilePicture: boolean = false;
+  public editSalaryDialog: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -32,102 +31,105 @@ export class ProfPersCrdComponent implements OnInit {
     private masterService: MasterService
   ) {}
 
-  public redSocForm: FormGroup = this.fb.group({
-    linkedin: ['', [Validators.pattern(linkedInRegEx)]],
-    github: ['', [Validators.pattern(gitHubRegEx)]],
+  public profileForm: FormGroup = this.fb.group({
+    img: ['', [Validators.required]],
   });
 
-  public salaryForm: FormGroup = this.fb.group({
-    currency: ['', [Validators.required]],
-    iAmount: ['', [Validators.required]],
-    fAmount: ['', [Validators.required]],
+  public redSocForm: FormGroup = this.fb.group({
+    linkedin: ['', [Validators.required, Validators.pattern(linkedInRegEx)]],
+    github: ['', [Validators.required, Validators.pattern(gitHubRegEx)]],
   });
+
+  public salaryForm: FormGroup = this.fb.group(
+    {
+      currency: ['', [Validators.required]],
+      iAmount: ['', [Validators.required]],
+      fAmount: ['', [Validators.required]],
+    },
+    {
+      validators: [
+        this.fValidator.isFieldOneLessFieldTwo('iAmount', 'fAmount'),
+      ],
+    }
+  );
 
   ngOnInit(): void {
     this.resume = [{ label: 'CV' }, { label: 'CV Fractal' }];
     this.checkCurrencies();
   }
 
-  private getCurrencies(): void {
-    this.masterService.getCurrencies().subscribe({
-      next: (skills) => {
-        this.coins = skills;
-      },
-    });
-  }
-
-  public get isCurrencyListEmpty(): boolean {
-    return !this.coins || this.coins.length === 0;
-  }
-
-  private get isCacheCurrenciesEmpty(): boolean {
-    return (
-      !this.masterService.cacheStorage.byCurrency.currencies ||
-      this.masterService.cacheStorage.byCurrency.currencies.length === 0
-    );
-  }
-
-  private checkCurrencies(): void {
-    if (this.isCacheCurrenciesEmpty) {
-      this.getCurrencies();
-    } else {
-      const cacheCurrencies =
-        this.masterService.cacheStorage.byCurrency.currencies;
-      this.coins = cacheCurrencies;
-    }
-  }
-
-  isValidField(field: string) {
-    return this.fValidator.isValidField(this.redSocForm, field);
-  }
-
-  isValidSalaryField(field: string) {
-    return this.fValidator.isValidField(this.salaryForm, field);
-  }
-
-  onSveSalary() {
-    console.log(this.salaryForm.value);
-  }
-
-  onSveRedSoc() {
-    console.log(this.redSocForm.value);
-  }
-
-  onPhotoUpload(event: any) {
+  public onPhotoUpload(event: any) {
     console.log('Upload');
   }
 
-  openEditProfilePicture() {
+  public onSveProfile() {
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.profileForm.value);
+  }
+
+  public onSveSalary() {
+    if (this.salaryForm.invalid) {
+      this.salaryForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.salaryForm.value);
+  }
+
+  public onSveRedSoc() {
+    if (this.redSocForm.invalid) {
+      this.redSocForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.redSocForm.value);
+  }
+
+  public isValidProfileField(field: string) {
+    return this.fValidator.isValidField(this.profileForm, field);
+  }
+
+  public isValidSocField(field: string) {
+    return this.fValidator.isValidField(this.redSocForm, field);
+  }
+
+  public isValidSalaryField(field: string) {
+    return this.fValidator.isValidField(this.salaryForm, field);
+  }
+
+  public openEditProfilePicture() {
     this.editProfilePicture = true;
   }
 
-  hideEditProfilePicture() {
-    this.editProfilePicture = false;
-  }
-
-  openEditSocialMediaDialog() {
+  public opEditSocMediaDlg() {
     const linkedin = this.customTalent?.linkedin ?? '';
     const github = this.customTalent?.github ?? '';
     this.redSocForm.reset({ linkedin, github });
     this.editSocialMediaDialog = true;
   }
 
-  hideEditSocialMediaDialog() {
-    this.editSocialMediaDialog = false;
-  }
-
-  openEditSalaryDialog() {
-    console.log(this.customTalent);
-    const currency = this.coin.currency;
+  public openEditSalaryDialog() {
+    const currency = this.coin.id;
     const iAmount = this.customTalent?.initialSalary ?? '';
     const fAmount = this.customTalent?.finalSalary ?? '';
     this.salaryForm.reset({ currency, iAmount, fAmount });
     this.editSalaryDialog = true;
   }
 
-  hideEditSalaryDialog() {
+  public hideEditSalaryDialog() {
     this.salaryForm.reset();
     this.editSalaryDialog = false;
+  }
+
+  public hideEditProfilePicture() {
+    this.profileForm.reset();
+    this.editProfilePicture = false;
+  }
+
+  public hidEditSocMediaDlg() {
+    this.redSocForm.reset();
+    this.editSocialMediaDialog = false;
   }
 
   public get countryCity(): { country: string; city: string } {
@@ -174,5 +176,57 @@ export class ProfPersCrdComponent implements OnInit {
     } else {
       return { id: 0, currency: '' };
     }
+  }
+
+  private getCurrencies(): void {
+    this.masterService.getCurrencies().subscribe({
+      next: (skills) => {
+        this.coins = skills;
+      },
+    });
+  }
+
+  public get isCurrencyListEmpty(): boolean {
+    return !this.coins || this.coins.length === 0;
+  }
+
+  private get isCacheCurrenciesEmpty(): boolean {
+    return (
+      !this.masterService.cacheStorage.byCurrency.currencies ||
+      this.masterService.cacheStorage.byCurrency.currencies.length === 0
+    );
+  }
+
+  private checkCurrencies(): void {
+    if (this.isCacheCurrenciesEmpty) {
+      this.getCurrencies();
+    } else {
+      const cacheCurrencies =
+        this.masterService.cacheStorage.byCurrency.currencies;
+      this.coins = cacheCurrencies;
+    }
+  }
+
+  public getErrLinkField(field: string): string {
+    let msg = this.fValidator.isRequiredErr(this.redSocForm, field);
+    if (msg === null) {
+      msg = 'Ingrese su link de LinkedIn.';
+    }
+    return msg;
+  }
+  public getErrGitField(field: string): string {
+    let msg = this.fValidator.isRequiredErr(this.redSocForm, field);
+    if (msg === null) {
+      msg = 'Ingrese su link de GitHub.';
+    }
+    return msg;
+  }
+
+  public getErrFnAmountField(field: string): string {
+    let msg = this.fValidator.isRequiredErr(this.salaryForm, field);
+    if (msg === null) {
+      msg = 'El monto final debe ser mayor que el monto inicial.';
+    }
+    return msg;
   }
 }

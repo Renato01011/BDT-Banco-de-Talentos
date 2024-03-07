@@ -80,9 +80,9 @@
     </div>
     <form
       class="w-12 flex flex-column"
-      [formGroup]="techSkForm"
       autocomplete="off"
-      (onsubmit)="onSveTechSkForm()"
+      [formGroup]="techSkForm"
+      (ngSubmit)="onSveTechSkForm()"
     >
       <div class="w-12 flex flex-column justify-content-start mb-2">
         <label
@@ -99,8 +99,8 @@
         <small
           id="inputLink"
           class="hidden"
-          [ngClass]="{ 'p-error block text-left': isValidField('name') }"
-          >Este campo es obligatorio.</small
+          [ngClass]="{ 'p-error block text-left': isValidTechField('name') }"
+          >{{ getErrTechNameExpField("name") }}</small
         >
       </div>
       <div class="w-12 flex flex-column justify-content-start mb-2">
@@ -114,13 +114,17 @@
           class="w-full"
           styleClass="w-full"
           placeholder="Nro. de años"
+          mode="decimal"
+          [maxFractionDigits]="2"
+          [min]="0"
+          [max]="20"
           formControlName="yearExp"
         ></p-inputNumber>
         <small
           id="inputNumber"
           class="hidden"
-          [ngClass]="{ 'p-error block text-left': isValidField('yearExp') }"
-          >Los años de experiencia deben ser un número positivo.</small
+          [ngClass]="{ 'p-error block text-left': isValidTechField('yearExp') }"
+          >{{ getErrYearExpField("yearExp") }}</small
         >
       </div>
       <div class="w-12 flex flex-wrap pt-3">
@@ -132,6 +136,7 @@
             pRipple
             label="Cancelar"
             icon="pi pi-times"
+            type="button"
             class="p-button-outlined p-button-secondary w-full"
             (click)="hideNewTechnicalSkillDialog()"
           ></button>
@@ -178,7 +183,7 @@
       class="w-12 flex flex-column"
       [formGroup]="softSkForm"
       autocomplete="off"
-      (onsubmit)="onSveSoftSkForm()"
+      (ngSubmit)="onSveSoftSkForm()"
     >
       <div class="w-12 flex flex-column justify-content-start mb-2">
         <label
@@ -196,7 +201,7 @@
           id="inputSoft"
           class="hidden"
           [ngClass]="{ 'p-error block text-left': isValidSoftField('name') }"
-          >Este campo es obligatorio.</small
+          >{{ getErrNameField("name") }}</small
         >
       </div>
       <div class="w-12 flex flex-wrap pt-3">
@@ -208,6 +213,7 @@
             pRipple
             label="Cancelar"
             icon="pi pi-times"
+            type="button"
             class="p-button-outlined p-button-secondary w-full"
             (click)="hideNewSoftSkillDialog()"
           ></button>

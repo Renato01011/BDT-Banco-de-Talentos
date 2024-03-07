@@ -47,45 +47,39 @@ export class LangPersCrdComponent implements OnInit {
     this.proficiency = this.uploadProficiency;
   }
 
-  private get uploadLanguages(): LanguageModel[] {
-    const cacheLanguages = this.masterService.cacheStorage.byLanguage.languages;
-    return cacheLanguages;
-  }
-
-  public get uploadProficiency(): LangProficiencyModel[] {
-    const cacheProficiencies =
-      this.masterService.cacheStorage.byLangProficiency.proficiencies;
-    return cacheProficiencies;
-  }
-
-  isValidField(field: string) {
-    return this.fValidator.isValidField(this.newLanguageForm, field);
-  }
-
-  onSveNewLanguageForm() {
+  public onSveNewLanguageForm() {
+    if (this.newLanguageForm.invalid) {
+      this.newLanguageForm.markAllAsTouched();
+      return;
+    }
     console.log(this.newLanguageForm.value);
   }
-
-  OnLanguageChange() {
-    this.newLanguageForm.controls['proficiency'].setValue(null);
-  }
-
-  isValidEditLangField(field: string) {
-    return this.fValidator.isValidField(this.editLanguageForm, field);
-  }
-
-  onSveEditLangForm() {
+  public onSveEditLangForm() {
+    if (this.editLanguageForm.invalid) {
+      this.editLanguageForm.markAllAsTouched();
+      return;
+    }
     console.log(this.editLanguageForm.value);
   }
 
-  OnEditLangChange() {
+  public isValidField(field: string) {
+    return this.fValidator.isValidField(this.newLanguageForm, field);
+  }
+
+  public isValidEditLangField(field: string) {
+    return this.fValidator.isValidField(this.editLanguageForm, field);
+  }
+
+  public OnLanguageChange() {
+    this.newLanguageForm.controls['proficiency'].setValue(null);
+  }
+
+  public OnEditLangChange() {
     this.editLanguageForm.controls['editProficiency'].setValue(null);
   }
 
-  openEditLanguageDialog(id: number) {
-    console.log(this.langProficiency);
+  public openEditLanguageDialog(id: number) {
     const resp = this.findLangById(id);
-    console.log(resp);
     const editLanguages = resp.languageName;
     const editProficiency = resp.proficiency;
     const editRating = resp.starCount;
@@ -97,15 +91,15 @@ export class LangPersCrdComponent implements OnInit {
     this.editLanguageDialog = true;
   }
 
-  hideEditLanguageDialog() {
+  public hideEditLanguageDialog() {
     this.editLanguageDialog = false;
   }
 
-  openNewLanguageDialog() {
+  public openNewLanguageDialog() {
     this.newLanguageDialog = true;
   }
 
-  hideNewLanguageDialog() {
+  public hideNewLanguageDialog() {
     this.newLanguageDialog = false;
   }
 
@@ -114,5 +108,16 @@ export class LangPersCrdComponent implements OnInit {
       (lang) => lang.idTalentLanguage === id
     )!;
     return lang;
+  }
+
+  private get uploadLanguages(): LanguageModel[] {
+    const cacheLanguages = this.masterService.cacheStorage.byLanguage.languages;
+    return cacheLanguages;
+  }
+
+  public get uploadProficiency(): LangProficiencyModel[] {
+    const cacheProficiencies =
+      this.masterService.cacheStorage.byLangProficiency.proficiencies;
+    return cacheProficiencies;
   }
 }

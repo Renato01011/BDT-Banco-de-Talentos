@@ -10,10 +10,10 @@ import { EducationalExperience } from '../../models/interfaces/talentResp.interf
 })
 export class EducPersCrdComponent implements OnInit {
   @Input()
-  educExp: EducationalExperience[] = [];
+  public educExp: EducationalExperience[] = [];
 
-  newEducationalExperienceDialog: boolean = false;
-  editEducationalExperienceDialog: boolean = false;
+  public newEducationalExperienceDialog: boolean = false;
+  public editEducationalExperienceDialog: boolean = false;
 
   constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
 
@@ -39,61 +39,31 @@ export class EducPersCrdComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  isValidField(field: string) {
-    return this.fValidator.isValidField(this.newEducForm, field);
-  }
-
-  isValidEditEducField(field: string) {
-    return this.fValidator.isValidField(this.editEducForm, field);
-  }
-
-  onCheckFractal() {
-    if (this.newEducForm.get('hFractal')!.value) {
-      this.newEducForm.controls['name'].disable();
-      this.newEducForm.controls['name'].setValue('FRACTAL');
-    } else {
-      this.newEducForm.controls['name'].enable();
-      this.newEducForm.controls['name'].setValue('');
+  public onSveEditEducForm() {
+    if (this.editEducForm.invalid) {
+      this.editEducForm.markAllAsTouched();
+      return;
     }
-  }
-  onCheckCurrDate() {
-    if (this.newEducForm.get('tPresent')!.value) {
-      this.newEducForm.controls['edDate'].disable();
-      this.newEducForm.controls['edDate'].setValue(new Date());
-    } else {
-      this.newEducForm.controls['edDate'].enable();
-      this.newEducForm.controls['edDate'].setValue(null);
-    }
-  }
-
-  onCheckEdtFractal() {
-    if (this.editEducForm.get('hFractal')!.value) {
-      this.editEducForm.controls['editName'].disable();
-      this.editEducForm.controls['editName'].setValue('FRACTAL');
-    } else {
-      this.editEducForm.controls['editName'].enable();
-      this.editEducForm.controls['editName'].setValue('');
-    }
-  }
-  onCheckEdtCurrDate() {
-    if (this.editEducForm.get('tPresent')!.value) {
-      this.editEducForm.controls['editEdDate'].disable();
-      this.editEducForm.controls['editEdDate'].setValue(new Date());
-    } else {
-      this.editEducForm.controls['editEdDate'].enable();
-      this.editEducForm.controls['editEdDate'].setValue(null);
-    }
-  }
-
-  onSveEditEducForm() {
     console.log(this.editEducForm.value);
   }
 
-  onSveNewEducForm() {
+  public onSveNewEducForm() {
+    if (this.newEducForm.invalid) {
+      this.newEducForm.markAllAsTouched();
+      return;
+    }
     console.log(this.newEducForm.value);
   }
 
-  openEditEducationalExperienceDialog(id: number) {
+  public isValidField(field: string) {
+    return this.fValidator.isValidField(this.newEducForm, field);
+  }
+
+  public isValidEditEducField(field: string) {
+    return this.fValidator.isValidField(this.editEducForm, field);
+  }
+
+  public openEditEducationalExperienceDialog(id: number) {
     const resp = this.findEducExpById(id);
     const editName = resp.institution;
     const editCareer = resp.major;
@@ -110,16 +80,16 @@ export class EducPersCrdComponent implements OnInit {
     this.editEducationalExperienceDialog = true;
   }
 
-  hideEditEducationalExperienceDialog() {
+  public hideEditEducationalExperienceDialog() {
     this.editEducForm.reset();
     this.editEducationalExperienceDialog = false;
   }
 
-  openNewEducationalExperienceDialog() {
+  public openNewEducationalExperienceDialog() {
     this.newEducationalExperienceDialog = true;
   }
 
-  hideNewEducationalExperienceDialog() {
+  public hideNewEducationalExperienceDialog() {
     this.newEducForm.reset();
     this.newEducationalExperienceDialog = false;
   }
@@ -129,5 +99,43 @@ export class EducPersCrdComponent implements OnInit {
       (exp) => exp.idEducationalExperience === id
     )!;
     return educExp;
+  }
+
+  public onCheckFractal() {
+    if (this.newEducForm.get('hFractal')!.value) {
+      this.newEducForm.controls['name'].disable();
+      this.newEducForm.controls['name'].setValue('FRACTAL');
+    } else {
+      this.newEducForm.controls['name'].enable();
+      this.newEducForm.controls['name'].setValue('');
+    }
+  }
+  public onCheckCurrDate() {
+    if (this.newEducForm.get('tPresent')!.value) {
+      this.newEducForm.controls['edDate'].disable();
+      this.newEducForm.controls['edDate'].setValue(new Date());
+    } else {
+      this.newEducForm.controls['edDate'].enable();
+      this.newEducForm.controls['edDate'].setValue(null);
+    }
+  }
+
+  public onCheckEdtFractal() {
+    if (this.editEducForm.get('hFractal')!.value) {
+      this.editEducForm.controls['editName'].disable();
+      this.editEducForm.controls['editName'].setValue('FRACTAL');
+    } else {
+      this.editEducForm.controls['editName'].enable();
+      this.editEducForm.controls['editName'].setValue('');
+    }
+  }
+  public onCheckEdtCurrDate() {
+    if (this.editEducForm.get('tPresent')!.value) {
+      this.editEducForm.controls['editEdDate'].disable();
+      this.editEducForm.controls['editEdDate'].setValue(new Date());
+    } else {
+      this.editEducForm.controls['editEdDate'].enable();
+      this.editEducForm.controls['editEdDate'].setValue(null);
+    }
   }
 }

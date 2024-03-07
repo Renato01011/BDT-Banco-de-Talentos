@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Document } from '../../models/interfaces/talentResp.interfaces';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FrmValService } from '../../service/frmVal/frm-val.service';
 
 @Component({
   selector: 'shared-certs-pers-crd',
@@ -8,13 +10,17 @@ import { Document } from '../../models/interfaces/talentResp.interfaces';
 })
 export class CertsPersCrdComponent implements OnInit {
   @Input()
-  documents: Document[] = [];
+  public documents: Document[] = [];
 
-  addFileDialog: boolean = false;
+  public addFileDialog: boolean = false;
 
-  responsiveOptions: any[] = [];
+  public responsiveOptions: any[] = [];
 
-  constructor() {}
+  constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
+
+  public fileForm: FormGroup = this.fb.group({
+    file: ['', [Validators.required]],
+  });
 
   ngOnInit(): void {
     this.responsiveOptions = [
@@ -32,11 +38,28 @@ export class CertsPersCrdComponent implements OnInit {
     ];
   }
 
-  openAddFileDialog() {
+  public onFileUpload(event: any) {
+    console.log('Upload');
+  }
+
+  public onSveFile() {
+    if (this.fileForm.invalid) {
+      this.fileForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.fileForm.value);
+  }
+
+  public isValidFileField(field: string) {
+    return this.fValidator.isValidField(this.fileForm, field);
+  }
+
+  public openAddFileDialog() {
     this.addFileDialog = true;
   }
 
-  hideAddFileDialog() {
+  public hideAddFileDialog() {
+    this.fileForm.reset();
     this.addFileDialog = false;
   }
 }

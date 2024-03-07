@@ -10,10 +10,10 @@ import { WorkExperience } from '../../models/interfaces/talentResp.interfaces';
 })
 export class ExpPersCrdComponent implements OnInit {
   @Input()
-  workExp: WorkExperience[] = [];
+  public workExp: WorkExperience[] = [];
 
-  newWorkExperienceDialog: boolean = false;
-  editWorkExperienceDialog: boolean = false;
+  public newWorkExperienceDialog: boolean = false;
+  public editWorkExperienceDialog: boolean = false;
 
   constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
 
@@ -37,61 +37,31 @@ export class ExpPersCrdComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  isValidField(field: string) {
+  private onSaveForm(form: FormGroup) {
+    if (form.invalid) {
+      form.markAllAsTouched();
+      return;
+    }
+    console.log(form.value);
+  }
+
+  public onSveNewExp() {
+    this.onSaveForm(this.newExpForm);
+  }
+
+  public onSveEditedExp() {
+    this.onSaveForm(this.editExpForm);
+  }
+
+  public isValidField(field: string) {
     return this.fValidator.isValidField(this.newExpForm, field);
   }
 
-  onCheckFractal() {
-    if (this.newExpForm.get('hFractal')!.value) {
-      this.newExpForm.controls['company'].disable();
-      this.newExpForm.controls['company'].setValue('FRACTAL');
-    } else {
-      this.newExpForm.controls['company'].enable();
-      this.newExpForm.controls['company'].setValue('');
-    }
-  }
-  onCheckCurrDate() {
-    if (this.newExpForm.get('tPresent')!.value) {
-      this.newExpForm.controls['eDate'].disable();
-      this.newExpForm.controls['eDate'].setValue(new Date());
-    } else {
-      this.newExpForm.controls['eDate'].enable();
-      this.newExpForm.controls['eDate'].setValue(null);
-    }
-  }
-
-  isValidEditField(field: string) {
+  public isValidEditField(field: string) {
     return this.fValidator.isValidField(this.editExpForm, field);
   }
 
-  onEdtCheckFractal() {
-    if (this.editExpForm.get('hFractal')!.value) {
-      this.editExpForm.controls['editCompany'].disable();
-      this.editExpForm.controls['editCompany'].setValue('FRACTAL');
-    } else {
-      this.editExpForm.controls['editCompany'].enable();
-      this.editExpForm.controls['editCompany'].setValue('');
-    }
-  }
-  onEdtCheckCurrDate() {
-    if (this.editExpForm.get('tPresent')!.value) {
-      this.editExpForm.controls['editEndDate'].disable();
-      this.editExpForm.controls['editEndDate'].setValue(new Date());
-    } else {
-      this.editExpForm.controls['editEndDate'].enable();
-      this.editExpForm.controls['editEndDate'].setValue(null);
-    }
-  }
-
-  onSveNewExp() {
-    console.log(this.newExpForm.value);
-  }
-
-  onSveEditedExp() {
-    console.log(this.newExpForm.value);
-  }
-
-  openEditWorkExperienceDialog(id: number) {
+  public openEditWorkExperienceDialog(id: number) {
     const resp = this.findWorkExpById(id);
     const editCompany = resp.firm;
     const editJob = resp.jobTitle;
@@ -101,16 +71,16 @@ export class ExpPersCrdComponent implements OnInit {
     this.editWorkExperienceDialog = true;
   }
 
-  hideEditWorkExperienceDialog() {
+  public hideEditWorkExperienceDialog() {
     this.editExpForm.reset();
     this.editWorkExperienceDialog = false;
   }
 
-  openNewWorkExperienceDialog() {
+  public openNewWorkExperienceDialog() {
     this.newWorkExperienceDialog = true;
   }
 
-  hideNewWorkExperienceDialog() {
+  public hideNewWorkExperienceDialog() {
     this.newExpForm.reset();
     this.newWorkExperienceDialog = false;
   }
@@ -127,5 +97,43 @@ export class ExpPersCrdComponent implements OnInit {
   private findWorkExpById(id: number): WorkExperience {
     const workExp = this.workExp.find((exp) => exp.idWorkExperience === id)!;
     return workExp;
+  }
+
+  public onCheckFractal() {
+    if (this.newExpForm.get('hFractal')!.value) {
+      this.newExpForm.controls['company'].disable();
+      this.newExpForm.controls['company'].setValue('FRACTAL');
+    } else {
+      this.newExpForm.controls['company'].enable();
+      this.newExpForm.controls['company'].setValue('');
+    }
+  }
+  public onCheckCurrDate() {
+    if (this.newExpForm.get('tPresent')!.value) {
+      this.newExpForm.controls['eDate'].disable();
+      this.newExpForm.controls['eDate'].setValue(new Date());
+    } else {
+      this.newExpForm.controls['eDate'].enable();
+      this.newExpForm.controls['eDate'].setValue(null);
+    }
+  }
+
+  public onEdtCheckFractal() {
+    if (this.editExpForm.get('hFractal')!.value) {
+      this.editExpForm.controls['editCompany'].disable();
+      this.editExpForm.controls['editCompany'].setValue('FRACTAL');
+    } else {
+      this.editExpForm.controls['editCompany'].enable();
+      this.editExpForm.controls['editCompany'].setValue('');
+    }
+  }
+  public onEdtCheckCurrDate() {
+    if (this.editExpForm.get('tPresent')!.value) {
+      this.editExpForm.controls['editEndDate'].disable();
+      this.editExpForm.controls['editEndDate'].setValue(new Date());
+    } else {
+      this.editExpForm.controls['editEndDate'].enable();
+      this.editExpForm.controls['editEndDate'].setValue(null);
+    }
   }
 }

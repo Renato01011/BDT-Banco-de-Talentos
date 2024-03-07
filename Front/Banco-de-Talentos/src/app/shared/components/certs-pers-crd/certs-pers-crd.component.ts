@@ -11,6 +11,8 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
 export class CertsPersCrdComponent implements OnInit {
   @Input()
   public documents: Document[] = [];
+  @Input()
+  public selectedId?: number;
 
   public addFileDialog: boolean = false;
 
@@ -42,11 +44,17 @@ export class CertsPersCrdComponent implements OnInit {
     console.log('Upload');
   }
 
-  public onSveFile() {
-    if (this.fileForm.invalid) {
-      this.fileForm.markAllAsTouched();
-      return;
+  private onSaveForm(form: FormGroup): boolean {
+    if (form.invalid) {
+      form.markAllAsTouched();
+      return false;
     }
+    return true;
+  }
+
+  public onSveFile() {
+    if (!this.onSaveForm(this.fileForm)) return;
+    if (!this.selectedId) return;
     console.log(this.fileForm.value);
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 
@@ -10,6 +10,8 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
 export class FeedbackCrdComponent implements OnInit {
   rating: number = 0;
   newFeedbackDialog: boolean = false;
+  @Input()
+  public selectedId?: number;
 
   constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
 
@@ -20,12 +22,22 @@ export class FeedbackCrdComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  isValidField(field: string) {
-    return this.fValidator.isValidField(this.feedBkForm, field);
+  private onSaveForm(form: FormGroup): boolean {
+    if (form.invalid) {
+      form.markAllAsTouched();
+      return false;
+    }
+    return true;
   }
 
   onSveFeedBkForm() {
+    if (!this.onSaveForm(this.feedBkForm)) return;
+    if (!this.selectedId) return;
     console.log(this.feedBkForm.value);
+  }
+
+  isValidField(field: string) {
+    return this.fValidator.isValidField(this.feedBkForm, field);
   }
 
   openNewFeedbackDialog() {

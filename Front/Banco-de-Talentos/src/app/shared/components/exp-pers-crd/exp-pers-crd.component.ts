@@ -11,6 +11,8 @@ import { WorkExperience } from '../../models/interfaces/talentResp.interfaces';
 export class ExpPersCrdComponent implements OnInit {
   @Input()
   public workExp: WorkExperience[] = [];
+  @Input()
+  public selectedId?: number;
 
   public newWorkExperienceDialog: boolean = false;
   public editWorkExperienceDialog: boolean = false;
@@ -37,20 +39,24 @@ export class ExpPersCrdComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  private onSaveForm(form: FormGroup) {
+  private onSaveForm(form: FormGroup): boolean {
     if (form.invalid) {
       form.markAllAsTouched();
-      return;
+      return false;
     }
-    console.log(form.value);
+    return true;
   }
 
   public onSveNewExp() {
-    this.onSaveForm(this.newExpForm);
+    if (!this.onSaveForm(this.newExpForm)) return;
+    if (!this.selectedId) return;
+    console.log(this.newExpForm.value);
   }
 
   public onSveEditedExp() {
-    this.onSaveForm(this.editExpForm);
+    if (!this.onSaveForm(this.editExpForm)) return;
+    if (!this.selectedId) return;
+    console.log(this.editExpForm.value);
   }
 
   public isValidField(field: string) {

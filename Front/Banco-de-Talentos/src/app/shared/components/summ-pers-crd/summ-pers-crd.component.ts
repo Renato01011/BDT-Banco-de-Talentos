@@ -10,6 +10,8 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
 export class SummPersCrdComponent implements OnInit {
   @Input()
   description: string = '';
+  @Input()
+  public selectedId?: number;
 
   editDescriptionDialog: boolean = false;
 
@@ -43,6 +45,7 @@ export class SummPersCrdComponent implements OnInit {
       this.summForm.markAllAsTouched();
       return;
     }
+    if (!this.selectedId) return;
     console.log(this.summForm.value);
   }
 

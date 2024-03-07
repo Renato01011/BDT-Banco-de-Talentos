@@ -5,21 +5,22 @@
         <div class="mb-5">
           <p-image src="./assets/login/Fractal Logo Login.png" [style]="{ width: '243.3px', height: '63.66px' }"></p-image>
         </div>
-        <h2 class="logInTextHeader">Inicio de sesión</h2>
-        <h1 class="logInSubHeader mb-5">Inicia sesión</h1>
-        <p class="logInSubSubHeader mb-1">Usuario</p>
-        <input pInputText placeholder="Nombre de usuario" class="w-full"/>
-        <p class="logInSubSubHeader mb-1">Contraseña</p>
-        <p-password [toggleMask]="true" placeholder="Contraseña" class="w-full" styleClass="w-full p-password p-component p-inputwrapper p-input-icon-right" inputStyleClass="w-full"></p-password>
-        <p class="m-4 ml-0 forgotPasswordText">Olvidé mi contraseña</p>
-        <button
-          pButton
-          pRipple
-          type="button"
-          label="Iniciar sesión"
-          class="logInButton p-button-success w-full"
-          (click)="onLogin()"
-        ></button>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <h2 class="logInTextHeader">Inicio de sesión</h2>
+          <h1 class="logInSubHeader mb-5">Inicia sesión</h1>
+          <p class="logInSubSubHeader mb-1">Usuario</p>
+          <input pInputText placeholder="Nombre de usuario" class="w-full" formControlName="username" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('username') }"/>
+          <p class="logInSubSubHeader mb-1">Contraseña</p>
+          <p-password [toggleMask]="true" placeholder="Contraseña" class="w-full" styleClass="w-full p-password p-component p-inputwrapper p-input-icon-right" inputStyleClass="w-full" formControlName="password" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('password') }"></p-password>
+          <p class="m-4 ml-0 forgotPasswordText">Olvidé mi contraseña</p>
+          <button
+            pButton
+            pRipple
+            type="submit"
+            label="Iniciar sesión"
+            class="logInButton p-button-success w-full"
+          ></button>
+        </form>
       </div>
     </div>
   </div>

@@ -34,4 +34,18 @@ export class UrlConstants {
     environment.host + environment.context + '/educ/add';
   public static readonly URL_ADD_LANG =
     environment.host + environment.context + '/lang/add';
+  public static readonly URL_EDIT_DESCRIPTION =
+    environment.host + environment.context + '/talent/update/description';
+  public static readonly URL_EDIT_PROFILE_PICTURE =
+    environment.host + environment.context + '/talent/update/profile-picture';
+  public static readonly URL_EDIT_SALARY =
+    environment.host + environment.context + '/talent/update/salary';
+  public static readonly URL_EDIT_SOCIAL_LINKS =
+    environment.host + environment.context + '/talent/update/social-links';
+  public static readonly URL_EDIT_EDUC_EXP =
+    environment.host + environment.context + '/educ/update';
+  public static readonly URL_EDIT_WORK_EXP =
+    environment.host + environment.context + '/work/update';
+  public static readonly URL_EDIT_LANG_EXP =
+    environment.host + environment.context + '/lang/update';
 }

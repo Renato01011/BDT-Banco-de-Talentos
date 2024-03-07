@@ -8,6 +8,8 @@ import {
 } from '../../models/interfaces/master.interfaces';
 import { LanguageLevel } from '../../models/interfaces/talentResp.interfaces';
 import { AddInfoService } from '../../service/addInfo/add-info.service';
+import { EditInfoService } from '../../service/editInfo/edit-info.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 @Component({
   selector: 'shared-lang-pers-crd',
@@ -25,6 +27,8 @@ export class LangPersCrdComponent implements OnInit {
   newLanguageDialog: boolean = false;
   editLanguageDialog: boolean = false;
 
+  currEditingLangProf: number = 0;
+
   language: LanguageModel[] = [];
 
   proficiency: LangProficiencyModel[] = [];
@@ -33,7 +37,9 @@ export class LangPersCrdComponent implements OnInit {
     private fb: FormBuilder,
     private fValidator: FrmValService,
     private masterService: MasterService,
-    private addInfoService: AddInfoService
+    private addInfoService: AddInfoService,
+    private editInfoService: EditInfoService,
+    private toastService: ToastService
   ) {}
 
   public newLanguageForm: FormGroup = this.fb.group({
@@ -81,8 +87,20 @@ export class LangPersCrdComponent implements OnInit {
   }
   public onSveEditLangForm() {
     if (!this.onSaveForm(this.editLanguageForm)) return;
-    console.log(this.editLanguageForm.value);
     if (!this.selectedId) return;
+    this.editInfoService.editLanguageExpertise({
+      idiomaId: this.editLanguageForm.get('editLanguages')!.value,
+      nivelId: this.editLanguageForm.get('editProficiency')!.value,
+      nuEstrellas: this.editLanguageForm.get('editRating')!.value
+    }, this.selectedId, this.currEditingLangProf).subscribe({
+      next: (resp) => {
+        this.hideEditLanguageDialog();
+        this.toastService.addProperties(
+          'success', 'Se editó correctamente', resp.message
+        );
+        this.talentId.emit(this.selectedId);
+      }
+    });
   }
 
   public isValidField(field: string) {
@@ -103,8 +121,9 @@ export class LangPersCrdComponent implements OnInit {
 
   public openEditLanguageDialog(id: number) {
     const resp = this.findLangById(id);
-    const editLanguages = resp.languageName;
-    const editProficiency = resp.proficiency;
+    this.currEditingLangProf = id;
+    const editLanguages = resp.idLanguage;
+    const editProficiency = resp.idProficiency;
     const editRating = resp.starCount;
     this.editLanguageForm.reset({
       editLanguages,
@@ -115,6 +134,7 @@ export class LangPersCrdComponent implements OnInit {
   }
 
   public hideEditLanguageDialog() {
+    this.currEditingLangProf = 0;
     this.editLanguageDialog = false;
   }
 

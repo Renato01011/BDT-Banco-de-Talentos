@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
+import { EditInfoService } from '../../service/editInfo/edit-info.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 @Component({
   selector: 'shared-summ-pers-crd',
@@ -18,7 +20,7 @@ export class SummPersCrdComponent implements OnInit {
 
   editDescriptionDialog: boolean = false;
 
-  constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
+  constructor(private fb: FormBuilder, private fValidator: FrmValService, private editInfoService: EditInfoService, private toastService: ToastService) {}
 
   public summForm: FormGroup = this.fb.group({
     description: [
@@ -49,8 +51,17 @@ export class SummPersCrdComponent implements OnInit {
       return;
     }
     if (!this.selectedId) return;
-    console.log(this.summForm.value);
-    // this.talentId.emit(Number(resp.id));
+    this.editInfoService.editTalentDescription({
+      description: this.summForm.get('description')!.value
+    }, this.selectedId).subscribe({
+      next: (resp) => {
+        this.hideEditDescriptionDialog();
+        this.toastService.addProperties(
+          'success', 'Se editó correctamente', resp.message
+        );
+        this.talentId.emit(this.selectedId);
+      }
+    });
   }
 
   openEditDescriptionDialog() {

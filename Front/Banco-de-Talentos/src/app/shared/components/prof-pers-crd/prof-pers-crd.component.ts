@@ -5,6 +5,8 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { MasterService } from 'src/app/core/services/master/master.service';
 import { CurrenciesModel } from '../../models/interfaces/master.interfaces';
 import { CustomTalent } from '../../models/interfaces/customTalent.interfaces';
+import { EditInfoService } from '../../service/editInfo/edit-info.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
 const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
@@ -29,10 +31,17 @@ export class ProfPersCrdComponent implements OnInit {
   public editProfilePicture: boolean = false;
   public editSalaryDialog: boolean = false;
 
+  photoText: string = 'Sube una nueva foto de perfil';
+  photoDetailsText: string = 'PNG o JPG (max. 800x400px)';
+  base64photo: string = '';
+  photoUploaded: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private fValidator: FrmValService,
-    private masterService: MasterService
+    private masterService: MasterService,
+    private editInfoService: EditInfoService,
+    private toastService: ToastService
   ) {}
 
   public profileForm: FormGroup = this.fb.group({
@@ -70,29 +79,98 @@ export class ProfPersCrdComponent implements OnInit {
     return true;
   }
 
-  public onPhotoUpload(event: any) {
-    console.log('Upload');
+  public async onPhotoUpload(event: any) {
+    const photo: File = event.target.files[0];
+    if (photo) {
+      if (photo.type == 'image/jpeg' || photo.type == 'image/png') {
+        const bmp = await createImageBitmap(photo);
+        const { width, height } = bmp;
+        bmp.close();
+        if (width > 800 || height > 400) {
+          this.toastService.addProperties(
+            'error',
+            'Ocurrio un error',
+            'Las dimensiones de la imagen son demasiado grandes'
+          );
+          this.profileForm.controls['img'].setValue('');
+          return;
+        }
+        this.photoUploaded = true;
+        //this.photo = photo;
+        const photoReader = new FileReader();
+        photoReader.readAsDataURL(photo);
+        photoReader.onloadend = () => {
+          this.base64photo = photoReader.result as string;
+        };
+        this.photoText = 'Archivo Correctamente Subido';
+        this.photoDetailsText = photo.name;
+      } else {
+        this.toastService.addProperties(
+          'error',
+          'Ocurrio un error',
+          'Imagen no es PNG o JPG'
+        );
+        this.profileForm.controls['img'].setValue('');
+        return;
+      }
+    } else {
+      this.photoText = 'Error al Subir';
+      this.toastService.addProperties(
+        'error',
+        'Ocurrio un error',
+        'Error al subir imagen, vuelva a intentar'
+      );
+      this.profileForm.controls['img'].setValue('');
+    }
   }
 
   public onSveProfile() {
     if (!this.onSaveForm(this.profileForm)) return;
     if (!this.selectedId) return;
-    console.log(this.profileForm.value);
-    //this.talentId.emit(Number(resp.id));
+    this.editInfoService.editTalentProfilePicture({ profilePicture: this.base64photo.split(',')[1] }, this.selectedId).subscribe({
+      next: (resp) => {
+        this.hideEditProfilePicture();
+        this.toastService.addProperties(
+          'success', 'Se editó correctamente', resp.message
+        );
+        this.talentId.emit(this.selectedId);
+      }
+    });
   }
 
   public onSveSalary() {
     if (!this.onSaveForm(this.salaryForm)) return;
     if (!this.selectedId) return;
-    console.log(this.salaryForm.value);
-    //this.talentId.emit(Number(resp.id));
+    this.editInfoService.editTalentSalary({ 
+      idCoin: this.salaryForm.get('currency')!.value,
+      initialSalary: this.salaryForm.get('iAmount')!.value,
+      finalSalary: this.salaryForm.get('fAmount')!.value
+     }, this.selectedId).subscribe({
+      next: (resp) => {
+        this.hideEditSalaryDialog();
+        this.toastService.addProperties(
+          'success', 'Se editó correctamente', resp.message
+        );
+        this.talentId.emit(this.selectedId);
+      }
+    });
   }
 
   public onSveRedSoc() {
     if (!this.onSaveForm(this.redSocForm)) return;
     if (!this.selectedId) return;
-    console.log(this.redSocForm.value);
-    //this.talentId.emit(Number(resp.id));
+    this.editInfoService.editTalentSocialLinks({ 
+      linkedin: this.redSocForm.get('linkedin')!.value,
+      github: this.redSocForm.get('github')!.value
+     }, this.selectedId).subscribe({
+      next: (resp) => {
+        this.hidEditSocMediaDlg();
+        this.toastService.addProperties(
+          'success', 'Se editó correctamente', resp.message
+        );
+        this.talentId.emit(this.selectedId);
+      }
+    });
   }
 
   public isValidProfileField(field: string) {
@@ -133,6 +211,10 @@ export class ProfPersCrdComponent implements OnInit {
 
   public hideEditProfilePicture() {
     this.profileForm.reset();
+    this.photoText = 'Sube una nueva foto de perfil';
+    this.photoDetailsText = 'PNG o JPG (max. 800x400px)';
+    this.photoUploaded = false;
+    this.base64photo = '';
     this.editProfilePicture = false;
   }
 

@@ -152,18 +152,21 @@
     >
       <button
         pButton
+        type="button"
         class="p-button-outlined border-300 w-full flex flex-column"
         (click)="photoUpload.click()"
       >
-        <i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"></i>
+        <!--<i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"></i>-->
+        <i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400" style="font-size: 1.5rem; color: #708090" *ngIf="!photoUploaded"></i>
+        <i class="pi pi-check px-2 pt-5 text-2xl text-bluegray-400" style="font-size: 1.5rem; color: #708090" *ngIf="photoUploaded"></i>
         <span
           class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
           style="color: #0b85c3"
-          >Sube una nueva foto de perfil</span
+          >{{ photoText }}</span
         >
         <span
           class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
-          >PNG o JPG (max. 800x400px)</span
+          >{{ photoDetailsText }}</span
         >
         <input
           #photoUpload

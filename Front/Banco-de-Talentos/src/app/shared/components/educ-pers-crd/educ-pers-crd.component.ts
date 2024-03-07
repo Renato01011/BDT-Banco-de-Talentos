@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { EducationalExperience } from '../../models/interfaces/talentResp.interfaces';
+import { AddInfoService } from '../../service/addInfo/add-info.service';
 
 @Component({
   selector: 'shared-educ-pers-crd',
@@ -13,11 +14,17 @@ export class EducPersCrdComponent implements OnInit {
   public educExp: EducationalExperience[] = [];
   @Input()
   public selectedId?: number;
+  @Output()
+  public talentId = new EventEmitter<number>();
 
   public newEducationalExperienceDialog: boolean = false;
   public editEducationalExperienceDialog: boolean = false;
 
-  constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
+  constructor(
+    private fb: FormBuilder,
+    private fValidator: FrmValService,
+    private addInfoService: AddInfoService
+  ) {}
 
   public newEducForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
@@ -57,8 +64,24 @@ export class EducPersCrdComponent implements OnInit {
 
   public onSveNewEducForm() {
     if (!this.onSaveForm(this.newEducForm)) return;
-    console.log(this.newEducForm.value);
     if (!this.selectedId) return;
+    console.log(this.newEducForm.getRawValue());
+    const { name, career, degree, stDate, edDate } =
+      this.newEducForm.getRawValue();
+    const body = {
+      institucion: name,
+      carrera: career,
+      grado: degree,
+      fechaInicio: stDate,
+      fechaFin: edDate,
+    };
+    this.addInfoService.addEducExp(body, this.selectedId).subscribe({
+      next: (resp) => {
+        console.log(resp.message);
+        this.talentId.emit(Number(resp.id));
+        this.hideNewEducationalExperienceDialog();
+      },
+    });
   }
 
   public isValidField(field: string) {

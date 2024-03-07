@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 
@@ -9,9 +9,12 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
 })
 export class SummPersCrdComponent implements OnInit {
   @Input()
-  description: string = '';
+  public description: string = '';
   @Input()
   public selectedId?: number;
+
+  @Output()
+  public talentId = new EventEmitter<number>();
 
   editDescriptionDialog: boolean = false;
 
@@ -47,6 +50,7 @@ export class SummPersCrdComponent implements OnInit {
     }
     if (!this.selectedId) return;
     console.log(this.summForm.value);
+    // this.talentId.emit(Number(resp.id));
   }
 
   openEditDescriptionDialog() {

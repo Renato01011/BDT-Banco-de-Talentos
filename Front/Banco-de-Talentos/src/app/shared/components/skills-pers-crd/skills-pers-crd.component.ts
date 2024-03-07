@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { AddInfoService } from '../../service/addInfo/add-info.service';
@@ -23,6 +23,9 @@ export class SkillsPersCrdComponent implements OnInit {
   @Input()
   public selectedId?: number;
 
+  @Output()
+  public talentId = new EventEmitter<number>();
+
   inlineTechnicalSkills: { name: string }[] = [];
 
   technicalSkillsDialog: boolean = false;
@@ -44,7 +47,7 @@ export class SkillsPersCrdComponent implements OnInit {
       '',
       [
         Validators.required,
-        Validators.maxLength(10),
+        Validators.maxLength(20),
         Validators.pattern(justLettersRegEx),
       ],
     ],
@@ -69,13 +72,30 @@ export class SkillsPersCrdComponent implements OnInit {
       nombre: name,
       anios: yearExp,
     };
-    this.addInfoService.addTechSkill(body, this.selectedId);
+    this.addInfoService.addTechSkill(body, this.selectedId).subscribe({
+      next: (resp) => {
+        console.log(resp.message);
+        this.talentId.emit(Number(resp.id));
+        this.hideNewTechnicalSkillDialog();
+      },
+    });
   }
 
   public onSveSoftSkForm() {
     if (!this.onSaveForm(this.softSkForm)) return;
     if (!this.selectedId) return;
     console.log(this.softSkForm.value);
+    const { name } = this.softSkForm.value;
+    const body = {
+      nombre: name,
+    };
+    this.addInfoService.addSoftSkill(body, this.selectedId).subscribe({
+      next: (resp) => {
+        console.log(resp.message);
+        this.talentId.emit(Number(resp.id));
+        this.hideNewSoftSkillDialog();
+      },
+    });
   }
 
   public getErrYearExpField(field: string): string {

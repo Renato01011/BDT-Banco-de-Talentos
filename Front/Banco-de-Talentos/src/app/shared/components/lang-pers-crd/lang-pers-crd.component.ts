@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { MasterService } from 'src/app/core/services/master/master.service';
@@ -7,6 +7,7 @@ import {
   LanguageModel,
 } from '../../models/interfaces/master.interfaces';
 import { LanguageLevel } from '../../models/interfaces/talentResp.interfaces';
+import { AddInfoService } from '../../service/addInfo/add-info.service';
 
 @Component({
   selector: 'shared-lang-pers-crd',
@@ -15,9 +16,11 @@ import { LanguageLevel } from '../../models/interfaces/talentResp.interfaces';
 })
 export class LangPersCrdComponent implements OnInit {
   @Input()
-  langProficiency: LanguageLevel[] = [];
+  public langProficiency: LanguageLevel[] = [];
   @Input()
   public selectedId?: number;
+  @Output()
+  public talentId = new EventEmitter<number>();
 
   newLanguageDialog: boolean = false;
   editLanguageDialog: boolean = false;
@@ -29,7 +32,8 @@ export class LangPersCrdComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private fValidator: FrmValService,
-    private masterService: MasterService
+    private masterService: MasterService,
+    private addInfoService: AddInfoService
   ) {}
 
   public newLanguageForm: FormGroup = this.fb.group({
@@ -59,8 +63,21 @@ export class LangPersCrdComponent implements OnInit {
 
   public onSveNewLanguageForm() {
     if (!this.onSaveForm(this.newLanguageForm)) return;
-    console.log(this.newLanguageForm.value);
     if (!this.selectedId) return;
+    console.log(this.newLanguageForm.value);
+    const { languages, proficiency, rating } = this.newLanguageForm.value;
+    const body = {
+      idiomaId: languages,
+      nivelId: proficiency,
+      nuEstrellas: rating,
+    };
+    this.addInfoService.addLang(body, this.selectedId).subscribe({
+      next: (resp) => {
+        console.log(resp.message);
+        this.talentId.emit(Number(resp.id));
+        this.hideNewLanguageDialog();
+      },
+    });
   }
   public onSveEditLangForm() {
     if (!this.onSaveForm(this.editLanguageForm)) return;

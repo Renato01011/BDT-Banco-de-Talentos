@@ -13,8 +13,8 @@
         >
           <shared-pers-prof-crd
             [talents]="talents"
-            (talentId)="searchByTalentId($event)"
             [selId]="selId"
+            (talentId)="searchByTalentId($event)"
           ></shared-pers-prof-crd>
         </p-scrollPanel>
       </div>
@@ -31,31 +31,38 @@
           <shared-prof-pers-crd
             [customTalent]="customTalent"
             [selectedId]="selId"
+            (talentId)="searchByTalentId($event)"
           ></shared-prof-pers-crd>
           <shared-certs-pers-crd
             [documents]="documents"
             [selectedId]="selId"
+            (talentId)="searchByTalentId($event)"
           ></shared-certs-pers-crd>
           <shared-skills-pers-crd
             [softSkills]="softSkills"
             [techSkills]="techSkills"
             [selectedId]="selId"
+            (talentId)="searchByTalentId($event)"
           ></shared-skills-pers-crd>
           <shared-summ-pers-crd
             [description]="description"
             [selectedId]="selId"
+            (talentId)="searchByTalentId($event)"
           ></shared-summ-pers-crd>
           <shared-exp-pers-crd
             [workExp]="workExp"
             [selectedId]="selId"
+            (talentId)="searchByTalentId($event)"
           ></shared-exp-pers-crd>
           <shared-educ-pers-crd
             [educExp]="educExp"
             [selectedId]="selId"
+            (talentId)="searchByTalentId($event)"
           ></shared-educ-pers-crd>
           <shared-lang-pers-crd
             [langProficiency]="langProficiency"
             [selectedId]="selId"
+            (talentId)="searchByTalentId($event)"
           ></shared-lang-pers-crd>
           <shared-feedback-crd [selectedId]="selId"></shared-feedback-crd>
         </p-scrollPanel>

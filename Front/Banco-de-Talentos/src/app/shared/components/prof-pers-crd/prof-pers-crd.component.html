@@ -114,7 +114,7 @@
         </a>
         <span
           class="cursor-pointer text-500 hover:text-700 mx-2"
-          (click)="openEditSocialMediaDialog()"
+          (click)="opEditSocMediaDlg()"
         >
           <i class="pi pi-pencil text-sm"></i>
         </span>
@@ -144,51 +144,75 @@
         >Sube una nueva foto de perfil.</span
       >
     </div>
-    <button
-      pButton
-      class="p-button-outlined border-300 w-full flex flex-column"
-      (click)="photoUpload.click()"
+    <form
+      class="w-12 flex flex-column"
+      autocomplete="off"
+      [formGroup]="profileForm"
+      (ngSubmit)="onSveProfile()"
     >
-      <i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"></i>
-      <span
-        class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
-        style="color: #0b85c3"
-        >Sube una nueva foto de perfil</span
+      <button
+        pButton
+        class="p-button-outlined border-300 w-full flex flex-column"
+        (click)="photoUpload.click()"
       >
-      <span
-        class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
-        >PNG o JPG (max. 800x400px)</span
-      >
-      <input
-        #photoUpload
-        type="file"
-        accept=".png, .jpg, .jpeg"
-        style="display: none"
-        (change)="onPhotoUpload($event)"
-      />
-    </button>
-    <div class="w-12 flex flex-wrap pt-3">
-      <div class="w-6 p-2 pl-0 flex align-items-center justify-content-center">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-secondary w-full"
-          (click)="hideEditProfilePicture()"
-        ></button>
+        <i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"></i>
+        <span
+          class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
+          style="color: #0b85c3"
+          >Sube una nueva foto de perfil</span
+        >
+        <span
+          class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
+          >PNG o JPG (max. 800x400px)</span
+        >
+        <input
+          #photoUpload
+          id="picture"
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          style="display: none"
+          formControlName="img"
+          (change)="onPhotoUpload($event)"
+        />
+      </button>
+      <div class="w-12">
+        <small
+          id="picture"
+          class="hidden"
+          [ngClass]="{
+            'p-error block text-left': isValidProfileField('img')
+          }"
+          >Este campo no puede estar vacío.</small
+        >
       </div>
-      <div class="w-6 p-2 pr-0 flex align-items-center justify-content-center">
-        <button
-          pButton
-          pRipple
-          label="Editar"
-          icon="pi pi-check"
-          type="submit"
-          class="p-button-success w-full"
-        ></button>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            type="button"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideEditProfilePicture()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Editar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </p-dialog>
 
@@ -215,9 +239,9 @@
     </div>
     <form
       class="w-12 flex flex-column"
+      autocomplete="off"
       [formGroup]="salaryForm"
       (ngSubmit)="onSveSalary()"
-      autocomplete="off"
     >
       <div class="w-12 flex flex-column align-items-center">
         <div
@@ -225,7 +249,7 @@
           class="h-3rem w-full border-round border-1 border-300 mb-2 flex"
           [ngClass]="{
             'border-primary border-2 bg-indigo-50':
-              coin.name == salaryForm.controls['currency'].value
+              coin.id == salaryForm.controls['currency'].value
           }"
         >
           <div
@@ -239,7 +263,7 @@
             <p-radioButton
               [inputId]="coin.name"
               name="currency"
-              [value]="coin.name"
+              [value]="coin.id"
               formControlName="currency"
             ></p-radioButton>
           </div>
@@ -259,6 +283,8 @@
               inputId="inputNumber"
               class="w-full"
               styleClass="w-full"
+              [min]="0"
+              [max]="10000"
               formControlName="iAmount"
             ></p-inputNumber>
             <small
@@ -283,6 +309,8 @@
             <p-inputNumber
               inputId="inputNumber2"
               styleClass="w-12"
+              [min]="0"
+              [max]="10000"
               formControlName="fAmount"
             ></p-inputNumber>
             <small
@@ -291,7 +319,7 @@
               [ngClass]="{
                 'p-error block text-left': isValidSalaryField('fAmount')
               }"
-              >Este campo no puede estar vacío.</small
+              >{{ getErrFnAmountField("fAmount") }}</small
             >
           </div>
         </div>
@@ -306,6 +334,7 @@
             label="Cancelar"
             icon="pi pi-times"
             class="p-button-outlined p-button-secondary w-full"
+            type="button"
             (click)="hideEditSalaryDialog()"
           ></button>
         </div>
@@ -348,10 +377,10 @@
       </span>
     </div>
     <form
+      class="w-12 flex flex-column"
+      autocomplete="off"
       [formGroup]="redSocForm"
       (ngSubmit)="onSveRedSoc()"
-      autocomplete="off"
-      class="w-12 flex flex-column"
     >
       <div class="w-12 flex flex-column justify-content-start mb-2">
         <label
@@ -363,8 +392,8 @@
         <small
           id="inputLink"
           class="hidden"
-          [ngClass]="{ 'p-error block text-left': isValidField('linkedin') }"
-          >Ingrese su link de LinkedIn</small
+          [ngClass]="{ 'p-error block text-left': isValidSocField('linkedin') }"
+          >{{ getErrLinkField("linkedin") }}</small
         >
       </div>
       <div class="w-12 flex flex-column justify-content-start mb-2">
@@ -377,8 +406,8 @@
         <small
           id="inputLink2"
           class="hidden"
-          [ngClass]="{ 'p-error block text-left': isValidField('github') }"
-          >Ingrese su link de GitHub</small
+          [ngClass]="{ 'p-error block text-left': isValidSocField('github') }"
+          >{{ getErrGitField("github") }}</small
         >
       </div>
       <div class="w-12 flex flex-wrap pt-3">
@@ -390,8 +419,9 @@
             pRipple
             label="Cancelar"
             icon="pi pi-times"
+            type="button"
             class="p-button-outlined p-button-secondary w-full"
-            (click)="hideEditSocialMediaDialog()"
+            (click)="hidEditSocMediaDlg()"
           ></button>
         </div>
         <div

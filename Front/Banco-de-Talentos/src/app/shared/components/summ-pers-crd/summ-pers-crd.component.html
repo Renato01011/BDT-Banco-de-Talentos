@@ -57,7 +57,7 @@
           id="inputLink"
           class="hidden"
           [ngClass]="{ 'p-error block text-left': isValidField('description') }"
-          >Este campo no puede estar vacío.</small
+          >{{ getErrDescField("description") }}</small
         >
       </div>
       <div class="w-12 flex flex-wrap pt-3">
@@ -69,6 +69,7 @@
             pRipple
             label="Cancelar"
             icon="pi pi-times"
+            type="button"
             class="p-button-outlined p-button-secondary w-full"
             (click)="hideEditDescriptionDialog()"
           ></button>

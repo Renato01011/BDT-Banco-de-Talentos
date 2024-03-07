@@ -162,6 +162,7 @@
               styleClass="w-full"
               dateFormat="mm/yy"
               inputId="stDate"
+              dataType="string"
               appendTo="body"
               formControlName="stDate"
             ></p-calendar>
@@ -185,6 +186,7 @@
               styleClass="w-full"
               dateFormat="mm/yy"
               inputId="edDate"
+              dataType="string"
               appendTo="body"
               formControlName="edDate"
             ></p-calendar>
@@ -215,6 +217,7 @@
             pRipple
             label="Cancelar"
             icon="pi pi-times"
+            type="button"
             class="p-button-outlined p-button-secondary w-full"
             (click)="hideNewEducationalExperienceDialog()"
           ></button>
@@ -264,9 +267,9 @@
   </div>
   <form
     class="w-12 flex flex-column"
-    [formGroup]="editEducForm"
     autocomplete="off"
-    (ngSubmit)="onSveNewEducForm()"
+    [formGroup]="editEducForm"
+    (ngSubmit)="onSveEditEducForm()"
   >
     <div class="w-12 flex flex-column justify-content-start">
       <label
@@ -353,6 +356,7 @@
             styleClass="w-full"
             dateFormat="mm/yy"
             inputId="editStDate"
+            dataType="string"
             appendTo="body"
             formControlName="editStDate"
           ></p-calendar>
@@ -378,6 +382,7 @@
             styleClass="w-full"
             dateFormat="mm/yy"
             inputId="editEdDate"
+            dataType="string"
             appendTo="body"
             formControlName="editEdDate"
           ></p-calendar>
@@ -408,6 +413,7 @@
           pRipple
           label="Cancelar"
           icon="pi pi-times"
+          type="button"
           class="p-button-outlined p-button-secondary w-full"
           (click)="hideEditEducationalExperienceDialog()"
         ></button>

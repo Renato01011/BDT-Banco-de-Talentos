@@ -24,4 +24,14 @@ export class UrlConstants {
     environment.host + environment.context + '/filter/filter-talent';
   public static readonly URL_REQ_SRCH_BY_ID =
     environment.host + environment.context + '/talent/get-talent';
+  public static readonly URL_ADD_TEC_SKILL =
+    environment.host + environment.context + '/tech/add';
+  public static readonly URL_ADD_SFT_SKILL =
+    environment.host + environment.context + '/soft/add';
+  public static readonly URL_ADD_WRK_EXP =
+    environment.host + environment.context + '/work/add';
+  public static readonly URL_ADD_EDUC =
+    environment.host + environment.context + '/educ/add';
+  public static readonly URL_ADD_LANG =
+    environment.host + environment.context + '/lang/add';
 }

@@ -30,23 +30,34 @@
         >
           <shared-prof-pers-crd
             [customTalent]="customTalent"
+            [selectedId]="selId"
           ></shared-prof-pers-crd>
           <shared-certs-pers-crd
             [documents]="documents"
+            [selectedId]="selId"
           ></shared-certs-pers-crd>
           <shared-skills-pers-crd
             [softSkills]="softSkills"
             [techSkills]="techSkills"
+            [selectedId]="selId"
           ></shared-skills-pers-crd>
           <shared-summ-pers-crd
             [description]="description"
+            [selectedId]="selId"
           ></shared-summ-pers-crd>
-          <shared-exp-pers-crd [workExp]="workExp"></shared-exp-pers-crd>
-          <shared-educ-pers-crd [educExp]="educExp"></shared-educ-pers-crd>
+          <shared-exp-pers-crd
+            [workExp]="workExp"
+            [selectedId]="selId"
+          ></shared-exp-pers-crd>
+          <shared-educ-pers-crd
+            [educExp]="educExp"
+            [selectedId]="selId"
+          ></shared-educ-pers-crd>
           <shared-lang-pers-crd
             [langProficiency]="langProficiency"
+            [selectedId]="selId"
           ></shared-lang-pers-crd>
-          <shared-feedback-crd></shared-feedback-crd>
+          <shared-feedback-crd [selectedId]="selId"></shared-feedback-crd>
         </p-scrollPanel>
       </div>
     </div>

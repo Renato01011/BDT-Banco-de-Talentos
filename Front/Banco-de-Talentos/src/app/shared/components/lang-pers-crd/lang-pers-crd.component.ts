@@ -16,6 +16,8 @@ import { LanguageLevel } from '../../models/interfaces/talentResp.interfaces';
 export class LangPersCrdComponent implements OnInit {
   @Input()
   langProficiency: LanguageLevel[] = [];
+  @Input()
+  public selectedId?: number;
 
   newLanguageDialog: boolean = false;
   editLanguageDialog: boolean = false;
@@ -47,19 +49,23 @@ export class LangPersCrdComponent implements OnInit {
     this.proficiency = this.uploadProficiency;
   }
 
-  public onSveNewLanguageForm() {
-    if (this.newLanguageForm.invalid) {
-      this.newLanguageForm.markAllAsTouched();
-      return;
+  private onSaveForm(form: FormGroup): boolean {
+    if (form.invalid) {
+      form.markAllAsTouched();
+      return false;
     }
+    return true;
+  }
+
+  public onSveNewLanguageForm() {
+    if (!this.onSaveForm(this.newLanguageForm)) return;
     console.log(this.newLanguageForm.value);
+    if (!this.selectedId) return;
   }
   public onSveEditLangForm() {
-    if (this.editLanguageForm.invalid) {
-      this.editLanguageForm.markAllAsTouched();
-      return;
-    }
+    if (!this.onSaveForm(this.editLanguageForm)) return;
     console.log(this.editLanguageForm.value);
+    if (!this.selectedId) return;
   }
 
   public isValidField(field: string) {

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
+import { AddInfoService } from '../../service/addInfo/add-info.service';
 import {
   SoftSkill,
   TechnicalAbility,
@@ -19,13 +20,19 @@ export class SkillsPersCrdComponent implements OnInit {
   softSkills: SoftSkill[] = [];
   @Input()
   techSkills: TechnicalAbility[] = [];
+  @Input()
+  public selectedId?: number;
 
   inlineTechnicalSkills: { name: string }[] = [];
 
   technicalSkillsDialog: boolean = false;
   softSkillsDialog: boolean = false;
 
-  constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
+  constructor(
+    private fb: FormBuilder,
+    private fValidator: FrmValService,
+    private addInfoService: AddInfoService
+  ) {}
 
   public techSkForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(10)]],
@@ -45,19 +52,29 @@ export class SkillsPersCrdComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public onSveTechSkForm() {
-    if (this.techSkForm.invalid) {
-      this.techSkForm.markAllAsTouched();
-      return;
+  private onSaveForm(form: FormGroup): boolean {
+    if (form.invalid) {
+      form.markAllAsTouched();
+      return false;
     }
+    return true;
+  }
+
+  public onSveTechSkForm() {
+    if (!this.onSaveForm(this.techSkForm)) return;
+    if (!this.selectedId) return;
+    const { name, yearExp } = this.techSkForm.value;
     console.log(this.techSkForm.value);
+    const body = {
+      nombre: name,
+      anios: yearExp,
+    };
+    this.addInfoService.addTechSkill(body, this.selectedId);
   }
 
   public onSveSoftSkForm() {
-    if (this.softSkForm.invalid) {
-      this.softSkForm.markAllAsTouched();
-      return;
-    }
+    if (!this.onSaveForm(this.softSkForm)) return;
+    if (!this.selectedId) return;
     console.log(this.softSkForm.value);
   }
 

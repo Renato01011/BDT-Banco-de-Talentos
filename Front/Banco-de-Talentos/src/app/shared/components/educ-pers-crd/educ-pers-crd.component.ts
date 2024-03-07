@@ -11,6 +11,8 @@ import { EducationalExperience } from '../../models/interfaces/talentResp.interf
 export class EducPersCrdComponent implements OnInit {
   @Input()
   public educExp: EducationalExperience[] = [];
+  @Input()
+  public selectedId?: number;
 
   public newEducationalExperienceDialog: boolean = false;
   public editEducationalExperienceDialog: boolean = false;
@@ -39,20 +41,24 @@ export class EducPersCrdComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public onSveEditEducForm() {
-    if (this.editEducForm.invalid) {
-      this.editEducForm.markAllAsTouched();
-      return;
+  private onSaveForm(form: FormGroup): boolean {
+    if (form.invalid) {
+      form.markAllAsTouched();
+      return false;
     }
+    return true;
+  }
+
+  public onSveEditEducForm() {
+    if (!this.onSaveForm(this.editEducForm)) return;
     console.log(this.editEducForm.value);
+    if (!this.selectedId) return;
   }
 
   public onSveNewEducForm() {
-    if (this.newEducForm.invalid) {
-      this.newEducForm.markAllAsTouched();
-      return;
-    }
+    if (!this.onSaveForm(this.newEducForm)) return;
     console.log(this.newEducForm.value);
+    if (!this.selectedId) return;
   }
 
   public isValidField(field: string) {

@@ -17,6 +17,8 @@ const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
 export class ProfPersCrdComponent implements OnInit {
   @Input()
   public customTalent?: CustomTalent;
+  @Input()
+  public selectedId?: number;
 
   public resume: MenuItem[] = [];
   public coins: CurrenciesModel[] = [];
@@ -58,31 +60,33 @@ export class ProfPersCrdComponent implements OnInit {
     this.checkCurrencies();
   }
 
+  private onSaveForm(form: FormGroup): boolean {
+    if (form.invalid) {
+      form.markAllAsTouched();
+      return false;
+    }
+    return true;
+  }
+
   public onPhotoUpload(event: any) {
     console.log('Upload');
   }
 
   public onSveProfile() {
-    if (this.profileForm.invalid) {
-      this.profileForm.markAllAsTouched();
-      return;
-    }
+    if (!this.onSaveForm(this.profileForm)) return;
+    if (!this.selectedId) return;
     console.log(this.profileForm.value);
   }
 
   public onSveSalary() {
-    if (this.salaryForm.invalid) {
-      this.salaryForm.markAllAsTouched();
-      return;
-    }
+    if (!this.onSaveForm(this.salaryForm)) return;
+    if (!this.selectedId) return;
     console.log(this.salaryForm.value);
   }
 
   public onSveRedSoc() {
-    if (this.redSocForm.invalid) {
-      this.redSocForm.markAllAsTouched();
-      return;
-    }
+    if (!this.onSaveForm(this.redSocForm)) return;
+    if (!this.selectedId) return;
     console.log(this.redSocForm.value);
   }
 

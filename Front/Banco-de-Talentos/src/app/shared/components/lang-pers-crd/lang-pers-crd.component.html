@@ -83,7 +83,6 @@
         <label for="languages" class="block text-left mb-2">Idioma</label>
         <p-dropdown
           [options]="language"
-          [showClear]="true"
           placeholder="Nombre del idioma"
           optionLabel="name"
           optionValue="id"
@@ -104,7 +103,6 @@
         <label for="proficiency" class="block text-left mb-2">Nivel</label>
         <p-dropdown
           [options]="proficiency"
-          [showClear]="true"
           placeholder="Nombre del idioma"
           optionLabel="name"
           optionValue="id"
@@ -201,10 +199,9 @@
         <label for="editLanguages" class="block text-left mb-2">Idioma</label>
         <p-dropdown
           [options]="language"
-          [showClear]="true"
           placeholder="Nombre del idioma"
           optionLabel="name"
-          optionValue="name"
+          optionValue="id"
           appendTo="body"
           class="w-full text-left"
           styleClass="w-full"
@@ -224,10 +221,9 @@
         <label for="editProficiency" class="block text-left mb-2">Nivel</label>
         <p-dropdown
           [options]="proficiency"
-          [showClear]="true"
           placeholder="Nombre del idioma"
           optionLabel="name"
-          optionValue="name"
+          optionValue="id"
           appendTo="body"
           class="w-full text-left"
           styleClass="w-full"

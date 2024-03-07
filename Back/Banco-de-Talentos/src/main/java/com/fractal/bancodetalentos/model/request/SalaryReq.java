@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SalaryReq {
+    private Integer idCoin;
     private Integer initialSalary;
     private Integer finalSalary;
 }

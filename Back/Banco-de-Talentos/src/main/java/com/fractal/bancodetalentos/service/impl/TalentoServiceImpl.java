@@ -464,6 +464,14 @@ public class TalentoServiceImpl implements TalentoService {
             throw new ResourceNotFoundException("Talent", "id", id);
         }
 
+        StoredProcedureQuery storedProcedureQueryCoin = entityManager
+                .createStoredProcedureQuery("SP_EDIT_COIN")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
+                .setParameter(1, id)
+                .setParameter(2, salaryReq.getIdCoin());
+        storedProcedureQueryCoin.execute();
+
         StoredProcedureQuery storedProcedureQuery = entityManager
                 .createStoredProcedureQuery("SP_EDIT_SALARY")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)

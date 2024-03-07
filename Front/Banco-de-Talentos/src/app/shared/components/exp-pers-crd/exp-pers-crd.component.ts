@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { WorkExperience } from '../../models/interfaces/talentResp.interfaces';
 import { AddInfoService } from '../../service/addInfo/add-info.service';
+import { EditInfoService } from '../../service/editInfo/edit-info.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 @Component({
   selector: 'shared-exp-pers-crd',
@@ -20,11 +22,16 @@ export class ExpPersCrdComponent implements OnInit {
   public newWorkExperienceDialog: boolean = false;
   public editWorkExperienceDialog: boolean = false;
 
+  currEditingWorkExp: number = 0;
+
   constructor(
     private fb: FormBuilder,
     private fValidator: FrmValService,
-    private addInfoService: AddInfoService
+    private addInfoService: AddInfoService,
+    private editInfoService: EditInfoService,
+    private toastService: ToastService
   ) {}
+
 
   public newExpForm: FormGroup = this.fb.group({
     company: ['', [Validators.required]],
@@ -77,7 +84,20 @@ export class ExpPersCrdComponent implements OnInit {
   public onSveEditedExp() {
     if (!this.onSaveForm(this.editExpForm)) return;
     if (!this.selectedId) return;
-    console.log(this.editExpForm.value);
+    this.editInfoService.editWorkExperience({ 
+      empresa: this.editExpForm.get('editCompany')!.value,
+      puesto: this.editExpForm.get('editJob')!.value,
+      fechaInicio: this.editExpForm.get('editDate')!.value,
+      fechaFin: this.editExpForm.get('editEndDate')!.value
+     }, this.selectedId, this.currEditingWorkExp).subscribe({
+      next: (resp) => {
+        this.hideEditWorkExperienceDialog();
+        this.toastService.addProperties(
+          'success', 'Se editó correctamente', resp.message
+        );
+        this.talentId.emit(this.selectedId);
+      }
+    });
   }
 
   public isValidField(field: string) {
@@ -89,6 +109,7 @@ export class ExpPersCrdComponent implements OnInit {
   }
 
   public openEditWorkExperienceDialog(id: number) {
+    this.currEditingWorkExp = id;
     const resp = this.findWorkExpById(id);
     const editCompany = resp.firm;
     const editJob = resp.jobTitle;
@@ -99,7 +120,10 @@ export class ExpPersCrdComponent implements OnInit {
   }
 
   public hideEditWorkExperienceDialog() {
+    this.currEditingWorkExp = 0;
     this.editExpForm.reset();
+    this.onEdtCheckFractal();
+    this.onEdtCheckCurrDate();
     this.editWorkExperienceDialog = false;
   }
 
@@ -108,6 +132,8 @@ export class ExpPersCrdComponent implements OnInit {
   }
 
   public hideNewWorkExperienceDialog() {
+    this.onCheckFractal();
+    this.onCheckCurrDate();
     this.newExpForm.reset();
     this.newWorkExperienceDialog = false;
   }

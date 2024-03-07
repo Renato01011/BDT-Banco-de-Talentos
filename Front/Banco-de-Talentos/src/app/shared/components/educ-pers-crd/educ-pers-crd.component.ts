@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { EducationalExperience } from '../../models/interfaces/talentResp.interfaces';
 import { AddInfoService } from '../../service/addInfo/add-info.service';
+import { EditInfoService } from '../../service/editInfo/edit-info.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 @Component({
   selector: 'shared-educ-pers-crd',
@@ -20,10 +22,14 @@ export class EducPersCrdComponent implements OnInit {
   public newEducationalExperienceDialog: boolean = false;
   public editEducationalExperienceDialog: boolean = false;
 
+  currEditingEducExp: number = 0;
+
   constructor(
     private fb: FormBuilder,
     private fValidator: FrmValService,
-    private addInfoService: AddInfoService
+    private addInfoService: AddInfoService,
+    private editInfoService: EditInfoService,
+    private toastService: ToastService
   ) {}
 
   public newEducForm: FormGroup = this.fb.group({
@@ -58,8 +64,22 @@ export class EducPersCrdComponent implements OnInit {
 
   public onSveEditEducForm() {
     if (!this.onSaveForm(this.editEducForm)) return;
-    console.log(this.editEducForm.value);
     if (!this.selectedId) return;
+    this.editInfoService.editEducationalExperience({
+      institucion: this.editEducForm.get('editName')!.value,
+      carrera: this.editEducForm.get('editCareer')!.value,
+      grado: this.editEducForm.get('editDegree')!.value,
+      fechaInicio: this.editEducForm.get('editStDate')!.value,
+      fechaFin: this.editEducForm.get('editEdDate')!.value
+    }, this.selectedId, this.currEditingEducExp).subscribe({
+      next: (resp) => {
+        this.hideEditEducationalExperienceDialog();
+        this.toastService.addProperties(
+          'success', 'Se editó correctamente', resp.message
+        );
+        this.talentId.emit(this.selectedId);
+      }
+    });
   }
 
   public onSveNewEducForm() {
@@ -93,6 +113,7 @@ export class EducPersCrdComponent implements OnInit {
   }
 
   public openEditEducationalExperienceDialog(id: number) {
+    this.currEditingEducExp = id;
     const resp = this.findEducExpById(id);
     const editName = resp.institution;
     const editCareer = resp.major;
@@ -110,7 +131,10 @@ export class EducPersCrdComponent implements OnInit {
   }
 
   public hideEditEducationalExperienceDialog() {
+    this.currEditingEducExp = 0;
     this.editEducForm.reset();
+    this.onCheckEdtFractal();
+    this.onCheckEdtCurrDate();
     this.editEducationalExperienceDialog = false;
   }
 

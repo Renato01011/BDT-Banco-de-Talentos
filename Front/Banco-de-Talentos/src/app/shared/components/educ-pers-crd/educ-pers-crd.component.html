@@ -253,11 +253,12 @@
       <span class="text-lg md:text-xl font-semibold text-800">
         Edita tu experiencia educativa
       </span>
-      <span
-        class="text-red-300 hover:text-red-500 text-sm font-light mx-1 cursor-pointer"
+      <button
+        class="text-red-300 hover:text-red-500 mx-1 cursor-pointer border-none bg-white"
+        (click)="confirm()"
       >
-        <i class="pi pi-trash"></i>
-      </span>
+        <i class="pi pi-trash text-lg hover:text-xl"></i>
+      </button>
     </div>
   </ng-template>
   <div class="flex align-items-center w-12 pb-3">

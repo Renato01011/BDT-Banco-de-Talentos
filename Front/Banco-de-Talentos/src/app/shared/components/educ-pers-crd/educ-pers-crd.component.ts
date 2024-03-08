@@ -5,6 +5,7 @@ import { EducationalExperience } from '../../models/interfaces/talentResp.interf
 import { AddInfoService } from '../../service/addInfo/add-info.service';
 import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'shared-educ-pers-crd',
@@ -29,7 +30,8 @@ export class EducPersCrdComponent implements OnInit {
     private fValidator: FrmValService,
     private addInfoService: AddInfoService,
     private editInfoService: EditInfoService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {}
 
   public newEducForm: FormGroup = this.fb.group({
@@ -65,21 +67,29 @@ export class EducPersCrdComponent implements OnInit {
   public onSveEditEducForm() {
     if (!this.onSaveForm(this.editEducForm)) return;
     if (!this.selectedId) return;
-    this.editInfoService.editEducationalExperience({
-      institucion: this.editEducForm.get('editName')!.value,
-      carrera: this.editEducForm.get('editCareer')!.value,
-      grado: this.editEducForm.get('editDegree')!.value,
-      fechaInicio: this.editEducForm.get('editStDate')!.value,
-      fechaFin: this.editEducForm.get('editEdDate')!.value
-    }, this.selectedId, this.currEditingEducExp).subscribe({
-      next: (resp) => {
-        this.hideEditEducationalExperienceDialog();
-        this.toastService.addProperties(
-          'success', 'Se editó correctamente', resp.message
-        );
-        this.talentId.emit(this.selectedId);
-      }
-    });
+    this.editInfoService
+      .editEducationalExperience(
+        {
+          institucion: this.editEducForm.get('editName')!.value,
+          carrera: this.editEducForm.get('editCareer')!.value,
+          grado: this.editEducForm.get('editDegree')!.value,
+          fechaInicio: this.editEducForm.get('editStDate')!.value,
+          fechaFin: this.editEducForm.get('editEdDate')!.value,
+        },
+        this.selectedId,
+        this.currEditingEducExp
+      )
+      .subscribe({
+        next: (resp) => {
+          this.hideEditEducationalExperienceDialog();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
   }
 
   public onSveNewEducForm() {
@@ -100,6 +110,19 @@ export class EducPersCrdComponent implements OnInit {
         console.log(resp.message);
         this.talentId.emit(Number(resp.id));
         this.hideNewEducationalExperienceDialog();
+      },
+    });
+  }
+
+  confirm() {
+    this.confirmationService.confirm({
+      header: 'Advertencia',
+      message: 'Estás a punto de eliminar esta información. ¿Deseas continuar?',
+      icon: 'pi pi-info-circle',
+
+      accept: () => {
+        //Actual logic to perform a confirmation
+        this.hideEditEducationalExperienceDialog();
       },
     });
   }

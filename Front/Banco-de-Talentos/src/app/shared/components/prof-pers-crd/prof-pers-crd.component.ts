@@ -127,50 +127,71 @@ export class ProfPersCrdComponent implements OnInit {
   public onSveProfile() {
     if (!this.onSaveForm(this.profileForm)) return;
     if (!this.selectedId) return;
-    this.editInfoService.editTalentProfilePicture({ profilePicture: this.base64photo.split(',')[1] }, this.selectedId).subscribe({
-      next: (resp) => {
-        this.hideEditProfilePicture();
-        this.toastService.addProperties(
-          'success', 'Se editó correctamente', resp.message
-        );
-        this.talentId.emit(this.selectedId);
-      }
-    });
+    this.editInfoService
+      .editTalentProfilePicture(
+        { profilePicture: this.base64photo.split(',')[1] },
+        this.selectedId
+      )
+      .subscribe({
+        next: (resp) => {
+          this.hideEditProfilePicture();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
   }
 
   public onSveSalary() {
     if (!this.onSaveForm(this.salaryForm)) return;
     if (!this.selectedId) return;
-    this.editInfoService.editTalentSalary({ 
-      idCoin: this.salaryForm.get('currency')!.value,
-      initialSalary: this.salaryForm.get('iAmount')!.value,
-      finalSalary: this.salaryForm.get('fAmount')!.value
-     }, this.selectedId).subscribe({
-      next: (resp) => {
-        this.hideEditSalaryDialog();
-        this.toastService.addProperties(
-          'success', 'Se editó correctamente', resp.message
-        );
-        this.talentId.emit(this.selectedId);
-      }
-    });
+    this.editInfoService
+      .editTalentSalary(
+        {
+          idCoin: this.salaryForm.get('currency')!.value,
+          initialSalary: this.salaryForm.get('iAmount')!.value,
+          finalSalary: this.salaryForm.get('fAmount')!.value,
+        },
+        this.selectedId
+      )
+      .subscribe({
+        next: (resp) => {
+          this.hideEditSalaryDialog();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
   }
 
   public onSveRedSoc() {
     if (!this.onSaveForm(this.redSocForm)) return;
     if (!this.selectedId) return;
-    this.editInfoService.editTalentSocialLinks({ 
-      linkedin: this.redSocForm.get('linkedin')!.value,
-      github: this.redSocForm.get('github')!.value
-     }, this.selectedId).subscribe({
-      next: (resp) => {
-        this.hidEditSocMediaDlg();
-        this.toastService.addProperties(
-          'success', 'Se editó correctamente', resp.message
-        );
-        this.talentId.emit(this.selectedId);
-      }
-    });
+    this.editInfoService
+      .editTalentSocialLinks(
+        {
+          linkedin: this.redSocForm.get('linkedin')!.value,
+          github: this.redSocForm.get('github')!.value,
+        },
+        this.selectedId
+      )
+      .subscribe({
+        next: (resp) => {
+          this.hidEditSocMediaDlg();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
   }
 
   public isValidProfileField(field: string) {
@@ -271,8 +292,8 @@ export class ProfPersCrdComponent implements OnInit {
 
   private getCurrencies(): void {
     this.masterService.getCurrencies().subscribe({
-      next: (skills) => {
-        this.coins = skills;
+      next: (coins) => {
+        this.coins = coins;
       },
     });
   }

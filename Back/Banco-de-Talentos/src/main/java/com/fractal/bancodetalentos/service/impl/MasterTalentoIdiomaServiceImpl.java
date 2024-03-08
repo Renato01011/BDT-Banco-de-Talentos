@@ -40,6 +40,7 @@ public class MasterTalentoIdiomaServiceImpl implements MasterTalentoIdiomaServic
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, Integer.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter(4, Integer.class, ParameterMode.OUT)
                 .setParameter(1, id)
                 .setParameter(2, idiomas.getIdiomaId());
         storedProcedureQueryCheckSkill.execute();

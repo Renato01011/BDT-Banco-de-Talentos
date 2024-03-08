@@ -14,10 +14,14 @@ import {
   NOT_FOUND,
   UNAUTHORIZED,
 } from '../../global/constants/http-errors.constants';
+import { LoaderService } from '../../services/loader/loader.service';
 
 @Injectable()
 export class ErrHandlerInterceptor implements HttpInterceptor {
-  constructor(private toastService: ToastService) {}
+  constructor(
+    private toastService: ToastService,
+    private loaderService: LoaderService
+  ) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -33,6 +37,7 @@ export class ErrHandlerInterceptor implements HttpInterceptor {
   private handleRequestError(error: HttpErrorResponse): Observable<any> {
     console.log(error);
     this.getErrMessage(error);
+    this.loaderService.hideLoader();
     return throwError(() => error);
   }
 

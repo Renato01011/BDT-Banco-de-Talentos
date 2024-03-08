@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { LoaderService } from 'src/app/core/services/loader/loader.service';
-import { ToastService } from '../../../core/services/toast/toast.service';
+import { tap } from 'rxjs';
+import { CustomTalent } from '../../../shared/models/interfaces/customTalent.interfaces';
 import { FilterRequest } from 'src/app/shared/models/interfaces/filterReq.interfaces';
-import { FilterService } from '../../../core/services/filter/filter.service';
 import { FilterResponse } from 'src/app/shared/models/interfaces/filterResp.interfaces';
+import { FilterService } from '../../../core/services/filter/filter.service';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 import { TalentService } from '../../../core/services/talent/talent.service';
+import { ToastService } from '../../../core/services/toast/toast.service';
 import {
   Document,
   EducationalExperience,
@@ -16,8 +18,6 @@ import {
   TechnicalAbility,
   WorkExperience,
 } from 'src/app/shared/models/interfaces/talentResp.interfaces';
-import { tap } from 'rxjs';
-import { CustomTalent } from '../../../shared/models/interfaces/customTalent.interfaces';
 
 @Component({
   selector: 'app-list',
@@ -32,27 +32,25 @@ export class ListComponent implements OnInit {
     nameJobTitle: '',
   };
 
-  public talents: FilterResponse[] = [];
-  public talentId?: number;
   public selId?: number;
+  public talentId?: number;
+  public talents: FilterResponse[] = [];
 
-  description: string = '';
-
-  documents: Document[] = [];
-  softSkills: SoftSkill[] = [];
-  techSkills: TechnicalAbility[] = [];
-  workExp: WorkExperience[] = [];
-  educExp: EducationalExperience[] = [];
-  langProficiency: LanguageLevel[] = [];
-
-  customTalent?: CustomTalent;
+  public customTalent?: CustomTalent;
+  public description: string = '';
+  public documents: Document[] = [];
+  public educExp: EducationalExperience[] = [];
+  public langProficiency: LanguageLevel[] = [];
+  public softSkills: SoftSkill[] = [];
+  public techSkills: TechnicalAbility[] = [];
+  public workExp: WorkExperience[] = [];
 
   constructor(
-    private router: Router,
-    private loaderService: LoaderService,
-    private toastService: ToastService,
     private filterService: FilterService,
-    private talentService: TalentService
+    private loaderService: LoaderService,
+    private router: Router,
+    private talentService: TalentService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -60,20 +58,23 @@ export class ListComponent implements OnInit {
     this.getTalentList(this.filterReq);
   }
 
-  filterTalent(filter: FilterRequest): void {
+  public filterTalent(filter: FilterRequest): void {
     this.getTalentList(filter);
   }
 
-  getTalentList(filter: FilterRequest): void {
+  private getTalentList(filter: FilterRequest): void {
+    this.loaderService.showLoader();
     this.filterService.filterTalent(filter).subscribe({
       next: (talents) => {
         this.talents = talents;
         this.firstCall();
+        this.loaderService.hideLoader();
       },
     });
   }
 
-  searchByTalentId(id: number): void {
+  public searchByTalentId(id: number): void {
+    this.loaderService.showLoader();
     this.talentService
       .getTalentById(id)
       .pipe(
@@ -89,11 +90,12 @@ export class ListComponent implements OnInit {
       .subscribe({
         next: (talent) => {
           this.selId = talent.idTalent;
+          this.loaderService.hideLoader();
         },
       });
   }
 
-  public firstCall() {
+  public firstCall(): void {
     if (this.talents && this.talents.length > 0) {
       const [firstObjeto] = this.talents;
       const firstId = firstObjeto.id;
@@ -101,7 +103,7 @@ export class ListComponent implements OnInit {
     }
   }
 
-  public newTalent(talent: TalentResponse) {
+  public newTalent(talent: TalentResponse): void {
     const {
       idTalent,
       name,

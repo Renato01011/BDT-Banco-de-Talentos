@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   AddEducExp,
+  AddFile,
   AddLang,
   AddResp,
   AddSoftSkill,
@@ -44,6 +45,12 @@ export class AddInfoService {
   public addLang(body: AddLang, id: number): Observable<AddResp> {
     return this.httpClient.post<AddResp>(
       `${UrlConstants.URL_ADD_LANG}/${id}`,
+      body
+    );
+  }
+  public addFile(body: AddFile, id: number): Observable<AddResp> {
+    return this.httpClient.post<AddResp>(
+      `${UrlConstants.URL_ADD_FILE}/${id}`,
       body
     );
   }

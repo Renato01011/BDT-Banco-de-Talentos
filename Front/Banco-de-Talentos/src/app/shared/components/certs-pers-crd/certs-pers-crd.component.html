@@ -16,7 +16,7 @@
               class="w-full h-8rem border-round flex flex-column align-items-center"
             >
               <div class="h-6rem w-full border-round-top overflow-hidden">
-                <img src="./assets/users/1.jpg" [alt]="" class="file-image" />
+                <img src="./assets/pdfIcon.svg" [alt]="" class="file-image" />
               </div>
               <div
                 class="h-2rem w-full border-round-bottom surface-100 flex align-items-center"
@@ -94,15 +94,23 @@
         class="p-button-outlined border-300 w-full flex flex-column"
         (click)="fileUpload.click()"
       >
-        <i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"></i>
+        <i
+          class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"
+          *ngIf="!fileUploaded"
+        ></i>
+        <i
+          class="pi pi-check px-2 pt-5 text-2xl text-teal-500"
+          *ngIf="fileUploaded"
+        ></i>
         <span
           class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
           style="color: #0b85c3"
-          >Sube un archivo</span
+          [ngClass]="{ 'text-teal-500': fileUploaded }"
+          >{{ fileText }}</span
         >
         <span
           class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
-          >PDF</span
+          >{{ fileDetailsText }}</span
         >
         <input
           #fileUpload
@@ -114,7 +122,7 @@
           (change)="onFileUpload($event)"
         />
       </button>
-      <div class="w-12">
+      <div class="w-12 py-2">
         <small
           id="file"
           class="hidden"

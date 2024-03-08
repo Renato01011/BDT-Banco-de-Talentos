@@ -28,6 +28,12 @@ export interface AddLang {
   nuEstrellas: number;
 }
 
+export interface AddFile {
+  nombre: string;
+  tipoArchivo: string;
+  archivo: string;
+}
+
 export interface AddResp {
   id: string;
   message: string;

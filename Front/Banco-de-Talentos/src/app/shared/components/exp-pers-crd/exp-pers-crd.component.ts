@@ -5,6 +5,7 @@ import { WorkExperience } from '../../models/interfaces/talentResp.interfaces';
 import { AddInfoService } from '../../service/addInfo/add-info.service';
 import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'shared-exp-pers-crd',
@@ -29,9 +30,9 @@ export class ExpPersCrdComponent implements OnInit {
     private fValidator: FrmValService,
     private addInfoService: AddInfoService,
     private editInfoService: EditInfoService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {}
-
 
   public newExpForm: FormGroup = this.fb.group({
     company: ['', [Validators.required]],
@@ -84,19 +85,40 @@ export class ExpPersCrdComponent implements OnInit {
   public onSveEditedExp() {
     if (!this.onSaveForm(this.editExpForm)) return;
     if (!this.selectedId) return;
-    this.editInfoService.editWorkExperience({ 
-      empresa: this.editExpForm.get('editCompany')!.value,
-      puesto: this.editExpForm.get('editJob')!.value,
-      fechaInicio: this.editExpForm.get('editDate')!.value,
-      fechaFin: this.editExpForm.get('editEndDate')!.value
-     }, this.selectedId, this.currEditingWorkExp).subscribe({
-      next: (resp) => {
+    this.editInfoService
+      .editWorkExperience(
+        {
+          empresa: this.editExpForm.get('editCompany')!.value,
+          puesto: this.editExpForm.get('editJob')!.value,
+          fechaInicio: this.editExpForm.get('editDate')!.value,
+          fechaFin: this.editExpForm.get('editEndDate')!.value,
+        },
+        this.selectedId,
+        this.currEditingWorkExp
+      )
+      .subscribe({
+        next: (resp) => {
+          this.hideEditWorkExperienceDialog();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
+  }
+
+  confirm() {
+    this.confirmationService.confirm({
+      header: 'Advertencia',
+      message: 'Estás a punto de eliminar esta información. ¿Deseas continuar?',
+      icon: 'pi pi-info-circle',
+
+      accept: () => {
+        //Actual logic to perform a confirmation
         this.hideEditWorkExperienceDialog();
-        this.toastService.addProperties(
-          'success', 'Se editó correctamente', resp.message
-        );
-        this.talentId.emit(this.selectedId);
-      }
+      },
     });
   }
 

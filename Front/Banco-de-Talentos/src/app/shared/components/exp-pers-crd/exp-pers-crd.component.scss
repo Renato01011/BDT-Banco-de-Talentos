@@ -1,1 +1,24 @@
+$primary-color: #009695;
+$primary-hover-color: #007d7c;
+$text-color: #ffffff;
+$border-color: $primary-color;
 
+.p-button {
+  color: $text-color;
+  background: $primary-color;
+  border: 1px solid $border-color;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.375rem;
+  transition: none;
+
+  &:enabled:hover {
+    background: $primary-hover-color;
+    border-color: $primary-hover-color;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px $primary-color,
+      0 1px 2px 0 rgba(0, 0, 0, 0);
+  }
+}

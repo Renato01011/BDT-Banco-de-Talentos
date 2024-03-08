@@ -235,11 +235,12 @@
       <span class="text-lg md:text-xl font-semibold text-800">
         Edita tu experiencia
       </span>
-      <span
-        class="text-red-300 hover:text-red-500 text-sm font-light mx-1 cursor-pointer"
+      <button
+        class="text-red-300 hover:text-red-500 mx-1 cursor-pointer border-none bg-white"
+        (click)="confirm()"
       >
-        <i class="pi pi-trash"></i>
-      </span>
+        <i class="pi pi-trash text-lg hover:text-xl"></i>
+      </button>
     </div>
   </ng-template>
   <div class="w-12 flex flex-column align-items-center">
@@ -396,3 +397,23 @@
     </form>
   </div>
 </p-dialog>
+
+<p-confirmDialog #exp>
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="No"
+      class="p-button-outlined p-button-secondary"
+      (click)="exp.reject()"
+    ></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Yes"
+      (click)="exp.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>

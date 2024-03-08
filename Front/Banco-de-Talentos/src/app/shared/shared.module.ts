@@ -15,6 +15,8 @@ import { LangPersCrdComponent } from './components/lang-pers-crd/lang-pers-crd.c
 import { FeedbackCrdComponent } from './components/feedback-crd/feedback-crd.component';
 import { PipesModule } from '../core/pipes/pipes.module';
 
+import { ConfirmationService } from 'primeng/api';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -49,5 +51,6 @@ import { PipesModule } from '../core/pipes/pipes.module';
     LangPersCrdComponent,
     FeedbackCrdComponent,
   ],
+  providers: [ConfirmationService],
 })
 export class SharedModule {}

@@ -32,6 +32,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { CarouselModule } from 'primeng/carousel';
 import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   exports: [
@@ -67,6 +68,7 @@ import { DividerModule } from 'primeng/divider';
     CarouselModule,
     PasswordModule,
     DividerModule,
+    ConfirmDialogModule,
   ],
 })
 export class MaterialModule {}

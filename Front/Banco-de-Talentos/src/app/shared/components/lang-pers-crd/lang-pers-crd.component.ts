@@ -10,6 +10,7 @@ import { LanguageLevel } from '../../models/interfaces/talentResp.interfaces';
 import { AddInfoService } from '../../service/addInfo/add-info.service';
 import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'shared-lang-pers-crd',
@@ -39,7 +40,8 @@ export class LangPersCrdComponent implements OnInit {
     private masterService: MasterService,
     private addInfoService: AddInfoService,
     private editInfoService: EditInfoService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {}
 
   public newLanguageForm: FormGroup = this.fb.group({
@@ -88,18 +90,39 @@ export class LangPersCrdComponent implements OnInit {
   public onSveEditLangForm() {
     if (!this.onSaveForm(this.editLanguageForm)) return;
     if (!this.selectedId) return;
-    this.editInfoService.editLanguageExpertise({
-      idiomaId: this.editLanguageForm.get('editLanguages')!.value,
-      nivelId: this.editLanguageForm.get('editProficiency')!.value,
-      nuEstrellas: this.editLanguageForm.get('editRating')!.value
-    }, this.selectedId, this.currEditingLangProf).subscribe({
-      next: (resp) => {
+    this.editInfoService
+      .editLanguageExpertise(
+        {
+          idiomaId: this.editLanguageForm.get('editLanguages')!.value,
+          nivelId: this.editLanguageForm.get('editProficiency')!.value,
+          nuEstrellas: this.editLanguageForm.get('editRating')!.value,
+        },
+        this.selectedId,
+        this.currEditingLangProf
+      )
+      .subscribe({
+        next: (resp) => {
+          this.hideEditLanguageDialog();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
+  }
+
+  confirm() {
+    this.confirmationService.confirm({
+      header: 'Advertencia',
+      message: 'Estás a punto de eliminar esta información. ¿Deseas continuar?',
+      icon: 'pi pi-info-circle',
+
+      accept: () => {
+        //Actual logic to perform a confirmation
         this.hideEditLanguageDialog();
-        this.toastService.addProperties(
-          'success', 'Se editó correctamente', resp.message
-        );
-        this.talentId.emit(this.selectedId);
-      }
+      },
     });
   }
 

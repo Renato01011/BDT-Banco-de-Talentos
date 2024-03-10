@@ -29,4 +29,10 @@ public class MasterTalentoIdiomaController {
         GeneralResp generalResp = idiomaService.putLangExp(idTalent, idTalentLang, idiomas);
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{idTalent}/{idTalentLang}")
+    public ResponseEntity<GeneralResp> deleteTalentLang(@PathVariable Integer idTalent, @PathVariable Integer idTalentLang) {
+        GeneralResp generalResp = idiomaService.deleteTalentLang(idTalent, idTalentLang);
+        return new ResponseEntity<>(generalResp, HttpStatus.OK);
+    }
 }

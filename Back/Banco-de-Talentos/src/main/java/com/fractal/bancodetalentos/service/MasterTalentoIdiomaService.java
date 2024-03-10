@@ -9,4 +9,5 @@ public interface MasterTalentoIdiomaService {
 
     Map<String, String> addNewLanguage(Idiomas idiomas, Integer id);
     GeneralResp putLangExp(Integer idTalent, Integer idTalentLang, Idiomas idiomas);
+    GeneralResp deleteTalentLang(Integer idTalent, Integer idTalentLang);
 }

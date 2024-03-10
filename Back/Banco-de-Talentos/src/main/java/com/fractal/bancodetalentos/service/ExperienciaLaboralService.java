@@ -9,4 +9,5 @@ public interface ExperienciaLaboralService {
 
     Map<String, String> addNewWorkExp(ExperienciasLaborales laborales, Integer id);
     GeneralResp putWorkExp(Integer idTalent, Integer idWorkExp, ExperienciasLaborales experienciasLaborales);
+    GeneralResp deleteWorkExp(Integer idTalent, Integer idWorkExp);
 }

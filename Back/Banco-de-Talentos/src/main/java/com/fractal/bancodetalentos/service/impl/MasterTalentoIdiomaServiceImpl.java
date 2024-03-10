@@ -119,4 +119,30 @@ public class MasterTalentoIdiomaServiceImpl implements MasterTalentoIdiomaServic
 
         return generalResp;
     }
+
+    @Override
+    public GeneralResp deleteTalentLang(Integer idTalent, Integer idTalentLang) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, idTalent);
+        storedProcedureQuery.execute();
+        Integer exists = (Integer) storedProcedureQuery.getOutputParameterValue(2);
+
+        if (exists == 0) {
+            throw new ResourceNotFoundException("Talent", "id", idTalent);
+        }
+
+        StoredProcedureQuery storedProcedureQueryIdioma = entityManager
+                .createStoredProcedureQuery("SP_DELETE_LANGUAGE_LEVEL")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .setParameter(1, idTalentLang);
+        storedProcedureQueryIdioma.execute();
+
+        GeneralResp generalResp = new GeneralResp();
+        generalResp.setCode(200);
+        generalResp.setMessage("Correctly Deleted");
+
+        return generalResp;
+    }
 }

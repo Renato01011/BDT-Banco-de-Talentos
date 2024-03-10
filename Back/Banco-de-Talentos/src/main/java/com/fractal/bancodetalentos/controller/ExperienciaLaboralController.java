@@ -29,4 +29,10 @@ public class ExperienciaLaboralController {
         GeneralResp generalResp = laboralService.putWorkExp(idTalent, idWorkExp, experienciasLaborales);
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{idTalent}/{idWorkExp}")
+    public ResponseEntity<GeneralResp> deleteWorkExp(@PathVariable Integer idTalent, @PathVariable Integer idWorkExp) {
+        GeneralResp generalResp = laboralService.deleteWorkExp(idTalent, idWorkExp);
+        return new ResponseEntity<>(generalResp, HttpStatus.OK);
+    }
 }

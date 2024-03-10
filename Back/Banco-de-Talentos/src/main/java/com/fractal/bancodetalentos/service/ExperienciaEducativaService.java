@@ -9,4 +9,5 @@ public interface ExperienciaEducativaService {
 
     Map<String, String> addNewEducExp(ExperienciasEducativas educativas, Integer id);
     GeneralResp putEducExp(Integer idTalent, Integer idEducExp, ExperienciasEducativas experienciasEducativas);
+    GeneralResp deleteEducExp(Integer idTalent, Integer idEducExp);
 }

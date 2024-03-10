@@ -29,4 +29,10 @@ public class ExperienciaEducativaController {
         GeneralResp generalResp = educativaService.putEducExp(idTalent, idEducExp, experienciasEducativas);
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{idTalent}/{idEducExp}")
+    public ResponseEntity<GeneralResp> deleteEducExp(@PathVariable Integer idTalent, @PathVariable Integer idEducExp) {
+        GeneralResp generalResp = educativaService.deleteEducExp(idTalent, idEducExp);
+        return new ResponseEntity<>(generalResp, HttpStatus.OK);
+    }
 }

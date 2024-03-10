@@ -628,7 +628,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         documentos: [
           {
             nombre: this.fileDetailsText,
-            tipoArchivo: 'PDF',
+            tipoArchivo: 'application/pdf',
             archivo: this.base64file.split(',')[1],
           },
         ],

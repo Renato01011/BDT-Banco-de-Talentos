@@ -492,6 +492,10 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     return objectArray;
   }
 
+  onPhoneLocationChange() {
+    this.newTalentForm.controls['phone'].setValue('');
+  }
+
   OnCountryChangeGetData() {
     this.newTalentForm
       .get('country')!

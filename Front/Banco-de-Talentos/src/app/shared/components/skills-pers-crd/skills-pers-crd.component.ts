@@ -6,6 +6,7 @@ import {
   SoftSkill,
   TechnicalAbility,
 } from '../../models/interfaces/talentResp.interfaces';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 const yearExpRegEx = '^(?:\\d+(?:\\.(?:[0-9]|1[0-1]))?)$';
 const justLettersRegEx = '^[a-zA-Z\\s]+$';
@@ -34,7 +35,8 @@ export class SkillsPersCrdComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private fValidator: FrmValService,
-    private addInfoService: AddInfoService
+    private addInfoService: AddInfoService,
+    private toastService: ToastService
   ) {}
 
   public techSkForm: FormGroup = this.fb.group({
@@ -74,7 +76,12 @@ export class SkillsPersCrdComponent implements OnInit {
     };
     this.addInfoService.addTechSkill(body, this.selectedId).subscribe({
       next: (resp) => {
-        console.log(resp.message);
+        //console.log(resp.message);
+        this.toastService.addProperties(
+          'success',
+          'Se agregó correctamente',
+          resp.message
+        );
         this.talentId.emit(Number(resp.id));
         this.hideNewTechnicalSkillDialog();
       },
@@ -91,7 +98,12 @@ export class SkillsPersCrdComponent implements OnInit {
     };
     this.addInfoService.addSoftSkill(body, this.selectedId).subscribe({
       next: (resp) => {
-        console.log(resp.message);
+        //console.log(resp.message);
+        this.toastService.addProperties(
+          'success',
+          'Se agregó correctamente',
+          resp.message
+        );
         this.talentId.emit(Number(resp.id));
         this.hideNewSoftSkillDialog();
       },

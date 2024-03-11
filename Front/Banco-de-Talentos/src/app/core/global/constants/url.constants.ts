@@ -50,4 +50,10 @@ export class UrlConstants {
     environment.host + environment.context + '/work/update';
   public static readonly URL_EDIT_LANG_EXP =
     environment.host + environment.context + '/lang/update';
+  public static readonly URL_DELETE_EDUC_EXP = 
+   environment.host + environment.context + '/educ/delete';
+  public static readonly URL_DELETE_WORK_EXP = 
+   environment.host + environment.context + '/work/delete';
+  public static readonly URL_DELETE_LANG_EXP = 
+   environment.host + environment.context + '/lang/delete';
 }

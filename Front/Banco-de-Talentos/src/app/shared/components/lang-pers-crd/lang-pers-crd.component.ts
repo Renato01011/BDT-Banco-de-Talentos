@@ -11,6 +11,7 @@ import { AddInfoService } from '../../service/addInfo/add-info.service';
 import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { ConfirmationService } from 'primeng/api';
+import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
 
 @Component({
   selector: 'shared-lang-pers-crd',
@@ -41,7 +42,8 @@ export class LangPersCrdComponent implements OnInit {
     private addInfoService: AddInfoService,
     private editInfoService: EditInfoService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private deleteInfoService: DeleteInfoService
   ) {}
 
   public newLanguageForm: FormGroup = this.fb.group({
@@ -81,7 +83,12 @@ export class LangPersCrdComponent implements OnInit {
     };
     this.addInfoService.addLang(body, this.selectedId).subscribe({
       next: (resp) => {
-        console.log(resp.message);
+        //console.log(resp.message);
+        this.toastService.addProperties(
+          'success',
+          'Se agregó correctamente',
+          resp.message
+        );
         this.talentId.emit(Number(resp.id));
         this.hideNewLanguageDialog();
       },
@@ -120,8 +127,18 @@ export class LangPersCrdComponent implements OnInit {
       icon: 'pi pi-info-circle',
 
       accept: () => {
-        //Actual logic to perform a confirmation
-        this.hideEditLanguageDialog();
+        if (!this.selectedId) return;
+        this.deleteInfoService.deleteLanguageExpertise(this.selectedId, this.currEditingLangProf).subscribe({
+          next: (resp) => {
+            this.hideEditLanguageDialog();
+            this.toastService.addProperties(
+              'success',
+              'Se eliminó correctamente',
+              resp.message
+            );
+            this.talentId.emit(this.selectedId);
+          }
+        });
       },
     });
   }

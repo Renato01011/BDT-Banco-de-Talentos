@@ -115,6 +115,11 @@ export class CertsPersCrdComponent implements OnInit {
     };
     this.addInfoService.addFile(body, this.selectedId).subscribe({
       next: (resp) => {
+        this.toastService.addProperties(
+          'success',
+          'Se agregó correctamente',
+          resp.message
+        );
         this.talentId.emit(Number(resp.id));
         this.hideAddFileDialog();
       },

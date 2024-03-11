@@ -6,6 +6,7 @@ import { AddInfoService } from '../../service/addInfo/add-info.service';
 import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { ConfirmationService } from 'primeng/api';
+import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
 
 @Component({
   selector: 'shared-exp-pers-crd',
@@ -31,7 +32,8 @@ export class ExpPersCrdComponent implements OnInit {
     private addInfoService: AddInfoService,
     private editInfoService: EditInfoService,
     private toastService: ToastService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private deleteInfoService: DeleteInfoService
   ) {}
 
   public newExpForm: FormGroup = this.fb.group({
@@ -75,7 +77,12 @@ export class ExpPersCrdComponent implements OnInit {
     };
     this.addInfoService.addWorkExp(body, this.selectedId).subscribe({
       next: (resp) => {
-        console.log(resp.message);
+        //console.log(resp.message);
+        this.toastService.addProperties(
+          'success',
+          'Se agregó correctamente',
+          resp.message
+        );
         this.talentId.emit(Number(resp.id));
         this.hideNewWorkExperienceDialog();
       },
@@ -116,8 +123,18 @@ export class ExpPersCrdComponent implements OnInit {
       icon: 'pi pi-info-circle',
 
       accept: () => {
-        //Actual logic to perform a confirmation
-        this.hideEditWorkExperienceDialog();
+        if (!this.selectedId) return;
+        this.deleteInfoService.deleteWorkExperience(this.selectedId, this.currEditingWorkExp).subscribe({
+          next: (resp) => {
+            this.hideEditWorkExperienceDialog();
+            this.toastService.addProperties(
+              'success',
+              'Se eliminó correctamente',
+              resp.message
+            );
+            this.talentId.emit(this.selectedId);
+          }
+        });
       },
     });
   }

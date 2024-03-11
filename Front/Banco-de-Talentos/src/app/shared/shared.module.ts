@@ -16,6 +16,7 @@ import { FeedbackCrdComponent } from './components/feedback-crd/feedback-crd.com
 import { PipesModule } from '../core/pipes/pipes.module';
 
 import { ConfirmationService } from 'primeng/api';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ConfirmationService } from 'primeng/api';
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
+    PdfViewerModule,
   ],
   exports: [
     HeaderComponent,

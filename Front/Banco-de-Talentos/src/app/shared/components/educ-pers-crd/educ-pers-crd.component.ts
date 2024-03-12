@@ -21,6 +21,8 @@ export class EducPersCrdComponent implements OnInit {
   @Output()
   public talentId = new EventEmitter<number>();
 
+  public maxDate: Date = new Date();
+
   public newEducationalExperienceDialog: boolean = false;
   public editEducationalExperienceDialog: boolean = false;
 
@@ -36,25 +38,35 @@ export class EducPersCrdComponent implements OnInit {
     private deleteInfoService: DeleteInfoService
   ) {}
 
-  public newEducForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required]],
-    career: ['', [Validators.required]],
-    degree: ['', [Validators.required]],
-    stDate: ['', [Validators.required]],
-    edDate: ['', [Validators.required]],
-    hFractal: [false],
-    tPresent: [false],
-  });
+  public newEducForm: FormGroup = this.fb.group(
+    {
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      career: ['', [Validators.required, Validators.maxLength(40)]],
+      degree: ['', [Validators.required, Validators.maxLength(30)]],
+      stDate: ['', [Validators.required]],
+      edDate: ['', [Validators.required]],
+      hFractal: [false],
+      tPresent: [false],
+    },
+    {
+      validators: [this.fValidator.compareDates('stDate', 'edDate')],
+    }
+  );
 
-  public editEducForm: FormGroup = this.fb.group({
-    editName: ['', [Validators.required]],
-    editCareer: ['', [Validators.required]],
-    editDegree: ['', [Validators.required]],
-    editStDate: ['', [Validators.required]],
-    editEdDate: ['', [Validators.required]],
-    hFractal: [false],
-    tPresent: [false],
-  });
+  public editEducForm: FormGroup = this.fb.group(
+    {
+      editName: ['', [Validators.required, Validators.maxLength(50)]],
+      editCareer: ['', [Validators.required, Validators.maxLength(40)]],
+      editDegree: ['', [Validators.required, Validators.maxLength(30)]],
+      editStDate: ['', [Validators.required]],
+      editEdDate: ['', [Validators.required]],
+      hFractal: [false],
+      tPresent: [false],
+    },
+    {
+      validators: [this.fValidator.compareDates('editStDate', 'editEdDate')],
+    }
+  );
 
   ngOnInit(): void {}
 
@@ -129,17 +141,19 @@ export class EducPersCrdComponent implements OnInit {
 
       accept: () => {
         if (!this.selectedId) return;
-        this.deleteInfoService.deleteEducationalExperience(this.selectedId, this.currEditingEducExp).subscribe({
-          next: (resp) => {
-            this.hideEditEducationalExperienceDialog();
-            this.toastService.addProperties(
-              'success',
-              'Se eliminó correctamente',
-              resp.message
-            );
-            this.talentId.emit(this.selectedId);
-          }
-        });
+        this.deleteInfoService
+          .deleteEducationalExperience(this.selectedId, this.currEditingEducExp)
+          .subscribe({
+            next: (resp) => {
+              this.hideEditEducationalExperienceDialog();
+              this.toastService.addProperties(
+                'success',
+                'Se eliminó correctamente',
+                resp.message
+              );
+              this.talentId.emit(this.selectedId);
+            },
+          });
       },
     });
   }
@@ -150,6 +164,33 @@ export class EducPersCrdComponent implements OnInit {
 
   public isValidEditEducField(field: string) {
     return this.fValidator.isValidField(this.editEducForm, field);
+  }
+
+  public getErrNewNameCareerDegreeField(field: string): string {
+    let msg =
+      this.fValidator.isRequiredErr(this.newEducForm, field) ??
+      this.fValidator.isMaxLengthErr(this.newEducForm, field) ??
+      'Este campo no debe ser nulo.';
+    return msg;
+  }
+  public getErrEditNameCareerDegreeField(field: string): string {
+    let msg =
+      this.fValidator.isRequiredErr(this.editEducForm, field) ??
+      this.fValidator.isMaxLengthErr(this.editEducForm, field) ??
+      'Este campo no debe ser nulo.';
+    return msg;
+  }
+  public getErrNewEndDateField(field: string): string {
+    let msg =
+      this.fValidator.isRequiredErr(this.newEducForm, field) ??
+      ' La fecha de finalización debe ser posterior a la fecha de inicio.';
+    return msg;
+  }
+  public getErrEditEndDateField(field: string): string {
+    let msg =
+      this.fValidator.isRequiredErr(this.editEducForm, field) ??
+      ' La fecha de finalización debe ser posterior a la fecha de inicio.';
+    return msg;
   }
 
   public openEditEducationalExperienceDialog(id: number) {

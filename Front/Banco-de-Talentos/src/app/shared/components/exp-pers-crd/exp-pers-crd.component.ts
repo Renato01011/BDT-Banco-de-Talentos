@@ -24,6 +24,8 @@ export class ExpPersCrdComponent implements OnInit {
   public newWorkExperienceDialog: boolean = false;
   public editWorkExperienceDialog: boolean = false;
 
+  public maxDate: Date = new Date();
+
   currEditingWorkExp: number = 0;
 
   constructor(
@@ -36,23 +38,33 @@ export class ExpPersCrdComponent implements OnInit {
     private deleteInfoService: DeleteInfoService
   ) {}
 
-  public newExpForm: FormGroup = this.fb.group({
-    company: ['', [Validators.required]],
-    job: ['', [Validators.required]],
-    sDate: ['', [Validators.required]],
-    eDate: ['', [Validators.required]],
-    hFractal: [false],
-    tPresent: [false],
-  });
+  public newExpForm: FormGroup = this.fb.group(
+    {
+      company: ['', [Validators.required, Validators.maxLength(50)]],
+      job: ['', [Validators.required, Validators.maxLength(40)]],
+      sDate: ['', [Validators.required]],
+      eDate: ['', [Validators.required]],
+      hFractal: [false],
+      tPresent: [false],
+    },
+    {
+      validators: [this.fValidator.compareDates('sDate', 'eDate')],
+    }
+  );
 
-  public editExpForm: FormGroup = this.fb.group({
-    editCompany: ['', [Validators.required]],
-    editJob: ['', [Validators.required]],
-    editDate: ['', [Validators.required]],
-    editEndDate: ['', [Validators.required]],
-    hFractal: [false],
-    tPresent: [false],
-  });
+  public editExpForm: FormGroup = this.fb.group(
+    {
+      editCompany: ['', [Validators.required, Validators.maxLength(50)]],
+      editJob: ['', [Validators.required, Validators.maxLength(40)]],
+      editDate: ['', [Validators.required]],
+      editEndDate: ['', [Validators.required]],
+      hFractal: [false],
+      tPresent: [false],
+    },
+    {
+      validators: [this.fValidator.compareDates('editDate', 'editEndDate')],
+    }
+  );
 
   ngOnInit(): void {}
 
@@ -124,17 +136,19 @@ export class ExpPersCrdComponent implements OnInit {
 
       accept: () => {
         if (!this.selectedId) return;
-        this.deleteInfoService.deleteWorkExperience(this.selectedId, this.currEditingWorkExp).subscribe({
-          next: (resp) => {
-            this.hideEditWorkExperienceDialog();
-            this.toastService.addProperties(
-              'success',
-              'Se eliminó correctamente',
-              resp.message
-            );
-            this.talentId.emit(this.selectedId);
-          }
-        });
+        this.deleteInfoService
+          .deleteWorkExperience(this.selectedId, this.currEditingWorkExp)
+          .subscribe({
+            next: (resp) => {
+              this.hideEditWorkExperienceDialog();
+              this.toastService.addProperties(
+                'success',
+                'Se eliminó correctamente',
+                resp.message
+              );
+              this.talentId.emit(this.selectedId);
+            },
+          });
       },
     });
   }
@@ -145,6 +159,36 @@ export class ExpPersCrdComponent implements OnInit {
 
   public isValidEditField(field: string) {
     return this.fValidator.isValidField(this.editExpForm, field);
+  }
+
+  public getErrNewCompanyJobField(field: string): string {
+    let msg =
+      this.fValidator.isRequiredErr(this.newExpForm, field) ??
+      this.fValidator.isMaxLengthErr(this.newExpForm, field) ??
+      'Este campo no debe ser nulo.';
+    return msg;
+  }
+
+  public getErrEditCompanyJobField(field: string): string {
+    let msg =
+      this.fValidator.isRequiredErr(this.editExpForm, field) ??
+      this.fValidator.isMaxLengthErr(this.editExpForm, field) ??
+      'Este campo no debe ser nulo.';
+    return msg;
+  }
+
+  public getErrEndDateField(field: string): string {
+    let msg =
+      this.fValidator.isRequiredErr(this.newExpForm, field) ??
+      ' La fecha de finalización debe ser posterior a la fecha de inicio.';
+    return msg;
+  }
+
+  public getErrEditEndDateField(field: string): string {
+    let msg =
+      this.fValidator.isRequiredErr(this.editExpForm, field) ??
+      ' La fecha de finalización debe ser posterior a la fecha de inicio.';
+    return msg;
   }
 
   public openEditWorkExperienceDialog(id: number) {

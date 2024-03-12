@@ -56,4 +56,23 @@ export class FrmValService {
       return null;
     };
   }
+
+  public compareDates(dateField1: string, dateField2: string) {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const dateValue1 = new Date(formGroup.get(dateField1)?.value);
+      const dateValue2 = new Date(formGroup.get(dateField2)?.value);
+
+      if (
+        !isNaN(dateValue1.getTime()) &&
+        !isNaN(dateValue2.getTime()) &&
+        dateValue1 >= dateValue2
+      ) {
+        formGroup.get(dateField2)?.setErrors({ notGreater: true });
+        return { notGreater: true };
+      }
+
+      formGroup.get(dateField2)?.setErrors(null);
+      return null;
+    };
+  }
 }

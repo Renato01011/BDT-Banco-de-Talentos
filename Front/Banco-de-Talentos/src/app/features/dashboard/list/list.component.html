@@ -2,7 +2,7 @@
   (onFilterReqVal)="filterTalent($event)"
 ></shared-control-panel>
 
-<div class="bg-white py-0 px-3 sm:px-6 xl:px-8 shadow-none content">
+<div class="bg-white py-0 px-2 lg:px-4 xl:px-7 shadow-none content">
   <div class="flex flex-wrap border-round w-full">
     <div
       class="content w-12 sm:w-4 font-bold py-1 px-2 flex justify-content-center"
@@ -21,6 +21,7 @@
     </div>
     <div
       class="content bg-white w-12 sm:w-8 font-bold p-2 flex justify-content-center sm:justify-content-start"
+      *ngIf="isListEmpty"
     >
       <div
         class="w-full shadow-8 md:shadow-4 text-center border-round-lg surface-overlay overflow-hidden"
@@ -31,38 +32,38 @@
           <shared-prof-pers-crd
             [customTalent]="customTalent"
             [selectedId]="selId"
-            (talentId)="searchByTalentId($event)"
+            (talentId)="saveChanges($event)"
           ></shared-prof-pers-crd>
           <shared-certs-pers-crd
             [documents]="documents"
             [selectedId]="selId"
-            (talentId)="searchByTalentId($event)"
+            (talentId)="saveChanges($event)"
           ></shared-certs-pers-crd>
           <shared-skills-pers-crd
             [softSkills]="softSkills"
             [techSkills]="techSkills"
             [selectedId]="selId"
-            (talentId)="searchByTalentId($event)"
+            (talentId)="saveChanges($event)"
           ></shared-skills-pers-crd>
           <shared-summ-pers-crd
             [description]="description"
             [selectedId]="selId"
-            (talentId)="searchByTalentId($event)"
+            (talentId)="saveChanges($event)"
           ></shared-summ-pers-crd>
           <shared-exp-pers-crd
             [workExp]="workExp"
             [selectedId]="selId"
-            (talentId)="searchByTalentId($event)"
+            (talentId)="saveChanges($event)"
           ></shared-exp-pers-crd>
           <shared-educ-pers-crd
             [educExp]="educExp"
             [selectedId]="selId"
-            (talentId)="searchByTalentId($event)"
+            (talentId)="saveChanges($event)"
           ></shared-educ-pers-crd>
           <shared-lang-pers-crd
             [langProficiency]="langProficiency"
             [selectedId]="selId"
-            (talentId)="searchByTalentId($event)"
+            (talentId)="saveChanges($event)"
           ></shared-lang-pers-crd>
           <shared-feedback-crd [selectedId]="selId"></shared-feedback-crd>
         </p-scrollPanel>

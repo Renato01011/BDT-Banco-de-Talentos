@@ -1,4 +1,4 @@
-<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+<div class="flex flex-wrap border-round m-1 sm:my-2 sm:mr-2 sm:ml-4">
   <div class="w-12 p-1 flex align-items-center justify-content-between">
     <div class="flex align-items-center justify-content-center">
       <span class="font-semibold text-base text-600">Experiencia</span>
@@ -19,7 +19,7 @@
   >
     <div class="w-2 py-1 flex align-items-center justify-content-center">
       <p-avatar
-        image="./assets/users/no-images.jpeg"
+        image="./assets/images/no-images.jpeg"
         size="large"
         shape="circle"
       ></p-avatar>
@@ -98,7 +98,7 @@
           id="company"
           class="hidden"
           [ngClass]="{ 'p-error block text-left': isValidField('company') }"
-          >Este campo es obligatorio.</small
+          >{{ getErrNewCompanyJobField("company") }}</small
         >
       </div>
       <div class="w-12 flex flex-column justify-content-start py-2">
@@ -126,7 +126,7 @@
           id="inputJob"
           class="hidden"
           [ngClass]="{ 'p-error block text-left': isValidField('job') }"
-          >Este campo es obligatorio.</small
+          >{{ getErrNewCompanyJobField("job") }}</small
         >
       </div>
       <div class="w-12 flex flex-wrap align-items-center pt-2">
@@ -141,11 +141,13 @@
               class="w-full"
               styleClass="w-full"
               dateFormat="mm/yy"
+              placeholder="MM / YYYY"
               view="month"
               inputId="sDate"
               appendTo="body"
               formControlName="sDate"
               [readonlyInput]="true"
+              [maxDate]="maxDate"
             ></p-calendar>
             <small
               id="eDate"
@@ -166,17 +168,19 @@
               class="w-full"
               styleClass="w-full"
               dateFormat="mm/yy"
+              placeholder="MM / YYYY"
               view="month"
               inputId="eDate"
               appendTo="body"
               formControlName="eDate"
               [readonlyInput]="true"
+              [maxDate]="maxDate"
             ></p-calendar>
             <small
               id="eDate"
               class="hidden"
               [ngClass]="{ 'p-error block text-left': isValidField('eDate') }"
-              >Este campo es obligatorio.</small
+              >{{ getErrEndDateField("eDate") }}</small
             >
           </div>
         </div>
@@ -273,7 +277,7 @@
           [ngClass]="{
             'p-error block text-left': isValidEditField('editCompany')
           }"
-          >Este campo es obligatorio.</small
+          >{{ getErrEditCompanyJobField("editCompany") }}</small
         >
       </div>
       <div class="w-12 flex flex-column justify-content-start py-2">
@@ -301,7 +305,7 @@
           id="editJob"
           class="hidden"
           [ngClass]="{ 'p-error block text-left': isValidEditField('editJob') }"
-          >Este campo es obligatorio.</small
+          >{{ getErrEditCompanyJobField("editJob") }}</small
         >
       </div>
       <div class="w-12 flex flex-wrap align-items-center pt-2">
@@ -316,10 +320,13 @@
               class="w-full"
               styleClass="w-full"
               dateFormat="mm/yy"
+              placeholder="MM / YYYY"
               view="month"
               inputId="dateformat"
               appendTo="body"
               formControlName="editDate"
+              [readonlyInput]="true"
+              [maxDate]="maxDate"
             ></p-calendar>
             <small
               id="editDate"
@@ -342,10 +349,13 @@
               class="w-full"
               styleClass="w-full"
               dateFormat="mm/yy"
+              placeholder="MM / YYYY"
               view="month"
               inputId="dateformat"
               appendTo="body"
               formControlName="editEndDate"
+              [readonlyInput]="true"
+              [maxDate]="maxDate"
             ></p-calendar>
             <small
               id="editEndDate"
@@ -353,7 +363,7 @@
               [ngClass]="{
                 'p-error block text-left': isValidEditField('editEndDate')
               }"
-              >Este campo es obligatorio.</small
+              >{{ getErrEditEndDateField("editEndDate") }}</small
             >
           </div>
         </div>

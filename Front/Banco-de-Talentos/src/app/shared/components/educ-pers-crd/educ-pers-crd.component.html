@@ -1,4 +1,4 @@
-<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+<div class="flex flex-wrap border-round m-1 sm:my-2 sm:mr-2 sm:ml-4">
   <div class="w-12 p-1 flex align-items-center justify-content-between">
     <div class="flex align-items-center justify-content-center">
       <span class="font-semibold text-base text-600">Educación</span>
@@ -19,7 +19,7 @@
   >
     <div class="w-2 py-1 flex align-items-center justify-content-center">
       <p-avatar
-        image="./assets/users/no-images.jpeg"
+        image="./assets/images/no-images.jpeg"
         size="large"
         shape="circle"
       ></p-avatar>
@@ -99,7 +99,7 @@
           id="name"
           class="hidden"
           [ngClass]="{ 'p-error block text-left': isValidField('name') }"
-          >Este campo es obligatorio.</small
+          >{{ getErrNewNameCareerDegreeField("name") }}</small
         >
       </div>
       <div class="w-12 flex flex-column justify-content-start py-2">
@@ -127,7 +127,7 @@
           id="career"
           class="hidden"
           [ngClass]="{ 'p-error block text-left': isValidField('career') }"
-          >Este campo es obligatorio.</small
+          >{{ getErrNewNameCareerDegreeField("career") }}</small
         >
       </div>
       <div class="w-12 flex flex-column justify-content-start py-1">
@@ -146,7 +146,7 @@
           id="degree"
           class="hidden"
           [ngClass]="{ 'p-error block text-left': isValidField('degree') }"
-          >Este campo es obligatorio.</small
+          >{{ getErrNewNameCareerDegreeField("degree") }}</small
         >
       </div>
       <div class="w-12 flex flex-wrap align-items-center py-1">
@@ -161,10 +161,13 @@
               class="w-full"
               styleClass="w-full"
               dateFormat="mm/yy"
+              placeholder="MM / YYYY"
               inputId="stDate"
               view="month"
               appendTo="body"
               formControlName="stDate"
+              [readonlyInput]="true"
+              [maxDate]="maxDate"
             ></p-calendar>
             <small
               id="stDate"
@@ -185,16 +188,19 @@
               class="w-full"
               styleClass="w-full"
               dateFormat="mm/yy"
+              placeholder="MM / YYYY"
               inputId="edDate"
               view="month"
               appendTo="body"
               formControlName="edDate"
+              [readonlyInput]="true"
+              [maxDate]="maxDate"
             ></p-calendar>
             <small
               id="edDate"
               class="hidden"
               [ngClass]="{ 'p-error block text-left': isValidField('edDate') }"
-              >Este campo es obligatorio.</small
+              >{{ getErrNewEndDateField("edDate") }}</small
             >
           </div>
         </div>
@@ -290,7 +296,7 @@
         [ngClass]="{
           'p-error block text-left': isValidEditEducField('editName')
         }"
-        >Este campo es obligatorio.</small
+        >{{ getErrEditNameCareerDegreeField("editName") }}</small
       >
     </div>
     <div class="w-12 flex flex-column justify-content-start py-2">
@@ -320,7 +326,7 @@
         [ngClass]="{
           'p-error block text-left': isValidEditEducField('editCareer')
         }"
-        >Este campo es obligatorio.</small
+        >{{ getErrEditNameCareerDegreeField("editCareer") }}</small
       >
     </div>
     <div class="w-12 flex flex-column justify-content-start py-1">
@@ -341,7 +347,7 @@
         [ngClass]="{
           'p-error block text-left': isValidEditEducField('editDegree')
         }"
-        >Este campo es obligatorio.</small
+        >{{ getErrEditNameCareerDegreeField("editDegree") }}</small
       >
     </div>
     <div class="w-12 flex flex-wrap align-items-center py-1">
@@ -356,10 +362,13 @@
             class="w-full"
             styleClass="w-full"
             dateFormat="mm/yy"
+            placeholder="MM / YYYY"
             inputId="editStDate"
             view="month"
             appendTo="body"
             formControlName="editStDate"
+            [readonlyInput]="true"
+            [maxDate]="maxDate"
           ></p-calendar>
           <small
             id="editStDate"
@@ -382,10 +391,13 @@
             class="w-full"
             styleClass="w-full"
             dateFormat="mm/yy"
+            placeholder="MM / YYYY"
             inputId="editEdDate"
             view="month"
             appendTo="body"
             formControlName="editEdDate"
+            [readonlyInput]="true"
+            [maxDate]="maxDate"
           ></p-calendar>
           <small
             id="editEdDate"
@@ -393,7 +405,7 @@
             [ngClass]="{
               'p-error block text-left': isValidEditEducField('editEdDate')
             }"
-            >Este campo es obligatorio.</small
+            >{{ getErrEditEndDateField("editEdDate") }}</small
           >
         </div>
       </div>

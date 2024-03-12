@@ -9,7 +9,7 @@ import {
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 const yearExpRegEx = '^(?:\\d+(?:\\.(?:[0-9]|1[0-1]))?)$';
-const justLettersRegEx = '^[a-zA-Z\\s]+$';
+const justLettersRegEx = '^[a-zA-ZÁáÉéÍíÓóÚúÜü\\s]+$';
 
 @Component({
   selector: 'shared-skills-pers-crd',
@@ -129,7 +129,7 @@ export class SkillsPersCrdComponent implements OnInit {
     return (
       this.fValidator.isRequiredErr(this.softSkForm, field) ??
       this.fValidator.isMaxLengthErr(this.softSkForm, field) ??
-      'Los números y otros caracteres no son válidos.'
+      'Los números no son válidos.'
     );
   }
 

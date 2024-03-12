@@ -20,12 +20,21 @@ export class SummPersCrdComponent implements OnInit {
 
   editDescriptionDialog: boolean = false;
 
-  constructor(private fb: FormBuilder, private fValidator: FrmValService, private editInfoService: EditInfoService, private toastService: ToastService) {}
+  constructor(
+    private fb: FormBuilder,
+    private fValidator: FrmValService,
+    private editInfoService: EditInfoService,
+    private toastService: ToastService
+  ) {}
 
   public summForm: FormGroup = this.fb.group({
     description: [
       '',
-      [Validators.required, Validators.minLength(10), Validators.maxLength(20)],
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(100),
+      ],
     ],
   });
 
@@ -40,7 +49,7 @@ export class SummPersCrdComponent implements OnInit {
       this.fValidator.isRequiredErr(this.summForm, field) ??
       this.fValidator.isMinLengthErr(this.summForm, field) ??
       this.fValidator.isMaxLengthErr(this.summForm, field) ??
-      'Este campo no puede estar nulo.';
+      'Este campo no debe ser nulo.';
 
     return msg;
   }
@@ -51,17 +60,24 @@ export class SummPersCrdComponent implements OnInit {
       return;
     }
     if (!this.selectedId) return;
-    this.editInfoService.editTalentDescription({
-      description: this.summForm.get('description')!.value
-    }, this.selectedId).subscribe({
-      next: (resp) => {
-        this.hideEditDescriptionDialog();
-        this.toastService.addProperties(
-          'success', 'Se editó correctamente', resp.message
-        );
-        this.talentId.emit(this.selectedId);
-      }
-    });
+    this.editInfoService
+      .editTalentDescription(
+        {
+          description: this.summForm.get('description')!.value,
+        },
+        this.selectedId
+      )
+      .subscribe({
+        next: (resp) => {
+          this.hideEditDescriptionDialog();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
   }
 
   openEditDescriptionDialog() {

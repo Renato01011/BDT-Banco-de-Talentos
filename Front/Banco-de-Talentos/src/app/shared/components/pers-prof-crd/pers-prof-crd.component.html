@@ -16,12 +16,12 @@
   <div class="w-7 px-0 py-1 flex align-items-center">
     <div class="flex flex-column flex-wrap w-full gap-1">
       <div class="border-round flex align-items-center justify-content-start">
-        <span class="font-semibold text-base text-800">
+        <span class="font-semibold text-sm sm:text-base text-800">
           {{ item.nameJobTitle | extractFullName }}
         </span>
       </div>
       <div class="border-round flex align-items-center justify-content-start">
-        <span class="text-500 text-sm font-light">
+        <span class="text-500 text-xs sm:text-sm font-light">
           {{ item.nameJobTitle | extractJobPosition }}
         </span>
       </div>
@@ -34,12 +34,12 @@
         ></p-rating>
       </div>
       <div class="border-round flex align-items-center justify-content-between">
-        <span class="text-500 text-sm font-light">
-          <i class="pi pi-map-marker text-sm text-800"></i>
+        <span class="text-500 text-xs sm:text-sm font-light">
+          <i class="pi pi-map-marker text-xs sm:text-sm text-800"></i>
           {{ item.location | titlecase }}
         </span>
-        <span class="text-500 text-sm font-light">
-          <i class="pi pi-dollar text-sm text-800"></i>
+        <span class="text-500 text-xs sm:text-sm font-light">
+          <i class="pi pi-dollar text-xs sm:text-sm text-800"></i>
           {{ item.initialSalary }} - {{ item.finalSalary }}
         </span>
       </div>
@@ -47,7 +47,7 @@
   </div>
   <div class="w-2 p-2 flex align-content-start justify-content-center">
     <span class="heart-icon">
-      <i class="pi pi-heart-fill text-xl"></i>
+      <i class="pi pi-heart-fill text-base sm:text-xl"></i>
     </span>
   </div>
 </div>

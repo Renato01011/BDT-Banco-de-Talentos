@@ -1,7 +1,7 @@
-<div class="py-3 px-3 sm:px-6 xl:px-8 flex align-items-center shadow-none">
+<div class="py-2 px-2 lg:px-4 xl:px-7 flex align-items-center shadow-none">
   <div class="flex flex-wrap border-round w-full">
     <div
-      class="w-12 sm:w-4 font-bold p-2 flex align-items-center justify-content-center sm:justify-content-start"
+      class="w-12 sm:w-4 font-bold py-1 px-2 flex align-items-center justify-content-center sm:justify-content-start"
     >
       <p-button
         label="Nuevo Talento"
@@ -11,9 +11,11 @@
       ></p-button>
     </div>
     <div
-      class="w-12 sm:w-8 font-bold p-2 flex flex-wrap align-items-center justify-content-center sm:justify-content-between"
+      class="w-12 sm:w-8 font-bold py-1 px-2 flex flex-wrap align-items-center sm:justify-content-evenly"
     >
-      <div class="mx-1 mb-2 md:mb-0">
+      <div
+        class="w-6 sm:w-2 xl:w-2 flex align-items-center justify-content-start sm:justify-content-center p-1"
+      >
         <p-overlayPanel #techSkills [style]="{ width: '350px' }">
           <ng-template pTemplate>
             <p-chips
@@ -42,7 +44,9 @@
         ></p-button>
       </div>
 
-      <div class="mx-1 mb-2 md:mb-0">
+      <div
+        class="w-6 sm:w-2 xl:w-2 flex align-items-center justify-content-center p-1"
+      >
         <p-overlayPanel #proficiencyOP [style]="{ width: '180px' }">
           <ng-template pTemplate>
             <p-listbox
@@ -63,7 +67,9 @@
         ></p-button>
       </div>
 
-      <div class="mx-1 mb-2 md:mb-0">
+      <div
+        class="w-12 sm:w-2 xl:w-2 flex align-items-center justify-content-center p-1"
+      >
         <p-overlayPanel #favorite [style]="{ width: '180px' }">
           <ng-template pTemplate>
             <p-listbox
@@ -82,8 +88,11 @@
           [disabled]="isFavoriteListEmpty"
         ></p-button>
       </div>
-      <div class="mx-1 mb-2 md:mb-0">
-        <span class="p-input-icon-left">
+
+      <div
+        class="w-8 sm:w-4 xl:w-5 flex align-items-center justify-content-center p-1"
+      >
+        <span class="p-input-icon-left w-full xl:w-9">
           <i class="pi pi-search"></i>
           <input
             type="text"
@@ -94,10 +103,14 @@
           />
         </span>
       </div>
-      <div class="mx-1 mb-2 md:mb-0">
+
+      <div
+        class="w-4 sm:w-2 xl:w-1 flex align-items-center justify-content-center p-1"
+      >
         <p-button
           label="Buscar"
-          styleClass="p-button-sm p-button-success"
+          styleClass="p-button-sm p-button-success w-full"
+          class="w-full"
           (onClick)="emitFilter()"
         ></p-button>
       </div>

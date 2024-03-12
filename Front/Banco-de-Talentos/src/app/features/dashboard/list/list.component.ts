@@ -54,12 +54,12 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.toastService.addProperties('info', 'Info', '🥳');
     this.getTalentList(this.filterReq);
   }
 
   public filterTalent(filter: FilterRequest): void {
-    this.getTalentList(filter);
+    this.filterReq = filter;
+    this.getTalentList(this.filterReq);
   }
 
   private getTalentList(filter: FilterRequest): void {
@@ -69,6 +69,7 @@ export class ListComponent implements OnInit {
         this.talents = talents;
         this.firstCall();
         this.loaderService.hideLoader();
+        this.totalTalents(talents);
       },
     });
   }
@@ -103,6 +104,11 @@ export class ListComponent implements OnInit {
     }
   }
 
+  public saveChanges(id: number): void {
+    this.searchByTalentId(id);
+    this.getTalentList(this.filterReq);
+  }
+
   public newTalent(talent: TalentResponse): void {
     const {
       idTalent,
@@ -135,5 +141,26 @@ export class ListComponent implements OnInit {
       miscData,
       feedbacks,
     };
+  }
+
+  public get isListEmpty(): boolean {
+    return this.talents.length !== 0;
+  }
+
+  public totalTalents(talents: FilterResponse[]): void {
+    const total = talents.length;
+    if (total === 1) {
+      this.toastService.addProperties(
+        'info',
+        'Info',
+        `¡Hemos encontrado un resultado para tu búsqueda!`
+      );
+    } else {
+      this.toastService.addProperties(
+        'info',
+        'Info',
+        `¡Hemos encontrado ${total} resultados para tu búsqueda!`
+      );
+    }
   }
 }

@@ -65,6 +65,27 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "deploy": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.deploy.ts"
+                }
+              ],
+              "outputHashing": "all"
             }
           },
           "defaultConfiguration": "production"
@@ -77,6 +98,9 @@
             },
             "development": {
               "browserTarget": "Banco-de-Talentos:build:development"
+            },
+            "deploy": {
+              "browserTarget": "Banco-de-Talentos:build:deploy"
             }
           },
           "defaultConfiguration": "development"

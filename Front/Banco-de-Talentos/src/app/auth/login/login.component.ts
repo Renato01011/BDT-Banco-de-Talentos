@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { FrmValService } from 'src/app/shared/service/frmVal/frm-val.service';
 
 import { STORAGE_CURRENT_TOKEN } from '../../core/global/constants/constants';
 import { AuthService } from 'src/app/core/services/auth/auth.service';

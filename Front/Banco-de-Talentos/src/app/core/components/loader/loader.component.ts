@@ -19,11 +19,7 @@ export class LoaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('loader');
-
     this.loader$.subscribe((loader) => {
-      console.log(loader);
-
       this.isLoading = loader.status;
       this.msg = loader.msg;
       this.changeDetector.detectChanges();

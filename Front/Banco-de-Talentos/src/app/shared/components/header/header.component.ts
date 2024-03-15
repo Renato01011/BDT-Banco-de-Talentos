@@ -29,8 +29,13 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Logout',
         icon: 'pi pi-fw pi-sign-out',
-        routerLink: '/auth/login',
+        command: (event) => this.logout(),
       },
     ];
+  }
+
+  private logout() {
+    sessionStorage.clear();
+    this.router.navigateByUrl('/auth/login');
   }
 }

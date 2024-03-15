@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
+  
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

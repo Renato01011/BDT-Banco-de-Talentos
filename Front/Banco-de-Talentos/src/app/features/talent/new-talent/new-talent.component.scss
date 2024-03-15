@@ -1,11 +1,103 @@
-:host ::ng-deep .p-card-body {
-    padding-top: 0;
+:host ::ng-deep {
+    .p-card-body {
+        padding-top: 0;
+    }
+    
+    .p-card-content {
+        padding-top: 0;
+    }
+    
+    .p-scrollpanel-content {
+        padding: 18px;
+    }
+    
+    .p-button-label {
+        text-align: center;
+    }
+
+    .p-rating .p-rating-icon {
+        color: #faab34;
+    }
+
+    .p-rating .p-rating-icon.pi-star-fill {
+        color: #faab34;
+    }
+
+    .p-rating .p-rating-icon.p-rating-cancel {
+        color: #ef4444;
+    }
 }
 
-:host ::ng-deep .p-card-content {
-    padding-top: 0;
+.selectedCoin {
+    border-color: #0B85C3;
 }
 
-:host ::ng-deep .p-scrollpanel-content {
-    padding: 18px;
+.cardStyle {
+    border: 1px solid #D0D5DD;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);
+    border-radius: 8px;
+}
+
+.saveButton {
+    width: 87px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #009688;
+    border-color: #009688;
+    &:enabled:hover {
+        background: #007d7c;
+        border-color: #007d7c;
+    }
+}
+
+.returnButton {
+    width: 76px;
+    height: 40px;
+    border: 1px solid #0B85C3;
+    border-radius: 8px;
+}
+
+.subHeaderText {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #344054;
+}
+
+.headerText {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    color: #101828;
+}
+
+.buttonHighlightText {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #0B85C3;
+}
+
+.buttonDetailText {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #667085;
+}
+
+.addMoreButtonText {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #0B85C3;
 }

@@ -5,7 +5,7 @@ import { TalentRoutingModule } from './talent-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 import { NewTalentComponent } from './new-talent/new-talent.component';
 import { MaterialModule } from 'src/app/shared/material/material.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     TalentRoutingModule,
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class TalentModule { }

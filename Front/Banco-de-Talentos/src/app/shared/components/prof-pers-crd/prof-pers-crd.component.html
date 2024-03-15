@@ -1,17 +1,21 @@
-<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+<div class="flex flex-wrap border-round m-1 sm:my-3 sm:mr-2 sm:ml-4">
   <div class="w-3 sm:w-2 p-1 flex align-items-center justify-content-center">
     <div
       class="relative w-4rem sm:w-6rem h-4rem sm:h-6rem border-circle bg-center bg-cover"
       style="background-image: url('./assets/users/1.jpg')"
+      [ngStyle]="{
+        'background-image':
+          'url(' + (customTalent?.profilePicture | base64ToImage) + ')'
+      }"
     >
       <div
-        class="absolute bottom-0 right-0 bg-white shadow-2 flex align-items-center justify-content-center w-2rem sm:w-3rem h-2rem sm:h-3rem border-circle"
+        class="absolute bottom-0 right-0 bg-white shadow-2 hover:shadow-5 flex align-items-center justify-content-center w-2rem h-2rem border-circle"
       >
         <span
           class="cursor-pointer text-500"
           (click)="openEditProfilePicture()"
         >
-          <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
+          <i class="pi pi-pencil text-sm text-500 hover:text-800"></i>
         </span>
       </div>
     </div>
@@ -21,35 +25,39 @@
       <div
         class="border-round flex align-items-center sm:justify-content-start justify-content-between"
       >
-        <span class="font-semibold text-base text-800"
-          >Juan Lopez Martinez</span
-        >
+        <span class="font-semibold text-sm sm:text-base text-800"
+          >{{ customTalent?.name }} {{ customTalent?.surname }}
+          {{ customTalent?.secondSurname }}
+        </span>
         <span class="cursor-pointer mx-2 heart-icon">
           <i class="pi pi-heart"></i>
         </span>
       </div>
       <div class="flex flex-wrap">
         <div
-          class="w-12 sm:w-4 border-round flex align-items-center justify-content-start"
+          class="w-12 sm:w-5 border-round flex align-items-center justify-content-start"
         >
-          <span class="text-500 text-sm font-light">Full-stack developer</span>
+          <span class="text-500 text-xs sm:text-sm font-light">{{
+            workAs.name
+          }}</span>
         </div>
         <div
-          class="w-12 sm:w-8 border-round flex align-items-center justify-content-around profile-country-salary"
+          class="w-12 sm:w-7 border-round flex align-items-center justify-content-around profile-country-salary"
         >
-          <span class="text-500 text-sm font-light">
-            <i class="pi pi-map-marker" style="font-size: 0.875rem"></i>
-            Lima, Peru
+          <span class="text-500 text-xs sm:text-sm font-light">
+            <i class="pi pi-map-marker text-xs sm:text-sm text-800"></i>
+            {{ countryCity.city | titlecase }},
+            {{ countryCity.country | titlecase }}
           </span>
-          <span class="text-500 text-sm font-light">
-            <i class="pi pi-dollar" style="font-size: 0.875rem"></i>
-            2500 - 3000
+          <span class="text-500 text-xs sm:text-sm font-light">
+            <i class="pi pi-dollar text-xs sm:text-sm text-800"></i>
+            {{ customTalent?.initialSalary }} - {{ customTalent?.finalSalary }}
           </span>
           <span
-            class="text-500 text-sm font-light mx-1 cursor-pointer"
+            class="text-500 hover:text-700 text-sm font-light mx-1 cursor-pointer"
             (click)="openEditSalaryDialog()"
           >
-            <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
+            <i class="pi pi-pencil text-sm"></i>
           </span>
         </div>
       </div>
@@ -57,13 +65,13 @@
         class="border-round flex align-items-center sm:justify-content-start justify-content-between"
       >
         <p-rating
-          [(ngModel)]="rating"
+          [ngModel]="customTalent?.avgRating"
           [stars]="5"
           [cancel]="false"
           [readonly]="true"
         ></p-rating>
-        <span class="mx-2 text-500 text-sm font-light"
-          >{{ rating }} feedbacks
+        <span class="mx-2 text-500 text-xs sm:text-sm font-light"
+          >{{ totFeedbacks }} feedbacks
         </span>
       </div>
     </div>
@@ -88,21 +96,29 @@
       <div
         class="w-12 border-round flex align-items-center justify-content-center sm:justify-content-end"
       >
-        <a class="cursor-pointer px-2">
-          <span class="text-400">
-            <i class="pi pi-github" style="font-size: 1.5rem"></i>
+        <a
+          class="cursor-pointer px-2"
+          [href]="customTalent?.github"
+          target="_blank"
+        >
+          <span class="text-400 hover:text-700">
+            <i class="pi pi-github text-xl sm:text-2xl"></i>
           </span>
         </a>
-        <a class="cursor-pointer px-2">
-          <span class="text-400">
-            <i class="pi pi-linkedin" style="font-size: 1.5rem"></i>
+        <a
+          class="cursor-pointer px-2"
+          [href]="customTalent?.linkedin"
+          target="_blank"
+        >
+          <span class="text-400 hover:text-700">
+            <i class="pi pi-linkedin text-xl sm:text-2xl"></i>
           </span>
         </a>
         <span
-          class="cursor-pointer text-500 mx-2"
-          (click)="openEditSocialMediaDialog()"
+          class="cursor-pointer text-500 hover:text-700 mx-2"
+          (click)="opEditSocMediaDlg()"
         >
-          <i class="pi pi-pencil" style="font-size: 0.875rem"></i>
+          <i class="pi pi-pencil text-sm"></i>
         </span>
       </div>
     </div>
@@ -111,185 +127,329 @@
 
 <p-dialog
   [(visible)]="editProfilePicture"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Modifica tu foto de perfil</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Sube una nueva foto de perfil.</p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800"
+        >Modifica tu foto de perfil</span
+      >
     </div>
   </ng-template>
-  <div class="flex flex-warp align-items-center justify-content-center">
-    <button
-      pButton
-      class="p-button-outlined border-300 w-full flex flex-column"
+  <div class="flex flex-column align-items-center justify-content-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500"
+        >Sube una nueva foto de perfil.</span
+      >
+    </div>
+    <form
+      class="w-12 flex flex-column"
+      autocomplete="off"
+      [formGroup]="profileForm"
+      (ngSubmit)="onSveProfile()"
     >
-      <i
-        class="pi pi-cloud-upload px-2 pt-5"
-        style="font-size: 1.5rem; color: #708090"
-      ></i>
-      <span
-        class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
-        style="color: #0b85c3"
-        >Sube una nueva foto de perfil</span
+      <button
+        pButton
+        type="button"
+        class="p-button-outlined border-300 w-full flex flex-column"
+        (click)="photoUpload.click()"
       >
-      <span
-        class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
-        >PNG o JPG (max. 800x400px)</span
-      >
-    </button>
+        <!--<i class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"></i>-->
+        <i
+          class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"
+          style="font-size: 1.5rem; color: #708090"
+          *ngIf="!photoUploaded"
+        ></i>
+        <i
+          class="pi pi-check px-2 pt-5 text-2xl text-bluegray-400"
+          style="font-size: 1.5rem; color: #708090"
+          *ngIf="photoUploaded"
+        ></i>
+        <span
+          class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
+          style="color: #0b85c3"
+          >{{ photoText }}</span
+        >
+        <span
+          class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
+          >{{ photoDetailsText }}</span
+        >
+        <input
+          #photoUpload
+          id="picture"
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          style="display: none"
+          formControlName="img"
+          (change)="onPhotoUpload($event)"
+        />
+      </button>
+      <div class="w-12">
+        <small
+          id="picture"
+          class="hidden"
+          [ngClass]="{
+            'p-error block text-left': isValidProfileField('img')
+          }"
+          >Este campo no puede estar vacío.</small
+        >
+      </div>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            type="button"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideEditProfilePicture()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Editar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
+      </div>
+    </form>
   </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
-          (click)="hideEditProfilePicture()"
-        ></button>
-      </div>
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Editar"
-          icon="pi pi-check"
-          class="p-button-success w-full"
-        ></button>
-      </div>
-    </div>
-  </ng-template>
 </p-dialog>
 
 <p-dialog
   [(visible)]="editSalaryDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
-  <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Modifica tu banda salarial</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Agrega el rango de tus expectativas salariales.</p>
-      </div>
+  <ng-template pTemplate="header" class="pb-0">
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Modifica tu banda salarial
+      </span>
     </div>
   </ng-template>
-  <div>
-    <div class="w-full">
-      <div
-        *ngFor="let coin of coins"
-        class="h-3rem w-full border-round border-1 border-300 mb-2 flex"
-      >
-        <div class="w-full pl-1 flex align-items-center justify-content-start">
-          <label [for]="coin.code" class="ml-2">{{ coin.name }}</label>
-        </div>
-        <div class="w-full pr-3 flex align-items-center justify-content-end">
-          <p-radioButton
-            [inputId]="coin.code"
-            name="coin"
-            [value]="coin"
-            [(ngModel)]="selectedCoin"
-          ></p-radioButton>
-        </div>
-      </div>
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Agrega el rango de tus expectativas salariales.
+      </span>
     </div>
-    <div class="formgrid grid">
-      <div class="field col">
-        <p>Monto Inicial</p>
-        <p-inputNumber class="w-full" styleClass="w-full"></p-inputNumber>
+    <form
+      class="w-12 flex flex-column"
+      autocomplete="off"
+      [formGroup]="salaryForm"
+      (ngSubmit)="onSveSalary()"
+    >
+      <div class="w-12 flex flex-column align-items-center">
+        <div
+          *ngFor="let coin of coins"
+          class="h-3rem w-full border-round border-1 border-300 mb-2 flex"
+          [ngClass]="{
+            'border-primary border-2 bg-indigo-50':
+              coin.id == salaryForm.controls['currency'].value
+          }"
+        >
+          <div
+            class="w-full pl-1 flex align-items-center justify-content-start"
+          >
+            <label [for]="coin.name" class="ml-2">{{
+              coin.name | titlecase
+            }}</label>
+          </div>
+          <div class="w-full pr-3 flex align-items-center justify-content-end">
+            <p-radioButton
+              [inputId]="coin.name"
+              name="currency"
+              [value]="coin.id"
+              formControlName="currency"
+            ></p-radioButton>
+          </div>
+        </div>
       </div>
-      <div class="field col">
-        <p>Monto Final</p>
-        <p-inputNumber class="w-full" styleClass="w-full"></p-inputNumber>
+      <div class="w-12 flex flex-wrap align-items-center">
+        <div
+          class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pr-3"
+        >
+          <div class="w-12 flex flex-column justify-content-start mb-2">
+            <label
+              for="inputNumber"
+              class="block text-left mb-2 font-medium text-bluegray-800"
+              >Monto Inicial</label
+            >
+            <p-inputNumber
+              inputId="inputNumber"
+              class="w-full"
+              styleClass="w-full"
+              [min]="0"
+              [max]="10000"
+              formControlName="iAmount"
+            ></p-inputNumber>
+            <small
+              id="inputNumber"
+              class="hidden"
+              [ngClass]="{
+                'p-error block text-left': isValidSalaryField('iAmount')
+              }"
+              >Este campo no puede estar vacío.</small
+            >
+          </div>
+        </div>
+        <div
+          class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pl-3"
+        >
+          <div class="w-12 flex flex-column justify-content-start mb-2">
+            <label
+              for="inputNumber2"
+              class="block text-left mb-2 font-medium text-bluegray-800"
+              >Monto Final</label
+            >
+            <p-inputNumber
+              inputId="inputNumber2"
+              styleClass="w-12"
+              [min]="0"
+              [max]="10000"
+              formControlName="fAmount"
+            ></p-inputNumber>
+            <small
+              id="inputNumber2"
+              class="hidden"
+              [ngClass]="{
+                'p-error block text-left': isValidSalaryField('fAmount')
+              }"
+              >{{ getErrFnAmountField("fAmount") }}</small
+            >
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            class="p-button-outlined p-button-secondary w-full"
+            type="button"
+            (click)="hideEditSalaryDialog()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Editar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
+      </div>
+    </form>
   </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
-          (click)="hideEditSalaryDialog()"
-        ></button>
-      </div>
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Editar"
-          icon="pi pi-check"
-          class="p-button-success w-full"
-        ></button>
-      </div>
-    </div>
-  </ng-template>
 </p-dialog>
 
 <p-dialog
   [(visible)]="editSocialMediaDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Modifica tus medios sociales</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Agrega y muestra tus medios sociales.</p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Modifica tus medios sociales
+      </span>
     </div>
   </ng-template>
-  <div>
-    <p>Link de LinkedIn</p>
-    <input
-      pInputText
-      placeholder="Ingrese su link de LinkedIn"
-      class="w-full"
-    />
-  </div>
-  <div>
-    <p>Link de GitHub</p>
-    <input pInputText placeholder="Ingrese su link de GitHub" class="w-full" />
-  </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
-          (click)="hideEditSocialMediaDialog()"
-        ></button>
-      </div>
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Editar"
-          icon="pi pi-check"
-          class="p-button-success w-full"
-        ></button>
-      </div>
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Agrega y muestra tus medios sociales.
+      </span>
     </div>
-  </ng-template>
+    <form
+      class="w-12 flex flex-column"
+      autocomplete="off"
+      [formGroup]="redSocForm"
+      (ngSubmit)="onSveRedSoc()"
+    >
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label
+          for="inputLink"
+          class="block text-left mb-2 font-medium text-bluegray-800"
+          >Link de LinkedIn</label
+        >
+        <input pInputText formControlName="linkedin" class="w-full" />
+        <small
+          id="inputLink"
+          class="hidden"
+          [ngClass]="{ 'p-error block text-left': isValidSocField('linkedin') }"
+          >{{ getErrLinkField("linkedin") }}</small
+        >
+      </div>
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label
+          for="inputLink2"
+          class="block text-left mb-2 font-medium text-bluegray-800"
+          >Link de GitHub</label
+        >
+        <input pInputText formControlName="github" class="w-full" />
+        <small
+          id="inputLink2"
+          class="hidden"
+          [ngClass]="{ 'p-error block text-left': isValidSocField('github') }"
+          >{{ getErrGitField("github") }}</small
+        >
+      </div>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            type="button"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hidEditSocMediaDlg()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Editar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </div>
 </p-dialog>

@@ -1,4 +1,4 @@
-<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+<div class="flex flex-wrap border-round m-1 sm:my-2 sm:mr-2 sm:ml-4">
   <div class="w-12 sm:w-7 p-1 flex flex-column">
     <div class="w-12 border-round-sm flex justify-content-between">
       <div class="flex align-items-center justify-content-center">
@@ -20,14 +20,14 @@
     <div class="border-round-sm">
       <div class="flex align-items-center flex-wrap gap-1">
         <p-chip
-          *ngFor="let skill of inlineTechnicalSkills"
+          *ngFor="let skill of inLineTechSkills"
           [label]="skill.name"
           styleClass="custom-chip"
         ></p-chip>
       </div>
     </div>
   </div>
-  <div class="w-12 sm:w-5 py-1 flex flex-column">
+  <div class="w-12 sm:w-5 p-1 flex flex-column">
     <div class="w-12 border-round-sm flex justify-content-between">
       <div class="flex align-items-center justify-content-center">
         <span class="font-semibold text-base text-600"
@@ -56,98 +56,181 @@
     </div>
   </div>
 </div>
+
 <p-dialog
   [(visible)]="technicalSkillsDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Agregar una nueva habilidad técnica</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Agrega tu nueva experiencia técnica</p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Agregar una nueva habilidad técnica
+      </span>
     </div>
   </ng-template>
-  <div>
-    <p>Habilidad técnica</p>
-    <input pInputText placeholder="Nombre de la habilidad" class="w-full" />
-    <p>Años de experiencia</p>
-    <p-inputNumber
-      class="w-full"
-      styleClass="w-full"
-      placeholder="Nro. de años"
-    ></p-inputNumber>
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Agrega tu nueva experiencia técnica.
+      </span>
+    </div>
+    <form
+      class="w-12 flex flex-column"
+      autocomplete="off"
+      [formGroup]="techSkForm"
+      (ngSubmit)="onSveTechSkForm()"
+    >
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label
+          for="inputLink"
+          class="block text-left mb-2 font-medium text-bluegray-800 font-medium text-bluegray-800"
+          >Habilidad técnica</label
+        >
+        <input
+          pInputText
+          placeholder="Ingrese su habilidad técnica"
+          class="w-full"
+          formControlName="name"
+        />
+        <small
+          id="inputLink"
+          class="hidden"
+          [ngClass]="{ 'p-error block text-left': isValidTechField('name') }"
+          >{{ getErrTechNameExpField("name") }}</small
+        >
+      </div>
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label
+          for="inputNumber"
+          class="block text-left mb-2 font-medium text-bluegray-800 font-medium text-bluegray-800"
+          >Años de experiencia</label
+        >
+        <p-inputNumber
+          inputId="inputNumber"
+          class="w-full"
+          styleClass="w-full"
+          placeholder="Nro. de años"
+          mode="decimal"
+          [maxFractionDigits]="2"
+          [min]="0"
+          [max]="20"
+          formControlName="yearExp"
+        ></p-inputNumber>
+        <small
+          id="inputNumber"
+          class="hidden"
+          [ngClass]="{ 'p-error block text-left': isValidTechField('yearExp') }"
+          >{{ getErrYearExpField("yearExp") }}</small
+        >
+      </div>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            type="button"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideNewTechnicalSkillDialog()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Agregar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
+      </div>
+    </form>
   </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
-          (click)="hideNewTechnicalSkillDialog()"
-        ></button>
-      </div>
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Agregar"
-          icon="pi pi-check"
-          class="p-button-success w-full"
-        ></button>
-      </div>
-    </div>
-  </ng-template>
 </p-dialog>
 
 <p-dialog
   [(visible)]="softSkillsDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Agregar una nueva habilidad blanda</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>Agrega tu nueva experiencia blanda</p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Agregar una nueva habilidad blanda
+      </span>
     </div>
   </ng-template>
-  <div>
-    <h4>Habilidad blanda</h4>
-    <input pInputText placeholder="Nombre de la habilidad" class="w-full" />
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Agrega tu nueva experiencia blanda.
+      </span>
+    </div>
+    <form
+      class="w-12 flex flex-column"
+      [formGroup]="softSkForm"
+      autocomplete="off"
+      (ngSubmit)="onSveSoftSkForm()"
+    >
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <label
+          for="inputSoft"
+          class="block text-left mb-2 font-medium text-bluegray-800"
+          >Habilidad blanda</label
+        >
+        <input
+          pInputText
+          placeholder="Nombre de la habilidad"
+          class="w-full"
+          formControlName="name"
+        />
+        <small
+          id="inputSoft"
+          class="hidden"
+          [ngClass]="{ 'p-error block text-left': isValidSoftField('name') }"
+          >{{ getErrNameField("name") }}</small
+        >
+      </div>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            type="button"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideNewSoftSkillDialog()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Agregar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
+      </div>
+    </form>
   </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
-          (click)="hideNewSoftSkillDialog()"
-        ></button>
-      </div>
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Agregar"
-          icon="pi pi-check"
-          class="p-button-success w-full"
-        ></button>
-      </div>
-    </div>
-  </ng-template>
 </p-dialog>

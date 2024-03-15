@@ -1,6 +1,8 @@
-<shared-control-panel></shared-control-panel>
+<shared-control-panel
+  (onFilterReqVal)="filterTalent($event)"
+></shared-control-panel>
 
-<div class="bg-white py-0 px-3 sm:px-6 shadow-none content">
+<div class="bg-white py-0 px-2 lg:px-4 xl:px-7 shadow-none content">
   <div class="flex flex-wrap border-round w-full">
     <div
       class="content w-12 sm:w-4 font-bold py-1 px-2 flex justify-content-center"
@@ -9,12 +11,17 @@
         <p-scrollPanel
           [style]="{ width: '100%', height: 'calc(100vh - 190px)' }"
         >
-          <shared-pers-prof-crd></shared-pers-prof-crd>
+          <shared-pers-prof-crd
+            [talents]="talents"
+            [selId]="selId"
+            (talentId)="searchByTalentId($event)"
+          ></shared-pers-prof-crd>
         </p-scrollPanel>
       </div>
     </div>
     <div
       class="content bg-white w-12 sm:w-8 font-bold p-2 flex justify-content-center sm:justify-content-start"
+      *ngIf="isListEmpty"
     >
       <div
         class="w-full shadow-8 md:shadow-4 text-center border-round-lg surface-overlay overflow-hidden"
@@ -22,14 +29,43 @@
         <p-scrollPanel
           [style]="{ width: '100%', height: 'calc(100vh - 190px)' }"
         >
-          <shared-prof-pers-crd></shared-prof-pers-crd>
-          <shared-certs-pers-crd></shared-certs-pers-crd>
-          <shared-skills-pers-crd></shared-skills-pers-crd>
-          <shared-summ-pers-crd></shared-summ-pers-crd>
-          <shared-exp-pers-crd></shared-exp-pers-crd>
-          <shared-educ-pers-crd></shared-educ-pers-crd>
-          <shared-lang-pers-crd></shared-lang-pers-crd>
-          <shared-feedback-crd></shared-feedback-crd>
+          <shared-prof-pers-crd
+            [customTalent]="customTalent"
+            [selectedId]="selId"
+            (talentId)="saveChanges($event)"
+          ></shared-prof-pers-crd>
+          <shared-certs-pers-crd
+            [documents]="documents"
+            [selectedId]="selId"
+            (talentId)="saveChanges($event)"
+          ></shared-certs-pers-crd>
+          <shared-skills-pers-crd
+            [softSkills]="softSkills"
+            [techSkills]="techSkills"
+            [selectedId]="selId"
+            (talentId)="saveChanges($event)"
+          ></shared-skills-pers-crd>
+          <shared-summ-pers-crd
+            [description]="description"
+            [selectedId]="selId"
+            (talentId)="saveChanges($event)"
+          ></shared-summ-pers-crd>
+          <shared-exp-pers-crd
+            [workExp]="workExp"
+            [selectedId]="selId"
+            (talentId)="saveChanges($event)"
+          ></shared-exp-pers-crd>
+          <shared-educ-pers-crd
+            [educExp]="educExp"
+            [selectedId]="selId"
+            (talentId)="saveChanges($event)"
+          ></shared-educ-pers-crd>
+          <shared-lang-pers-crd
+            [langProficiency]="langProficiency"
+            [selectedId]="selId"
+            (talentId)="saveChanges($event)"
+          ></shared-lang-pers-crd>
+          <shared-feedback-crd [selectedId]="selId"></shared-feedback-crd>
         </p-scrollPanel>
       </div>
     </div>

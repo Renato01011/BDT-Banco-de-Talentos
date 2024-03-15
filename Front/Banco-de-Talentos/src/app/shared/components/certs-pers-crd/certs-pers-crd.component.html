@@ -1,7 +1,7 @@
-<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+<div class="flex flex-wrap border-round m-1 sm:my-2 sm:mr-2 sm:ml-4">
   <div class="w-12 sm:w-8 p-1 flex align-items-center justify-content-center">
     <p-carousel
-      [value]="products"
+      [value]="documents"
       [numVisible]="2"
       [numScroll]="2"
       [circular]="true"
@@ -12,11 +12,12 @@
       <ng-template let-product pTemplate="item">
         <div class="h-9rem w-full py-1">
           <div class="border-round px-2">
-            <div
-              class="w-full h-8rem border-round flex flex-column align-items-center"
+            <button
+              (click)="showDialog(product.idDocument)"
+              class="w-full h-8rem border-none border-round flex flex-column align-items-center cursor-pointer"
             >
               <div class="h-6rem w-full border-round-top overflow-hidden">
-                <img src="./assets/users/1.jpg" [alt]="" class="file-image" />
+                <img src="./assets/pdfIcon.svg" [alt]="" class="file-image" />
               </div>
               <div
                 class="h-2rem w-full border-round-bottom surface-100 flex align-items-center"
@@ -30,18 +31,17 @@
                     <div
                       class="w-10rem flex align-items-center align-content-start white-space-nowrap overflow-hidden text-overflow-ellipsis"
                     >
-                      Certificado
-                      {{ product.name }}
+                      {{ product.documentName }}
                     </div>
                   </div>
                   <div
                     class="w-12 border-round text-xs text-500 flex align-items-center pl-2"
                   >
-                    PDF
+                    {{ product.documentType }}
                   </div>
                 </div>
               </div>
-            </div>
+            </button>
           </div>
         </div>
       </ng-template>
@@ -50,13 +50,10 @@
   <div class="w-12 sm:w-4 py-1 flex align-items-center justify-content-center">
     <button
       pButton
-      class="p-button-outlined border-transparent h-8rem w-10 surface-50 flex flex-column"
+      class="p-button-outlined border-transparent h-8rem w-10 surface-50 hover:surface-200 flex flex-column"
       (click)="openAddFileDialog()"
     >
-      <i
-        class="pi pi-cloud-upload px-2 pt-3"
-        style="font-size: 1.5rem; color: #708090"
-      ></i>
+      <i class="pi pi-cloud-upload px-2 pt-3 text-2xl text-bluegray-400"></i>
       <span
         class="px-3 pt-4 flex align-items-center justify-content-center font-semibold border-round"
         style="color: #0b85c3"
@@ -65,66 +62,122 @@
     </button>
   </div>
 </div>
+
 <p-dialog
   [(visible)]="addFileDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
   [modal]="true"
-  [closable]="false"
-  [style]="{ width: '650px' }"
 >
   <ng-template pTemplate="header">
-    <div class="flex flex-column">
-      <div class="flex align-items-start justify-content-start h-3rem">
-        <h2>Agrega un archivo</h2>
-      </div>
-      <div class="flex align-items-start justify-content-start h-2rem">
-        <p>
-          Sube tu nuevo certificado, diploma o algún archivo que respalde tus
-          aptitudes.
-        </p>
-      </div>
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Agrega un archivo
+      </span>
     </div>
   </ng-template>
-  <div class="flex flex-warp align-items-center justify-content-center">
-    <button
-      pButton
-      class="p-button-outlined border-300 w-full flex flex-column"
+  <div class="w-12 flex flex-column align-items-center">
+    <div class="flex align-items-center w-12 pb-3">
+      <span class="text-sm md:text-base font-normal text-500">
+        Sube tu nuevo certificado, diploma o algún archivo que respalde tus
+        aptitudes.
+      </span>
+    </div>
+    <form
+      class="w-12 flex flex-column"
+      autocomplete="off"
+      [formGroup]="fileForm"
+      (ngSubmit)="onSveFile()"
     >
-      <i
-        class="pi pi-cloud-upload px-2 pt-5"
-        style="font-size: 1.5rem; color: #708090"
-      ></i>
-      <span
-        class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
-        style="color: #0b85c3"
-        >Sube un archivo</span
+      <button
+        pButton
+        class="p-button-outlined border-300 w-full flex flex-column"
+        (click)="fileUpload.click()"
       >
-      <span
-        class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
-        >PDF</span
-      >
-    </button>
+        <i
+          class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"
+          *ngIf="!fileUploaded"
+        ></i>
+        <i
+          class="pi pi-check px-2 pt-5 text-2xl text-teal-500"
+          *ngIf="fileUploaded"
+        ></i>
+        <span
+          class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
+          style="color: #0b85c3"
+          [ngClass]="{ 'text-teal-500': fileUploaded }"
+          >{{ fileText }}</span
+        >
+        <span
+          class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
+          >{{ fileDetailsText }}</span
+        >
+        <input
+          #fileUpload
+          id="file"
+          type="file"
+          accept=".pdf"
+          style="display: none"
+          formControlName="file"
+          (change)="onFileUpload($event)"
+        />
+      </button>
+      <div class="w-12 py-2">
+        <small
+          id="file"
+          class="hidden"
+          [ngClass]="{
+            'p-error block text-left': isValidFileField('file')
+          }"
+          >Este campo no puede estar vacío.</small
+        >
+      </div>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            type="button"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideAddFileDialog()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Subir"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
+      </div>
+    </form>
   </div>
-  <ng-template pTemplate="footer">
-    <div class="formgrid grid">
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-outlined p-button-info w-full"
-          (click)="hideAddFileDialog()"
-        ></button>
-      </div>
-      <div class="field col">
-        <button
-          pButton
-          pRipple
-          label="Subir"
-          icon="pi pi-check"
-          class="p-button-success w-full"
-        ></button>
-      </div>
-    </div>
-  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [(visible)]="display"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw', height: '80vh' }"
+>
+  <pdf-viewer
+    [src]="pdfSrc"
+    [render-text]="true"
+    [original-size]="true"
+    [fit-to-page]="true"
+    style="height: 100%"
+  ></pdf-viewer>
 </p-dialog>

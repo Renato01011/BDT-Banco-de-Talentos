@@ -17,7 +17,7 @@
             placeholder="Nombre de usuario"
             class="w-full"
             formControlName="username"
-            [ngClass]="{ 'ng-invalid ng-dirty': isValidField('username') }"
+            [ngClass]="{ 'ng-invalid ng-dirty': isValidField('username') || invalidCredentials }"
           />
           <p class="logInSubSubHeader mb-1">Contraseña</p>
           <p-password
@@ -27,7 +27,7 @@
             styleClass="w-full p-password p-component p-inputwrapper p-input-icon-right"
             inputStyleClass="w-full"
             formControlName="password"
-            [ngClass]="{ 'ng-invalid ng-dirty': isValidField('password') }"
+            [ngClass]="{ 'ng-invalid ng-dirty': isValidField('password') || invalidCredentials }"
           ></p-password>
           <p class="m-4 ml-0 forgotPasswordText">Olvidé mi contraseña</p>
           <button

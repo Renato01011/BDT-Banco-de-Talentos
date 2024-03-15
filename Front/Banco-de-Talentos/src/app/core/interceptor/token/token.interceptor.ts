@@ -16,9 +16,12 @@ export class TokenInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const token = sessionStorage.getItem(STORAGE_CURRENT_TOKEN) ?? '';
+    //const token = sessionStorage.getItem(STORAGE_CURRENT_TOKEN) ?? '';
+    const token = JSON.parse(sessionStorage.getItem(STORAGE_CURRENT_TOKEN) || '{}');
 
-    request = this.addAuthorizationHeader(request, token);
+    if (!request.url.includes('/auth/login')) {
+      request = this.addAuthorizationHeader(request, token);
+    }
 
     return next.handle(request);
   }

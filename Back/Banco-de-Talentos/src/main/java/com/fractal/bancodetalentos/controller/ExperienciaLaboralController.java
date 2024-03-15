@@ -6,6 +6,7 @@ import com.fractal.bancodetalentos.service.ExperienciaLaboralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ public class ExperienciaLaboralController {
 
     private final ExperienciaLaboralService laboralService;
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PostMapping("/add/{id}")
     public ResponseEntity<Map<String, String>> addNewWorkExp(@PathVariable Integer id, @Valid @RequestBody ExperienciasLaborales laborales) {
         Map<String, String> resp = laboralService.addNewWorkExp(laborales, id);

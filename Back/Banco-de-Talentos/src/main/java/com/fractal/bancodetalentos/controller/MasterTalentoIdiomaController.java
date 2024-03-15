@@ -6,6 +6,7 @@ import com.fractal.bancodetalentos.service.MasterTalentoIdiomaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ public class MasterTalentoIdiomaController {
 
     private final MasterTalentoIdiomaService idiomaService;
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PostMapping("/add/{id}")
     public ResponseEntity<Map<String, String>> addNewLangExp(@PathVariable Integer id, @Valid @RequestBody Idiomas idiomas) {
         Map<String, String> resp = idiomaService.addNewLanguage(idiomas, id);

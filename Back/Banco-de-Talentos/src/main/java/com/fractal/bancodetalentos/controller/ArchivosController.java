@@ -18,7 +18,7 @@ public class ArchivosController {
 
     private final ArchivosService archivosService;
 
-    @PreAuthorize("hasRole('RECLUTADOR')")
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PostMapping("/add/{id}")
     public ResponseEntity<Map<String, String>> addNewFile(@PathVariable Integer id, @Valid @RequestBody Documento documento) {
         Map<String, String> resp = archivosService.addNewFile(documento, id);

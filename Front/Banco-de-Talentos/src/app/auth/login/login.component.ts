@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { ToastService } from 'src/app/core/services/toast/toast.service';
-import { FrmValService } from 'src/app/shared/service/frmVal/frm-val.service';
 
 import { STORAGE_CURRENT_TOKEN } from '../../core/global/constants/constants';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
@@ -18,7 +15,10 @@ export class LoginComponent implements OnInit {
   mobile: boolean = false;
   invalidCredentials: boolean = false;
 
-  mobile: boolean = false;
+  loginForm = this.formBuilder.group({
+    username: ['', [Validators.required]],
+    password: ['', [Validators.required]]
+  });
 
   constructor(private router: Router, private formBuilder: FormBuilder, private formValidator: FrmValService, private authService: AuthService) {}
 

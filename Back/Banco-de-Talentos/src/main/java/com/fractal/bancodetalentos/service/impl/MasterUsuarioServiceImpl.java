@@ -8,6 +8,8 @@ import com.fractal.bancodetalentos.model.dto.TxRolDTO;
 import com.fractal.bancodetalentos.service.MasterUsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.persistence.EntityManager;
@@ -27,6 +29,7 @@ public class MasterUsuarioServiceImpl implements MasterUsuarioService {
 
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public TmUsuarioDTO findByUsername(String username) {
         Boolean existsUser = existsByUsername(username);
         if (Boolean.FALSE.equals(existsUser)) {
@@ -75,6 +78,7 @@ public class MasterUsuarioServiceImpl implements MasterUsuarioService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Boolean existsByUsername(String username) {
         StoredProcedureQuery storedProcedureQueryCheck = entityManager.createStoredProcedureQuery("SP_EXISTS_BY_NAME")
                 .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)

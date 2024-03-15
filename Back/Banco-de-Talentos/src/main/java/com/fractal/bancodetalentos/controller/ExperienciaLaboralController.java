@@ -26,12 +26,14 @@ public class ExperienciaLaboralController {
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PutMapping("/update/{idTalent}/{idWorkExp}")
     public ResponseEntity<GeneralResp> putWorkExp(@PathVariable Integer idTalent, @PathVariable Integer idWorkExp, @Valid @RequestBody ExperienciasLaborales experienciasLaborales) {
         GeneralResp generalResp = laboralService.putWorkExp(idTalent, idWorkExp, experienciasLaborales);
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @DeleteMapping("/delete/{idTalent}/{idWorkExp}")
     public ResponseEntity<GeneralResp> deleteWorkExp(@PathVariable Integer idTalent, @PathVariable Integer idWorkExp) {
         GeneralResp generalResp = laboralService.deleteWorkExp(idTalent, idWorkExp);

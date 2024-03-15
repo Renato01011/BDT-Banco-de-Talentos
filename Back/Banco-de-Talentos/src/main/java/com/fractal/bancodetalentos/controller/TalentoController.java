@@ -8,6 +8,7 @@ import com.fractal.bancodetalentos.service.TalentoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ public class TalentoController {
 
     private final TalentoService talentoService;
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PostMapping("/new-talent")
     public ResponseEntity<GeneralResp> addNewTalent(@Valid @RequestBody NewTalentReq newTalentRequest) {
         GeneralResp newTalentResp = talentoService.addNewTalent(newTalentRequest);
@@ -37,6 +39,7 @@ public class TalentoController {
         return new ResponseEntity<>(talentResp, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PutMapping("/update/description/{id}")
     public ResponseEntity<GeneralResp> putDescription(@PathVariable Integer id, @Valid @RequestBody DescriptionReq descriptionReq) {
         GeneralResp generalResp = talentoService.putDescription(id, descriptionReq);
@@ -46,6 +49,7 @@ public class TalentoController {
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PutMapping("/update/profile-picture/{id}")
     public ResponseEntity<GeneralResp> putProfilePicture(@PathVariable Integer id, @Valid @RequestBody ProfilePictureReq profilePictureReq) {
         GeneralResp generalResp = talentoService.putProfilePicture(id, profilePictureReq);
@@ -55,6 +59,7 @@ public class TalentoController {
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PutMapping("/update/salary/{id}")
     public ResponseEntity<GeneralResp> putSalary(@PathVariable Integer id, @Valid @RequestBody SalaryReq salaryReq) {
         GeneralResp generalResp = talentoService.putSalary(id, salaryReq);
@@ -64,6 +69,7 @@ public class TalentoController {
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PutMapping("/update/social-links/{id}")
     public ResponseEntity<GeneralResp> putSocialLinks(@PathVariable Integer id, @Valid @RequestBody SocialLinksReq socialLinksReq) {
         GeneralResp generalResp = talentoService.putSocialLinks(id, socialLinksReq);

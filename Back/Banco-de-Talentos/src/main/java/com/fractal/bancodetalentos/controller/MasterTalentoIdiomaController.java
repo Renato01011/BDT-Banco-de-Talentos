@@ -26,12 +26,14 @@ public class MasterTalentoIdiomaController {
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PutMapping("/update/{idTalent}/{idTalentLang}")
     public ResponseEntity<GeneralResp> putLangExp(@PathVariable Integer idTalent, @PathVariable Integer idTalentLang, @Valid @RequestBody Idiomas idiomas) {
         GeneralResp generalResp = idiomaService.putLangExp(idTalent, idTalentLang, idiomas);
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @DeleteMapping("/delete/{idTalent}/{idTalentLang}")
     public ResponseEntity<GeneralResp> deleteTalentLang(@PathVariable Integer idTalent, @PathVariable Integer idTalentLang) {
         GeneralResp generalResp = idiomaService.deleteTalentLang(idTalent, idTalentLang);

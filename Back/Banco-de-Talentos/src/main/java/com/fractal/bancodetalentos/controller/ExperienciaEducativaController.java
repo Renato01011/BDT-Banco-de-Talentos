@@ -26,12 +26,14 @@ public class ExperienciaEducativaController {
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @PutMapping("/update/{idTalent}/{idEducExp}")
     public ResponseEntity<GeneralResp> putEducExp(@PathVariable Integer idTalent, @PathVariable Integer idEducExp, @Valid @RequestBody ExperienciasEducativas experienciasEducativas) {
         GeneralResp generalResp = educativaService.putEducExp(idTalent, idEducExp, experienciasEducativas);
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
     @DeleteMapping("/delete/{idTalent}/{idEducExp}")
     public ResponseEntity<GeneralResp> deleteEducExp(@PathVariable Integer idTalent, @PathVariable Integer idEducExp) {
         GeneralResp generalResp = educativaService.deleteEducExp(idTalent, idEducExp);

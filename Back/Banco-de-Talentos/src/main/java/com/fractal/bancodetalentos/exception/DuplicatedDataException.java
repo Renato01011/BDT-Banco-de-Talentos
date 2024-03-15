@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DuplicatedDataException extends RuntimeException{
+public class DuplicatedDataException extends RuntimeException {
 
     private String fieldName;
 

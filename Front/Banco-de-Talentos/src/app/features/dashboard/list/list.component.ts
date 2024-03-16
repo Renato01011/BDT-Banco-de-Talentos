@@ -9,6 +9,7 @@ import { FilterService } from '../../../core/services/filter/filter.service';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
 import { TalentService } from '../../../core/services/talent/talent.service';
 import { ToastService } from '../../../core/services/toast/toast.service';
+import { AuthService } from '../../../core/services/auth/auth.service';
 import {
   Document,
   EducationalExperience,
@@ -25,6 +26,8 @@ import {
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
+  public isRecruiter: boolean = false;
+
   public filterReq: FilterRequest = {
     habilities: '',
     languageIds: '',
@@ -50,11 +53,15 @@ export class ListComponent implements OnInit {
     private loaderService: LoaderService,
     private router: Router,
     private talentService: TalentService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.getTalentList(this.filterReq);
+
+    this.isRecruiter = this.authService.isRecruiter;
+    console.log(this.isRecruiter);
   }
 
   public filterTalent(filter: FilterRequest): void {

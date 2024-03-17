@@ -7,6 +7,7 @@ import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'shared-educ-pers-crd',
@@ -23,6 +24,8 @@ export class EducPersCrdComponent implements OnInit {
 
   public maxDate: Date = new Date();
 
+  public isRecruiter: boolean = false;
+
   public newEducationalExperienceDialog: boolean = false;
   public editEducationalExperienceDialog: boolean = false;
 
@@ -35,7 +38,8 @@ export class EducPersCrdComponent implements OnInit {
     private editInfoService: EditInfoService,
     private toastService: ToastService,
     private confirmationService: ConfirmationService,
-    private deleteInfoService: DeleteInfoService
+    private deleteInfoService: DeleteInfoService,
+    private authService: AuthService
   ) {}
 
   public newEducForm: FormGroup = this.fb.group(
@@ -68,7 +72,9 @@ export class EducPersCrdComponent implements OnInit {
     }
   );
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isRecruiter = this.authService.isRecruiter;
+  }
 
   private onSaveForm(form: FormGroup): boolean {
     if (form.invalid) {

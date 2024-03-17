@@ -62,6 +62,7 @@ export class ListComponent implements OnInit {
 
     this.isRecruiter = this.authService.isRecruiter;
     console.log(this.isRecruiter);
+    console.log(this.authService.idUser);
   }
 
   public filterTalent(filter: FilterRequest): void {
@@ -76,7 +77,7 @@ export class ListComponent implements OnInit {
         this.talents = talents;
         this.firstCall();
         this.loaderService.hideLoader();
-        this.totalTalents(talents);
+        this.showMsgForRecruiter(talents);
       },
     });
   }
@@ -154,7 +155,7 @@ export class ListComponent implements OnInit {
     return this.talents.length !== 0;
   }
 
-  public totalTalents(talents: FilterResponse[]): void {
+  private totalTalents(talents: FilterResponse[]): void {
     const total = talents.length;
     if (total === 1) {
       this.toastService.addProperties(
@@ -168,6 +169,12 @@ export class ListComponent implements OnInit {
         'Info',
         `¡Hemos encontrado ${total} resultados para tu búsqueda!`
       );
+    }
+  }
+
+  private showMsgForRecruiter(talents: FilterResponse[]) {
+    if (this.isRecruiter) {
+      this.totalTalents(talents);
     }
   }
 }

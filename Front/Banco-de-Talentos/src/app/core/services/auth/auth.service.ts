@@ -85,4 +85,9 @@ export class AuthService {
     const roles = this.decodeToken()?.roles ?? [];
     return this.getAuthority(roles);
   }
+
+  public get idUser(): number {
+    const id = this.decodeToken()?.id ?? 0;
+    return id;
+  }
 }

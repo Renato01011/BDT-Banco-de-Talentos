@@ -1,7 +1,7 @@
 import { environment } from 'src/environments/environment';
 
 export class UrlConstants {
-  public static readonly URL_LOGIN_TOKEN = 
+  public static readonly URL_LOGIN_TOKEN =
     environment.host + environment.context + '/auth/login';
   public static readonly URL_REQ_LANG =
     environment.host + environment.context + '/master/languages';
@@ -58,4 +58,6 @@ export class UrlConstants {
     environment.host + environment.context + '/work/delete';
   public static readonly URL_DELETE_LANG_EXP =
     environment.host + environment.context + '/lang/delete';
+  public static readonly URL_REQ_USER =
+    environment.host + environment.context + '/user/picture';
 }

@@ -7,6 +7,7 @@ import { CurrenciesModel } from '../../models/interfaces/master.interfaces';
 import { CustomTalent } from '../../models/interfaces/customTalent.interfaces';
 import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
 const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
@@ -27,6 +28,8 @@ export class ProfPersCrdComponent implements OnInit {
   public resume: MenuItem[] = [];
   public coins: CurrenciesModel[] = [];
 
+  public isRecruiter: boolean = false;
+
   public editSocialMediaDialog: boolean = false;
   public editProfilePicture: boolean = false;
   public editSalaryDialog: boolean = false;
@@ -41,7 +44,8 @@ export class ProfPersCrdComponent implements OnInit {
     private fValidator: FrmValService,
     private masterService: MasterService,
     private editInfoService: EditInfoService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private authService: AuthService
   ) {}
 
   public profileForm: FormGroup = this.fb.group({
@@ -69,6 +73,7 @@ export class ProfPersCrdComponent implements OnInit {
   ngOnInit(): void {
     this.resume = [{ label: 'CV' }, { label: 'CV Fractal' }];
     this.checkCurrencies();
+    this.isRecruiter = this.authService.isRecruiter;
   }
 
   private onSaveForm(form: FormGroup): boolean {

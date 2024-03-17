@@ -14,7 +14,7 @@
   >
     <div class="flex flex-order-1 sm:flex-order-0">
       <p-avatar
-        image="./assets/users/2.jpg"
+        [image]="picture | base64ToImage"
         size="large"
         shape="circle"
       ></p-avatar>
@@ -26,7 +26,7 @@
         {{ name }}
       </span>
       <span class="text-500 text-sm font-light hidden md:block">
-        {{ recruiterOrVisitant | titlecase }}
+        {{ recruiterOrVisitor | titlecase }}
       </span>
     </div>
   </div>

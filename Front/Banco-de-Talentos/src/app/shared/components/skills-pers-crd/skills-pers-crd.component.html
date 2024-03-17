@@ -12,6 +12,7 @@
           pRipple
           icon="pi pi-plus"
           class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+          *ngIf="isRecruiter"
           (click)="openNewTechnicalSkillDialog()"
         ></button>
       </div>
@@ -40,6 +41,7 @@
           pRipple
           icon="pi pi-plus"
           class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+          *ngIf="isRecruiter"
           (click)="openNewSoftSkillDialog()"
         ></button>
       </div>

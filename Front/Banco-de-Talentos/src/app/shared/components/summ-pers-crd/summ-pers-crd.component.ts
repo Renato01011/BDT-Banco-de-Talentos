@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'shared-summ-pers-crd',
@@ -19,12 +20,14 @@ export class SummPersCrdComponent implements OnInit {
   public talentId = new EventEmitter<number>();
 
   editDescriptionDialog: boolean = false;
+  public isRecruiter: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private fValidator: FrmValService,
     private editInfoService: EditInfoService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private authService: AuthService
   ) {}
 
   public summForm: FormGroup = this.fb.group({
@@ -38,7 +41,9 @@ export class SummPersCrdComponent implements OnInit {
     ],
   });
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isRecruiter = this.authService.isRecruiter;
+  }
 
   isValidField(field: string) {
     return this.fValidator.isValidField(this.summForm, field);

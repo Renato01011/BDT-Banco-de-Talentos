@@ -12,6 +12,7 @@ import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'shared-lang-pers-crd',
@@ -25,6 +26,8 @@ export class LangPersCrdComponent implements OnInit {
   public selectedId?: number;
   @Output()
   public talentId = new EventEmitter<number>();
+
+  public isRecruiter: boolean = false;
 
   newLanguageDialog: boolean = false;
   editLanguageDialog: boolean = false;
@@ -43,7 +46,8 @@ export class LangPersCrdComponent implements OnInit {
     private editInfoService: EditInfoService,
     private toastService: ToastService,
     private confirmationService: ConfirmationService,
-    private deleteInfoService: DeleteInfoService
+    private deleteInfoService: DeleteInfoService,
+    private authService: AuthService
   ) {}
 
   public newLanguageForm: FormGroup = this.fb.group({
@@ -61,6 +65,7 @@ export class LangPersCrdComponent implements OnInit {
   ngOnInit(): void {
     this.language = this.uploadLanguages;
     this.proficiency = this.uploadProficiency;
+    this.isRecruiter = this.authService.isRecruiter;
   }
 
   private onSaveForm(form: FormGroup): boolean {
@@ -128,17 +133,19 @@ export class LangPersCrdComponent implements OnInit {
 
       accept: () => {
         if (!this.selectedId) return;
-        this.deleteInfoService.deleteLanguageExpertise(this.selectedId, this.currEditingLangProf).subscribe({
-          next: (resp) => {
-            this.hideEditLanguageDialog();
-            this.toastService.addProperties(
-              'success',
-              'Se eliminó correctamente',
-              resp.message
-            );
-            this.talentId.emit(this.selectedId);
-          }
-        });
+        this.deleteInfoService
+          .deleteLanguageExpertise(this.selectedId, this.currEditingLangProf)
+          .subscribe({
+            next: (resp) => {
+              this.hideEditLanguageDialog();
+              this.toastService.addProperties(
+                'success',
+                'Se eliminó correctamente',
+                resp.message
+              );
+              this.talentId.emit(this.selectedId);
+            },
+          });
       },
     });
   }

@@ -7,6 +7,7 @@ import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'shared-exp-pers-crd',
@@ -20,6 +21,8 @@ export class ExpPersCrdComponent implements OnInit {
   public selectedId?: number;
   @Output()
   public talentId = new EventEmitter<number>();
+
+  public isRecruiter: boolean = false;
 
   public newWorkExperienceDialog: boolean = false;
   public editWorkExperienceDialog: boolean = false;
@@ -35,7 +38,8 @@ export class ExpPersCrdComponent implements OnInit {
     private editInfoService: EditInfoService,
     private toastService: ToastService,
     private confirmationService: ConfirmationService,
-    private deleteInfoService: DeleteInfoService
+    private deleteInfoService: DeleteInfoService,
+    private authService: AuthService
   ) {}
 
   public newExpForm: FormGroup = this.fb.group(
@@ -66,7 +70,9 @@ export class ExpPersCrdComponent implements OnInit {
     }
   );
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isRecruiter = this.authService.isRecruiter;
+  }
 
   private onSaveForm(form: FormGroup): boolean {
     if (form.invalid) {

@@ -51,6 +51,7 @@
     <button
       pButton
       class="p-button-outlined border-transparent h-8rem w-10 surface-50 hover:surface-200 flex flex-column"
+      *ngIf="isRecruiter"
       (click)="openAddFileDialog()"
     >
       <i class="pi pi-cloud-upload px-2 pt-3 text-2xl text-bluegray-400"></i>

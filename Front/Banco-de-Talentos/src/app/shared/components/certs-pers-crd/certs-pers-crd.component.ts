@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AddInfoService } from '../../service/addInfo/add-info.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'shared-certs-pers-crd',
@@ -17,6 +18,8 @@ export class CertsPersCrdComponent implements OnInit {
   public selectedId?: number;
   @Output()
   public talentId = new EventEmitter<number>();
+
+  public isRecruiter: boolean = false;
 
   public fileText: string = 'Sube un archivo';
   public fileDetailsText: string = 'PDF (max. 5MB)';
@@ -34,7 +37,8 @@ export class CertsPersCrdComponent implements OnInit {
     private fb: FormBuilder,
     private fValidator: FrmValService,
     private toastService: ToastService,
-    private addInfoService: AddInfoService
+    private addInfoService: AddInfoService,
+    private authService: AuthService
   ) {}
 
   public fileForm: FormGroup = this.fb.group({
@@ -56,6 +60,7 @@ export class CertsPersCrdComponent implements OnInit {
         numScroll: 1,
       },
     ];
+    this.isRecruiter = this.authService.isRecruiter;
   }
 
   public onFileUpload(event: any) {

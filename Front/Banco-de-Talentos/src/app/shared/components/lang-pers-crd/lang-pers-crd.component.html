@@ -3,7 +3,10 @@
     <div class="flex align-items-center justify-content-center">
       <span class="font-semibold text-base text-600">Idiomas</span>
     </div>
-    <div class="flex align-items-center justify-content-center">
+    <div
+      class="flex align-items-center justify-content-center"
+      *ngIf="isRecruiter"
+    >
       <button
         pButton
         pRipple
@@ -38,6 +41,7 @@
     <div class="w-2 py-1 flex align-items-center justify-content-center">
       <div
         class="flex align-items-center justify-content-center h-4rem border-round"
+        *ngIf="isRecruiter"
       >
         <button
           pButton

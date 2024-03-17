@@ -6,6 +6,7 @@ export interface Payload {
   sub: string;
   iat: number;
   exp: number;
+  id: number;
   roles: Role[];
   name: string;
 }

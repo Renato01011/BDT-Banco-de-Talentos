@@ -34,6 +34,12 @@ export interface AddFile {
   archivo: string;
 }
 
+export interface AddFeedback {
+  nuEstrellas: number;
+  descripcion: string;
+  userFromId: number;
+}
+
 export interface AddResp {
   id: string;
   message: string;

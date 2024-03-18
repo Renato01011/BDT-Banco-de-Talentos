@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { STORAGE_CURRENT_TOKEN } from '../../core/global/constants/constants';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { FrmValService } from 'src/app/shared/service/frmVal/frm-val.service';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required]]
   });
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private formValidator: FrmValService, private authService: AuthService) {}
+  constructor(private router: Router, private formBuilder: FormBuilder, private formValidator: FrmValService, private authService: AuthService, private loaderService: LoaderService) {}
 
   ngOnInit(): void {
     if (window.screen.width < 1000) {
@@ -66,14 +67,17 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     if (this.loginForm.valid) {
+      this.loaderService.showLoader();
       this.authService.loginUser(this.loginForm.get('username')!.value, this.loginForm.get('password')!.value).subscribe({
         next: (token) => {
           if (token != null && token.token != '') {
             sessionStorage.setItem(STORAGE_CURRENT_TOKEN, JSON.stringify(token.token));
+            this.loaderService.hideLoader();
             this.router.navigateByUrl('/home');
           }
         },
         error: (error) => {
+          this.loaderService.hideLoader();
           this.invalidCredentials = true;
         }
       });

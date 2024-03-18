@@ -1,19 +1,20 @@
 <div class="flex flex-wrap border-round m-1 sm:my-2 sm:mr-2 sm:ml-4">
   <div class="w-12 p-1 flex align-items-center justify-content-between">
     <div class="flex align-items-center justify-content-center">
-      <span class="font-semibold text-base text-600">Idiomas</span>
+      <span class="font-semibold text-sm md:text-base text-600">Idiomas</span>
     </div>
     <div
       class="flex align-items-center justify-content-center"
       *ngIf="isRecruiter"
     >
       <button
-        pButton
-        pRipple
-        icon="pi pi-plus"
-        class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+        type="button"
+        class="mx-1 back-icon-btn"
+        *ngIf="isRecruiter"
         (click)="openNewLanguageDialog()"
-      ></button>
+      >
+        <i class="pi pi-plus text-sm"></i>
+      </button>
     </div>
   </div>
   <div
@@ -22,10 +23,14 @@
   >
     <div class="w-3 sm:w-2 py-1 flex align-items-center justify-content-center">
       <div class="flex flex-column gap-2">
-        <div class="flex align-items-center font-semibold text-base text-800">
+        <div
+          class="flex align-items-center font-semibold text-sm md:text-base text-800"
+        >
           {{ item.languageName | titlecase }}
         </div>
-        <div class="flex align-items-center text-500 text-sm font-normal">
+        <div
+          class="flex align-items-center text-500 text-xs md:text-sm font-normal"
+        >
           {{ item.proficiency | titlecase }}
         </div>
       </div>

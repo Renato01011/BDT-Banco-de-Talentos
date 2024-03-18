@@ -1,15 +1,16 @@
 <div class="flex flex-wrap border-round m-1 sm:my-2 sm:mr-2 sm:ml-4">
-  <div class="w-12 p-1 flex align-items-center">
+  <div class="w-12 p-1 my-1 flex align-items-center">
     <span class="text-left text-sm text-500">
       {{ description }}
-      <span
-        class="cursor-pointer mx-2 text-500 hover:text-700"
-        *ngIf="isRecruiter"
-        (click)="openEditDescriptionDialog()"
-      >
-        <i class="pi pi-pencil text-sm"></i>
-      </span>
     </span>
+    <button
+      type="button"
+      class="mx-1 back-icon-btn"
+      *ngIf="isRecruiter"
+      (click)="openEditDescriptionDialog()"
+    >
+      <i class="pi pi-pencil text-sm"></i>
+    </button>
   </div>
 </div>
 <p-dialog

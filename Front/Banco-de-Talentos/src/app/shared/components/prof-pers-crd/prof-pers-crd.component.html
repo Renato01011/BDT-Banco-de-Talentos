@@ -7,17 +7,14 @@
           'url(' + (customTalent?.profilePicture | base64ToImage) + ')'
       }"
     >
-      <div
-        class="absolute bottom-0 right-0 bg-white shadow-2 hover:shadow-5 flex align-items-center justify-content-center w-2rem h-2rem border-circle"
+      <button
+        type="button"
+        class="absolute bottom-0 right-0 back-icon-abs-btn"
         *ngIf="isRecruiter"
+        (click)="openEditProfilePicture()"
       >
-        <span
-          class="cursor-pointer text-500"
-          (click)="openEditProfilePicture()"
-        >
-          <i class="pi pi-pencil text-sm text-500 hover:text-800"></i>
-        </span>
-      </div>
+        <i class="pi pi-pencil text-sm"></i>
+      </button>
     </div>
   </div>
   <div class="w-9 sm:w-6 py-1 flex align-items-center justify-content-center">
@@ -53,13 +50,14 @@
             <i class="pi pi-dollar text-xs sm:text-sm text-800"></i>
             {{ customTalent?.initialSalary }} - {{ customTalent?.finalSalary }}
           </span>
-          <span
-            class="text-500 hover:text-700 text-sm font-light mx-1 cursor-pointer"
+          <button
+            type="button"
+            class="mx-1 back-icon-btn"
             *ngIf="isRecruiter"
             (click)="openEditSalaryDialog()"
           >
             <i class="pi pi-pencil text-sm"></i>
-          </span>
+          </button>
         </div>
       </div>
       <div
@@ -115,13 +113,15 @@
             <i class="pi pi-linkedin text-xl sm:text-2xl"></i>
           </span>
         </a>
-        <span
-          class="cursor-pointer text-500 hover:text-700 mx-2"
+
+        <button
+          type="button"
+          class="mx-1 back-icon-btn"
           *ngIf="isRecruiter"
           (click)="opEditSocMediaDlg()"
         >
           <i class="pi pi-pencil text-sm"></i>
-        </span>
+        </button>
       </div>
     </div>
   </div>

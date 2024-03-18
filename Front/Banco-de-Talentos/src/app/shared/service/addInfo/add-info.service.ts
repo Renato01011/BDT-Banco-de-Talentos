@@ -9,6 +9,7 @@ import {
   AddSoftSkill,
   AddTechSkill,
   AddWorkExp,
+  AddFeedback,
 } from '../../models/interfaces/addInfo.interfaces';
 import { UrlConstants } from 'src/app/core/global/constants/url.constants';
 
@@ -51,6 +52,12 @@ export class AddInfoService {
   public addFile(body: AddFile, id: number): Observable<AddResp> {
     return this.httpClient.post<AddResp>(
       `${UrlConstants.URL_ADD_FILE}/${id}`,
+      body
+    );
+  }
+  public addFeedback(body: AddFeedback, id: number): Observable<AddResp> {
+    return this.httpClient.post<AddResp>(
+      `${UrlConstants.URL_ADD_FEEDBACK}/${id}`,
       body
     );
   }

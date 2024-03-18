@@ -38,6 +38,8 @@ export class UrlConstants {
     environment.host + environment.context + '/lang/add';
   public static readonly URL_ADD_FILE =
     environment.host + environment.context + '/file/add';
+  public static readonly URL_ADD_FEEDBACK =
+    environment.host + environment.context + '/feedback/add';
   public static readonly URL_EDIT_DESCRIPTION =
     environment.host + environment.context + '/talent/update/description';
   public static readonly URL_EDIT_PROFILE_PICTURE =

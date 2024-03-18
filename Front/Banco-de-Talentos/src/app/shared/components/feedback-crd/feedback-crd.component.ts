@@ -56,8 +56,7 @@ export class FeedbackCrdComponent implements OnInit {
   onSveFeedBkForm() {
     if (!this.onSaveForm(this.feedBkForm || !this.selectedId)) return;
     if (this.idUser == null || this.selectedId == null) return;
-    //console.log(this.feedBkForm.value);
-    //console.log(this.idUser);
+
     const { feedback, rating } = this.feedBkForm.getRawValue();
     const body = {
       nuEstrellas: rating,
@@ -73,7 +72,7 @@ export class FeedbackCrdComponent implements OnInit {
         );
         this.talentId.emit(Number(resp.id));
         this.hideNewFeedbackDialog();
-      }
+      },
     });
   }
 

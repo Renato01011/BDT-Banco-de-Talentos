@@ -5,6 +5,11 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AddInfoService } from '../../service/addInfo/add-info.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { ResponsiveOpt } from '../../models/interfaces/responsiveOpt.interfaces';
+import {
+  responsiveForRecruiter,
+  responsiveForVisitor,
+} from 'src/app/core/global/constants/responsive.constants';
 
 @Component({
   selector: 'shared-certs-pers-crd',
@@ -26,12 +31,12 @@ export class CertsPersCrdComponent implements OnInit {
   public base64file?: string;
   public fileUploaded: boolean = false;
   public addFileDialog: boolean = false;
-
-  public responsiveOptions: any[] = [];
-
   public display: boolean = false;
-
   public pdfSrc: string = '';
+
+  public responsiveOptions: ResponsiveOpt[] = [];
+  public numVisible: number = 3;
+  public numScroll: number = 3;
 
   constructor(
     private fb: FormBuilder,
@@ -47,20 +52,8 @@ export class CertsPersCrdComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.responsiveOptions = [
-      {
-        breakpoint: '768px',
-        numVisible: 2,
-        numScroll: 2,
-      },
-
-      {
-        breakpoint: '560px',
-        numVisible: 1,
-        numScroll: 1,
-      },
-    ];
     this.isRecruiter = this.authService.isRecruiter;
+    this.generateResponsiveOpt();
   }
 
   public onFileUpload(event: any) {
@@ -175,5 +168,17 @@ export class CertsPersCrdComponent implements OnInit {
   private findCertsById(id: number): Document {
     const certs = this.documents.find((cert) => cert.idDocument === id)!;
     return certs;
+  }
+
+  private generateResponsiveOpt() {
+    if (this.isRecruiter) {
+      this.numScroll = 2;
+      this.numVisible = 2;
+      this.responsiveOptions = responsiveForRecruiter;
+    } else {
+      this.numScroll = 3;
+      this.numVisible = 3;
+      this.responsiveOptions = responsiveForVisitor;
+    }
   }
 }

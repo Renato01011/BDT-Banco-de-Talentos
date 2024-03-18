@@ -35,7 +35,10 @@
         </div>
       </div>
     </div>
-    <div class="w-7 sm:w-8 p-1 flex align-items-center justify-content-start">
+    <div
+      class="w-9 sm:w-8 p-1 flex align-items-center justify-content-start"
+      [ngClass]="{ 'w-7': isRecruiter }"
+    >
       <p-rating
         [(ngModel)]="item.starCount"
         [stars]="5"
@@ -43,10 +46,12 @@
         [readonly]="true"
       ></p-rating>
     </div>
-    <div class="w-2 py-1 flex align-items-center justify-content-center">
+    <div
+      class="w-2 py-1 flex align-items-center justify-content-center"
+      *ngIf="isRecruiter"
+    >
       <div
         class="flex align-items-center justify-content-center h-4rem border-round"
-        *ngIf="isRecruiter"
       >
         <button
           pButton

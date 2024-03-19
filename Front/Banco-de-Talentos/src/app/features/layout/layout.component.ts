@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -6,7 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-  constructor() {}
+  public username: string = '';
+  public name: string = '';
+  public isRecruiter: boolean = false;
 
-  ngOnInit(): void {}
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.username = this.authService.username;
+    this.name = this.authService.name;
+    this.isRecruiter = this.authService.isRecruiter;
+  }
 }

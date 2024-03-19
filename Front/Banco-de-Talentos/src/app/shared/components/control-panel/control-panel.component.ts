@@ -7,6 +7,8 @@ import {
   LanguageModel,
 } from '../../models/interfaces/master.interfaces';
 import { FilterRequest } from '../../models/interfaces/filterReq.interfaces';
+import { FilterService } from 'src/app/core/services/filter/filter.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 interface Favorite {
   name: string;
@@ -31,6 +33,8 @@ export class ControlPanelComponent implements OnInit {
   term: string = '';
   selectedFavorite: string[] = [];
 
+  public isRecruiter: boolean = false;
+
   public filterReq: FilterRequest = {
     habilities: '',
     languageIds: '',
@@ -41,12 +45,18 @@ export class ControlPanelComponent implements OnInit {
   @Output()
   public onFilterReqVal = new EventEmitter<FilterRequest>();
 
-  constructor(private router: Router, private masterService: MasterService) {}
+  constructor(
+    private router: Router,
+    private masterService: MasterService,
+    private filterService: FilterService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.checkTechSkills();
     this.checkLanguages();
     this.checkProficiency();
+    this.isRecruiter = this.authService.isRecruiter;
   }
 
   emitFilter() {
@@ -155,5 +165,9 @@ export class ControlPanelComponent implements OnInit {
 
   public get isFavoriteListEmpty(): boolean {
     return !this.favorites || this.favorites.length === 0;
+  }
+
+  public get totalMsg(): string {
+    return this.filterService.resultMsg;
   }
 }

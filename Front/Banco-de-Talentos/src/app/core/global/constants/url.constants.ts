@@ -1,6 +1,8 @@
 import { environment } from 'src/environments/environment';
 
 export class UrlConstants {
+  public static readonly URL_LOGIN_TOKEN =
+    environment.host + environment.context + '/auth/login';
   public static readonly URL_REQ_LANG =
     environment.host + environment.context + '/master/languages';
   public static readonly URL_REQ_ROLES =
@@ -36,6 +38,8 @@ export class UrlConstants {
     environment.host + environment.context + '/lang/add';
   public static readonly URL_ADD_FILE =
     environment.host + environment.context + '/file/add';
+  public static readonly URL_ADD_FEEDBACK =
+    environment.host + environment.context + '/feedback/add';
   public static readonly URL_EDIT_DESCRIPTION =
     environment.host + environment.context + '/talent/update/description';
   public static readonly URL_EDIT_PROFILE_PICTURE =
@@ -56,4 +60,6 @@ export class UrlConstants {
     environment.host + environment.context + '/work/delete';
   public static readonly URL_DELETE_LANG_EXP =
     environment.host + environment.context + '/lang/delete';
+  public static readonly URL_REQ_USER =
+    environment.host + environment.context + '/user/picture';
 }

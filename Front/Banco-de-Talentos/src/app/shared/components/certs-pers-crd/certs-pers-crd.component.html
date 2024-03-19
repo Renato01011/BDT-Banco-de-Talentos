@@ -1,11 +1,14 @@
 <div class="flex flex-wrap border-round m-1 sm:my-2 sm:mr-2 sm:ml-4">
-  <div class="w-12 sm:w-8 p-1 flex align-items-center justify-content-center">
+  <div
+    class="w-12 p-1 flex align-items-center justify-content-center"
+    [ngClass]="{ 'sm:w-8': isRecruiter }"
+  >
     <p-carousel
       [value]="documents"
-      [numVisible]="2"
-      [numScroll]="2"
       [circular]="true"
       [showIndicators]="false"
+      [numVisible]="numVisible"
+      [numScroll]="numScroll"
       [responsiveOptions]="responsiveOptions"
       class="w-full"
     >
@@ -47,7 +50,11 @@
       </ng-template>
     </p-carousel>
   </div>
-  <div class="w-12 sm:w-4 py-1 flex align-items-center justify-content-center">
+
+  <div
+    class="w-12 sm:w-4 py-1 flex align-items-center justify-content-center"
+    *ngIf="isRecruiter"
+  >
     <button
       pButton
       class="p-button-outlined border-transparent h-8rem w-10 surface-50 hover:surface-200 flex flex-column"
@@ -55,8 +62,8 @@
     >
       <i class="pi pi-cloud-upload px-2 pt-3 text-2xl text-bluegray-400"></i>
       <span
-        class="px-3 pt-4 flex align-items-center justify-content-center font-semibold border-round"
         style="color: #0b85c3"
+        class="px-3 pt-4 flex align-items-center justify-content-center font-semibold border-round"
         >Sube un archivo</span
       >
     </button>

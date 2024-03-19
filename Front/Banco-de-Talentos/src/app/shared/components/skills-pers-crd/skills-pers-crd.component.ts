@@ -7,6 +7,7 @@ import {
   TechnicalAbility,
 } from '../../models/interfaces/talentResp.interfaces';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 const yearExpRegEx = '^(?:\\d+(?:\\.(?:[0-9]|1[0-1]))?)$';
 const justLettersRegEx = '^[a-zA-ZÁáÉéÍíÓóÚúÜü\\s]+$';
@@ -27,6 +28,8 @@ export class SkillsPersCrdComponent implements OnInit {
   @Output()
   public talentId = new EventEmitter<number>();
 
+  public isRecruiter: boolean = false;
+
   inlineTechnicalSkills: { name: string }[] = [];
 
   technicalSkillsDialog: boolean = false;
@@ -36,7 +39,8 @@ export class SkillsPersCrdComponent implements OnInit {
     private fb: FormBuilder,
     private fValidator: FrmValService,
     private addInfoService: AddInfoService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private authService: AuthService
   ) {}
 
   public techSkForm: FormGroup = this.fb.group({
@@ -55,7 +59,9 @@ export class SkillsPersCrdComponent implements OnInit {
     ],
   });
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isRecruiter = this.authService.isRecruiter;
+  }
 
   private onSaveForm(form: FormGroup): boolean {
     if (form.invalid) {

@@ -1,8 +1,13 @@
 // :host ::ng-deep .p-dialog .p-dialog-header {
 //   padding-bottom: 0.75rem;
 // }
+@import "_variables";
+
 .heart-icon {
-  color: #c11574;
+  color: var(--bdt-strong-pink);
+}
+.heart-icon:hover {
+  color: var(--bdt-bright-pink);
 }
 :host ::ng-deep {
   .p-inputNumber input {

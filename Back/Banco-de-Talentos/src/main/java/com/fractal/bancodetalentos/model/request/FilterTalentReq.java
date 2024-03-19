@@ -25,4 +25,7 @@ public class FilterTalentReq {
     @NotNull(message = "Este campo no puede ser nulo")
     private String nameJobTitle;
 
+    @NotNull(message = "Este campo no puede ser nulo")
+    private String userListIds;
+
 }

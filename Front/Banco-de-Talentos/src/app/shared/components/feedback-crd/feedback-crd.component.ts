@@ -4,6 +4,7 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { AddInfoService } from '../../service/addInfo/add-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { Feedbacks } from '../../models/interfaces/talentResp.interfaces';
 
 @Component({
   selector: 'shared-feedback-crd',
@@ -16,6 +17,9 @@ export class FeedbackCrdComponent implements OnInit {
 
   @Output()
   public talentId = new EventEmitter<number>();
+
+  @Input()
+  public feedbacks: Feedbacks[] = [];
 
   public rating: number = 0;
   public newFeedbackDialog: boolean = false;

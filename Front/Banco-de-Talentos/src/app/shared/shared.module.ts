@@ -17,6 +17,7 @@ import { PipesModule } from '../core/pipes/pipes.module';
 
 import { ConfirmationService } from 'primeng/api';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NoResultsComponent } from './components/no-results/no-results.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     EducPersCrdComponent,
     LangPersCrdComponent,
     FeedbackCrdComponent,
+    NoResultsComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +54,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     EducPersCrdComponent,
     LangPersCrdComponent,
     FeedbackCrdComponent,
+    NoResultsComponent,
   ],
   providers: [ConfirmationService],
 })

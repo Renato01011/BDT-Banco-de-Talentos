@@ -2,7 +2,10 @@
   (onFilterReqVal)="filterTalent($event)"
 ></shared-control-panel>
 
-<div class="bg-white py-0 px-2 lg:px-4 xl:px-7 shadow-none content">
+<div
+  class="bg-white py-0 px-2 lg:px-4 xl:px-7 shadow-none content"
+  *ngIf="isListEmpty"
+>
   <div class="flex flex-wrap border-round w-full">
     <div
       class="content w-12 sm:w-4 font-bold py-1 px-2 flex justify-content-center"
@@ -21,7 +24,6 @@
     </div>
     <div
       class="content bg-white w-12 sm:w-8 font-bold p-2 flex justify-content-center sm:justify-content-start"
-      *ngIf="isListEmpty"
     >
       <div
         class="w-full shadow-8 md:shadow-4 text-center border-round-lg surface-overlay overflow-hidden"
@@ -65,9 +67,15 @@
             [selectedId]="selId"
             (talentId)="saveChanges($event)"
           ></shared-lang-pers-crd>
-          <shared-feedback-crd [selectedId]="selId"></shared-feedback-crd>
+          <shared-feedback-crd
+            [feedbacks]="feedbacks"
+            [selectedId]="selId"
+            (talentId)="saveChanges($event)"
+          ></shared-feedback-crd>
         </p-scrollPanel>
       </div>
     </div>
   </div>
 </div>
+
+<shared-no-results *ngIf="!isListEmpty"></shared-no-results>

@@ -9,6 +9,11 @@ import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 
+interface Favorite {
+  name: string;
+  code: string;
+}
+
 const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
 const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
 
@@ -27,6 +32,8 @@ export class ProfPersCrdComponent implements OnInit {
 
   public resume: MenuItem[] = [];
   public coins: CurrenciesModel[] = [];
+
+  favorites: Favorite[] = [];
 
   public isRecruiter: boolean = false;
 
@@ -74,6 +81,13 @@ export class ProfPersCrdComponent implements OnInit {
     this.resume = [{ label: 'CV' }, { label: 'CV Fractal' }];
     this.checkCurrencies();
     this.isRecruiter = this.authService.isRecruiter;
+    this.favorites = [
+      { name: 'favorite 1', code: 'fv1' },
+      { name: 'favorite 2', code: 'fv2' },
+      { name: 'favorite 3', code: 'fv3' },
+      { name: 'favorite 4', code: 'fv4' },
+      { name: 'favorite 5', code: 'fv5' },
+    ];
   }
 
   private onSaveForm(form: FormGroup): boolean {

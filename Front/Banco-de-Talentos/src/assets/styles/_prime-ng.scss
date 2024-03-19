@@ -25,3 +25,9 @@ $xl: 1620px;
     "cursor-pointer bg-white hover:bg-gray-50 text-500 hover:text-800 flex align-items-center justify-content-center w-2rem h-2rem border-none border-circle shadow-2 hover:shadow-5 transition-colors transition-duration-150"
   );
 }
+
+.pink-icon-btn {
+  @include styleclass(
+    "flex align-items-center justify-content-center cursor-pointer border-none surface-section hover:bg-white-alpha-10 border-circle w-2rem h-2rem hover:shadow-2 transition-colors transition-duration-150"
+  );
+}

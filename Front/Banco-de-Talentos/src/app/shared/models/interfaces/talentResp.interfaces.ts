@@ -21,7 +21,7 @@ export interface TalentResponse {
   documents: Document[];
   miscData: MiscDatum[];
   languageLevels: LanguageLevel[];
-  feedbacks: any[];
+  feedbacks: Feedbacks[];
 }
 
 export interface Document {
@@ -77,4 +77,13 @@ export interface WorkExperience {
   jobTitle: string;
   intialDate: string;
   finalDate: string;
+}
+
+export interface Feedbacks {
+  idFeedback: number;
+  starCount: number;
+  description: string;
+  idUserFrom: number;
+  userFromName: string;
+  userFromPhoto: string;
 }

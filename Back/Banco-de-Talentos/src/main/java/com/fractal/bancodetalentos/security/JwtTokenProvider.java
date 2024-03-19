@@ -37,7 +37,7 @@ public class JwtTokenProvider {
                 .setExpiration(fechaExpiracion)
                 .claim("id", usuario.getIdUsuario())
                 .claim("roles", authentication.getAuthorities())
-                .claim("name", usuario.getNoNombre() + ' ' + usuario.getApApellidoPaterno())
+                .claim("name", usuario.getNoNombre() + ' ' + usuario.getApApellidoPaterno() + ' ' + usuario.getApApellidoMaterno())
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 
         return token;

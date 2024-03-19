@@ -13,6 +13,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 import {
   Document,
   EducationalExperience,
+  Feedbacks,
   LanguageLevel,
   SoftSkill,
   TalentResponse,
@@ -47,6 +48,7 @@ export class ListComponent implements OnInit {
   public softSkills: SoftSkill[] = [];
   public techSkills: TechnicalAbility[] = [];
   public workExp: WorkExperience[] = [];
+  public feedbacks: Feedbacks[] = [];
 
   constructor(
     private filterService: FilterService,
@@ -77,7 +79,6 @@ export class ListComponent implements OnInit {
         this.talents = talents;
         this.firstCall();
         this.loaderService.hideLoader();
-        this.showMsgForRecruiter(talents);
       },
     });
   }
@@ -94,6 +95,7 @@ export class ListComponent implements OnInit {
         tap((talent) => (this.techSkills = talent.technicalAbilities)),
         tap((talent) => (this.workExp = talent.workExperiences)),
         tap((talent) => (this.description = talent.description)),
+        tap((talent) => (this.feedbacks = talent.feedbacks)),
         tap((talent) => this.newTalent(talent))
       )
       .subscribe({
@@ -153,22 +155,5 @@ export class ListComponent implements OnInit {
 
   public get isListEmpty(): boolean {
     return this.talents.length !== 0;
-  }
-
-  private totalTalents(talents: FilterResponse[]): void {
-    const total = talents.length;
-    if (total === 0) {
-      this.toastService.addProperties(
-        'info',
-        'Info',
-        `¡Hemos encontrado ${total} resultados para tu búsqueda!`
-      );
-    }
-  }
-
-  private showMsgForRecruiter(talents: FilterResponse[]) {
-    if (this.isRecruiter) {
-      this.totalTalents(talents);
-    }
   }
 }

@@ -390,6 +390,9 @@ public class TalentoServiceImpl implements TalentoService {
             feedback.setIdFeedback((Integer) objects[0]);
             feedback.setStarCount((Integer) objects[1]);
             feedback.setDescription((String) objects[2]);
+            feedback.setIdUserFrom((Integer) objects[3]);
+            feedback.setUserFromName((String) objects[4]);
+            feedback.setUserFromPhoto((byte[]) objects[5]);
             feedbackList.add(feedback);
         }
         talentResp.setFeedbacks(feedbackList);

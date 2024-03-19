@@ -22,13 +22,36 @@
       <div
         class="border-round flex align-items-center sm:justify-content-start justify-content-between"
       >
-        <span class="font-semibold text-sm sm:text-base text-800"
+        <span class="font-semibold text-sm sm:text-base text-800 mr-2"
           >{{ customTalent?.name }} {{ customTalent?.surname }}
           {{ customTalent?.secondSurname }}
         </span>
-        <span class="cursor-pointer mx-2 heart-icon">
+        <p-overlayPanel #fav [style]="{ width: '300px' }">
+          <ng-template pTemplate>
+            <div class="field">
+              <input
+                type="text"
+                pInputText
+                placeholder="Selecciona o crea un nuevo talento"
+                class="p-inputtext-sm w-full"
+              />
+            </div>
+            <p-scrollPanel [style]="{ width: '100%', height: '200px' }">
+              <p-listbox
+                [options]="favorites"
+                optionLabel="name"
+                styleClass="border-none"
+              ></p-listbox>
+            </p-scrollPanel>
+          </ng-template>
+        </p-overlayPanel>
+        <button
+          type="button"
+          class="pink-icon-btn heart-icon"
+          (click)="fav.toggle($event)"
+        >
           <i class="pi pi-heart"></i>
-        </span>
+        </button>
       </div>
       <div class="flex flex-wrap">
         <div

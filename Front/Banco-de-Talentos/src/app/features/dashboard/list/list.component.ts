@@ -157,13 +157,7 @@ export class ListComponent implements OnInit {
 
   private totalTalents(talents: FilterResponse[]): void {
     const total = talents.length;
-    if (total === 1) {
-      this.toastService.addProperties(
-        'info',
-        'Info',
-        `¡Hemos encontrado un resultado para tu búsqueda!`
-      );
-    } else {
+    if (total === 0) {
       this.toastService.addProperties(
         'info',
         'Info',

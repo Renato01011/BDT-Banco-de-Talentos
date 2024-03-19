@@ -1,6 +1,7 @@
 package com.fractal.bancodetalentos.security;
 
 import com.fractal.bancodetalentos.exception.JwtSignatureException;
+import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.dto.TmUsuarioDTO;
 import com.fractal.bancodetalentos.service.MasterUsuarioService;
 import io.jsonwebtoken.*;
@@ -29,7 +30,7 @@ public class JwtTokenProvider {
         String username = authentication.getName();
         Date fechaActual = new Date();
         Date fechaExpiracion = new Date(fechaActual.getTime() + jwtExpirationInMs);
-        TmUsuarioDTO usuario = usuarioService.findByUsername(authentication.getName());
+        TmUsuarioDTO usuario = usuarioService.findByUsername(authentication.getName()).orElseThrow(()-> new ResourceNotFoundException(username));
 
         String token = Jwts.builder()
                 .setSubject(username)

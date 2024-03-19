@@ -25,9 +25,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        TmUsuarioDTO usuarioDTO = usuarioService.findByUsername(username);
-                /*.orElseThrow(() -> new UsernameNotFoundException("USER NOT FOUND")
-        );*/
+        TmUsuarioDTO usuarioDTO = usuarioService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("USER NOT FOUND")
+        );
         return new User(usuarioDTO.getUsUsuario(), usuarioDTO.getPwPassword(), mapRoles(usuarioDTO.getRoles()));
     }
 

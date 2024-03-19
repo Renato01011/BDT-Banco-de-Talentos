@@ -25,10 +25,12 @@ public class FilterServiceImpl implements FilterService {
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
                 .setParameter(1, filterTalentReq.getHabilities())
                 .setParameter(2, filterTalentReq.getLanguageIds())
                 .setParameter(3, filterTalentReq.getLevelIds())
-                .setParameter(4, filterTalentReq.getNameJobTitle());
+                .setParameter(4, filterTalentReq.getNameJobTitle())
+                .setParameter(5, filterTalentReq.getUserListIds());
         storedProcedureQueryFilterTalent.execute();
         List<Object[]> result = storedProcedureQueryFilterTalent.getResultList();
         List<FilterTalentoResp> respList = new ArrayList<>();

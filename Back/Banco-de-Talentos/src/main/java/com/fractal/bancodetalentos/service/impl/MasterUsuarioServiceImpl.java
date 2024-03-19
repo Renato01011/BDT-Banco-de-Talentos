@@ -30,7 +30,7 @@ public class MasterUsuarioServiceImpl implements MasterUsuarioService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public TmUsuarioDTO findByUsername(String username) {
+    public Optional<TmUsuarioDTO> findByUsername(String username) {
         Boolean existsUser = existsByUsername(username);
         if (Boolean.FALSE.equals(existsUser)) {
             throw new ResourceNotFoundException(username);
@@ -74,7 +74,7 @@ public class MasterUsuarioServiceImpl implements MasterUsuarioService {
         }
         usuarioDTO.setRoles(rolDTOList);
 
-        return usuarioDTO;
+        return Optional.of(usuarioDTO);
     }
 
     @Override

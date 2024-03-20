@@ -5,4 +5,5 @@ export interface FilterRequest {
   languageIds: string;
   levelIds: string;
   nameJobTitle: string;
+  userListIds: string;
 }

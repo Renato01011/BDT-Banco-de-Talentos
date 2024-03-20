@@ -62,4 +62,8 @@ export class UrlConstants {
     environment.host + environment.context + '/lang/delete';
   public static readonly URL_REQ_USER =
     environment.host + environment.context + '/user/picture';
+  public static readonly URL_ADD_LIST_USER = 
+    environment.host + environment.context + '/list/new';
+  public static readonly URL_GET_LISTS_USER = 
+    environment.host + environment.context + '/list';
 }

@@ -3,6 +3,7 @@ package com.fractal.bancodetalentos.service.impl;
 import com.fractal.bancodetalentos.exception.DuplicatedDataException;
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.entity.BtTxListaUsuarioTalento;
+import com.fractal.bancodetalentos.model.request.NewUserListTalentReq;
 import com.fractal.bancodetalentos.model.response.GeneralResp;
 import com.fractal.bancodetalentos.service.ListaUsuarioTalentoService;
 import lombok.RequiredArgsConstructor;
@@ -21,16 +22,16 @@ public class ListaUsuarioTalentoServiceImpl implements ListaUsuarioTalentoServic
     private final EntityManager entityManager;
 
     @Override
-    public GeneralResp addNewTalentToList(Integer listId, Integer talentId) {
+    public GeneralResp addNewTalentToList(Integer listId, NewUserListTalentReq newUserListTalentReq) {
         StoredProcedureQuery storedProcedureQueryCheckTalent = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
-                .setParameter(1, talentId);
+                .setParameter(1, newUserListTalentReq.getTalentId());
         storedProcedureQueryCheckTalent.execute();
         Integer talentExists = (Integer) storedProcedureQueryCheckTalent.getOutputParameterValue(2);
 
         if (talentExists == 0) {
-            throw new ResourceNotFoundException("Talent", "id", talentId);
+            throw new ResourceNotFoundException("Talent", "id", newUserListTalentReq.getTalentId());
         }
 
         StoredProcedureQuery storedProcedureQueryCheckListUserId = entityManager.createStoredProcedureQuery("SP_CHECK_LIST_USER_ID")
@@ -49,12 +50,12 @@ public class ListaUsuarioTalentoServiceImpl implements ListaUsuarioTalentoServic
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, Integer.class, ParameterMode.OUT)
                 .setParameter(1, listId)
-                .setParameter(2, talentId);
+                .setParameter(2, newUserListTalentReq.getTalentId());
         storedProcedureQueryCheckListUserTalentId.execute();
         Integer listUserTalentExists = (Integer) storedProcedureQueryCheckListUserTalentId.getOutputParameterValue(3);
 
         if (listUserTalentExists != 0) {
-            throw new DuplicatedDataException(talentId.toString(), listId.toString());
+            throw new DuplicatedDataException(newUserListTalentReq.getTalentId().toString(), listId.toString());
         }
 
         StoredProcedureQuery storedProcedureQuery = entityManager
@@ -62,7 +63,7 @@ public class ListaUsuarioTalentoServiceImpl implements ListaUsuarioTalentoServic
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
                 .setParameter(1, listId)
-                .setParameter(2, talentId);
+                .setParameter(2, newUserListTalentReq.getTalentId());
         storedProcedureQuery.execute();
 
         GeneralResp temp = new GeneralResp();

@@ -34,6 +34,7 @@ export class ListComponent implements OnInit {
     languageIds: '',
     levelIds: '',
     nameJobTitle: '',
+    userListIds: '',
   };
 
   public selId?: number;

@@ -30,9 +30,9 @@ public class TalentoController {
         return new ResponseEntity<>(newTalentResp, HttpStatus.CREATED);
     }
 
-    @GetMapping("/get-talent/{id}")
-    public ResponseEntity<TalentResp> getTalent(@PathVariable Integer id) {
-        TalentResp talentResp = talentoService.getTalent(id);
+    @PostMapping("/get-talent/{id}")
+    public ResponseEntity<TalentResp> getTalent(@PathVariable Integer id, @Valid @RequestBody GetTalentReq getTalentReq) {
+        TalentResp talentResp = talentoService.getTalent(id, getTalentReq);
         if (talentResp == null) {
             throw new ResourceNotFoundException("Talent", "id", id);
         }

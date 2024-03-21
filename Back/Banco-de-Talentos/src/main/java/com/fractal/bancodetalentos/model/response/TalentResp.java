@@ -36,4 +36,5 @@ public class TalentResp {
     private List<DocumentResp> documents;
     private List<MasterTalentResp> miscData;
     private List<FeedbackResp> feedbacks;
+    private UserListTalentResp userListTalent;
 }

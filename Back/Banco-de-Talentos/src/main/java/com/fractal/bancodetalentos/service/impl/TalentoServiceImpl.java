@@ -200,7 +200,18 @@ public class TalentoServiceImpl implements TalentoService {
     }
 
     @Override
-    public TalentResp getTalent(Integer id) {
+    public TalentResp getTalent(Integer id, GetTalentReq getTalentReq) {
+        StoredProcedureQuery storedProcedureQueryCheckUser = entityManager.createStoredProcedureQuery("SP_CHECK_USER_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, getTalentReq.getUserId());
+        storedProcedureQueryCheckUser.execute();
+        Integer exists = (Integer) storedProcedureQueryCheckUser.getOutputParameterValue(2);
+
+        if (exists == 0) {
+            throw new ResourceNotFoundException("User", "id", getTalentReq.getUserId());
+        }
+
         // -- General Info --
         StoredProcedureQuery storedProcedureQuery = entityManager
                 .createStoredProcedureQuery("SP_GET_TALENT")
@@ -272,6 +283,16 @@ public class TalentoServiceImpl implements TalentoService {
                 .setParameter(1, id);
         storedProcedureQueryFeedbacks.execute();
         List<Object[]> feedbacks = storedProcedureQueryFeedbacks.getResultList();
+
+        // -- User Lists --
+        StoredProcedureQuery storedProcedureQueryUserList = entityManager
+                .createStoredProcedureQuery("SP_GET_TALENT_USER_LIST")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
+                .setParameter(1, id)
+                .setParameter(2, getTalentReq.getUserId());
+        storedProcedureQueryUserList.execute();
+        List<Object[]> userListTalent = storedProcedureQueryUserList.getResultList();
 
         // -- -- Filling Response -- --
         TalentResp talentResp = new TalentResp();
@@ -396,6 +417,21 @@ public class TalentoServiceImpl implements TalentoService {
             feedbackList.add(feedback);
         }
         talentResp.setFeedbacks(feedbackList);
+
+        // -- User Lists --
+        if (!userListTalent.isEmpty()) {
+            UserListTalentResp userListTalentResp = new UserListTalentResp();
+            for (Object[] objects: userListTalent) {
+                userListTalentResp.setIdListUser((Integer) objects[0]);
+                userListTalentResp.setListName((String) objects[1]);
+                userListTalentResp.setCreated((Date) objects[2]);
+                userListTalentResp.setIdListUserTalent((Integer) objects[3]);
+            }
+            talentResp.setUserListTalent(userListTalentResp);
+        }
+        else {
+            talentResp.setUserListTalent(null);
+        }
 
         return talentResp;
     }

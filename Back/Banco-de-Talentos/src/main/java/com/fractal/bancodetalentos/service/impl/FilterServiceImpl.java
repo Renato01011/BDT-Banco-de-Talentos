@@ -1,5 +1,6 @@
 package com.fractal.bancodetalentos.service.impl;
 
+import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.request.FilterTalentReq;
 import com.fractal.bancodetalentos.model.response.FilterTalentoResp;
 import com.fractal.bancodetalentos.service.FilterService;
@@ -19,18 +20,31 @@ public class FilterServiceImpl implements FilterService {
 
     @Override
     public List<FilterTalentoResp> filterTalents(FilterTalentReq filterTalentReq) {
+        StoredProcedureQuery storedProcedureQueryCheckUser = entityManager.createStoredProcedureQuery("SP_CHECK_USER_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, filterTalentReq.getUserId());
+        storedProcedureQueryCheckUser.execute();
+        Integer exists = (Integer) storedProcedureQueryCheckUser.getOutputParameterValue(2);
+
+        if (exists == 0) {
+            throw new ResourceNotFoundException("User", "id", filterTalentReq.getUserId());
+        }
+
         StoredProcedureQuery storedProcedureQueryFilterTalent = entityManager
                 .createStoredProcedureQuery("SP_FILTER_TALENT")
-                .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
-                .setParameter(1, filterTalentReq.getHabilities())
-                .setParameter(2, filterTalentReq.getLanguageIds())
-                .setParameter(3, filterTalentReq.getLevelIds())
-                .setParameter(4, filterTalentReq.getNameJobTitle())
-                .setParameter(5, filterTalentReq.getUserListIds());
+                .registerStoredProcedureParameter(6, String.class, ParameterMode.IN)
+                .setParameter(1, filterTalentReq.getUserId())
+                .setParameter(2, filterTalentReq.getHabilities())
+                .setParameter(3, filterTalentReq.getLanguageIds())
+                .setParameter(4, filterTalentReq.getLevelIds())
+                .setParameter(5, filterTalentReq.getNameJobTitle())
+                .setParameter(6, filterTalentReq.getUserListIds());
         storedProcedureQueryFilterTalent.execute();
         List<Object[]> result = storedProcedureQueryFilterTalent.getResultList();
         List<FilterTalentoResp> respList = new ArrayList<>();
@@ -43,6 +57,7 @@ public class FilterServiceImpl implements FilterService {
             filterTalentResp.setFinalSalary((Integer) objects[4]);
             filterTalentResp.setLocation((String) objects[5]);
             filterTalentResp.setAvgRating((Integer) objects[6]);
+            filterTalentResp.setInUserList((Integer) objects[7]);
             respList.add(filterTalentResp);
         }
         return respList;

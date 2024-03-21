@@ -26,7 +26,11 @@
           >{{ customTalent?.name }} {{ customTalent?.surname }}
           {{ customTalent?.secondSurname }}
         </span>
-        <p-overlayPanel #fav [style]="{ width: '300px' }">
+        <p-overlayPanel
+          #fav
+          [style]="{ width: '300px', zIndex: '99' }"
+          [autoZIndex]="false"
+        >
           <ng-template pTemplate>
             <div class="field">
               <input
@@ -34,21 +38,71 @@
                 pInputText
                 placeholder="Selecciona o crea un nuevo talento"
                 class="p-inputtext-sm w-full"
+                #txtSearch
+                (keyup)="onSearchFavorites(txtSearch.value)"
               />
             </div>
-            <p-scrollPanel [style]="{ width: '100%', height: '200px' }">
-              <p-listbox
-                [options]="favorites"
-                optionLabel="name"
-                styleClass="border-none"
-              ></p-listbox>
+            <p-scrollPanel
+              [style]="{ width: '100%', height: 'auto', maxHeight: '170px' }"
+              *ngIf="(favorites | searchFilter : search).length !== 0"
+            >
+              <button
+                *ngFor="let item of favorites | searchFilter : search"
+                class="flex align-items-center justify-content-center cursor-pointer h-3rem w-full mb-1 border-none border-round-md bg-white hover:surface-hover"
+                [ngClass]="{
+                  'border-primary border-2 bg-indigo-50':
+                    item.idListUser == selectedValue
+                }"
+                (click)="
+                  onSelectedFavorite(
+                    item.idListUser,
+                    item.listName,
+                    customTalent!.name
+                  )
+                "
+              >
+                <div
+                  class="w-full flex align-items-center justify-content-start"
+                >
+                  <label [for]="item.listName" class="ml-1 text-base">{{
+                    item.listName
+                  }}</label>
+                </div>
+                <div
+                  class="w-full flex align-items-center justify-content-end mr-1"
+                >
+                  <p-radioButton
+                    [inputId]="item.listName"
+                    name="fav"
+                    [value]="item.idListUser"
+                    [(ngModel)]="selectedValue"
+                  ></p-radioButton>
+                </div>
+              </button>
             </p-scrollPanel>
+            <div
+              class="w-12 p-2 pr-0 flex align-items-center justify-content-center"
+              *ngIf="(favorites | searchFilter : search).length === 0"
+            >
+              <button
+                pButton
+                pRipple
+                label="Crear Favorito"
+                icon="pi pi-check"
+                type="button"
+                class="p-button-success w-full"
+                [disabled]="search.length === 0"
+                (click)="
+                  onCreateNewFavorite(txtSearch.value, customTalent!.name)
+                "
+              ></button>
+            </div>
           </ng-template>
         </p-overlayPanel>
         <button
           type="button"
           class="pink-icon-btn heart-icon"
-          (click)="fav.toggle($event)"
+          (click)="onOpenOverlayPanel($event)"
         >
           <i class="pi pi-heart"></i>
         </button>

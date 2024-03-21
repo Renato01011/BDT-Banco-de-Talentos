@@ -423,23 +423,3 @@
     </form>
   </div>
 </p-dialog>
-
-<p-confirmDialog #exp>
-  <ng-template pTemplate="footer">
-    <button
-      type="button"
-      pButton
-      icon="pi pi-times"
-      label="No"
-      class="p-button-outlined p-button-secondary"
-      (click)="exp.reject()"
-    ></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-check"
-      label="Yes"
-      (click)="exp.accept()"
-    ></button>
-  </ng-template>
-</p-confirmDialog>

@@ -9,11 +9,8 @@ import {
 import { FilterRequest } from '../../models/interfaces/filterReq.interfaces';
 import { FilterService } from 'src/app/core/services/filter/filter.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-
-interface Favorite {
-  name: string;
-  code: string;
-}
+import { UserList } from '../../models/interfaces/userList.interfaces';
+import { UserService } from '../../service/user/user.service';
 
 @Component({
   selector: 'shared-control-panel',
@@ -25,13 +22,14 @@ export class ControlPanelComponent implements OnInit {
   language: LanguageModel[] = [];
   proficiency: LangProficiencyModel[] = [];
 
-  favorites: Favorite[] = [];
+  favorites: UserList[] = [];
 
   selectedTechSks: string[] = [];
   selectedIdLanguage: string = '';
   selectedIdProficiency: string = '';
   term: string = '';
-  selectedFavorite: string[] = [];
+  selectedIdFavorite: string = '';
+  public idUser?: number;
 
   public isRecruiter: boolean = false;
 
@@ -40,6 +38,7 @@ export class ControlPanelComponent implements OnInit {
     languageIds: '',
     levelIds: '',
     nameJobTitle: '',
+    userListIds: '',
   };
 
   @Output()
@@ -49,7 +48,8 @@ export class ControlPanelComponent implements OnInit {
     private router: Router,
     private masterService: MasterService,
     private filterService: FilterService,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +57,8 @@ export class ControlPanelComponent implements OnInit {
     this.checkLanguages();
     this.checkProficiency();
     this.isRecruiter = this.authService.isRecruiter;
+    this.idUser = this.authService.idUser;
+    this.getFavorites(this.idUser);
   }
 
   emitFilter() {
@@ -66,6 +68,7 @@ export class ControlPanelComponent implements OnInit {
       `${this.selectedIdProficiency}` === '' ? '' : '2';
     this.filterReq.levelIds = `${this.selectedIdProficiency}`;
     this.filterReq.nameJobTitle = this.term;
+    this.filterReq.userListIds = this.selectedIdFavorite;
     this.onFilterReqVal.emit(this.filterReq);
     this.resetFilterField();
   }
@@ -73,6 +76,7 @@ export class ControlPanelComponent implements OnInit {
   private resetFilterField() {
     this.selectedIdLanguage = '';
     this.selectedIdProficiency = '';
+    this.selectedIdFavorite = '';
   }
 
   onNewTalent() {
@@ -99,6 +103,14 @@ export class ControlPanelComponent implements OnInit {
     this.masterService.getLangProficiency().subscribe({
       next: (proficiency) => {
         this.proficiency = proficiency;
+      },
+    });
+  }
+
+  private getFavorites(userId: number) {
+    this.userService.getUserLists(userId).subscribe({
+      next: (favorites) => {
+        this.favorites = favorites;
       },
     });
   }

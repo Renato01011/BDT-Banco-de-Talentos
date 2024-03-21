@@ -15,5 +15,5 @@ public class UserListTalentResp {
     private Integer idListUser;
     private String listName;
     private Date created;
-    private Integer  ;
+    private Integer idListUserTalent;
 }

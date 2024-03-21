@@ -34,6 +34,7 @@ export class ControlPanelComponent implements OnInit {
   public isRecruiter: boolean = false;
 
   public filterReq: FilterRequest = {
+    userId: this.authService.idUser,
     habilities: '',
     languageIds: '',
     levelIds: '',

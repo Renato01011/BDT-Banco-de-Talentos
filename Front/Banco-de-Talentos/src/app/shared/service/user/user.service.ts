@@ -10,6 +10,8 @@ import { UserList } from '../../models/interfaces/userList.interfaces';
   providedIn: 'root',
 })
 export class UserService {
+  private favorites: UserList[] = [];
+  
   constructor(private httpClient: HttpClient) {}
 
   getPicture(username: string): Observable<Picture> {
@@ -45,6 +47,10 @@ export class UserService {
       `${UrlConstants.URL_EDIT_LIST_USER_TALENT}/${idListUserTalent}`,
       body
     );
+  }
+
+  public get favoritesList(): UserList[] {
+    return this.favorites;
   }
 
 }

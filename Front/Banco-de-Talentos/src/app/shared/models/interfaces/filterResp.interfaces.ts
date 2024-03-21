@@ -8,4 +8,5 @@ export interface FilterResponse {
   finalSalary: number;
   location: string;
   avgRating: number;
+  inUserList: number;
 }

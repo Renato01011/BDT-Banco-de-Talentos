@@ -30,6 +30,7 @@ export class ListComponent implements OnInit {
   public isRecruiter: boolean = false;
 
   public filterReq: FilterRequest = {
+    userId: this.authService.idUser,
     habilities: '',
     languageIds: '',
     levelIds: '',
@@ -87,7 +88,7 @@ export class ListComponent implements OnInit {
   public searchByTalentId(id: number): void {
     this.loaderService.showLoader();
     this.talentService
-      .getTalentById(id)
+      .getTalentById(id, this.authService.idUser)
       .pipe(
         tap((talent) => (this.documents = talent.documents)),
         tap((talent) => (this.educExp = talent.educationalExperiences)),

@@ -27,9 +27,11 @@ export class TalentService {
     );
   }
 
-  getTalentById(id: number): Observable<TalentResponse> {
-    return this.httpClient.get<TalentResponse>(
-      `${UrlConstants.URL_REQ_SRCH_BY_ID}/${id}`
+  getTalentById(id: number, userId: number): Observable<TalentResponse> {
+    const body = { userId: userId };
+    return this.httpClient.post<TalentResponse>(
+      `${UrlConstants.URL_REQ_SRCH_BY_ID}/${id}`,
+      body
     );
   }
 }

@@ -4,6 +4,7 @@ import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.entity.BtTmListaUsuario;
 import com.fractal.bancodetalentos.model.request.NewUserListReq;
 import com.fractal.bancodetalentos.model.response.GeneralResp;
+import com.fractal.bancodetalentos.model.response.NewUserListResp;
 import com.fractal.bancodetalentos.model.response.UserListResp;
 import com.fractal.bancodetalentos.service.ListaUsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class ListaUsuarioServiceImpl implements ListaUsuarioService {
     private final EntityManager entityManager;
 
     @Override
-    public GeneralResp addNewUserList(Integer id, NewUserListReq newUserListReq) {
+    public NewUserListResp addNewUserList(Integer id, NewUserListReq newUserListReq) {
         StoredProcedureQuery storedProcedureQueryCheckUser = entityManager.createStoredProcedureQuery("SP_CHECK_USER_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
@@ -41,14 +42,17 @@ public class ListaUsuarioServiceImpl implements ListaUsuarioService {
                 .createStoredProcedureQuery("SP_ADD_USER_LIST")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(3, Integer.class, ParameterMode.OUT)
                 .setParameter(1, id)
                 .setParameter(2, newUserListReq.getListName());
         storedProcedureQuery.execute();
+        Integer newListId = (Integer) storedProcedureQuery.getOutputParameterValue(3);
 
-        GeneralResp temp = new GeneralResp();
-        temp.setCode(200);
-        temp.setMessage("Correctly Added");
-        return temp;
+        NewUserListResp resp = new NewUserListResp();
+        resp.setCode(200);
+        resp.setMessage("Correctly Added");
+        resp.setIdUserList(newListId);
+        return resp;
     }
 
     @Override

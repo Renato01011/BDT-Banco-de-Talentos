@@ -4,6 +4,7 @@ import { ExtractFullNamePipe } from './extract-full-name.pipe';
 import { ExtractJobPositionPipe } from './extract-job-position.pipe';
 import { Base64ToImagePipe } from './base64-to-image.pipe';
 import { ExtractYearPipe } from './extract-year.pipe';
+import { SearchFilterPipe } from './search-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { ExtractYearPipe } from './extract-year.pipe';
     ExtractJobPositionPipe,
     Base64ToImagePipe,
     ExtractYearPipe,
+    SearchFilterPipe,
   ],
   imports: [CommonModule],
   exports: [
@@ -18,6 +20,7 @@ import { ExtractYearPipe } from './extract-year.pipe';
     ExtractJobPositionPipe,
     Base64ToImagePipe,
     ExtractYearPipe,
+    SearchFilterPipe,
   ],
 })
 export class PipesModule {}

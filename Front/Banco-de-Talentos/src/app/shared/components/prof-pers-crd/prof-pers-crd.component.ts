@@ -1,6 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { MasterService } from 'src/app/core/services/master/master.service';
 import { CurrenciesModel } from '../../models/interfaces/master.interfaces';
@@ -8,6 +15,9 @@ import { CustomTalent } from '../../models/interfaces/customTalent.interfaces';
 import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { UserService } from '../../service/user/user.service';
+import { UserList } from '../../models/interfaces/userList.interfaces';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 interface Favorite {
   name: string;
@@ -30,10 +40,16 @@ export class ProfPersCrdComponent implements OnInit {
   @Output()
   public talentId = new EventEmitter<number>();
 
+  @ViewChild('fav') overlayPanelFvt!: OverlayPanel;
+
+  public idUser?: number;
+  selectedValue?: number;
+
   public resume: MenuItem[] = [];
   public coins: CurrenciesModel[] = [];
 
-  favorites: Favorite[] = [];
+  favorites: UserList[] = [];
+  public search: string = '';
 
   public isRecruiter: boolean = false;
 
@@ -52,7 +68,9 @@ export class ProfPersCrdComponent implements OnInit {
     private masterService: MasterService,
     private editInfoService: EditInfoService,
     private toastService: ToastService,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService,
+    private confirmationService: ConfirmationService
   ) {}
 
   public profileForm: FormGroup = this.fb.group({
@@ -81,13 +99,47 @@ export class ProfPersCrdComponent implements OnInit {
     this.resume = [{ label: 'CV' }, { label: 'CV Fractal' }];
     this.checkCurrencies();
     this.isRecruiter = this.authService.isRecruiter;
-    this.favorites = [
-      { name: 'favorite 1', code: 'fv1' },
-      { name: 'favorite 2', code: 'fv2' },
-      { name: 'favorite 3', code: 'fv3' },
-      { name: 'favorite 4', code: 'fv4' },
-      { name: 'favorite 5', code: 'fv5' },
-    ];
+    this.idUser = this.authService.idUser;
+    this.favorites = this.userService.favoritesList;
+  }
+
+  onSelectedFavorite(id: number, search: string, name: string) {
+    this.selectedValue = id;
+    this.search = '';
+    this.confirmationService.confirm({
+      header: 'Advertencia',
+      message: `¿Desea agregar a "${name}" a su lista de "${search}"?`,
+      icon: 'pi pi-info-circle',
+
+      accept: () => {
+        console.log('yes');
+        this.overlayPanelFvt.hide();
+      },
+    });
+  }
+
+  onOpenOverlayPanel(event: any) {
+    this.search = '';
+    this.overlayPanelFvt.toggle(event);
+  }
+
+  onSearchFavorites(search: string) {
+    this.search = search;
+  }
+
+  onCreateNewFavorite(search: string, name: string) {
+    console.log(search);
+
+    this.confirmationService.confirm({
+      header: 'Advertencia',
+      message: `¿Desea agregar a "${name}" a su lista de "${search}"?`,
+      icon: 'pi pi-info-circle',
+
+      accept: () => {
+        console.log('yes');
+        this.overlayPanelFvt.hide();
+      },
+    });
   }
 
   private onSaveForm(form: FormGroup): boolean {

@@ -78,8 +78,9 @@
           <ng-template pTemplate>
             <p-listbox
               [options]="favorites"
-              optionLabel="name"
-              [(ngModel)]="selectedFavorite"
+              optionLabel="listName"
+              optionValue="idListUser"
+              [(ngModel)]="selectedIdFavorite"
               styleClass="border-none"
             ></p-listbox>
           </ng-template>

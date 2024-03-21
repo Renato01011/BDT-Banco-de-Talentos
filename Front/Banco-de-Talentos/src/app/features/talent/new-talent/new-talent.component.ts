@@ -344,7 +344,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         const bmp = await createImageBitmap(photo);
         const { width, height } = bmp;
         bmp.close();
-        if (width > 800 || height > 400) {
+        if (width > 10000 || height > 1000) {
           this.toastService.addProperties(
             'error',
             'Ocurrio un error',

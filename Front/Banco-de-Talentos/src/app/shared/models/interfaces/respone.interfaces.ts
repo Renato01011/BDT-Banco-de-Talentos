@@ -6,3 +6,9 @@ export interface PostResponse {
 export interface TokenResponse {
     token: string
 }
+
+export interface NewUserListRespone {
+    code: number,
+    message: string,
+    idUserList: number,
+}

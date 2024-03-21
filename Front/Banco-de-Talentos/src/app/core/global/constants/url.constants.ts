@@ -66,4 +66,8 @@ export class UrlConstants {
     environment.host + environment.context + '/list/new';
   public static readonly URL_GET_LISTS_USER = 
     environment.host + environment.context + '/list';
+  public static readonly URL_ADD_TALENT_TO_LIST = 
+    environment.host + environment.context + '/list-user/add';
+  public static readonly URL_EDIT_LIST_USER_TALENT = 
+    environment.host + environment.context + '/list-user/edit';
 }

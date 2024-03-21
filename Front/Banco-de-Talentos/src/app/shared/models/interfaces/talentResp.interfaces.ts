@@ -22,6 +22,7 @@ export interface TalentResponse {
   miscData: MiscDatum[];
   languageLevels: LanguageLevel[];
   feedbacks: Feedbacks[];
+  userListTalent: UserListTalent;
 }
 
 export interface Document {
@@ -86,4 +87,11 @@ export interface Feedbacks {
   idUserFrom: number;
   userFromName: string;
   userFromPhoto: string;
+}
+
+export interface UserListTalent {
+  idListUser: number;
+  listName: string;
+  created: Date;
+  idListUserTalent: number;
 }

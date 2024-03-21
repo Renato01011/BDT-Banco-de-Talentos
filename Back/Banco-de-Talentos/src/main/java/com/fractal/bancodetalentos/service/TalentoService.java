@@ -7,7 +7,7 @@ import com.fractal.bancodetalentos.model.response.TalentResp;
 public interface TalentoService {
 
     GeneralResp addNewTalent(NewTalentReq newTalentRequest);
-    TalentResp getTalent(Integer id);
+    TalentResp getTalent(Integer id, GetTalentReq getTalentReq);
     GeneralResp putDescription(Integer id, DescriptionReq descriptionReq);
     GeneralResp putProfilePicture(Integer id, ProfilePictureReq profilePictureReq);
     GeneralResp putSalary(Integer id, SalaryReq salaryReq);

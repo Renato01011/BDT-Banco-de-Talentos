@@ -55,10 +55,10 @@ export class ListComponent implements OnInit {
   constructor(
     private filterService: FilterService,
     private loaderService: LoaderService,
-    private router: Router,
     private talentService: TalentService,
-    private toastService: ToastService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -90,14 +90,7 @@ export class ListComponent implements OnInit {
     this.talentService
       .getTalentById(id, this.authService.idUser)
       .pipe(
-        tap((talent) => (this.documents = talent.documents)),
-        tap((talent) => (this.educExp = talent.educationalExperiences)),
-        tap((talent) => (this.langProficiency = talent.languageLevels)),
-        tap((talent) => (this.softSkills = talent.softSkills)),
-        tap((talent) => (this.techSkills = talent.technicalAbilities)),
-        tap((talent) => (this.workExp = talent.workExperiences)),
-        tap((talent) => (this.description = talent.description)),
-        tap((talent) => (this.feedbacks = talent.feedbacks)),
+        tap((talent) => this.updateTalentData(talent)),
         tap((talent) => this.newTalent(talent))
       )
       .subscribe({
@@ -106,6 +99,17 @@ export class ListComponent implements OnInit {
           this.loaderService.hideLoader();
         },
       });
+  }
+
+  private updateTalentData(talent: TalentResponse): void {
+    this.documents = talent.documents;
+    this.educExp = talent.educationalExperiences;
+    this.langProficiency = talent.languageLevels;
+    this.softSkills = talent.softSkills;
+    this.techSkills = talent.technicalAbilities;
+    this.workExp = talent.workExperiences;
+    this.description = talent.description;
+    this.feedbacks = talent.feedbacks;
   }
 
   public firstCall(): void {
@@ -136,6 +140,7 @@ export class ListComponent implements OnInit {
       avgRating,
       miscData,
       feedbacks,
+      userListTalent,
     } = talent;
 
     this.customTalent = {
@@ -152,6 +157,7 @@ export class ListComponent implements OnInit {
       avgRating,
       miscData,
       feedbacks,
+      userListTalent,
     };
   }
 

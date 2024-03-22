@@ -10,9 +10,7 @@
         (click)="onNewTalent()"
         *ngIf="isRecruiter"
       ></p-button>
-      <span class="text-left text-sm text-500" *ngIf="!isRecruiter">{{
-        totalMsg
-      }}</span>
+      <span class="text-left text-sm text-500">{{ totalMsg }}</span>
     </div>
     <div
       class="w-12 sm:w-8 py-1 px-2 flex flex-wrap align-items-center sm:justify-content-evenly"

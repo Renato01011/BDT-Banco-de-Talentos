@@ -1,6 +1,6 @@
 <div
   class="hover:surface-hover flex border-round-lg p-2 my-2 w-full cursor-pointer"
-  *ngFor="let item of talents | slice : 0 : 7"
+  *ngFor="let item of talents"
   (click)="emitTalentId(item.id)"
   [ngClass]="{
     'border-teal-100 border-1 bg-teal-100': item.id == selId
@@ -45,7 +45,10 @@
       </div>
     </div>
   </div>
-  <div class="w-2 p-2 flex align-content-start justify-content-center">
+  <div
+    class="w-2 p-2 flex align-content-start justify-content-center"
+    *ngIf="item.inUserList === 1"
+  >
     <span class="heart-icon">
       <i class="pi pi-heart-fill text-base sm:text-xl"></i>
     </span>

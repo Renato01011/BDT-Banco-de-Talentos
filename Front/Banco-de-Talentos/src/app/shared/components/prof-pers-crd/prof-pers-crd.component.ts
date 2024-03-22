@@ -18,6 +18,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserService } from '../../service/user/user.service';
 import { UserList } from '../../models/interfaces/userList.interfaces';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { switchMap } from 'rxjs';
 
 interface Favorite {
   name: string;
@@ -43,7 +44,7 @@ export class ProfPersCrdComponent implements OnInit {
   @ViewChild('fav') overlayPanelFvt!: OverlayPanel;
 
   public idUser?: number;
-  selectedValue?: number;
+  selectedFavoriteId?: number;
 
   public resume: MenuItem[] = [];
   public coins: CurrenciesModel[] = [];
@@ -104,22 +105,16 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   onSelectedFavorite(id: number, search: string, name: string) {
-    this.selectedValue = id;
-    this.search = '';
-    this.confirmationService.confirm({
-      header: 'Advertencia',
-      message: `¿Desea agregar a "${name}" a su lista de "${search}"?`,
-      icon: 'pi pi-info-circle',
-
-      accept: () => {
-        console.log('yes');
-        this.overlayPanelFvt.hide();
-      },
-    });
+    if (this.isAvailableToEdit()) {
+      this.editTalentOnUserListConfirm(id, search, name);
+    } else {
+      this.addTalentToUserListConfirm(id, search, name);
+    }
   }
 
   onOpenOverlayPanel(event: any) {
     this.search = '';
+    this.isAvailableToEdit();
     this.overlayPanelFvt.toggle(event);
   }
 
@@ -128,16 +123,108 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   onCreateNewFavorite(search: string, name: string) {
-    console.log(search);
+    this.confirmationService.confirm({
+      header: 'Advertencia',
+      message: `¿Desea agregar a "${name}" a su lista de "${search}"?`,
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        if (!this.selectedId || !this.idUser) return;
+        this.userService
+          .addNewList(this.idUser, search)
+          .pipe(
+            switchMap(({ idUserList }) =>
+              this.userService.addTalentToList(idUserList, this.selectedId!)
+            )
+          )
+          .subscribe({
+            next: (resp) => {
+              this.overlayPanelFvt.hide();
+              this.toastService.addProperties(
+                'success',
+                'Se agrego correctamente',
+                resp.message
+              );
+              this.talentId.emit(this.selectedId);
+            },
+          });
+      },
+    });
+  }
 
+  private addTalentToUserListConfirm(id: number, search: string, name: string) {
     this.confirmationService.confirm({
       header: 'Advertencia',
       message: `¿Desea agregar a "${name}" a su lista de "${search}"?`,
       icon: 'pi pi-info-circle',
 
       accept: () => {
-        console.log('yes');
+        if (!this.selectedId) return;
+        this.addTalentToUserList(id, this.selectedId);
+      },
+    });
+  }
+
+  private editTalentOnUserListConfirm(
+    id: number,
+    search: string,
+    name: string
+  ) {
+    this.confirmationService.confirm({
+      header: 'Advertencia',
+      message: `¿Está seguro de que desea agregar a "${name}" a su lista de "${search}"?`,
+      icon: 'pi pi-info-circle',
+
+      accept: () => {
+        const idListUserTalent = this.getIdListUserTalent();
+        if (!idListUserTalent) return;
+        this.editTalentOnUserList(idListUserTalent, id);
+      },
+    });
+  }
+
+  private isAvailableToEdit(): boolean {
+    if (this.customTalent?.userListTalent) {
+      const idFa = this.customTalent.userListTalent.idListUser;
+      this.selectedFavoriteId = idFa;
+      return true;
+    } else {
+      this.selectedFavoriteId = undefined;
+      return false;
+    }
+  }
+
+  private getIdListUserTalent(): number | null {
+    if (this.customTalent?.userListTalent) {
+      const id = this.customTalent.userListTalent.idListUserTalent;
+      return id;
+    }
+    return null;
+  }
+
+  private addTalentToUserList(idUserList: number, idTalent: number) {
+    this.userService.addTalentToList(idUserList, idTalent).subscribe({
+      next: (resp) => {
         this.overlayPanelFvt.hide();
+        this.toastService.addProperties(
+          'success',
+          'Se agrego correctamente',
+          resp.message
+        );
+        this.talentId.emit(this.selectedId);
+      },
+    });
+  }
+
+  private editTalentOnUserList(idListUserTalent: number, newListId: number) {
+    this.userService.editTalentUserList(idListUserTalent, newListId).subscribe({
+      next: (resp) => {
+        this.overlayPanelFvt.hide();
+        this.toastService.addProperties(
+          'success',
+          'Se edito correctamente',
+          resp.message
+        );
+        this.talentId.emit(this.selectedId);
       },
     });
   }

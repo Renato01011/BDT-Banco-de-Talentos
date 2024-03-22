@@ -1,4 +1,4 @@
-import { MiscDatum } from './talentResp.interfaces';
+import { MiscDatum, UserListTalent } from './talentResp.interfaces';
 
 export interface CustomTalent {
   idTalent: number;
@@ -16,4 +16,6 @@ export interface CustomTalent {
   avgRating: number;
   miscData: MiscDatum[];
   feedbacks: any[];
+
+  userListTalent: UserListTalent;
 }

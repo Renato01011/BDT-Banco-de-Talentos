@@ -51,7 +51,7 @@
                 class="flex align-items-center justify-content-center cursor-pointer h-3rem w-full mb-1 border-none border-round-md bg-white hover:surface-hover"
                 [ngClass]="{
                   'border-primary border-2 bg-indigo-50':
-                    item.idListUser == selectedValue
+                    item.idListUser === selectedFavoriteId
                 }"
                 (click)="
                   onSelectedFavorite(
@@ -75,7 +75,7 @@
                     [inputId]="item.listName"
                     name="fav"
                     [value]="item.idListUser"
-                    [(ngModel)]="selectedValue"
+                    [(ngModel)]="selectedFavoriteId"
                   ></p-radioButton>
                 </div>
               </button>
@@ -100,11 +100,20 @@
           </ng-template>
         </p-overlayPanel>
         <button
+          *ngIf="!customTalent?.userListTalent"
           type="button"
           class="pink-icon-btn heart-icon"
           (click)="onOpenOverlayPanel($event)"
         >
           <i class="pi pi-heart"></i>
+        </button>
+        <button
+          *ngIf="customTalent?.userListTalent"
+          type="button"
+          class="pink-icon-btn heart-icon"
+          (click)="onOpenOverlayPanel($event)"
+        >
+          <i class="pi pi-heart-fill"></i>
         </button>
       </div>
       <div class="flex flex-wrap">

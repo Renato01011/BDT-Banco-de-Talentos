@@ -41,7 +41,7 @@
         <p-button
           label="Habilidades"
           styleClass="p-button-sm p-button-rounded p-button-secondary"
-          (click)="isSkillsListEmpty ? null : techSkills.toggle($event)"
+          (click)="handleTechBtnClick($event)"
           [disabled]="isSkillsListEmpty"
         ></p-button>
       </div>

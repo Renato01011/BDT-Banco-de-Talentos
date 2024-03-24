@@ -10,6 +10,7 @@ import {
   responsiveForRecruiter,
   responsiveForVisitor,
 } from 'src/app/core/global/constants/responsive.constants';
+import { UtilsService } from '../../service/util/utils.service';
 
 @Component({
   selector: 'shared-certs-pers-crd',
@@ -43,7 +44,8 @@ export class CertsPersCrdComponent implements OnInit {
     private fValidator: FrmValService,
     private toastService: ToastService,
     private addInfoService: AddInfoService,
-    private authService: AuthService
+    private authService: AuthService,
+    private utilsService: UtilsService
   ) {}
 
   public fileForm: FormGroup = this.fb.group({
@@ -154,15 +156,9 @@ export class CertsPersCrdComponent implements OnInit {
   }
 
   public showDialog(id: number) {
-    console.log(this.documents);
-    this.loadPdf(id);
-    this.display = true;
-  }
-
-  private loadPdf(id: number): void {
     const resp = this.findCertsById(id);
-    const base64Pdf = resp.document;
-    this.pdfSrc = 'data:application/pdf;base64,' + base64Pdf;
+    const pdfData = resp.document;
+    this.utilsService.openPdfInNewTab(pdfData);
   }
 
   private findCertsById(id: number): Document {

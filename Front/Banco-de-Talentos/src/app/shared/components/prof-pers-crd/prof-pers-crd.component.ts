@@ -19,6 +19,7 @@ import { UserService } from '../../service/user/user.service';
 import { UserList } from '../../models/interfaces/userList.interfaces';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { switchMap } from 'rxjs';
+import { UtilsService } from '../../service/util/utils.service';
 
 interface Favorite {
   name: string;
@@ -71,6 +72,7 @@ export class ProfPersCrdComponent implements OnInit {
     private toastService: ToastService,
     private authService: AuthService,
     private userService: UserService,
+    private utilsService: UtilsService,
     private confirmationService: ConfirmationService
   ) {}
 
@@ -96,12 +98,128 @@ export class ProfPersCrdComponent implements OnInit {
     }
   );
 
+  public addFileDialog: boolean = false;
+  public fileText: string = 'Sube un archivo';
+  public fileDetailsText: string = 'PDF (max. 5MB)';
+
+  public enableEditViewPdf: boolean = false;
+  public titleForCv = 'Curriculum Vitae';
+  public paragraphForCV = 'Curriculum Vitae';
+  public cvUploaded: boolean = false;
+  public fileUploaded: boolean = false;
+  public base64file?: string;
+
+  public cvForm: FormGroup = this.fb.group({
+    file: ['', [Validators.required]],
+    fileType: ['PDF'],
+  });
+
   ngOnInit(): void {
-    this.resume = [{ label: 'CV' }, { label: 'CV Fractal' }];
+    this.resume = [
+      { label: 'CV', command: (event) => this.btnCVhandler() },
+      { label: 'CV Fractal' },
+    ];
     this.checkCurrencies();
     this.isRecruiter = this.authService.isRecruiter;
     this.idUser = this.authService.idUser;
     this.favorites = this.userService.favoritesList;
+  }
+  public onFileUpload(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      if (file.size > 50000000) {
+        this.toastService.addProperties(
+          'error',
+          'Ocurrió un error',
+          'Documento es demasiado pesado'
+        );
+        return;
+      }
+      if (file.type != 'application/pdf') {
+        this.toastService.addProperties(
+          'error',
+          'Ocurrió un error',
+          'Documento no es PDF'
+        );
+        return;
+      }
+      this.fileUploaded = true;
+
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onloadend = () => {
+        this.base64file = fileReader.result as string;
+      };
+      this.fileText = 'Archivo Correctamente Subido';
+      this.fileDetailsText = file.name;
+    } else {
+      this.toastService.addProperties(
+        'error',
+        'Ocurrió un error',
+        'Error al subir PDF, vuelva a intentar'
+      );
+    }
+  }
+
+  public isValidCvField(field: string) {
+    return this.fValidator.isValidField(this.cvForm, field);
+  }
+
+  public onSveFile() {
+    if (!this.onSaveForm(this.cvForm) || !this.selectedId || !this.base64file) {
+      return;
+    }
+    const { fileType } = this.cvForm.value;
+    console.log(fileType);
+  }
+
+  extractFileName(fileName: string): string {
+    const index = fileName.lastIndexOf('.pdf');
+    if (index !== -1) {
+      return fileName.substring(0, index);
+    } else {
+      return fileName;
+    }
+  }
+
+  btnCVhandler() {
+    this.enableEditViewPdf = false;
+    this.titleForCv = 'Curriculum Vitae';
+    this.paragraphForCV = 'Curriculum Vitae';
+    console.log(this.customTalent?.resume);
+    this.openResumeDialog();
+  }
+
+  onBtnUpdatePdf() {
+    this.enableEditViewPdf = true;
+    this.titleForCv = 'Editar Curriculum Vitae';
+    this.paragraphForCV = 'Sube tu nuevo Curriculum Vitae.';
+  }
+
+  openPdfInNewTab() {
+    if (!this.customTalent?.resume) return;
+    const pdfData = this.customTalent.resume.document;
+    this.utilsService.openPdfInNewTab(pdfData);
+  }
+
+  public openResumeDialog() {
+    this.addFileDialog = true;
+  }
+
+  public hideResumeDialog() {
+    this.cvForm.reset({ fileType: 'PDF' });
+    this.fileText = 'Sube un archivo';
+    this.fileDetailsText = 'PDF (max. 5MB)';
+    this.fileUploaded = false;
+    this.addFileDialog = false;
+  }
+
+  openWhatsApp() {
+    const phoneNum = this.customTalent?.phone
+      .replace(/\s/g, '')
+      .replace(/-/g, '');
+    const whatsAppUrl = `https://wa.me/${phoneNum}`;
+    window.open(whatsAppUrl, '_blank');
   }
 
   onSelectedFavorite(id: number, search: string, name: string) {

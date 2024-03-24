@@ -8,6 +8,8 @@ import {
 } from '../../models/interfaces/talentResp.interfaces';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { MasterService } from 'src/app/core/services/master/master.service';
+import { MASTER_STORAGE } from 'src/app/core/global/constants/constants';
 
 const yearExpRegEx = '^(?:\\d+(?:\\.(?:[0-9]|1[0-1]))?)$';
 const justLettersRegEx = '^[a-zA-ZÁáÉéÍíÓóÚúÜü\\s]+$';
@@ -40,6 +42,7 @@ export class SkillsPersCrdComponent implements OnInit {
     private fValidator: FrmValService,
     private addInfoService: AddInfoService,
     private toastService: ToastService,
+    private masterService: MasterService,
     private authService: AuthService
   ) {}
 
@@ -75,20 +78,19 @@ export class SkillsPersCrdComponent implements OnInit {
     if (!this.onSaveForm(this.techSkForm)) return;
     if (!this.selectedId) return;
     const { name, yearExp } = this.techSkForm.value;
-    console.log(this.techSkForm.value);
     const body = {
       nombre: name,
       anios: yearExp,
     };
     this.addInfoService.addTechSkill(body, this.selectedId).subscribe({
       next: (resp) => {
-        //console.log(resp.message);
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',
           resp.message
         );
         this.talentId.emit(Number(resp.id));
+        this.masterService.cacheStorage.byTechSkill.techSkills = [];
         this.hideNewTechnicalSkillDialog();
       },
     });
@@ -104,7 +106,6 @@ export class SkillsPersCrdComponent implements OnInit {
     };
     this.addInfoService.addSoftSkill(body, this.selectedId).subscribe({
       next: (resp) => {
-        //console.log(resp.message);
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',

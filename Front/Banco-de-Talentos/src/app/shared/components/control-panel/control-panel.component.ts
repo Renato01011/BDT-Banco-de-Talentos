@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { MasterService } from '../../../core/services/master/master.service';
 import { TechSkills } from '../../models/interfaces/techSkill.interfaces';
@@ -11,6 +17,7 @@ import { FilterService } from 'src/app/core/services/filter/filter.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserList } from '../../models/interfaces/userList.interfaces';
 import { UserService } from '../../service/user/user.service';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'shared-control-panel',
@@ -18,6 +25,8 @@ import { UserService } from '../../service/user/user.service';
   styleUrls: ['./control-panel.component.scss'],
 })
 export class ControlPanelComponent implements OnInit {
+  @ViewChild('techSkills') overlayPanelTech!: OverlayPanel;
+
   skills: TechSkills[] = [];
   language: LanguageModel[] = [];
   proficiency: LangProficiencyModel[] = [];
@@ -60,6 +69,15 @@ export class ControlPanelComponent implements OnInit {
     this.isRecruiter = this.authService.isRecruiter;
     this.idUser = this.authService.idUser;
     this.getFavorites(this.idUser);
+  }
+
+  handleTechBtnClick(event: any) {
+    if (!this.isSkillsListEmpty) {
+      this.overlayPanelTech.toggle(event);
+    }
+    if (this.isCacheSkillsEmpty) {
+      this.getTechSkills();
+    }
   }
 
   emitFilter() {

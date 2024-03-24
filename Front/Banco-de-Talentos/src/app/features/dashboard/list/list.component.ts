@@ -102,7 +102,8 @@ export class ListComponent implements OnInit {
   }
 
   private updateTalentData(talent: TalentResponse): void {
-    this.documents = talent.documents;
+    const [, ...certifications] = talent.documents;
+    this.documents = certifications;
     this.educExp = talent.educationalExperiences;
     this.langProficiency = talent.languageLevels;
     this.softSkills = talent.softSkills;
@@ -126,6 +127,7 @@ export class ListComponent implements OnInit {
   }
 
   public newTalent(talent: TalentResponse): void {
+    const [resume] = talent.documents;
     const {
       idTalent,
       name,
@@ -158,6 +160,7 @@ export class ListComponent implements OnInit {
       miscData,
       feedbacks,
       userListTalent,
+      resume,
     };
   }
 

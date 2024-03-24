@@ -1,4 +1,4 @@
-import { MiscDatum, UserListTalent } from './talentResp.interfaces';
+import { Document, MiscDatum, UserListTalent } from './talentResp.interfaces';
 
 export interface CustomTalent {
   idTalent: number;
@@ -18,4 +18,6 @@ export interface CustomTalent {
   feedbacks: any[];
 
   userListTalent: UserListTalent;
+
+  resume: Document;
 }

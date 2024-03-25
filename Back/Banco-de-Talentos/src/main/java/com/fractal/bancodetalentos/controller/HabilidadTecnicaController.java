@@ -23,7 +23,7 @@ public class HabilidadTecnicaController {
     @GetMapping("/skills")
     public ResponseEntity<List<TecSkillsResp>> findTecSkills() {
         List<TecSkillsResp> skills = tecnicaService.getTecSkillsResp();
-        if (skills == null || skills.isEmpty()) {
+        if (skills == null) {
             throw new ResourceNotFoundException("Technical Skills");
         }
         return new ResponseEntity<>(skills, HttpStatus.OK);

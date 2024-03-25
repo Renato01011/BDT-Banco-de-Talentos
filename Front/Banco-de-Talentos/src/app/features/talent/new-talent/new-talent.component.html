@@ -78,9 +78,17 @@
                         </div>
                         <div class="h-7rem">
                             <h3 class="subHeaderText">Descripción</h3>
-                            <textarea rows="5" cols="30" pInputTextarea placeholder="Descripción" class="w-full h-5rem" formControlName="description" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('description') }"></textarea>
+                            <textarea id="textDescripcion" rows="5" cols="30" pInputTextarea placeholder="Descripción" class="w-full h-5rem" formControlName="description" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('description') }"></textarea>
+                            <small 
+                                id="textDescripcion"
+                                class="hidden"
+                                [ngClass]="{
+                                    'p-error block text-left': isValidField('description')
+                                }"
+                            >Este campo debe tener como mínimo 10 caracteres.
+                            </small>
                         </div>
-                        <div>
+                        <div class="pt-2">
                             <h3 class="subHeaderText">Puesto actual</h3>
                             <p-dropdown [options]="profiles" styleClass="w-full" class="w-full" placeholder="Puesto Actual" optionLabel="name" [showClear]="false" appendTo="body" formControlName="profile" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('profile') }"></p-dropdown>
                         </div>
@@ -95,9 +103,25 @@
                     <div class="pt-1">
                         <h3 class="headerText">Medios Sociales</h3>
                         <p class="subHeaderText">Link de LinkedIn</p>
-                        <input pInputText placeholder="Nombre de la empresa" class="w-full" formControlName="linkedin" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('linkedin') }"/>
+                        <input id="textLinkedin" pInputText placeholder="Nombre de la empresa" class="w-full" formControlName="linkedin" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('linkedin') }"/>
+                        <small 
+                                id="textLinkedin"
+                                class="hidden"
+                                [ngClass]="{
+                                    'p-error block text-left': isValidField('linkedin')
+                                }"
+                            >Este campo debe contener un link válido de LinkedIn.
+                            </small>
                         <p class="subHeaderText">Link de Github</p>
-                        <input pInputText placeholder="Puesto en la empresa" class="w-full" formControlName="github" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('github') }"/>
+                        <input id="textGithub" pInputText placeholder="Puesto en la empresa" class="w-full" formControlName="github" [ngClass]="{ 'ng-invalid ng-dirty': isValidField('github') }"/>
+                        <small 
+                                id="textGithub"
+                                class="hidden"
+                                [ngClass]="{
+                                    'p-error block text-left': isValidField('github')
+                                }"
+                            >Este campo debe contener un link válido de Github.
+                            </small>
                     </div>
                     <div>
                         <h3 class="headerText">Banda salarial</h3>

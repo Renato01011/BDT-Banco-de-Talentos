@@ -135,6 +135,7 @@
           styleClass="p-button-sm p-button-rounded p-button-secondary"
           (click)="isFavoriteListEmpty ? null : favorite.toggle($event)"
           [disabled]="isFavoriteListEmpty"
+          (click)="onFavorite()"
         ></p-button>
       </div>
 

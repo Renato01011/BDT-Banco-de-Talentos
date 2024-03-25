@@ -73,6 +73,10 @@ export class ControlPanelComponent implements OnInit {
     this.getFavorites(this.idUser);
   }
 
+  onFavorite() {
+    this.getFavorites(this.authService.idUser);
+  }
+
   deselectFavorite(item: number) {
     if (this.selectedFavoriteId === item) {
       this.selectedFavoriteId = undefined;

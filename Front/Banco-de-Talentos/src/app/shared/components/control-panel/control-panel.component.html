@@ -3,14 +3,20 @@
     <div
       class="w-12 sm:w-4 py-1 px-2 flex align-items-center justify-content-center sm:justify-content-start"
     >
-      <p-button
-        label="Nuevo Talento"
-        icon="pi pi-plus"
-        styleClass="p-button-sm p-button-outlined p-button-info"
-        (click)="onNewTalent()"
-        *ngIf="isRecruiter"
-      ></p-button>
-      <span class="text-left text-sm text-500">{{ totalMsg }}</span>
+      <div class="w-4 flex align-items-center justify-content-start p-1">
+        <p-button
+          label="Nuevo Talento"
+          icon="pi pi-plus"
+          styleClass="p-button-sm p-button-outlined p-button-info"
+          (click)="onNewTalent()"
+          *ngIf="isRecruiter"
+        ></p-button>
+      </div>
+      <div class="w-8 flex align-items-center justify-content-start p-1">
+        <span class="text-left text-sm text-500" *ngIf="total != 0">{{
+          totalMsg
+        }}</span>
+      </div>
     </div>
     <div
       class="w-12 sm:w-8 py-1 px-2 flex flex-wrap align-items-center sm:justify-content-evenly"

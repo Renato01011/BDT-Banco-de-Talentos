@@ -64,6 +64,12 @@ export class ProfPersCrdComponent implements OnInit {
   base64photo: string = '';
   photoUploaded: boolean = false;
 
+  public feedbackMap = {
+    '=0': 'Ningún feedback registrado',
+    '=1': '# feedback',
+    other: '# feedbacks',
+  };
+
   constructor(
     private fb: FormBuilder,
     private fValidator: FrmValService,

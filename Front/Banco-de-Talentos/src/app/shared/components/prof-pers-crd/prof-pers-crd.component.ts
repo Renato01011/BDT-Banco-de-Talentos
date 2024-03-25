@@ -394,7 +394,6 @@ export class ProfPersCrdComponent implements OnInit {
           return;
         }
         this.photoUploaded = true;
-        //this.photo = photo;
         const photoReader = new FileReader();
         photoReader.readAsDataURL(photo);
         photoReader.onloadend = () => {

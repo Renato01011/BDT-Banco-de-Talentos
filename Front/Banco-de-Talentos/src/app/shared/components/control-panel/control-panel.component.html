@@ -49,15 +49,33 @@
       <div
         class="w-6 sm:w-2 xl:w-2 flex align-items-center justify-content-center p-1"
       >
-        <p-overlayPanel #proficiencyOP [style]="{ width: '180px' }">
+        <p-overlayPanel #proficiencyOP [style]="{ width: '200px' }">
           <ng-template pTemplate>
-            <p-listbox
-              [options]="proficiency"
-              optionLabel="name"
-              optionValue="id"
-              [(ngModel)]="selectedIdProficiency"
-              styleClass="border-none"
-            ></p-listbox>
+            <button
+              *ngFor="let item of proficiency"
+              class="flex align-items-center justify-content-center cursor-pointer h-3rem w-full mb-1 border-none border-round-md bg-white hover:surface-hover"
+              [ngClass]="{
+                'border-primary border-2 bg-indigo-50':
+                  item.id === selectedIdProficiency
+              }"
+              (dblclick)="deselectFavorite(item.id)"
+            >
+              <div class="w-full flex align-items-center justify-content-start">
+                <label [for]="item.name" class="ml-1 text-base">{{
+                  item.name
+                }}</label>
+              </div>
+              <div
+                class="w-full flex align-items-center justify-content-end mr-1"
+              >
+                <p-radioButton
+                  [inputId]="item.name"
+                  name="proficiency"
+                  [value]="item.id"
+                  [(ngModel)]="selectedIdProficiency"
+                ></p-radioButton>
+              </div>
+            </button>
           </ng-template>
         </p-overlayPanel>
 
@@ -72,15 +90,37 @@
       <div
         class="w-12 sm:w-2 xl:w-2 flex align-items-center justify-content-center p-1"
       >
-        <p-overlayPanel #favorite [style]="{ width: '180px' }">
+        <p-overlayPanel #favorite [style]="{ width: '250px' }">
           <ng-template pTemplate>
-            <p-listbox
-              [options]="favorites"
-              optionLabel="listName"
-              optionValue="idListUser"
-              [(ngModel)]="selectedIdFavorite"
-              styleClass="border-none"
-            ></p-listbox>
+            <p-scrollPanel [style]="{ width: '100%', height: '200px' }">
+              <button
+                *ngFor="let item of favorites"
+                class="flex align-items-center justify-content-center cursor-pointer h-3rem w-full mb-1 border-none border-round-md bg-white hover:surface-hover"
+                [ngClass]="{
+                  'border-primary border-2 bg-indigo-50':
+                    item.idListUser === selectedFavoriteId
+                }"
+                (dblclick)="deselectFavorite(item.idListUser)"
+              >
+                <div
+                  class="w-full flex align-items-center justify-content-start"
+                >
+                  <label [for]="item.listName" class="ml-1 text-base">{{
+                    item.listName
+                  }}</label>
+                </div>
+                <div
+                  class="w-full flex align-items-center justify-content-end mr-1"
+                >
+                  <p-radioButton
+                    [inputId]="item.listName"
+                    name="fav"
+                    [value]="item.idListUser"
+                    [(ngModel)]="selectedFavoriteId"
+                  ></p-radioButton>
+                </div>
+              </button>
+            </p-scrollPanel>
           </ng-template>
         </p-overlayPanel>
 

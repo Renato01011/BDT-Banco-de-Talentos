@@ -10,6 +10,7 @@ import { UrlConstants } from '../../global/constants/url.constants';
 })
 export class FilterService {
   public resultMsg: string = '';
+  public total: number = 0;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -20,12 +21,12 @@ export class FilterService {
   }
 
   private generateResultMsg(talents: FilterResponse[], filterName: string) {
-    const total = talents.length;
+    this.total = talents.length;
     const name = this.generateFilterMsg(filterName);
-    if (total === 1) {
-      this.resultMsg = `Un resultado resultados disponibles para ${name}`;
+    if (this.total === 1) {
+      this.resultMsg = `Un resultado disponibles para ${name}`;
     } else {
-      this.resultMsg = ` ${total} resultados disponibles para ${name}`;
+      this.resultMsg = ` ${this.total} resultados disponibles para ${name}`;
     }
   }
 

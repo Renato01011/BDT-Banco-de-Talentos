@@ -78,6 +78,7 @@ export class ControlPanelComponent implements OnInit {
       this.selectedFavoriteId = undefined;
     }
     if (this.selectedIdProficiency === item) {
+      this.selectedIdLanguage = '';
       this.selectedIdProficiency = undefined;
     }
   }
@@ -95,16 +96,11 @@ export class ControlPanelComponent implements OnInit {
     const skillsStr = this.selectedTechSks.join(', ');
     this.filterReq.habilities = skillsStr;
     this.filterReq.languageIds =
-      `${this.selectedIdProficiency}` === '' ? '' : '2';
+      this.selectedIdProficiency !== undefined ? '2' : '';
     this.filterReq.levelIds = `${this.selectedIdProficiency ?? ''}`;
     this.filterReq.nameJobTitle = this.term;
     this.filterReq.userListIds = `${this.selectedFavoriteId ?? ''}`;
     this.onFilterReqVal.emit(this.filterReq);
-    this.resetFilterField();
-  }
-
-  private resetFilterField() {
-    this.selectedIdLanguage = '';
   }
 
   onNewTalent() {
@@ -209,5 +205,9 @@ export class ControlPanelComponent implements OnInit {
 
   public get totalMsg(): string {
     return this.filterService.resultMsg;
+  }
+
+  public get total(): number {
+    return this.filterService.total;
   }
 }

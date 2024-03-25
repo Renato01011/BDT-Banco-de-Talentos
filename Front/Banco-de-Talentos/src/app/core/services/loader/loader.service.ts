@@ -22,7 +22,6 @@ export class LoaderService {
     this.loader.status = true;
     this.loader.msg = msg;
     this.loader$.next(this.loader);
-    console.log('showLoader');
   }
 
   hideLoader(): void {

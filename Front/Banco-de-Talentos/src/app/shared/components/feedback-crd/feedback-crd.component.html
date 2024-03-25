@@ -1,48 +1,54 @@
-<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+<div class="flex flex-wrap border-round m-1 sm:my-2 sm:mr-2 sm:ml-4">
   <div class="w-12 p-1 flex align-items-center justify-content-between">
     <div class="flex align-items-center justify-content-center">
-      <span class="font-semibold text-base text-600">Feedback</span>
+      <span class="font-semibold text-sm md:text-base text-600">Feedback</span>
     </div>
   </div>
   <div
-    class="w-12 flex align-items-center surface-hover p-1 mx-0 sm:mx-3 border-round-md"
+    class="w-12 flex align-items-center surface-hover p-1 mx-0 sm:mx-3 border-round-md my-1"
+    *ngFor="let item of feedbacks"
   >
     <div class="w-2 py-1 flex align-items-center justify-content-center">
       <p-avatar
-        image="./assets/users/1.jpg"
+        [image]="item.userFromPhoto | base64ToImage"
         size="large"
         shape="circle"
       ></p-avatar>
     </div>
     <div class="w-10 p-1 flex align-items-center justify-content-center">
       <div class="flex flex-column gap-2 w-full">
-        <div class="flex align-items-center font-semibold text-base text-800">
-          Cesar Ortiz
+        <div
+          class="flex align-items-center font-semibold text-sm md:text-base text-800"
+        >
+          {{ item.userFromName }}
           <span class="mx-4">
             <p-rating
-              [(ngModel)]="rating"
+              [ngModel]="item.starCount"
               [stars]="5"
               [cancel]="false"
               [readonly]="true"
             ></p-rating>
           </span>
         </div>
-        <div class="flex align-items-center text-500 text-sm font-normal">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis
-          nostrum id ab.
+        <div
+          class="flex align-items-center text-500 text-xs md:text-sm font-normal"
+        >
+          {{ item.description }}
         </div>
       </div>
     </div>
   </div>
-  <div class="w-12 py-1 flex align-items-center justify-content-start">
-    <div
-      class="flex align-items-center justify-content-center border-round text-500 hover:text-700 text-sm font-medium cursor-pointer"
+  <div
+    class="w-12 py-1 flex align-items-center justify-content-start mx-0 sm:mx-3"
+  >
+    <button
+      type="button"
+      class="back-icon-txt-btn"
+      (click)="openNewFeedbackDialog()"
     >
-      <span class="mx-4" (click)="openNewFeedbackDialog()">
-        <i class="pi pi-plus text-sm text-500 hover:text-700"></i>
-        <span> Dar nuevo feedback</span>
-      </span>
-    </div>
+      <i class="pi pi-plus text-xs mr-2"></i>
+      <span class="text-sm"> Dar nuevo feedback</span>
+    </button>
   </div>
 </div>
 
@@ -105,7 +111,7 @@
           id="inputComment"
           class="hidden"
           [ngClass]="{ 'p-error block text-left': isValidField('feedback') }"
-          >Por favor, ingresa su comentario.</small
+          >{{ getErrFeedBkField("feedback") }}</small
         >
       </div>
       <div class="w-12 flex flex-wrap pt-3">
@@ -127,7 +133,7 @@
           <button
             pButton
             pRipple
-            label="Editar"
+            label="Agregar"
             icon="pi pi-check"
             type="submit"
             class="p-button-success w-full"

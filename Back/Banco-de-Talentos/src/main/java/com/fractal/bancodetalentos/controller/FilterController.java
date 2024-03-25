@@ -23,12 +23,14 @@ public class FilterController {
     private final FilterService filterService;
 
     @PostMapping("/filter-talent")
-    public ResponseEntity<List<FilterTalentoResp>> filterTalents(@Valid @RequestBody FilterTalentReq filterTalentReq) {
-        List<FilterTalentoResp> talents = filterService.filterTalents(filterTalentReq);
+    //public ResponseEntity<List<FilterTalentoResp>> filterTalents(@Valid @RequestBody FilterTalentReq filterTalentReq) {
+    public List<FilterTalentoResp> filterTalents(@Valid @RequestBody FilterTalentReq filterTalentReq) {
+        return filterService.filterTalents(filterTalentReq);
+        /*List<FilterTalentoResp> talents = filterService.filterTalents(filterTalentReq);
         if (talents == null || talents.isEmpty()) {
             throw new ResourceNotFoundException("Filter");
         }
-        return new ResponseEntity<>(talents, HttpStatus.OK);
+        return new ResponseEntity<>(talents, HttpStatus.OK);*/
     }
 
 }

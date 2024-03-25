@@ -1,19 +1,32 @@
 <div
-  class="bg-white py-3 px-3 sm:px-6 xl:px-8 shadow-3 flex align-items-center justify-content-between relative"
+  class="bg-white py-3 px-3 lg:px-4 xl:px-8 shadow-3 flex align-items-center justify-content-between relative"
 >
-  <img src="./assets/users/fractal-logo.png" alt="Logo" class="logo-image" />
-  <div class="flex align-items-center" (click)="profileOP.toggle($event)">
-    <p-avatar
-      image="./assets/users/2.jpg"
-      size="large"
-      shape="circle"
-    ></p-avatar>
-    <div class="flex flex-column hidden md:block px-3">
+  <div class="xl:pl-7">
+    <img
+      src="./assets/images/fractal-logo.png"
+      alt="Logo"
+      class="logo-image h-3rem"
+    />
+  </div>
+  <div
+    class="flex align-items-center justify-content-end xl:pr-7"
+    (click)="profileOP.toggle($event)"
+  >
+    <div class="flex flex-order-1 sm:flex-order-0">
+      <p-avatar
+        [image]="picture | base64ToImage"
+        size="large"
+        shape="circle"
+      ></p-avatar>
+    </div>
+    <div
+      class="flex flex-order-0 sm:flex-order-1 flex-column hidden md:block px-3"
+    >
       <span class="font-semibold text-base text-800 hidden md:block">
-        Claudia Vasquez
+        {{ name }}
       </span>
       <span class="text-500 text-sm font-light hidden md:block">
-        Reclutador
+        {{ recruiterOrVisitor | titlecase }}
       </span>
     </div>
   </div>

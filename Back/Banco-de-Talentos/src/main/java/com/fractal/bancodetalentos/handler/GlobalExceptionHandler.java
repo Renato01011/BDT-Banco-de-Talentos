@@ -1,5 +1,7 @@
 package com.fractal.bancodetalentos.handler;
 
+import com.fractal.bancodetalentos.exception.DuplicatedDataException;
+import com.fractal.bancodetalentos.exception.JwtSignatureException;
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.dto.ErrorDTO;
 import com.fractal.bancodetalentos.model.dto.ValidationErrDTO;
@@ -13,16 +15,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorDTO> handlerResourceNotFoundException (ResourceNotFoundException exception, WebRequest webRequest) {
-        ErrorDTO errorDTO = ErrorDTO.builder().timestamp(new Date()).status(404).error("RESOURCE_NOT_FOUND").message(exception.getMessage()).path(webRequest.getDescription(false).replace("uri=","")).build();
+    public ResponseEntity<ErrorDTO> handlerResourceNotFoundException(ResourceNotFoundException exception, WebRequest webRequest) {
+        ErrorDTO errorDTO = ErrorDTO.builder().timestamp(new Date()).status(404).error("RESOURCE_NOT_FOUND").message(exception.getMessage()).path(webRequest.getDescription(false).replace("uri=", "")).build();
         return new ResponseEntity<>(errorDTO, HttpStatus.NOT_FOUND);
     }
 
@@ -35,5 +35,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             errDTOS.add(new ValidationErrDTO(nameField, message));
         });
         return new ResponseEntity<>(errDTOS, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DuplicatedDataException.class)
+    public ResponseEntity<ErrorDTO> handlerDuplicatedDataException(DuplicatedDataException exception, WebRequest webRequest) {
+        ErrorDTO errorDTO = ErrorDTO.builder().timestamp(new Date()).status(400).error("BAD_REQUEST").message(exception.getMessage()).path(webRequest.getDescription(false).replace("uri=", "")).build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(JwtSignatureException.class)
+    public ResponseEntity<ErrorDTO> handlerJwtSignatureException(JwtSignatureException exception, WebRequest webRequest) {
+        ErrorDTO errorDTO = ErrorDTO.builder().timestamp(new Date()).status(400).error("BAD_REQUEST").message(exception.getMessage()).path(webRequest.getDescription(false).replace("uri=", "")).build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 }

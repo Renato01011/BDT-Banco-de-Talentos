@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { MasterService } from 'src/app/core/services/master/master.service';
@@ -6,6 +6,13 @@ import {
   LangProficiencyModel,
   LanguageModel,
 } from '../../models/interfaces/master.interfaces';
+import { LanguageLevel } from '../../models/interfaces/talentResp.interfaces';
+import { AddInfoService } from '../../service/addInfo/add-info.service';
+import { EditInfoService } from '../../service/editInfo/edit-info.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { ConfirmationService } from 'primeng/api';
+import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'shared-lang-pers-crd',
@@ -13,10 +20,19 @@ import {
   styleUrls: ['./lang-pers-crd.component.scss'],
 })
 export class LangPersCrdComponent implements OnInit {
-  rating: number = 0;
+  @Input()
+  public langProficiency: LanguageLevel[] = [];
+  @Input()
+  public selectedId?: number;
+  @Output()
+  public talentId = new EventEmitter<number>();
+
+  public isRecruiter: boolean = false;
 
   newLanguageDialog: boolean = false;
   editLanguageDialog: boolean = false;
+
+  currEditingLangProf: number = 0;
 
   language: LanguageModel[] = [];
 
@@ -25,7 +41,13 @@ export class LangPersCrdComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private fValidator: FrmValService,
-    private masterService: MasterService
+    private masterService: MasterService,
+    private addInfoService: AddInfoService,
+    private editInfoService: EditInfoService,
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService,
+    private deleteInfoService: DeleteInfoService,
+    private authService: AuthService
   ) {}
 
   public newLanguageForm: FormGroup = this.fb.group({
@@ -43,6 +65,139 @@ export class LangPersCrdComponent implements OnInit {
   ngOnInit(): void {
     this.language = this.uploadLanguages;
     this.proficiency = this.uploadProficiency;
+    this.isRecruiter = this.authService.isRecruiter;
+  }
+
+  private onSaveForm(form: FormGroup): boolean {
+    if (form.invalid) {
+      form.markAllAsTouched();
+      return false;
+    }
+    return true;
+  }
+
+  public onSveNewLanguageForm() {
+    if (!this.onSaveForm(this.newLanguageForm)) return;
+    if (!this.selectedId) return;
+    console.log(this.newLanguageForm.value);
+    const { languages, proficiency, rating } = this.newLanguageForm.value;
+    const body = {
+      idiomaId: languages,
+      nivelId: proficiency,
+      nuEstrellas: rating,
+    };
+    this.addInfoService.addLang(body, this.selectedId).subscribe({
+      next: (resp) => {
+        //console.log(resp.message);
+        this.toastService.addProperties(
+          'success',
+          'Se agregó correctamente',
+          resp.message
+        );
+        this.talentId.emit(Number(resp.id));
+        this.hideNewLanguageDialog();
+      },
+    });
+  }
+  public onSveEditLangForm() {
+    if (!this.onSaveForm(this.editLanguageForm)) return;
+    if (!this.selectedId) return;
+    this.editInfoService
+      .editLanguageExpertise(
+        {
+          idiomaId: this.editLanguageForm.get('editLanguages')!.value,
+          nivelId: this.editLanguageForm.get('editProficiency')!.value,
+          nuEstrellas: this.editLanguageForm.get('editRating')!.value,
+        },
+        this.selectedId,
+        this.currEditingLangProf
+      )
+      .subscribe({
+        next: (resp) => {
+          this.hideEditLanguageDialog();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
+  }
+
+  confirm() {
+    this.confirmationService.confirm({
+      header: 'Advertencia',
+      message: 'Estás a punto de eliminar esta información. ¿Deseas continuar?',
+      icon: 'pi pi-info-circle',
+
+      accept: () => {
+        if (!this.selectedId) return;
+        this.deleteInfoService
+          .deleteLanguageExpertise(this.selectedId, this.currEditingLangProf)
+          .subscribe({
+            next: (resp) => {
+              this.hideEditLanguageDialog();
+              this.toastService.addProperties(
+                'success',
+                'Se eliminó correctamente',
+                resp.message
+              );
+              this.talentId.emit(this.selectedId);
+            },
+          });
+      },
+    });
+  }
+
+  public isValidField(field: string) {
+    return this.fValidator.isValidField(this.newLanguageForm, field);
+  }
+
+  public isValidEditLangField(field: string) {
+    return this.fValidator.isValidField(this.editLanguageForm, field);
+  }
+
+  public OnLanguageChange() {
+    this.newLanguageForm.controls['proficiency'].setValue(null);
+  }
+
+  public OnEditLangChange() {
+    this.editLanguageForm.controls['editProficiency'].setValue(null);
+  }
+
+  public openEditLanguageDialog(id: number) {
+    const resp = this.findLangById(id);
+    this.currEditingLangProf = id;
+    const editLanguages = resp.idLanguage;
+    const editProficiency = resp.idProficiency;
+    const editRating = resp.starCount;
+    this.editLanguageForm.reset({
+      editLanguages,
+      editProficiency,
+      editRating,
+    });
+    this.editLanguageDialog = true;
+  }
+
+  public hideEditLanguageDialog() {
+    this.currEditingLangProf = 0;
+    this.editLanguageDialog = false;
+  }
+
+  public openNewLanguageDialog() {
+    this.newLanguageDialog = true;
+  }
+
+  public hideNewLanguageDialog() {
+    this.newLanguageDialog = false;
+  }
+
+  private findLangById(id: number): LanguageLevel {
+    const lang = this.langProficiency.find(
+      (lang) => lang.idTalentLanguage === id
+    )!;
+    return lang;
   }
 
   private get uploadLanguages(): LanguageModel[] {
@@ -54,45 +209,5 @@ export class LangPersCrdComponent implements OnInit {
     const cacheProficiencies =
       this.masterService.cacheStorage.byLangProficiency.proficiencies;
     return cacheProficiencies;
-  }
-
-  isValidField(field: string) {
-    return this.fValidator.isValidField(this.newLanguageForm, field);
-  }
-
-  onSveNewLanguageForm() {
-    console.log(this.newLanguageForm.value);
-  }
-
-  OnLanguageChange() {
-    this.newLanguageForm.controls['proficiency'].setValue(null);
-  }
-
-  isValidEditLangField(field: string) {
-    return this.fValidator.isValidField(this.editLanguageForm, field);
-  }
-
-  onSveEditLangForm() {
-    console.log(this.editLanguageForm.value);
-  }
-
-  OnEditLangChange() {
-    this.editLanguageForm.controls['editProficiency'].setValue(null);
-  }
-
-  openEditLanguageDialog() {
-    this.editLanguageDialog = true;
-  }
-
-  hideEditLanguageDialog() {
-    this.editLanguageDialog = false;
-  }
-
-  openNewLanguageDialog() {
-    this.newLanguageDialog = true;
-  }
-
-  hideNewLanguageDialog() {
-    this.newLanguageDialog = false;
   }
 }

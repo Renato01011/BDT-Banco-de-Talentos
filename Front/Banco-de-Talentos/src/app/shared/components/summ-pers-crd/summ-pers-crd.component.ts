@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FrmValService } from '../../service/frmVal/frm-val.service';
+import { EditInfoService } from '../../service/editInfo/edit-info.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'shared-summ-pers-crd',
@@ -8,29 +11,88 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
   styleUrls: ['./summ-pers-crd.component.scss'],
 })
 export class SummPersCrdComponent implements OnInit {
-  editDescriptionDialog: boolean = false;
+  @Input()
+  public description: string = '';
+  @Input()
+  public selectedId?: number;
 
-  constructor(private fb: FormBuilder, private fValidator: FrmValService) {}
+  @Output()
+  public talentId = new EventEmitter<number>();
+
+  editDescriptionDialog: boolean = false;
+  public isRecruiter: boolean = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private fValidator: FrmValService,
+    private editInfoService: EditInfoService,
+    private toastService: ToastService,
+    private authService: AuthService
+  ) {}
 
   public summForm: FormGroup = this.fb.group({
-    description: ['', [Validators.required, Validators.minLength(100)]],
+    description: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(100),
+      ],
+    ],
   });
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isRecruiter = this.authService.isRecruiter;
+  }
 
   isValidField(field: string) {
     return this.fValidator.isValidField(this.summForm, field);
   }
 
+  public getErrDescField(field: string): string {
+    let msg =
+      this.fValidator.isRequiredErr(this.summForm, field) ??
+      this.fValidator.isMinLengthErr(this.summForm, field) ??
+      this.fValidator.isMaxLengthErr(this.summForm, field) ??
+      'Este campo no debe ser nulo.';
+
+    return msg;
+  }
+
   onSveSummForm() {
-    console.log(this.summForm.value);
+    if (this.summForm.invalid) {
+      this.summForm.markAllAsTouched();
+      return;
+    }
+    if (!this.selectedId) return;
+    this.editInfoService
+      .editTalentDescription(
+        {
+          description: this.summForm.get('description')!.value,
+        },
+        this.selectedId
+      )
+      .subscribe({
+        next: (resp) => {
+          this.hideEditDescriptionDialog();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
   }
 
   openEditDescriptionDialog() {
+    const description = this.description;
+    this.summForm.reset({ description });
     this.editDescriptionDialog = true;
   }
 
   hideEditDescriptionDialog() {
+    this.summForm.reset();
     this.editDescriptionDialog = false;
   }
 }

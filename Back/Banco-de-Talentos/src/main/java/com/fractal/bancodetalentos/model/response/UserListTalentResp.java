@@ -5,11 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostResp {
-    private Integer code;
-    private String message;
+public class UserListTalentResp {
+    private Integer idListUser;
+    private String listName;
+    private Date created;
+    private Integer idListUserTalent;
 }

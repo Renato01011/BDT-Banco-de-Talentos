@@ -1,19 +1,29 @@
-<div class="py-3 px-3 sm:px-6 xl:px-8 flex align-items-center shadow-none">
+<div class="py-2 px-2 lg:px-4 xl:px-7 flex align-items-center shadow-none">
   <div class="flex flex-wrap border-round w-full">
     <div
-      class="w-12 sm:w-4 font-bold p-2 flex align-items-center justify-content-center sm:justify-content-start"
+      class="w-12 sm:w-4 py-1 px-2 flex align-items-center justify-content-center sm:justify-content-start"
     >
-      <p-button
-        label="Nuevo Talento"
-        icon="pi pi-plus"
-        styleClass="p-button-sm p-button-outlined p-button-info"
-        (click)="onNewTalent()"
-      ></p-button>
+      <div class="w-4 flex align-items-center justify-content-start p-1">
+        <p-button
+          label="Nuevo Talento"
+          icon="pi pi-plus"
+          styleClass="p-button-sm p-button-outlined p-button-info"
+          (click)="onNewTalent()"
+          *ngIf="isRecruiter"
+        ></p-button>
+      </div>
+      <div class="w-8 flex align-items-center justify-content-start p-1">
+        <span class="text-left text-sm text-500" *ngIf="total != 0">{{
+          totalMsg
+        }}</span>
+      </div>
     </div>
     <div
-      class="w-12 sm:w-8 font-bold p-2 flex flex-wrap align-items-center justify-content-center sm:justify-content-between"
+      class="w-12 sm:w-8 py-1 px-2 flex flex-wrap align-items-center sm:justify-content-evenly"
     >
-      <div class="mx-1 mb-2 md:mb-0">
+      <div
+        class="w-6 sm:w-2 xl:w-2 flex align-items-center justify-content-start sm:justify-content-center p-1"
+      >
         <p-overlayPanel #techSkills [style]="{ width: '350px' }">
           <ng-template pTemplate>
             <p-chips
@@ -37,59 +47,86 @@
         <p-button
           label="Habilidades"
           styleClass="p-button-sm p-button-rounded p-button-secondary"
-          (click)="isSkillsListEmpty ? null : techSkills.toggle($event)"
+          (click)="handleTechBtnClick($event)"
           [disabled]="isSkillsListEmpty"
         ></p-button>
       </div>
-      <div class="mx-1 mb-2 md:mb-0">
-        <p-overlayPanel #languageOP [style]="{ width: '180px' }">
+
+      <div
+        class="w-6 sm:w-2 xl:w-2 flex align-items-center justify-content-center p-1"
+      >
+        <p-overlayPanel #proficiencyOP [style]="{ width: '200px' }">
           <ng-template pTemplate>
-            <p-listbox
-              [options]="language"
-              optionLabel="name"
-              optionValue="id"
-              [(ngModel)]="selectedIdLanguage"
-              styleClass="border-none"
-            ></p-listbox>
+            <button
+              *ngFor="let item of proficiency"
+              class="flex align-items-center justify-content-center cursor-pointer h-3rem w-full mb-1 border-none border-round-md bg-white hover:surface-hover"
+              [ngClass]="{
+                'border-primary border-2 bg-indigo-50':
+                  item.id === selectedIdProficiency
+              }"
+              (dblclick)="deselectFavorite(item.id)"
+            >
+              <div class="w-full flex align-items-center justify-content-start">
+                <label [for]="item.name" class="ml-1 text-base">{{
+                  item.name
+                }}</label>
+              </div>
+              <div
+                class="w-full flex align-items-center justify-content-end mr-1"
+              >
+                <p-radioButton
+                  [inputId]="item.name"
+                  name="proficiency"
+                  [value]="item.id"
+                  [(ngModel)]="selectedIdProficiency"
+                ></p-radioButton>
+              </div>
+            </button>
           </ng-template>
         </p-overlayPanel>
 
         <p-button
-          label="Idioma"
-          styleClass="p-button-sm p-button-rounded p-button-secondary"
-          (click)="isLanguageListEmpty ? null : languageOP.toggle($event)"
-          [disabled]="isLanguageListEmpty"
-        ></p-button>
-      </div>
-      <div class="mx-1 mb-2 md:mb-0">
-        <p-overlayPanel #proficiencyOP [style]="{ width: '180px' }">
-          <ng-template pTemplate>
-            <p-listbox
-              [options]="proficiency"
-              optionLabel="name"
-              optionValue="id"
-              [(ngModel)]="selectedIdProficiency"
-              styleClass="border-none"
-            ></p-listbox>
-          </ng-template>
-        </p-overlayPanel>
-
-        <p-button
-          label="Nivel"
+          label="Nivel de inglés"
           styleClass="p-button-sm p-button-rounded p-button-secondary"
           (click)="isProficiencyListEmpty ? null : proficiencyOP.toggle($event)"
           [disabled]="isProficiencyListEmpty"
         ></p-button>
       </div>
-      <div class="mx-1 mb-2 md:mb-0">
-        <p-overlayPanel #favorite [style]="{ width: '180px' }">
+
+      <div
+        class="w-12 sm:w-2 xl:w-2 flex align-items-center justify-content-center p-1"
+      >
+        <p-overlayPanel #favorite [style]="{ width: '250px' }">
           <ng-template pTemplate>
-            <p-listbox
-              [options]="favorites"
-              optionLabel="name"
-              [(ngModel)]="selectedFavorite"
-              styleClass="border-none"
-            ></p-listbox>
+            <p-scrollPanel [style]="{ width: '100%', height: '200px' }">
+              <button
+                *ngFor="let item of favorites"
+                class="flex align-items-center justify-content-center cursor-pointer h-3rem w-full mb-1 border-none border-round-md bg-white hover:surface-hover"
+                [ngClass]="{
+                  'border-primary border-2 bg-indigo-50':
+                    item.idListUser === selectedFavoriteId
+                }"
+                (dblclick)="deselectFavorite(item.idListUser)"
+              >
+                <div
+                  class="w-full flex align-items-center justify-content-start"
+                >
+                  <label [for]="item.listName" class="ml-1 text-base">{{
+                    item.listName
+                  }}</label>
+                </div>
+                <div
+                  class="w-full flex align-items-center justify-content-end mr-1"
+                >
+                  <p-radioButton
+                    [inputId]="item.listName"
+                    name="fav"
+                    [value]="item.idListUser"
+                    [(ngModel)]="selectedFavoriteId"
+                  ></p-radioButton>
+                </div>
+              </button>
+            </p-scrollPanel>
           </ng-template>
         </p-overlayPanel>
 
@@ -98,10 +135,14 @@
           styleClass="p-button-sm p-button-rounded p-button-secondary"
           (click)="isFavoriteListEmpty ? null : favorite.toggle($event)"
           [disabled]="isFavoriteListEmpty"
+          (click)="onFavorite()"
         ></p-button>
       </div>
-      <div class="mx-1 mb-2 md:mb-0">
-        <span class="p-input-icon-left">
+
+      <div
+        class="w-8 sm:w-4 xl:w-5 flex align-items-center justify-content-center p-1"
+      >
+        <span class="p-input-icon-left w-full xl:w-9">
           <i class="pi pi-search"></i>
           <input
             type="text"
@@ -112,10 +153,14 @@
           />
         </span>
       </div>
-      <div class="mx-1 mb-2 md:mb-0">
+
+      <div
+        class="w-4 sm:w-2 xl:w-1 flex align-items-center justify-content-center p-1"
+      >
         <p-button
           label="Buscar"
-          styleClass="p-button-sm p-button-success"
+          styleClass="p-button-sm p-button-success w-full"
+          class="w-full"
           (onClick)="emitFilter()"
         ></p-button>
       </div>

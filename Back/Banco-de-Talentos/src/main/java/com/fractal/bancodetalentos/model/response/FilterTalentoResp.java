@@ -21,5 +21,6 @@ public class FilterTalentoResp {
     private Integer finalSalary;
     private String location;
     private Integer avgRating;
+    private Integer inUserList;
 
 }

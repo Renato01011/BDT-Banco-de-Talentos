@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { MasterService } from '../../../core/services/master/master.service';
 import { TechSkills } from '../../models/interfaces/techSkill.interfaces';
@@ -7,11 +13,11 @@ import {
   LanguageModel,
 } from '../../models/interfaces/master.interfaces';
 import { FilterRequest } from '../../models/interfaces/filterReq.interfaces';
-
-interface Favorite {
-  name: string;
-  code: string;
-}
+import { FilterService } from 'src/app/core/services/filter/filter.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { UserList } from '../../models/interfaces/userList.interfaces';
+import { UserService } from '../../service/user/user.service';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'shared-control-panel',
@@ -19,42 +25,85 @@ interface Favorite {
   styleUrls: ['./control-panel.component.scss'],
 })
 export class ControlPanelComponent implements OnInit {
+  @ViewChild('techSkills') overlayPanelTech!: OverlayPanel;
+
   skills: TechSkills[] = [];
   language: LanguageModel[] = [];
   proficiency: LangProficiencyModel[] = [];
 
-  favorites: Favorite[] = [];
+  favorites: UserList[] = [];
 
   selectedTechSks: string[] = [];
   selectedIdLanguage: string = '';
-  selectedIdProficiency: string = '';
   term: string = '';
-  selectedFavorite: string[] = [];
+
+  public idUser?: number;
+
+  public isRecruiter: boolean = false;
 
   public filterReq: FilterRequest = {
+    userId: this.authService.idUser,
     habilities: '',
     languageIds: '',
     levelIds: '',
     nameJobTitle: '',
+    userListIds: '',
   };
+
+  selectedIdProficiency?: number;
+  selectedFavoriteId?: number;
 
   @Output()
   public onFilterReqVal = new EventEmitter<FilterRequest>();
 
-  constructor(private router: Router, private masterService: MasterService) {}
+  constructor(
+    private router: Router,
+    private masterService: MasterService,
+    private filterService: FilterService,
+    private authService: AuthService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.checkTechSkills();
     this.checkLanguages();
     this.checkProficiency();
+    this.isRecruiter = this.authService.isRecruiter;
+    this.idUser = this.authService.idUser;
+    this.getFavorites(this.idUser);
+  }
+
+  onFavorite() {
+    this.getFavorites(this.authService.idUser);
+  }
+
+  deselectFavorite(item: number) {
+    if (this.selectedFavoriteId === item) {
+      this.selectedFavoriteId = undefined;
+    }
+    if (this.selectedIdProficiency === item) {
+      this.selectedIdLanguage = '';
+      this.selectedIdProficiency = undefined;
+    }
+  }
+
+  handleTechBtnClick(event: any) {
+    if (!this.isSkillsListEmpty) {
+      this.overlayPanelTech.toggle(event);
+    }
+    if (this.isCacheSkillsEmpty) {
+      this.getTechSkills();
+    }
   }
 
   emitFilter() {
-    const habilidadesString = this.selectedTechSks.join(', ');
-    this.filterReq.habilities = habilidadesString;
-    this.filterReq.languageIds = this.selectedIdLanguage;
-    this.filterReq.levelIds = this.selectedIdProficiency;
+    const skillsStr = this.selectedTechSks.join(', ');
+    this.filterReq.habilities = skillsStr;
+    this.filterReq.languageIds =
+      this.selectedIdProficiency !== undefined ? '2' : '';
+    this.filterReq.levelIds = `${this.selectedIdProficiency ?? ''}`;
     this.filterReq.nameJobTitle = this.term;
+    this.filterReq.userListIds = `${this.selectedFavoriteId ?? ''}`;
     this.onFilterReqVal.emit(this.filterReq);
   }
 
@@ -66,9 +115,6 @@ export class ControlPanelComponent implements OnInit {
     this.masterService.getTechSkills().subscribe({
       next: (skills) => {
         this.skills = skills;
-      },
-      error: () => {
-        console.log('error');
       },
     });
   }
@@ -85,6 +131,14 @@ export class ControlPanelComponent implements OnInit {
     this.masterService.getLangProficiency().subscribe({
       next: (proficiency) => {
         this.proficiency = proficiency;
+      },
+    });
+  }
+
+  private getFavorites(userId: number) {
+    this.userService.getUserLists(userId).subscribe({
+      next: (favorites) => {
+        this.favorites = favorites;
       },
     });
   }
@@ -127,10 +181,6 @@ export class ControlPanelComponent implements OnInit {
     }
   }
 
-  public get isLanguageListEmpty(): boolean {
-    return !this.language || this.language.length === 0;
-  }
-
   private get isCacheProficiencyEmpty(): boolean {
     return (
       !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
@@ -155,5 +205,13 @@ export class ControlPanelComponent implements OnInit {
 
   public get isFavoriteListEmpty(): boolean {
     return !this.favorites || this.favorites.length === 0;
+  }
+
+  public get totalMsg(): string {
+    return this.filterService.resultMsg;
+  }
+
+  public get total(): number {
+    return this.filterService.total;
   }
 }

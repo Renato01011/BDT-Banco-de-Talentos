@@ -15,6 +15,10 @@ import { LangPersCrdComponent } from './components/lang-pers-crd/lang-pers-crd.c
 import { FeedbackCrdComponent } from './components/feedback-crd/feedback-crd.component';
 import { PipesModule } from '../core/pipes/pipes.module';
 
+import { ConfirmationService } from 'primeng/api';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NoResultsComponent } from './components/no-results/no-results.component';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -28,6 +32,7 @@ import { PipesModule } from '../core/pipes/pipes.module';
     EducPersCrdComponent,
     LangPersCrdComponent,
     FeedbackCrdComponent,
+    NoResultsComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +40,7 @@ import { PipesModule } from '../core/pipes/pipes.module';
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
+    PdfViewerModule,
   ],
   exports: [
     HeaderComponent,
@@ -48,6 +54,8 @@ import { PipesModule } from '../core/pipes/pipes.module';
     EducPersCrdComponent,
     LangPersCrdComponent,
     FeedbackCrdComponent,
+    NoResultsComponent,
   ],
+  providers: [ConfirmationService],
 })
 export class SharedModule {}

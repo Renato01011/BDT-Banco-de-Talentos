@@ -1,7 +1,11 @@
 <header class="navbar">
-  <shared-header></shared-header>
+  <shared-header
+    [name]="name"
+    [username]="username"
+    [isRecruiter]="isRecruiter"
+  ></shared-header>
 </header>
 
-<div class="content">
+<div class="content xl:px-8">
   <router-outlet></router-outlet>
 </div>

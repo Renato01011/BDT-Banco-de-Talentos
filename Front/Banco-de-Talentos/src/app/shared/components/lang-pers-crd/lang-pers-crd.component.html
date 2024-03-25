@@ -1,40 +1,55 @@
-<div class="flex flex-wrap border-round m-1 sm:m-2 sm:mr-0">
+<div class="flex flex-wrap border-round m-1 sm:my-2 sm:mr-2 sm:ml-4">
   <div class="w-12 p-1 flex align-items-center justify-content-between">
     <div class="flex align-items-center justify-content-center">
-      <span class="font-semibold text-base text-600">Idiomas</span>
+      <span class="font-semibold text-sm md:text-base text-600">Idiomas</span>
     </div>
-    <div class="flex align-items-center justify-content-center">
+    <div
+      class="flex align-items-center justify-content-center"
+      *ngIf="isRecruiter"
+    >
       <button
-        pButton
-        pRipple
-        icon="pi pi-plus"
-        class="p-button-rounded p-button-secondary p-button-text p-button-sm"
+        type="button"
+        class="mx-1 back-icon-btn"
+        *ngIf="isRecruiter"
         (click)="openNewLanguageDialog()"
-      ></button>
+      >
+        <i class="pi pi-plus text-sm"></i>
+      </button>
     </div>
   </div>
   <div
-    class="w-12 flex align-items-center surface-hover p-1 mx-0 sm:mx-3 border-round-md"
+    class="w-12 flex align-items-center surface-hover border-round-md p-1 mx-0 sm:mx-3 my-1"
+    *ngFor="let item of langProficiency"
   >
     <div class="w-3 sm:w-2 py-1 flex align-items-center justify-content-center">
       <div class="flex flex-column gap-2">
-        <div class="flex align-items-center font-semibold text-base text-800">
-          Inglés
+        <div
+          class="flex align-items-center font-semibold text-sm md:text-base text-800"
+        >
+          {{ item.languageName | titlecase }}
         </div>
-        <div class="flex align-items-center text-500 text-sm font-normal">
-          Avanzado
+        <div
+          class="flex align-items-center text-500 text-xs md:text-sm font-normal"
+        >
+          {{ item.proficiency | titlecase }}
         </div>
       </div>
     </div>
-    <div class="w-7 sm:w-8 p-1 flex align-items-center justify-content-start">
+    <div
+      class="w-9 sm:w-8 p-1 flex align-items-center justify-content-start"
+      [ngClass]="{ 'w-7': isRecruiter }"
+    >
       <p-rating
-        [(ngModel)]="rating"
+        [(ngModel)]="item.starCount"
         [stars]="5"
         [cancel]="false"
         [readonly]="true"
       ></p-rating>
     </div>
-    <div class="w-2 py-1 flex align-items-center justify-content-center">
+    <div
+      class="w-2 py-1 flex align-items-center justify-content-center"
+      *ngIf="isRecruiter"
+    >
       <div
         class="flex align-items-center justify-content-center h-4rem border-round"
       >
@@ -44,7 +59,7 @@
           type="button"
           icon="pi pi-pencil"
           class="p-button-rounded p-button-secondary p-button-text"
-          (click)="openEditLanguageDialog()"
+          (click)="openEditLanguageDialog(item.idTalentLanguage)"
         ></button>
       </div>
     </div>
@@ -74,18 +89,17 @@
     </div>
     <form
       class="w-12 flex flex-column"
-      [formGroup]="newLanguageForm"
       autocomplete="off"
+      [formGroup]="newLanguageForm"
       (ngSubmit)="onSveNewLanguageForm()"
     >
       <div class="w-12 flex flex-column justify-content-start mb-2">
         <label for="languages" class="block text-left mb-2">Idioma</label>
         <p-dropdown
           [options]="language"
-          [showClear]="true"
           placeholder="Nombre del idioma"
           optionLabel="name"
-          optionValue="name"
+          optionValue="id"
           appendTo="body"
           class="w-full text-left"
           styleClass="w-full"
@@ -103,10 +117,9 @@
         <label for="proficiency" class="block text-left mb-2">Nivel</label>
         <p-dropdown
           [options]="proficiency"
-          [showClear]="true"
           placeholder="Nombre del idioma"
           optionLabel="name"
-          optionValue="name"
+          optionValue="id"
           appendTo="body"
           class="w-full text-left"
           styleClass="w-full"
@@ -141,6 +154,7 @@
             pRipple
             label="Cancelar"
             icon="pi pi-times"
+            type="button"
             class="p-button-outlined p-button-secondary w-full"
             (click)="hideNewLanguageDialog()"
           ></button>
@@ -151,7 +165,7 @@
           <button
             pButton
             pRipple
-            label="Editar"
+            label="Agregar"
             icon="pi pi-check"
             type="submit"
             class="p-button-success w-full"
@@ -176,11 +190,12 @@
       <span class="text-lg md:text-xl font-semibold text-800">
         Edita tu experiencia
       </span>
-      <span
-        class="text-red-300 hover:text-red-500 text-sm font-light mx-1 cursor-pointer"
+      <button
+        class="text-red-300 hover:text-red-500 mx-1 cursor-pointer border-none bg-white"
+        (click)="confirm()"
       >
-        <i class="pi pi-trash"></i>
-      </span>
+        <i class="pi pi-trash text-lg hover:text-xl"></i>
+      </button>
     </div>
   </ng-template>
   <div class="w-12 flex flex-column align-items-center">
@@ -191,18 +206,17 @@
     </div>
     <form
       class="w-12 flex flex-column"
-      [formGroup]="editLanguageForm"
       autocomplete="off"
+      [formGroup]="editLanguageForm"
       (ngSubmit)="onSveEditLangForm()"
     >
       <div class="w-12 flex flex-column justify-content-start mb-2">
         <label for="editLanguages" class="block text-left mb-2">Idioma</label>
         <p-dropdown
           [options]="language"
-          [showClear]="true"
           placeholder="Nombre del idioma"
           optionLabel="name"
-          optionValue="name"
+          optionValue="id"
           appendTo="body"
           class="w-full text-left"
           styleClass="w-full"
@@ -222,10 +236,9 @@
         <label for="editProficiency" class="block text-left mb-2">Nivel</label>
         <p-dropdown
           [options]="proficiency"
-          [showClear]="true"
           placeholder="Nombre del idioma"
           optionLabel="name"
-          optionValue="name"
+          optionValue="id"
           appendTo="body"
           class="w-full text-left"
           styleClass="w-full"
@@ -264,6 +277,7 @@
             pRipple
             label="Cancelar"
             icon="pi pi-times"
+            type="button"
             class="p-button-outlined p-button-secondary w-full"
             (click)="hideEditLanguageDialog()"
           ></button>

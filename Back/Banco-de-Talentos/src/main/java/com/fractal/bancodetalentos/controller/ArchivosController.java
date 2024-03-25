@@ -24,4 +24,11 @@ public class ArchivosController {
         Map<String, String> resp = archivosService.addNewFile(documento, id);
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
+
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
+    @PutMapping("/update/{idFile}/talent/{id}")
+    public ResponseEntity<Map<String, String>> updateCv(@PathVariable Integer idFile, @PathVariable Integer id, @Valid @RequestBody Documento documento) {
+        Map<String, String> resp = archivosService.updateCV(documento, id, idFile);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
 }

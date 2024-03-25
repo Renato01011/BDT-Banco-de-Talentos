@@ -7,4 +7,6 @@ import java.util.Map;
 public interface ArchivosService {
 
     Map<String, String> addNewFile(Documento documento, Integer id);
+
+    Map<String, String> updateCV(Documento documento, Integer id, Integer idFile);
 }

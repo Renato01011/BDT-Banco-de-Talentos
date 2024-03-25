@@ -166,11 +166,33 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   public onSveFile() {
-    if (!this.onSaveForm(this.cvForm) || !this.selectedId || !this.base64file) {
+    if (
+      !this.onSaveForm(this.cvForm) ||
+      !this.selectedId ||
+      !this.base64file ||
+      !this.customTalent?.resume
+    ) {
       return;
     }
     const { fileType } = this.cvForm.value;
-    console.log(fileType);
+    const body = {
+      nombre: this.extractFileName(this.fileDetailsText),
+      tipoArchivo: fileType,
+      archivo: this.base64file.split(',')[1],
+    };
+    this.editInfoService
+      .updateResume(body, this.customTalent.resume.idDocument, this.selectedId)
+      .subscribe({
+        next: (resp) => {
+          this.toastService.addProperties(
+            'success',
+            'Se actualizo correctamente',
+            resp.message
+          );
+          this.talentId.emit(Number(resp.id));
+          this.hideResumeDialog();
+        },
+      });
   }
 
   extractFileName(fileName: string): string {

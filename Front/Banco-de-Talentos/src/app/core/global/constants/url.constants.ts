@@ -62,12 +62,14 @@ export class UrlConstants {
     environment.host + environment.context + '/lang/delete';
   public static readonly URL_REQ_USER =
     environment.host + environment.context + '/user/picture';
-  public static readonly URL_ADD_LIST_USER = 
+  public static readonly URL_ADD_LIST_USER =
     environment.host + environment.context + '/list/new';
-  public static readonly URL_GET_LISTS_USER = 
+  public static readonly URL_GET_LISTS_USER =
     environment.host + environment.context + '/list';
-  public static readonly URL_ADD_TALENT_TO_LIST = 
+  public static readonly URL_ADD_TALENT_TO_LIST =
     environment.host + environment.context + '/list-user/add';
-  public static readonly URL_EDIT_LIST_USER_TALENT = 
+  public static readonly URL_EDIT_LIST_USER_TALENT =
     environment.host + environment.context + '/list-user/edit';
+  public static readonly URL_UPDATE_CV =
+    environment.host + environment.context + '/file/update';
 }

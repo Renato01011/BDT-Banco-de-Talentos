@@ -86,6 +86,7 @@ export class ListComponent implements OnInit {
   }
 
   public searchByTalentId(id: number): void {
+    if (isNaN(id)) return;
     this.loaderService.showLoader();
     this.talentService
       .getTalentById(id, this.authService.idUser)

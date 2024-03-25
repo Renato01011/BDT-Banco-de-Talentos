@@ -35,9 +35,8 @@ export class ControlPanelComponent implements OnInit {
 
   selectedTechSks: string[] = [];
   selectedIdLanguage: string = '';
-  selectedIdProficiency: string = '';
   term: string = '';
-  selectedIdFavorite: string = '';
+
   public idUser?: number;
 
   public isRecruiter: boolean = false;
@@ -50,6 +49,9 @@ export class ControlPanelComponent implements OnInit {
     nameJobTitle: '',
     userListIds: '',
   };
+
+  selectedIdProficiency?: number;
+  selectedFavoriteId?: number;
 
   @Output()
   public onFilterReqVal = new EventEmitter<FilterRequest>();
@@ -71,6 +73,15 @@ export class ControlPanelComponent implements OnInit {
     this.getFavorites(this.idUser);
   }
 
+  deselectFavorite(item: number) {
+    if (this.selectedFavoriteId === item) {
+      this.selectedFavoriteId = undefined;
+    }
+    if (this.selectedIdProficiency === item) {
+      this.selectedIdProficiency = undefined;
+    }
+  }
+
   handleTechBtnClick(event: any) {
     if (!this.isSkillsListEmpty) {
       this.overlayPanelTech.toggle(event);
@@ -85,17 +96,15 @@ export class ControlPanelComponent implements OnInit {
     this.filterReq.habilities = skillsStr;
     this.filterReq.languageIds =
       `${this.selectedIdProficiency}` === '' ? '' : '2';
-    this.filterReq.levelIds = `${this.selectedIdProficiency}`;
+    this.filterReq.levelIds = `${this.selectedIdProficiency ?? ''}`;
     this.filterReq.nameJobTitle = this.term;
-    this.filterReq.userListIds = this.selectedIdFavorite;
+    this.filterReq.userListIds = `${this.selectedFavoriteId ?? ''}`;
     this.onFilterReqVal.emit(this.filterReq);
     this.resetFilterField();
   }
 
   private resetFilterField() {
     this.selectedIdLanguage = '';
-    this.selectedIdProficiency = '';
-    this.selectedIdFavorite = '';
   }
 
   onNewTalent() {

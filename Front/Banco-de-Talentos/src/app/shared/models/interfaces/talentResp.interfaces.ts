@@ -39,6 +39,7 @@ export interface EducationalExperience {
   degree: string;
   initialDate: string;
   finalDate: string;
+  flActualidad: number;
 }
 
 export interface LanguageLevel {
@@ -78,6 +79,7 @@ export interface WorkExperience {
   jobTitle: string;
   intialDate: string;
   finalDate: string;
+  flActualidad: number;
 }
 
 export interface Feedbacks {

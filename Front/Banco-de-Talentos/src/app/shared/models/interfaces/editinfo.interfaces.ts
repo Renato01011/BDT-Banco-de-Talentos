@@ -23,6 +23,7 @@ export interface EditEducExp {
     grado: string;
     fechaInicio: string;
     fechaFin: string;
+    flActualidad: number;
 }
 
 export interface EditWorkExp {
@@ -30,6 +31,7 @@ export interface EditWorkExp {
     puesto: string;
     fechaInicio: string;
     fechaFin: string;
+    flActualidad: number;
 }
 
 export interface EditLang {

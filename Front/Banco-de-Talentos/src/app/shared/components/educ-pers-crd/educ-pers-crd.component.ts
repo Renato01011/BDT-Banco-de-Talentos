@@ -95,6 +95,7 @@ export class EducPersCrdComponent implements OnInit {
           grado: this.editEducForm.get('editDegree')!.value,
           fechaInicio: this.editEducForm.get('editStDate')!.value,
           fechaFin: this.editEducForm.get('editEdDate')!.value,
+          flActualidad: this.editEducForm.get('tPresent')!.value ? 1 : 0,
         },
         this.selectedId,
         this.currEditingEducExp
@@ -116,7 +117,7 @@ export class EducPersCrdComponent implements OnInit {
     if (!this.onSaveForm(this.newEducForm)) return;
     if (!this.selectedId) return;
 
-    const { name, career, degree, stDate, edDate } =
+    const { name, career, degree, stDate, edDate, hFractal, tPresent } =
       this.newEducForm.getRawValue();
     const body = {
       institucion: name,
@@ -124,6 +125,7 @@ export class EducPersCrdComponent implements OnInit {
       grado: degree,
       fechaInicio: stDate,
       fechaFin: edDate,
+      flActualidad: tPresent ? 1 : 0,
     };
     this.addInfoService.addEducExp(body, this.selectedId).subscribe({
       next: (resp) => {
@@ -205,14 +207,20 @@ export class EducPersCrdComponent implements OnInit {
     const editCareer = resp.major;
     const editDegree = resp.degree;
     const editStDate = new Date(resp.initialDate);
-    const editEdDate = new Date(resp.finalDate);
+    const editEdDate = resp.flActualidad == 1 ? new Date() : new Date(resp.finalDate);
+    const hFractal = editName == 'Fractal';
+    const tPresent = resp.flActualidad == 1;
     this.editEducForm.reset({
       editName,
       editCareer,
       editDegree,
       editStDate,
       editEdDate,
+      hFractal,
+      tPresent,
     });
+    if (hFractal) { this.editEducForm.controls['editName'].disable(); }
+    if (tPresent) { this.editEducForm.controls['editEdDate'].disable(); }
     this.editEducationalExperienceDialog = true;
   }
 
@@ -243,7 +251,7 @@ export class EducPersCrdComponent implements OnInit {
   public onCheckFractal() {
     if (this.newEducForm.get('hFractal')!.value) {
       this.newEducForm.controls['name'].disable();
-      this.newEducForm.controls['name'].setValue('FRACTAL');
+      this.newEducForm.controls['name'].setValue('Fractal');
     } else {
       this.newEducForm.controls['name'].enable();
       this.newEducForm.controls['name'].setValue('');
@@ -262,7 +270,7 @@ export class EducPersCrdComponent implements OnInit {
   public onCheckEdtFractal() {
     if (this.editEducForm.get('hFractal')!.value) {
       this.editEducForm.controls['editName'].disable();
-      this.editEducForm.controls['editName'].setValue('FRACTAL');
+      this.editEducForm.controls['editName'].setValue('Fractal');
     } else {
       this.editEducForm.controls['editName'].enable();
       this.editEducForm.controls['editName'].setValue('');

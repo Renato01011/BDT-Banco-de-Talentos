@@ -41,6 +41,7 @@ export interface WorkExperienceTalentModel {
     puesto: string,
     fechaInicio: Date,
     fechaFin: Date,
+    flActualidad: number,
 }
 
 export interface EducationalExperienceTalentModel {
@@ -49,6 +50,7 @@ export interface EducationalExperienceTalentModel {
     grado: string,
     fechaInicio: Date,
     fechaFin: Date,
+    flActualidad: number,
 }
 
 export interface LanguagesTalentModel {

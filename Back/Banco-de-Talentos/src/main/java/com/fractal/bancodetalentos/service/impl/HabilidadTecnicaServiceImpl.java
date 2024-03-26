@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,12 +63,12 @@ public class HabilidadTecnicaServiceImpl implements HabilidadTecnicaService {
         if (existsSkill == 1) {
             throw new DuplicatedDataException(tecnicas.getNombre());
         }
-
+        
         StoredProcedureQuery storedProcedureQueryHabilidadTecnica = entityManager
                 .createStoredProcedureQuery("SP_ADD_TECHNICAL_ABILITY")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(3, BigDecimal.class, ParameterMode.IN)
                 .setParameter(1, id)
                 .setParameter(2, tecnicas.getNombre())
                 .setParameter(3, tecnicas.getAnios());

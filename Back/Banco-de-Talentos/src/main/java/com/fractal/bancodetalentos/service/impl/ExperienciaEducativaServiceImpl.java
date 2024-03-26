@@ -45,12 +45,14 @@ public class ExperienciaEducativaServiceImpl implements ExperienciaEducativaServ
                 .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(6, Date.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(7, Integer.class, ParameterMode.IN)
                 .setParameter(1, id)
                 .setParameter(2, educativas.getInstitucion())
                 .setParameter(3, educativas.getCarrera())
                 .setParameter(4, educativas.getGrado())
                 .setParameter(5, educativas.getFechaInicio())
-                .setParameter(6, educativas.getFechaFin());
+                .setParameter(6, educativas.getFechaFin())
+                .setParameter(7, educativas.getFlActualidad());
         storedProcedureQueryExperienciasEducativas.execute();
         Map<String, String> resp = new HashMap<>();
         resp.put("id", String.valueOf(id));
@@ -81,12 +83,14 @@ public class ExperienciaEducativaServiceImpl implements ExperienciaEducativaServ
                 .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(6, Date.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(7, Integer.class, ParameterMode.IN)
                 .setParameter(1, idEducExp)
                 .setParameter(2, experienciasEducativas.getInstitucion())
                 .setParameter(3, experienciasEducativas.getCarrera())
                 .setParameter(4, experienciasEducativas.getGrado())
                 .setParameter(5, experienciasEducativas.getFechaInicio())
-                .setParameter(6, experienciasEducativas.getFechaFin());
+                .setParameter(6, experienciasEducativas.getFechaFin())
+                .setParameter(7, experienciasEducativas.getFlActualidad());
         storedProcedureQueryExperienciasEducativas.execute();
 
         GeneralResp generalResp = new GeneralResp();

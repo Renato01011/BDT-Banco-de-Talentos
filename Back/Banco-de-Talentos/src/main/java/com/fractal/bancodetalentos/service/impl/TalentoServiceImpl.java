@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class TalentoServiceImpl implements TalentoService {
                         .createStoredProcedureQuery("SP_ADD_TECHNICAL_ABILITY")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-                        .registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN)
+                        .registerStoredProcedureParameter(3, BigDecimal.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
                         .setParameter(2, habilidadesTecnicas.getNombre())
                         .setParameter(3, habilidadesTecnicas.getAnios());
@@ -93,11 +94,13 @@ public class TalentoServiceImpl implements TalentoService {
                         .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(4, Date.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
+                        .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
                         .setParameter(2, experienciasLaborales.getEmpresa())
                         .setParameter(3, experienciasLaborales.getPuesto())
                         .setParameter(4, experienciasLaborales.getFechaInicio())
-                        .setParameter(5, experienciasLaborales.getFechaFin());
+                        .setParameter(5, experienciasLaborales.getFechaFin())
+                        .setParameter(6, experienciasLaborales.getFlActualidad());
                 storedProcedureQueryExperienciasLaborales.execute();
             }
         }
@@ -113,12 +116,14 @@ public class TalentoServiceImpl implements TalentoService {
                         .registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(6, Date.class, ParameterMode.IN)
+                        .registerStoredProcedureParameter(7, Integer.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
                         .setParameter(2, experienciasEducativas.getInstitucion())
                         .setParameter(3, experienciasEducativas.getCarrera())
                         .setParameter(4, experienciasEducativas.getGrado())
                         .setParameter(5, experienciasEducativas.getFechaInicio())
-                        .setParameter(6, experienciasEducativas.getFechaFin());
+                        .setParameter(6, experienciasEducativas.getFechaFin())
+                        .setParameter(7, experienciasEducativas.getFlActualidad());
                 storedProcedureQueryExperienciasEducativas.execute();
             }
         }
@@ -320,7 +325,7 @@ public class TalentoServiceImpl implements TalentoService {
             TechnicalAbilitiesResp technicalAbility = new TechnicalAbilitiesResp();
             technicalAbility.setIdTechnicalAbility((Integer) objects[0]);
             technicalAbility.setName((String) objects[1]);
-            technicalAbility.setYears((Integer) objects[2]);
+            technicalAbility.setYears((BigDecimal) objects[2]);
             technicalAbilitiesList.add(technicalAbility);
         }
         talentResp.setTechnicalAbilities(technicalAbilitiesList);
@@ -344,6 +349,7 @@ public class TalentoServiceImpl implements TalentoService {
             workExperienceTemp.setJobTitle((String) objects[2]);
             workExperienceTemp.setIntialDate((Date) objects[3]);
             workExperienceTemp.setFinalDate((Date) objects[4]);
+            workExperienceTemp.setFlActualidad((Integer) objects[5]);
             workExperiencesList.add(workExperienceTemp);
         }
         talentResp.setWorkExperiences(workExperiencesList);
@@ -358,6 +364,7 @@ public class TalentoServiceImpl implements TalentoService {
             educationalExperienceTemp.setDegree((String) objects[3]);
             educationalExperienceTemp.setInitialDate((Date) objects[4]);
             educationalExperienceTemp.setFinalDate((Date) objects[5]);
+            educationalExperienceTemp.setFlActualidad((Integer) objects[6]);
             educationalExperiencesList.add(educationalExperienceTemp);
         }
         talentResp.setEducationalExperiences(educationalExperiencesList);

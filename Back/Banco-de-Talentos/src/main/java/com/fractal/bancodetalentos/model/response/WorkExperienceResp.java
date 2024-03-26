@@ -17,4 +17,5 @@ public class WorkExperienceResp {
     private String jobTitle;
     private Date intialDate;
     private Date finalDate;
+    private Integer flActualidad;
 }

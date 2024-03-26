@@ -13,7 +13,7 @@ import { UserList } from '../../models/interfaces/userList.interfaces';
   providedIn: 'root',
 })
 export class UserService {
-  private favorites: UserList[] = [];
+  public favoritesCache: UserList[] = [];
 
   constructor(private httpClient: HttpClient) {}
 
@@ -33,7 +33,7 @@ export class UserService {
   getUserLists(userId: number): Observable<UserList[]> {
     return this.httpClient
       .get<UserList[]>(`${UrlConstants.URL_GET_LISTS_USER}/${userId}`)
-      .pipe(tap((favorites) => (this.favorites = favorites)));
+      .pipe(tap((favorites) => (this.favoritesCache = favorites)));
   }
 
   addTalentToList(idListUser: number, idTalent: number) {
@@ -50,9 +50,5 @@ export class UserService {
       `${UrlConstants.URL_EDIT_LIST_USER_TALENT}/${idListUserTalent}`,
       body
     );
-  }
-
-  public get favoritesList(): UserList[] {
-    return this.favorites;
   }
 }

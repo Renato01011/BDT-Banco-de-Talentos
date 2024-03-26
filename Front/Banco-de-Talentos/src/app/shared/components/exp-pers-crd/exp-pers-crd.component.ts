@@ -85,7 +85,7 @@ export class ExpPersCrdComponent implements OnInit {
   public onSveNewExp() {
     if (!this.onSaveForm(this.newExpForm)) return;
     if (!this.selectedId) return;
-    console.log(this.newExpForm.getRawValue());
+
     const { company, job, sDate, eDate } = this.newExpForm.getRawValue();
     const body = {
       empresa: company,
@@ -95,7 +95,6 @@ export class ExpPersCrdComponent implements OnInit {
     };
     this.addInfoService.addWorkExp(body, this.selectedId).subscribe({
       next: (resp) => {
-        //console.log(resp.message);
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',

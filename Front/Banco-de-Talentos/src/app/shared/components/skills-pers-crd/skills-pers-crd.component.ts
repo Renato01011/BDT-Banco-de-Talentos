@@ -98,7 +98,7 @@ export class SkillsPersCrdComponent implements OnInit {
   public onSveSoftSkForm() {
     if (!this.onSaveForm(this.softSkForm)) return;
     if (!this.selectedId) return;
-    console.log(this.softSkForm.value);
+
     const { name } = this.softSkForm.value;
     const body = {
       nombre: name,

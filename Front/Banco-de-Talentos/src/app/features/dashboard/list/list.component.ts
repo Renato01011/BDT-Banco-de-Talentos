@@ -63,10 +63,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTalentList(this.filterReq);
-
     this.isRecruiter = this.authService.isRecruiter;
-    console.log(this.isRecruiter);
-    console.log(this.authService.idUser);
   }
 
   public filterTalent(filter: FilterRequest): void {

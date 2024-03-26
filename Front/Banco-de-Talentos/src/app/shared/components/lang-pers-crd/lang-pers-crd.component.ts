@@ -79,7 +79,7 @@ export class LangPersCrdComponent implements OnInit {
   public onSveNewLanguageForm() {
     if (!this.onSaveForm(this.newLanguageForm)) return;
     if (!this.selectedId) return;
-    console.log(this.newLanguageForm.value);
+
     const { languages, proficiency, rating } = this.newLanguageForm.value;
     const body = {
       idiomaId: languages,
@@ -88,7 +88,6 @@ export class LangPersCrdComponent implements OnInit {
     };
     this.addInfoService.addLang(body, this.selectedId).subscribe({
       next: (resp) => {
-        //console.log(resp.message);
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',
@@ -167,6 +166,8 @@ export class LangPersCrdComponent implements OnInit {
   }
 
   public openEditLanguageDialog(id: number) {
+    this.checkLanguages();
+    this.checkProficiency();
     const resp = this.findLangById(id);
     this.currEditingLangProf = id;
     const editLanguages = resp.idLanguage;
@@ -186,6 +187,8 @@ export class LangPersCrdComponent implements OnInit {
   }
 
   public openNewLanguageDialog() {
+    this.checkLanguages();
+    this.checkProficiency();
     this.newLanguageDialog = true;
   }
 
@@ -209,5 +212,56 @@ export class LangPersCrdComponent implements OnInit {
     const cacheProficiencies =
       this.masterService.cacheStorage.byLangProficiency.proficiencies;
     return cacheProficiencies;
+  }
+
+  private get isCacheLanguagesEmpty(): boolean {
+    return (
+      !this.masterService.cacheStorage.byLanguage.languages ||
+      this.masterService.cacheStorage.byLanguage.languages.length === 0
+    );
+  }
+
+  private checkLanguages() {
+    if (this.isCacheLanguagesEmpty) {
+      this.getLanguages();
+    } else {
+      const cacheLanguages =
+        this.masterService.cacheStorage.byLanguage.languages;
+      this.language = cacheLanguages;
+    }
+  }
+
+  private getLanguages(): void {
+    this.masterService.getLanguages().subscribe({
+      next: (languages) => {
+        this.language = languages;
+      },
+    });
+  }
+
+  private get isCacheProficiencyEmpty(): boolean {
+    return (
+      !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
+      this.masterService.cacheStorage.byLangProficiency.proficiencies.length ===
+        0
+    );
+  }
+
+  private checkProficiency() {
+    if (this.isCacheProficiencyEmpty) {
+      this.getProficiencies();
+    } else {
+      const cacheProficiencies =
+        this.masterService.cacheStorage.byLangProficiency.proficiencies;
+      this.proficiency = cacheProficiencies;
+    }
+  }
+
+  private getProficiencies(): void {
+    this.masterService.getLangProficiency().subscribe({
+      next: (proficiency) => {
+        this.proficiency = proficiency;
+      },
+    });
   }
 }

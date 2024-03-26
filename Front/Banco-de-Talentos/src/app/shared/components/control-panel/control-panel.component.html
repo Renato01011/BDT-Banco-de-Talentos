@@ -3,13 +3,15 @@
     <div
       class="w-12 sm:w-4 py-1 px-2 flex align-items-center justify-content-center sm:justify-content-start"
     >
-      <div class="w-4 flex align-items-center justify-content-start p-1">
+      <div
+        class="w-4 flex align-items-center justify-content-start p-1"
+        *ngIf="isRecruiter"
+      >
         <p-button
           label="Nuevo Talento"
           icon="pi pi-plus"
           styleClass="p-button-sm p-button-outlined p-button-info"
           (click)="onNewTalent()"
-          *ngIf="isRecruiter"
         ></p-button>
       </div>
       <div class="w-8 flex align-items-center justify-content-start p-1">
@@ -48,7 +50,6 @@
           label="Habilidades"
           styleClass="p-button-sm p-button-rounded p-button-secondary"
           (click)="handleTechBtnClick($event)"
-          [disabled]="isSkillsListEmpty"
         ></p-button>
       </div>
 
@@ -88,8 +89,7 @@
         <p-button
           label="Nivel de inglés"
           styleClass="p-button-sm p-button-rounded p-button-secondary"
-          (click)="isProficiencyListEmpty ? null : proficiencyOP.toggle($event)"
-          [disabled]="isProficiencyListEmpty"
+          (click)="handleProficiencyBtnClick($event)"
         ></p-button>
       </div>
 
@@ -133,9 +133,7 @@
         <p-button
           label="Favoritos"
           styleClass="p-button-sm p-button-rounded p-button-secondary"
-          (click)="isFavoriteListEmpty ? null : favorite.toggle($event)"
-          [disabled]="isFavoriteListEmpty"
-          (click)="onFavorite()"
+          (click)="handleFavoriteBtnClick($event)"
         ></p-button>
       </div>
 

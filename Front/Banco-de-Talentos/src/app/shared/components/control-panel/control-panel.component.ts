@@ -26,6 +26,8 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 })
 export class ControlPanelComponent implements OnInit {
   @ViewChild('techSkills') overlayPanelTech!: OverlayPanel;
+  @ViewChild('proficiencyOP') overlayPanelProficiency!: OverlayPanel;
+  @ViewChild('favorite') overlayPanelFavorite!: OverlayPanel;
 
   skills: TechSkills[] = [];
   language: LanguageModel[] = [];
@@ -65,12 +67,8 @@ export class ControlPanelComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.checkTechSkills();
-    this.checkLanguages();
-    this.checkProficiency();
     this.isRecruiter = this.authService.isRecruiter;
     this.idUser = this.authService.idUser;
-    this.getFavorites(this.idUser);
   }
 
   onFavorite() {
@@ -88,12 +86,18 @@ export class ControlPanelComponent implements OnInit {
   }
 
   handleTechBtnClick(event: any) {
-    if (!this.isSkillsListEmpty) {
-      this.overlayPanelTech.toggle(event);
-    }
-    if (this.isCacheSkillsEmpty) {
-      this.getTechSkills();
-    }
+    this.checkTechSkills();
+    this.overlayPanelTech.toggle(event);
+  }
+
+  handleProficiencyBtnClick(event: any) {
+    this.checkProficiency();
+    this.overlayPanelProficiency.toggle(event);
+  }
+
+  handleFavoriteBtnClick(event: any) {
+    this.checkFavorites();
+    this.overlayPanelFavorite.toggle(event);
   }
 
   emitFilter() {
@@ -119,14 +123,6 @@ export class ControlPanelComponent implements OnInit {
     });
   }
 
-  private getLanguages(): void {
-    this.masterService.getLanguages().subscribe({
-      next: (languages) => {
-        this.language = languages;
-      },
-    });
-  }
-
   private getProficiencies(): void {
     this.masterService.getLangProficiency().subscribe({
       next: (proficiency) => {
@@ -141,6 +137,22 @@ export class ControlPanelComponent implements OnInit {
         this.favorites = favorites;
       },
     });
+  }
+
+  public get isCacheFavoritesEmpty(): boolean {
+    return (
+      !this.userService.favoritesCache ||
+      this.userService.favoritesCache.length === 0
+    );
+  }
+
+  private checkFavorites(): void {
+    if (!this.authService.idUser) return;
+    if (this.isCacheFavoritesEmpty) {
+      this.getFavorites(this.authService.idUser);
+    } else {
+      this.favorites = this.userService.favoritesCache;
+    }
   }
 
   public get isSkillsListEmpty(): boolean {
@@ -164,23 +176,6 @@ export class ControlPanelComponent implements OnInit {
     }
   }
 
-  private get isCacheLanguagesEmpty(): boolean {
-    return (
-      !this.masterService.cacheStorage.byLanguage.languages ||
-      this.masterService.cacheStorage.byLanguage.languages.length === 0
-    );
-  }
-
-  private checkLanguages() {
-    if (this.isCacheLanguagesEmpty) {
-      this.getLanguages();
-    } else {
-      const cacheLanguages =
-        this.masterService.cacheStorage.byLanguage.languages;
-      this.language = cacheLanguages;
-    }
-  }
-
   private get isCacheProficiencyEmpty(): boolean {
     return (
       !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
@@ -197,14 +192,6 @@ export class ControlPanelComponent implements OnInit {
         this.masterService.cacheStorage.byLangProficiency.proficiencies;
       this.proficiency = cacheProficiencies;
     }
-  }
-
-  public get isProficiencyListEmpty(): boolean {
-    return !this.proficiency || this.proficiency.length === 0;
-  }
-
-  public get isFavoriteListEmpty(): boolean {
-    return !this.favorites || this.favorites.length === 0;
   }
 
   public get totalMsg(): string {

@@ -2,6 +2,7 @@
   <ng-template #noDocuments>
     <div
       class="w-12 sm:w-8 p-1 flex align-items-center justify-content-center text-blue-400"
+      *ngIf="isRecruiter"
     >
       Sube tu certificado, diploma o algún archivo que respalde tus aptitudes.
       <i

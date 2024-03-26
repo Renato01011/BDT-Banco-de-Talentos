@@ -115,7 +115,7 @@ export class EducPersCrdComponent implements OnInit {
   public onSveNewEducForm() {
     if (!this.onSaveForm(this.newEducForm)) return;
     if (!this.selectedId) return;
-    console.log(this.newEducForm.getRawValue());
+
     const { name, career, degree, stDate, edDate } =
       this.newEducForm.getRawValue();
     const body = {
@@ -127,7 +127,6 @@ export class EducPersCrdComponent implements OnInit {
     };
     this.addInfoService.addEducExp(body, this.selectedId).subscribe({
       next: (resp) => {
-        //console.log(resp.message);
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',

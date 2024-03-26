@@ -125,10 +125,9 @@ export class ProfPersCrdComponent implements OnInit {
       { label: 'CV', command: (event) => this.btnCVhandler() },
       { label: 'CV Fractal' },
     ];
-    this.checkCurrencies();
+
     this.isRecruiter = this.authService.isRecruiter;
     this.idUser = this.authService.idUser;
-    this.favorites = this.userService.favoritesList;
   }
   public onFileUpload(event: any) {
     const file: File = event.target.files[0];
@@ -214,7 +213,7 @@ export class ProfPersCrdComponent implements OnInit {
     this.enableEditViewPdf = false;
     this.titleForCv = 'Curriculum Vitae';
     this.paragraphForCV = 'Curriculum Vitae';
-    console.log(this.customTalent?.resume);
+
     this.openResumeDialog();
   }
 
@@ -259,9 +258,34 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   onOpenOverlayPanel(event: any) {
+    this.checkFavorites();
     this.search = '';
     this.isAvailableToEdit();
     this.overlayPanelFvt.toggle(event);
+  }
+
+  private getFavorites(userId: number) {
+    this.userService.getUserLists(userId).subscribe({
+      next: (favorites) => {
+        this.favorites = favorites;
+      },
+    });
+  }
+
+  public get isCacheFavoritesEmpty(): boolean {
+    return (
+      !this.userService.favoritesCache ||
+      this.userService.favoritesCache.length === 0
+    );
+  }
+
+  private checkFavorites(): void {
+    if (!this.authService.idUser) return;
+    if (this.isCacheFavoritesEmpty) {
+      this.getFavorites(this.authService.idUser);
+    } else {
+      this.favorites = this.userService.favoritesCache;
+    }
   }
 
   onSearchFavorites(search: string) {
@@ -284,6 +308,7 @@ export class ProfPersCrdComponent implements OnInit {
           )
           .subscribe({
             next: (resp) => {
+              this.userService.favoritesCache = [];
               this.overlayPanelFvt.hide();
               this.toastService.addProperties(
                 'success',
@@ -521,6 +546,7 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   public openEditSalaryDialog() {
+    this.checkCurrencies();
     const currency = this.coin.id;
     const iAmount = this.customTalent?.initialSalary ?? '';
     const fAmount = this.customTalent?.finalSalary ?? '';
@@ -599,10 +625,6 @@ export class ProfPersCrdComponent implements OnInit {
         this.coins = coins;
       },
     });
-  }
-
-  public get isCurrencyListEmpty(): boolean {
-    return !this.coins || this.coins.length === 0;
   }
 
   private get isCacheCurrenciesEmpty(): boolean {

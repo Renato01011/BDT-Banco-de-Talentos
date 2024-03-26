@@ -10,7 +10,6 @@ import {
 } from '@angular/forms';
 import { switchMap } from 'rxjs';
 
-import { MasterRespConst } from 'src/app/core/global/constants/master-resp.constants';
 import * as MasterModels from 'src/app/shared/models/interfaces/master.interfaces';
 
 import { FrmValService } from 'src/app/shared/service/frmVal/frm-val.service';
@@ -149,11 +148,11 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.languages = this.uploadLanguages;
-    this.levels = this.uploadProficiency;
-    this.coins = this.uploadCurrencies;
+    this.checkCurrencies();
     this.checkCountries();
     this.checkProfiles();
+    this.checkLanguages();
+    this.checkProficiency();
     this.OnCountryChangeGetData();
     this.OnFinalSalaryInput();
     this.OnInitialSalaryInput();
@@ -206,23 +205,6 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       const cacheProfiles = this.masterService.cacheStorage.byProfile.profiles;
       this.profiles = cacheProfiles;
     }
-  }
-
-  private get uploadLanguages(): MasterModels.LanguageModel[] {
-    const cacheLanguages = this.masterService.cacheStorage.byLanguage.languages;
-    return cacheLanguages;
-  }
-
-  public get uploadProficiency(): MasterModels.LangProficiencyModel[] {
-    const cacheProficiencies =
-      this.masterService.cacheStorage.byLangProficiency.proficiencies;
-    return cacheProficiencies;
-  }
-
-  public get uploadCurrencies(): MasterModels.CurrenciesModel[] {
-    const cacheCurrencies =
-      this.masterService.cacheStorage.byCurrency.currencies;
-    return cacheCurrencies;
   }
 
   ngOnDestroy(): void {}
@@ -678,6 +660,82 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         'Revise los campos ingresados'
       );
       this.ValidateAllFormFields(this.newTalentForm);
+    }
+  }
+
+  private get isCacheLanguagesEmpty(): boolean {
+    return (
+      !this.masterService.cacheStorage.byLanguage.languages ||
+      this.masterService.cacheStorage.byLanguage.languages.length === 0
+    );
+  }
+
+  private checkLanguages() {
+    if (this.isCacheLanguagesEmpty) {
+      this.getLanguages();
+    } else {
+      const cacheLanguages =
+        this.masterService.cacheStorage.byLanguage.languages;
+      this.languages = cacheLanguages;
+    }
+  }
+
+  private getLanguages(): void {
+    this.masterService.getLanguages().subscribe({
+      next: (languages) => {
+        this.languages = languages;
+      },
+    });
+  }
+
+  private get isCacheProficiencyEmpty(): boolean {
+    return (
+      !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
+      this.masterService.cacheStorage.byLangProficiency.proficiencies.length ===
+        0
+    );
+  }
+
+  private checkProficiency() {
+    if (this.isCacheProficiencyEmpty) {
+      this.getProficiencies();
+    } else {
+      const cacheProficiencies =
+        this.masterService.cacheStorage.byLangProficiency.proficiencies;
+      this.levels = cacheProficiencies;
+    }
+  }
+
+  private getProficiencies(): void {
+    this.masterService.getLangProficiency().subscribe({
+      next: (proficiency) => {
+        this.levels = proficiency;
+      },
+    });
+  }
+
+  private getCurrencies(): void {
+    this.masterService.getCurrencies().subscribe({
+      next: (coins) => {
+        this.coins = coins;
+      },
+    });
+  }
+
+  private get isCacheCurrenciesEmpty(): boolean {
+    return (
+      !this.masterService.cacheStorage.byCurrency.currencies ||
+      this.masterService.cacheStorage.byCurrency.currencies.length === 0
+    );
+  }
+
+  private checkCurrencies(): void {
+    if (this.isCacheCurrenciesEmpty) {
+      this.getCurrencies();
+    } else {
+      const cacheCurrencies =
+        this.masterService.cacheStorage.byCurrency.currencies;
+      this.coins = cacheCurrencies;
     }
   }
 }

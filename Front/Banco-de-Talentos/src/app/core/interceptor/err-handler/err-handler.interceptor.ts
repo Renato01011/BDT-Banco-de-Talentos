@@ -35,7 +35,6 @@ export class ErrHandlerInterceptor implements HttpInterceptor {
   }
 
   private handleRequestError(error: HttpErrorResponse): Observable<any> {
-    console.log(error);
     this.getErrMessage(error);
     this.loaderService.hideLoader();
     return throwError(() => error);

@@ -86,12 +86,13 @@ export class ExpPersCrdComponent implements OnInit {
     if (!this.onSaveForm(this.newExpForm)) return;
     if (!this.selectedId) return;
 
-    const { company, job, sDate, eDate } = this.newExpForm.getRawValue();
+    const { company, job, sDate, eDate, hFractal, tPresent } = this.newExpForm.getRawValue();
     const body = {
       empresa: company,
       puesto: job,
       fechaInicio: sDate,
       fechaFin: eDate,
+      flActualidad: tPresent ? 1 : 0,
     };
     this.addInfoService.addWorkExp(body, this.selectedId).subscribe({
       next: (resp) => {
@@ -116,6 +117,7 @@ export class ExpPersCrdComponent implements OnInit {
           puesto: this.editExpForm.get('editJob')!.value,
           fechaInicio: this.editExpForm.get('editDate')!.value,
           fechaFin: this.editExpForm.get('editEndDate')!.value,
+          flActualidad: this.editExpForm.get('tPresent')!.value ? 1 : 0,
         },
         this.selectedId,
         this.currEditingWorkExp
@@ -202,8 +204,12 @@ export class ExpPersCrdComponent implements OnInit {
     const editCompany = resp.firm;
     const editJob = resp.jobTitle;
     const editDate = new Date(resp.intialDate);
-    const editEndDate = new Date(resp.finalDate);
-    this.editExpForm.reset({ editCompany, editJob, editDate, editEndDate });
+    const editEndDate = resp.flActualidad == 1 ? new Date() : new Date(resp.finalDate);
+    const hFractal = resp.firm == 'Fractal';
+    const tPresent = resp.flActualidad == 1;
+    this.editExpForm.reset({ editCompany, editJob, editDate, editEndDate, hFractal, tPresent });
+    if (hFractal) { this.editExpForm.controls['editCompany'].disable(); }
+    if (tPresent) { this.editExpForm.controls['editEndDate'].disable(); }
     this.editWorkExperienceDialog = true;
   }
 
@@ -243,7 +249,7 @@ export class ExpPersCrdComponent implements OnInit {
   public onCheckFractal() {
     if (this.newExpForm.get('hFractal')!.value) {
       this.newExpForm.controls['company'].disable();
-      this.newExpForm.controls['company'].setValue('FRACTAL');
+      this.newExpForm.controls['company'].setValue('Fractal');
     } else {
       this.newExpForm.controls['company'].enable();
       this.newExpForm.controls['company'].setValue('');
@@ -262,7 +268,7 @@ export class ExpPersCrdComponent implements OnInit {
   public onEdtCheckFractal() {
     if (this.editExpForm.get('hFractal')!.value) {
       this.editExpForm.controls['editCompany'].disable();
-      this.editExpForm.controls['editCompany'].setValue('FRACTAL');
+      this.editExpForm.controls['editCompany'].setValue('Fractal');
     } else {
       this.editExpForm.controls['editCompany'].enable();
       this.editExpForm.controls['editCompany'].setValue('');

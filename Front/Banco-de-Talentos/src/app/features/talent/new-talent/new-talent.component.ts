@@ -443,6 +443,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         puesto: formGroup.get('job')?.value,
         fechaInicio: formGroup.get('initialDate')?.value,
         fechaFin: formGroup.get('finalDate')?.value,
+        flActualidad: formGroup.get('flagCurrently')?.value ? 1 : 0,
       });
     });
     return objectArray;
@@ -457,6 +458,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         grado: formGroup.get('degree')?.value,
         fechaInicio: formGroup.get('initialDate')?.value,
         fechaFin: formGroup.get('finalDate')?.value,
+        flActualidad: formGroup.get('flagCurrently')?.value ? 1 : 0,
       });
     });
     return objectArray;

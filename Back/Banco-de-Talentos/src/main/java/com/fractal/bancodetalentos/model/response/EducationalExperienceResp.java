@@ -18,4 +18,5 @@ public class EducationalExperienceResp {
     private String degree;
     private Date initialDate;
     private Date finalDate;
+    private Integer flActualidad;
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -18,5 +19,5 @@ public class HabilidadesTecnicas {
     private String nombre;
     @NotNull(message = "Este campo no puede ser nulo")
     @Min(value = 0,  message = "Debe ser un numero positivo o cero")
-    private Integer anios;
+    private BigDecimal anios;
 }

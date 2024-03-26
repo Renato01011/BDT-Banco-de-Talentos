@@ -43,11 +43,13 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
                 .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(4, Date.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
                 .setParameter(1, id)
                 .setParameter(2, laborales.getEmpresa())
                 .setParameter(3, laborales.getPuesto())
                 .setParameter(4, laborales.getFechaInicio())
-                .setParameter(5, laborales.getFechaFin());
+                .setParameter(5, laborales.getFechaFin())
+                .setParameter(6, laborales.getFlActualidad());
         storedProcedureQueryExperienciasLaborales.execute();
         Map<String, String> resp = new HashMap<>();
         resp.put("id", String.valueOf(id));
@@ -76,11 +78,13 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
                 .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(4, Date.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
                 .setParameter(1, idWorkExp)
                 .setParameter(2, experienciasLaborales.getEmpresa())
                 .setParameter(3, experienciasLaborales.getPuesto())
                 .setParameter(4, experienciasLaborales.getFechaInicio())
-                .setParameter(5, experienciasLaborales.getFechaFin());
+                .setParameter(5, experienciasLaborales.getFechaFin())
+                .setParameter(6, experienciasLaborales.getFlActualidad());
         storedProcedureQueryExperienciasLaborales.execute();
 
         GeneralResp generalResp = new GeneralResp();

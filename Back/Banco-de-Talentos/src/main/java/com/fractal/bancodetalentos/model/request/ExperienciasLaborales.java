@@ -24,4 +24,6 @@ public class ExperienciasLaborales {
     private Date fechaInicio;
     @NotNull(message = "Este campo no puede ser nulo")
     private Date fechaFin;
+    @NotNull(message = "Este campo no puede ser nulo")
+    private Integer flActualidad;
 }

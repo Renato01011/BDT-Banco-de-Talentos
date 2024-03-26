@@ -112,7 +112,7 @@ export class ProfPersCrdComponent implements OnInit {
   public titleForCv = 'Curriculum Vitae';
   public paragraphForCV = 'Curriculum Vitae';
   public cvUploaded: boolean = false;
-  public fileUploaded: boolean = false;
+
   public base64file?: string;
 
   public cvForm: FormGroup = this.fb.group({
@@ -148,7 +148,7 @@ export class ProfPersCrdComponent implements OnInit {
         );
         return;
       }
-      this.fileUploaded = true;
+      this.cvUploaded = true;
 
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
@@ -237,7 +237,7 @@ export class ProfPersCrdComponent implements OnInit {
     this.cvForm.reset({ fileType: 'PDF' });
     this.fileText = 'Sube un archivo';
     this.fileDetailsText = 'PDF (max. 5MB)';
-    this.fileUploaded = false;
+    this.cvUploaded = false;
     this.addFileDialog = false;
   }
 
@@ -535,6 +535,7 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   public openEditProfilePicture() {
+    this.resetEditProfilePicture();
     this.editProfilePicture = true;
   }
 
@@ -560,17 +561,21 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   public hideEditProfilePicture() {
-    this.profileForm.reset();
-    this.photoText = 'Sube una nueva foto de perfil';
-    this.photoDetailsText = 'PNG o JPG (max. 800x400px)';
-    this.photoUploaded = false;
-    this.base64photo = '';
+    this.resetEditProfilePicture();
     this.editProfilePicture = false;
   }
 
   public hidEditSocMediaDlg() {
     this.redSocForm.reset();
     this.editSocialMediaDialog = false;
+  }
+
+  private resetEditProfilePicture() {
+    this.profileForm.reset();
+    this.photoText = 'Sube una nueva foto de perfil';
+    this.photoDetailsText = 'PNG o JPG (max. 800x400px)';
+    this.photoUploaded = false;
+    this.base64photo = '';
   }
 
   public get countryCity(): { country: string; city: string } {

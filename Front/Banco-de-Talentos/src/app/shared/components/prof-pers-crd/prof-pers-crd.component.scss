@@ -9,6 +9,10 @@
 .heart-icon:hover {
   color: var(--bdt-bright-pink);
 }
+
+.btn-text {
+  color: var(--bdt-strong-blue);
+}
 :host ::ng-deep {
   .p-inputNumber input {
     width: 100%;

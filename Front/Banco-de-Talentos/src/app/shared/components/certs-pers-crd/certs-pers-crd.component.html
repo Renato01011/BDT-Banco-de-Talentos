@@ -112,29 +112,24 @@
       [formGroup]="fileForm"
       (ngSubmit)="onSveFile()"
     >
-      <button
-        pButton
-        class="p-button-outlined border-300 w-full flex flex-column"
-        (click)="fileUpload.click()"
-      >
+      <button type="button" class="upload-btn" (click)="fileUpload.click()">
         <i
           class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"
           *ngIf="!fileUploaded"
         ></i>
         <i
-          class="pi pi-check px-2 pt-5 text-2xl text-teal-500"
+          class="pi pi-check px-2 pt-5 text-2xl text-bluegray-400"
           *ngIf="fileUploaded"
         ></i>
         <span
-          class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
-          style="color: #0b85c3"
-          [ngClass]="{ 'text-teal-500': fileUploaded }"
+          class="text-base font-bold px-3 pt-5 flex align-items-center justify-content-center btn-text"
           >{{ fileText }}</span
         >
         <span
-          class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
+          class="text-sm text-500 pt-1 flex align-items-center justify-content-center"
           >{{ fileDetailsText }}</span
         >
+        &nbsp;
         <input
           #fileUpload
           id="file"

@@ -241,31 +241,24 @@
       [formGroup]="profileForm"
       (ngSubmit)="onSveProfile()"
     >
-      <button
-        pButton
-        type="button"
-        class="p-button-outlined border-300 w-full flex flex-column"
-        (click)="photoUpload.click()"
-      >
+      <button type="button" class="upload-btn" (click)="photoUpload.click()">
         <i
           class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"
-          style="font-size: 1.5rem; color: #708090"
           *ngIf="!photoUploaded"
         ></i>
         <i
           class="pi pi-check px-2 pt-5 text-2xl text-bluegray-400"
-          style="font-size: 1.5rem; color: #708090"
           *ngIf="photoUploaded"
         ></i>
         <span
-          class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
-          style="color: #0b85c3"
+          class="text-base font-bold px-3 pt-5 flex align-items-center justify-content-center btn-text"
           >{{ photoText }}</span
         >
         <span
-          class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
+          class="text-sm text-500 pt-1 flex align-items-center justify-content-center"
           >{{ photoDetailsText }}</span
         >
+        &nbsp;
         <input
           #photoUpload
           id="picture"
@@ -276,7 +269,7 @@
           (change)="onPhotoUpload($event)"
         />
       </button>
-      <div class="w-12">
+      <div class="w-12 py-2">
         <small
           id="picture"
           class="hidden"
@@ -631,29 +624,24 @@
       [formGroup]="cvForm"
       (ngSubmit)="onSveFile()"
     >
-      <button
-        pButton
-        class="p-button-outlined border-300 w-full flex flex-column"
-        (click)="fileUpload.click()"
-      >
+      <button type="button" class="upload-btn" (click)="fileUpload.click()">
         <i
           class="pi pi-cloud-upload px-2 pt-5 text-2xl text-bluegray-400"
           *ngIf="!cvUploaded"
         ></i>
         <i
-          class="pi pi-check px-2 pt-5 text-2xl text-teal-500"
+          class="pi pi-check px-2 pt-5 text-2xl text-bluegray-400"
           *ngIf="cvUploaded"
         ></i>
         <span
-          class="px-3 pt-5 flex align-items-center justify-content-center font-bold border-round"
-          style="color: #0b85c3"
-          [ngClass]="{ 'text-teal-500': cvUploaded }"
+          class="text-base font-bold px-3 pt-5 flex align-items-center justify-content-center btn-text"
           >{{ fileText }}</span
         >
         <span
-          class="text-sm text-500 pt-1 flex align-items-center justify-content-center border-round"
+          class="text-sm text-500 pt-1 flex align-items-center justify-content-center"
           >{{ fileDetailsText }}</span
         >
+        &nbsp;
         <input
           #fileUpload
           id="file"

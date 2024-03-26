@@ -31,3 +31,14 @@ $xl: 1620px;
     "flex align-items-center justify-content-center cursor-pointer border-none surface-section hover:bg-white-alpha-10 border-circle w-2rem h-2rem hover:shadow-2 transition-colors transition-duration-150"
   );
 }
+
+.upload-btn {
+  @include styleclass(
+    "flex align-items-center justify-content-center cursor-pointer surface-section hover:surface-hover border-1 border-200 border-round-lg p-3 w-full flex flex-column"
+  );
+}
+
+.upload-btn:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--bdt-dark-blue),
+    0 1px 2px 0 rgba(0, 0, 0, 0);
+}

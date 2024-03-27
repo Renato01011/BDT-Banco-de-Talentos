@@ -48,11 +48,8 @@ export class ErrHandlerInterceptor implements HttpInterceptor {
         'Fallo de conexión con el servidor'
       );
     } else if (error.status === BAD_REQUEST) {
-      this.toastService.addProperties(
-        'warn',
-        'Mensaje de servidor',
-        'Fallo de conexión con el servidor'
-      );
+      const msg = this.getErrorMsgFromList(error.error);
+      this.toastService.addProperties('warn', 'Mensaje de servidor', msg);
     } else if (error.status === UNAUTHORIZED) {
       this.toastService.addProperties(
         'warn',
@@ -60,11 +57,8 @@ export class ErrHandlerInterceptor implements HttpInterceptor {
         'Debe autenticarse'
       );
     } else if (error.status === NOT_FOUND) {
-      this.toastService.addProperties(
-        'warn',
-        'Mensaje de servidor',
-        'El recurso solicitado no existe'
-      );
+      const message = this.getErrorMsgFromList(error.error);
+      this.toastService.addProperties('warn', 'Mensaje de servidor', message);
     } else if (error.status === INTERNAL_SERVER_ERROR) {
       this.toastService.addProperties(
         'error',
@@ -78,5 +72,12 @@ export class ErrHandlerInterceptor implements HttpInterceptor {
         'Fallo de conexión con el servidor'
       );
     }
+  }
+
+  private getErrorMsgFromList(err: any): string {
+    if (!err.errList || err.errList.length === 0) {
+      return 'Fallo de conexión con el servidor';
+    }
+    return err.errList[0].message;
   }
 }

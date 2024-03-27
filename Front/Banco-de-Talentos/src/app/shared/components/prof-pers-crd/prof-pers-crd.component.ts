@@ -301,11 +301,11 @@ export class ProfPersCrdComponent implements OnInit {
         if (!this.selectedId || !this.idUser) return;
         this.userService
           .addNewList(this.idUser, search)
-          .pipe(
-            switchMap(({ idUserList }) =>
-              this.userService.addTalentToList(idUserList, this.selectedId!)
-            )
-          )
+          // .pipe(
+          //   switchMap(({ idUserList }) =>
+          //     this.userService.addTalentToList(idUserList, this.selectedId!)
+          //   )
+          // )
           .subscribe({
             next: (resp) => {
               this.userService.favoritesCache = [];

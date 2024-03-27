@@ -122,8 +122,8 @@ export class EditInfoService {
     id: number
   ): Observable<EditModels.EditResp> {
     const sendBody = {
-      id: id,
       idFile: idFile,
+      idTalent: id,
       ...body,
     };
     return this.httpClient.put<EditModels.EditResp>(

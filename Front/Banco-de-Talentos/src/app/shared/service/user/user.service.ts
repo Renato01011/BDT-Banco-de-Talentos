@@ -23,7 +23,7 @@ export class UserService {
   }
 
   addNewList(userId: number, listName: string): Observable<NewUserListRespone> {
-    const body = { userId: userId, listName: listName };
+    const body = { id: userId, listName: listName };
     return this.httpClient.post<NewUserListRespone>(
       `${UrlConstants.URL_ADD_LIST_USER}`,
       body

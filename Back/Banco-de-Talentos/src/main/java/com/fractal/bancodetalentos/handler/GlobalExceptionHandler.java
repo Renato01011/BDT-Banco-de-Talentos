@@ -45,7 +45,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DuplicatedDataException.class)
     public ResponseEntity<ErrorDTO> handlerDuplicatedDataException(DuplicatedDataException exception, WebRequest webRequest) {
-        ErrDTO err = new ErrDTO(404, exception.getMessage());
+        ErrDTO err = new ErrDTO(400, exception.getMessage());
         List<ErrDTO> errDTO = new ArrayList<>();
         errDTO.add(err);
         ErrorDTO errorDTO = ErrorDTO.builder().timestamp(new Date()).error("BAD_REQUEST").errList(errDTO).path(webRequest.getDescription(false).replace("uri=", "")).build();
@@ -54,7 +54,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(JwtSignatureException.class)
     public ResponseEntity<ErrorDTO> handlerJwtSignatureException(JwtSignatureException exception, WebRequest webRequest) {
-        ErrDTO err = new ErrDTO(404, exception.getMessage());
+        ErrDTO err = new ErrDTO(400, exception.getMessage());
         List<ErrDTO> errDTO = new ArrayList<>();
         errDTO.add(err);
         ErrorDTO errorDTO = ErrorDTO.builder().timestamp(new Date()).error("BAD_REQUEST").errList(errDTO).path(webRequest.getDescription(false).replace("uri=", "")).build();

@@ -36,7 +36,7 @@ export class MasterService {
 
   getLanguages(): Observable<MasterModels.LanguageModel[]> {
     return this.httpClient
-      .get<MasterModels.LanguageModel[]>(UrlConstants.URL_REQ_LANG)
+      .post<MasterModels.LanguageModel[]>(UrlConstants.URL_REQ_LANG, null)
       .pipe(
         tap((languages) => (this.cacheStorage.byLanguage = { languages })),
         tap(() => this.sveToSessionStorage())
@@ -44,14 +44,15 @@ export class MasterService {
   }
 
   getRoles(): Observable<MasterModels.RoleModel[]> {
-    return this.httpClient.get<MasterModels.RoleModel[]>(
-      UrlConstants.URL_REQ_ROLES
+    return this.httpClient.post<MasterModels.RoleModel[]>(
+      UrlConstants.URL_REQ_ROLES,
+      null
     );
   }
 
   getCurrencies(): Observable<MasterModels.CurrenciesModel[]> {
     return this.httpClient
-      .get<MasterModels.CurrenciesModel[]>(UrlConstants.URL_REQ_CURRS)
+      .post<MasterModels.CurrenciesModel[]>(UrlConstants.URL_REQ_CURRS, null)
       .pipe(
         tap((currencies) => (this.cacheStorage.byCurrency = { currencies })),
         tap(() => this.sveToSessionStorage())
@@ -60,7 +61,7 @@ export class MasterService {
 
   getProfiles(): Observable<MasterModels.ProfileModel[]> {
     return this.httpClient
-      .get<MasterModels.ProfileModel[]>(UrlConstants.URL_REQ_PROF)
+      .post<MasterModels.ProfileModel[]>(UrlConstants.URL_REQ_PROF, null)
       .pipe(
         tap((profiles) => (this.cacheStorage.byProfile = { profiles })),
         tap(() => this.sveToSessionStorage())
@@ -69,7 +70,10 @@ export class MasterService {
 
   getLangProficiency(): Observable<MasterModels.LangProficiencyModel[]> {
     return this.httpClient
-      .get<MasterModels.LangProficiencyModel[]>(UrlConstants.URL_REQ_LANG_PROF)
+      .post<MasterModels.LangProficiencyModel[]>(
+        UrlConstants.URL_REQ_LANG_PROF,
+        null
+      )
       .pipe(
         tap(
           (proficiencies) =>
@@ -81,7 +85,7 @@ export class MasterService {
 
   getCountries(): Observable<MasterModels.CountryModel[]> {
     return this.httpClient
-      .get<MasterModels.CountryModel[]>(UrlConstants.URL_REQ_COUNTRIES)
+      .post<MasterModels.CountryModel[]>(UrlConstants.URL_REQ_COUNTRIES, null)
       .pipe(
         tap((countries) => (this.cacheStorage.byCountry = { countries })),
         tap(() => this.sveToSessionStorage())
@@ -89,14 +93,15 @@ export class MasterService {
   }
 
   getCities(id: number): Observable<MasterModels.CityModel[]> {
-    return this.httpClient.get<MasterModels.CityModel[]>(
-      UrlConstants.URL_REQ_CITIES_1 + id + UrlConstants.URL_REQ_CITIES_2
+    return this.httpClient.post<MasterModels.CityModel[]>(
+      UrlConstants.URL_REQ_CITIES_1 + id + UrlConstants.URL_REQ_CITIES_2,
+      null
     );
   }
 
   getTechSkills(): Observable<TechSkills[]> {
     return this.httpClient
-      .get<TechSkills[]>(UrlConstants.URL_REQ_TEC_SKILL)
+      .post<TechSkills[]>(UrlConstants.URL_REQ_TEC_SKILL, null)
       .pipe(
         tap((techSkills) => (this.cacheStorage.byTechSkill = { techSkills })),
         tap(() => this.sveToSessionStorage())

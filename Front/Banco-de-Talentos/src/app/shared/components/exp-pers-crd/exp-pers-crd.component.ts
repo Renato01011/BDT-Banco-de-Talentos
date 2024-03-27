@@ -8,6 +8,7 @@ import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'shared-exp-pers-crd',
@@ -39,6 +40,7 @@ export class ExpPersCrdComponent implements OnInit {
     private toastService: ToastService,
     private confirmationService: ConfirmationService,
     private deleteInfoService: DeleteInfoService,
+    private loaderService: LoaderService,
     private authService: AuthService
   ) {}
 
@@ -94,6 +96,7 @@ export class ExpPersCrdComponent implements OnInit {
       fechaFin: eDate,
       flActualidad: tPresent ? 1 : 0,
     };
+    this.loaderService.showLoader();
     this.addInfoService.addWorkExp(body, this.selectedId).subscribe({
       next: (resp) => {
         this.toastService.addProperties(
@@ -102,6 +105,7 @@ export class ExpPersCrdComponent implements OnInit {
           resp.message
         );
         this.talentId.emit(Number(resp.id));
+        this.loaderService.hideLoader();
         this.hideNewWorkExperienceDialog();
       },
     });
@@ -110,6 +114,7 @@ export class ExpPersCrdComponent implements OnInit {
   public onSveEditedExp() {
     if (!this.onSaveForm(this.editExpForm)) return;
     if (!this.selectedId) return;
+    this.loaderService.showLoader();
     this.editInfoService
       .editWorkExperience(
         {
@@ -131,6 +136,7 @@ export class ExpPersCrdComponent implements OnInit {
             resp.message
           );
           this.talentId.emit(this.selectedId);
+          this.loaderService.hideLoader();
         },
       });
   }
@@ -143,6 +149,7 @@ export class ExpPersCrdComponent implements OnInit {
 
       accept: () => {
         if (!this.selectedId) return;
+        this.loaderService.showLoader();
         this.deleteInfoService
           .deleteWorkExperience(this.selectedId, this.currEditingWorkExp)
           .subscribe({
@@ -154,6 +161,7 @@ export class ExpPersCrdComponent implements OnInit {
                 resp.message
               );
               this.talentId.emit(this.selectedId);
+              this.loaderService.hideLoader();
             },
           });
       },

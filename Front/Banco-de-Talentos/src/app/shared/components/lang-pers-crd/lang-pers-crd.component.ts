@@ -13,6 +13,7 @@ import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'shared-lang-pers-crd',
@@ -47,6 +48,7 @@ export class LangPersCrdComponent implements OnInit {
     private toastService: ToastService,
     private confirmationService: ConfirmationService,
     private deleteInfoService: DeleteInfoService,
+    private loaderService: LoaderService,
     private authService: AuthService
   ) {}
 
@@ -86,6 +88,7 @@ export class LangPersCrdComponent implements OnInit {
       nivelId: proficiency,
       nuEstrellas: rating,
     };
+    this.loaderService.showLoader();
     this.addInfoService.addLang(body, this.selectedId).subscribe({
       next: (resp) => {
         this.toastService.addProperties(
@@ -94,6 +97,7 @@ export class LangPersCrdComponent implements OnInit {
           resp.message
         );
         this.talentId.emit(Number(resp.id));
+        this.loaderService.hideLoader();
         this.hideNewLanguageDialog();
       },
     });
@@ -101,6 +105,7 @@ export class LangPersCrdComponent implements OnInit {
   public onSveEditLangForm() {
     if (!this.onSaveForm(this.editLanguageForm)) return;
     if (!this.selectedId) return;
+    this.loaderService.showLoader();
     this.editInfoService
       .editLanguageExpertise(
         {
@@ -113,13 +118,14 @@ export class LangPersCrdComponent implements OnInit {
       )
       .subscribe({
         next: (resp) => {
-          this.hideEditLanguageDialog();
           this.toastService.addProperties(
             'success',
             'Se editó correctamente',
             resp.message
           );
           this.talentId.emit(this.selectedId);
+          this.loaderService.hideLoader();
+          this.hideEditLanguageDialog();
         },
       });
   }
@@ -132,17 +138,19 @@ export class LangPersCrdComponent implements OnInit {
 
       accept: () => {
         if (!this.selectedId) return;
+        this.loaderService.showLoader();
         this.deleteInfoService
           .deleteLanguageExpertise(this.selectedId, this.currEditingLangProf)
           .subscribe({
             next: (resp) => {
-              this.hideEditLanguageDialog();
               this.toastService.addProperties(
                 'success',
                 'Se eliminó correctamente',
                 resp.message
               );
               this.talentId.emit(this.selectedId);
+              this.loaderService.hideLoader();
+              this.hideEditLanguageDialog();
             },
           });
       },

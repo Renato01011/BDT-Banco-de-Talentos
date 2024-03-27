@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { AddInfoService } from '../../service/addInfo/add-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { Feedbacks } from '../../models/interfaces/talentResp.interfaces';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'shared-feedback-crd',
@@ -30,6 +31,7 @@ export class FeedbackCrdComponent implements OnInit {
     private fValidator: FrmValService,
     private authService: AuthService,
     private addInfoService: AddInfoService,
+    private loaderService: LoaderService,
     private toastService: ToastService
   ) {}
 
@@ -67,6 +69,7 @@ export class FeedbackCrdComponent implements OnInit {
       descripcion: feedback,
       userFromId: this.idUser,
     };
+    this.loaderService.showLoader();
     this.addInfoService.addFeedback(body, this.selectedId).subscribe({
       next: (resp) => {
         this.toastService.addProperties(
@@ -75,6 +78,7 @@ export class FeedbackCrdComponent implements OnInit {
           resp.message
         );
         this.talentId.emit(Number(resp.id));
+        this.loaderService.hideLoader();
         this.hideNewFeedbackDialog();
       },
     });

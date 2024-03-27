@@ -4,6 +4,7 @@ import { FrmValService } from '../../service/frmVal/frm-val.service';
 import { EditInfoService } from '../../service/editInfo/edit-info.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'shared-summ-pers-crd',
@@ -27,6 +28,7 @@ export class SummPersCrdComponent implements OnInit {
     private fValidator: FrmValService,
     private editInfoService: EditInfoService,
     private toastService: ToastService,
+    private loaderService: LoaderService,
     private authService: AuthService
   ) {}
 
@@ -65,6 +67,7 @@ export class SummPersCrdComponent implements OnInit {
       return;
     }
     if (!this.selectedId) return;
+    this.loaderService.showLoader();
     this.editInfoService
       .editTalentDescription(
         {
@@ -81,6 +84,7 @@ export class SummPersCrdComponent implements OnInit {
             resp.message
           );
           this.talentId.emit(this.selectedId);
+          this.loaderService.hideLoader();
         },
       });
   }

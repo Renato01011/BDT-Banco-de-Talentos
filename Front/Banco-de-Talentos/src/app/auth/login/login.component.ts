@@ -6,6 +6,8 @@ import { STORAGE_CURRENT_TOKEN } from '../../core/global/constants/constants';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { FrmValService } from 'src/app/shared/service/frmVal/frm-val.service';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
+import { forkJoin } from 'rxjs';
+import { MasterService } from 'src/app/core/services/master/master.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required]]
   });
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private formValidator: FrmValService, private authService: AuthService, private loaderService: LoaderService) {}
+  constructor(private router: Router, private formBuilder: FormBuilder, private formValidator: FrmValService, private authService: AuthService, private loaderService: LoaderService, private masterService: MasterService) {}
 
   ngOnInit(): void {
     if (window.screen.width < 1000) {
@@ -72,8 +74,21 @@ export class LoginComponent implements OnInit {
         next: (token) => {
           if (token != null && token.token != '') {
             sessionStorage.setItem(STORAGE_CURRENT_TOKEN, JSON.stringify(token.token.slice(7)));
-            this.loaderService.hideLoader();
-            this.router.navigateByUrl('/home');
+            // -- CALL EVERY GET API FROM MASTER --
+            forkJoin([
+              this.masterService.getLanguages(),
+              this.masterService.getCurrencies(),
+              this.masterService.getProfiles(),
+              this.masterService.getLangProficiency(),
+              this.masterService.getCountries(),
+              this.masterService.getTechSkills(),
+            ]).subscribe({
+              next: () => {
+                this.loaderService.hideLoader();
+                this.router.navigateByUrl('/home');
+              }
+            });
+            // -- CALL EVERY GET API FROM MASTER --
           }
         },
         error: (error) => {

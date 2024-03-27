@@ -11,6 +11,7 @@ import {
   responsiveForVisitor,
 } from 'src/app/core/global/constants/responsive.constants';
 import { UtilsService } from '../../service/util/utils.service';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'shared-certs-pers-crd',
@@ -44,6 +45,7 @@ export class CertsPersCrdComponent implements OnInit {
     private fValidator: FrmValService,
     private toastService: ToastService,
     private addInfoService: AddInfoService,
+    private loaderService: LoaderService,
     private authService: AuthService,
     private utilsService: UtilsService
   ) {}
@@ -117,6 +119,7 @@ export class CertsPersCrdComponent implements OnInit {
       tipoArchivo: fileType,
       archivo: this.base64file.split(',')[1],
     };
+    this.loaderService.showLoader();
     this.addInfoService.addFile(body, this.selectedId).subscribe({
       next: (resp) => {
         this.toastService.addProperties(
@@ -125,6 +128,7 @@ export class CertsPersCrdComponent implements OnInit {
           resp.message
         );
         this.talentId.emit(Number(resp.id));
+        this.loaderService.hideLoader();
         this.hideAddFileDialog();
       },
     });

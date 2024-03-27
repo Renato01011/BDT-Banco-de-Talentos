@@ -8,6 +8,7 @@ import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'shared-educ-pers-crd',
@@ -39,6 +40,7 @@ export class EducPersCrdComponent implements OnInit {
     private toastService: ToastService,
     private confirmationService: ConfirmationService,
     private deleteInfoService: DeleteInfoService,
+    private loaderService: LoaderService,
     private authService: AuthService
   ) {}
 
@@ -87,6 +89,7 @@ export class EducPersCrdComponent implements OnInit {
   public onSveEditEducForm() {
     if (!this.onSaveForm(this.editEducForm)) return;
     if (!this.selectedId) return;
+    this.loaderService.showLoader();
     this.editInfoService
       .editEducationalExperience(
         {
@@ -109,6 +112,7 @@ export class EducPersCrdComponent implements OnInit {
             resp.message
           );
           this.talentId.emit(this.selectedId);
+          this.loaderService.hideLoader();
         },
       });
   }
@@ -127,6 +131,7 @@ export class EducPersCrdComponent implements OnInit {
       fechaFin: edDate,
       flActualidad: tPresent ? 1 : 0,
     };
+    this.loaderService.showLoader();
     this.addInfoService.addEducExp(body, this.selectedId).subscribe({
       next: (resp) => {
         this.toastService.addProperties(
@@ -135,6 +140,7 @@ export class EducPersCrdComponent implements OnInit {
           resp.message
         );
         this.talentId.emit(Number(resp.id));
+        this.loaderService.hideLoader();
         this.hideNewEducationalExperienceDialog();
       },
     });
@@ -148,6 +154,7 @@ export class EducPersCrdComponent implements OnInit {
 
       accept: () => {
         if (!this.selectedId) return;
+        this.loaderService.showLoader();
         this.deleteInfoService
           .deleteEducationalExperience(this.selectedId, this.currEditingEducExp)
           .subscribe({
@@ -159,6 +166,7 @@ export class EducPersCrdComponent implements OnInit {
                 resp.message
               );
               this.talentId.emit(this.selectedId);
+              this.loaderService.hideLoader();
             },
           });
       },

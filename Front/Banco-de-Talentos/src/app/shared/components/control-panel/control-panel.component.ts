@@ -18,6 +18,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserList } from '../../models/interfaces/userList.interfaces';
 import { UserService } from '../../service/user/user.service';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'shared-control-panel',
@@ -63,6 +64,7 @@ export class ControlPanelComponent implements OnInit {
     private masterService: MasterService,
     private filterService: FilterService,
     private authService: AuthService,
+    private loaderService: LoaderService,
     private userService: UserService
   ) {}
 
@@ -116,9 +118,11 @@ export class ControlPanelComponent implements OnInit {
   }
 
   private getTechSkills(): void {
+    this.loaderService.showLoader();
     this.masterService.getTechSkills().subscribe({
       next: (skills) => {
         this.skills = skills;
+        this.loaderService.hideLoader();
       },
     });
   }
@@ -132,9 +136,11 @@ export class ControlPanelComponent implements OnInit {
   }
 
   private getFavorites(userId: number) {
+    this.loaderService.showLoader();
     this.userService.getUserLists(userId).subscribe({
       next: (favorites) => {
         this.favorites = favorites;
+        this.loaderService.hideLoader();
       },
     });
   }

@@ -8,6 +8,7 @@ import {
 } from '../../models/interfaces/talentResp.interfaces';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 import { MasterService } from 'src/app/core/services/master/master.service';
 
 const yearExpRegEx = '^(?:\\d+(?:\\.(?:[0-9]|1[0-1]))?)$';
@@ -42,6 +43,7 @@ export class SkillsPersCrdComponent implements OnInit {
     private addInfoService: AddInfoService,
     private toastService: ToastService,
     private masterService: MasterService,
+    private loaderService: LoaderService,
     private authService: AuthService
   ) {}
 
@@ -81,6 +83,7 @@ export class SkillsPersCrdComponent implements OnInit {
       nombre: name,
       anios: yearExp,
     };
+    this.loaderService.showLoader();
     this.addInfoService.addTechSkill(body, this.selectedId).subscribe({
       next: (resp) => {
         this.toastService.addProperties(
@@ -89,6 +92,7 @@ export class SkillsPersCrdComponent implements OnInit {
           resp.message
         );
         this.talentId.emit(Number(resp.id));
+        this.loaderService.hideLoader();
         this.masterService.cacheStorage.byTechSkill.techSkills = [];
         this.hideNewTechnicalSkillDialog();
       },
@@ -103,6 +107,7 @@ export class SkillsPersCrdComponent implements OnInit {
     const body = {
       nombre: name,
     };
+    this.loaderService.showLoader();
     this.addInfoService.addSoftSkill(body, this.selectedId).subscribe({
       next: (resp) => {
         this.toastService.addProperties(
@@ -111,6 +116,7 @@ export class SkillsPersCrdComponent implements OnInit {
           resp.message
         );
         this.talentId.emit(Number(resp.id));
+        this.loaderService.hideLoader();
         this.hideNewSoftSkillDialog();
       },
     });

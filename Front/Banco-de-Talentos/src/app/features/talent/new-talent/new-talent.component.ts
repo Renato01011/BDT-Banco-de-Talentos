@@ -481,12 +481,16 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   }
 
   OnCountryChangeGetData() {
+    this.loaderService.showLoader();
     this.newTalentForm
       .get('country')!
       .valueChanges.pipe(
         switchMap((country) => this.masterService.getCities(country.id))
       )
-      .subscribe((cities) => (this.cities = cities));
+      .subscribe((cities) => {
+        this.cities = cities;
+        this.loaderService.hideLoader();
+      });
   }
 
   OnFractalEducationCheckboxChange(abstractControl: AbstractControl) {

@@ -20,6 +20,7 @@ import { UserList } from '../../models/interfaces/userList.interfaces';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { switchMap } from 'rxjs';
 import { UtilsService } from '../../service/util/utils.service';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 interface Favorite {
   name: string;
@@ -79,7 +80,8 @@ export class ProfPersCrdComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private utilsService: UtilsService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private loaderService: LoaderService
   ) {}
 
   public profileForm: FormGroup = this.fb.group({
@@ -299,13 +301,14 @@ export class ProfPersCrdComponent implements OnInit {
       icon: 'pi pi-info-circle',
       accept: () => {
         if (!this.selectedId || !this.idUser) return;
+        this.loaderService.showLoader();
         this.userService
           .addNewList(this.idUser, search)
-          // .pipe(
-          //   switchMap(({ idUserList }) =>
-          //     this.userService.addTalentToList(idUserList, this.selectedId!)
-          //   )
-          // )
+          .pipe(
+            switchMap(({ idUserList }) =>
+              this.userService.addTalentToList(idUserList, this.selectedId!)
+            )
+          )
           .subscribe({
             next: (resp) => {
               this.userService.favoritesCache = [];
@@ -316,6 +319,7 @@ export class ProfPersCrdComponent implements OnInit {
                 resp.message
               );
               this.talentId.emit(this.selectedId);
+              this.loaderService.hideLoader();
             },
           });
       },
@@ -373,6 +377,7 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   private addTalentToUserList(idUserList: number, idTalent: number) {
+    this.loaderService.showLoader();
     this.userService.addTalentToList(idUserList, idTalent).subscribe({
       next: (resp) => {
         this.overlayPanelFvt.hide();
@@ -382,6 +387,7 @@ export class ProfPersCrdComponent implements OnInit {
           resp.message
         );
         this.talentId.emit(this.selectedId);
+        this.loaderService.hideLoader();
       },
     });
   }

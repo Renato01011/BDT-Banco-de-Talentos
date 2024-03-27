@@ -15,15 +15,15 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExperienciasLaborales {
-    @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
+    @NotBlank(message = "El nombre de la Empresa es obligatorio y no puede estar vacío ni ser nulo.")
     private String empresa;
-    @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
+    @NotBlank(message = "El nombre del Puesto es obligatorio y no puede estar vacío ni ser nulo.")
     private String puesto;
-    @NotNull(message = "Este campo no puede ser nulo")
-    @Past(message = "La fecha debe ser una fecha anterior a la actual")
+    @NotNull(message = "La fecha de inicio es obligatoria y no puede estar vacía ni ser nula.")
+    @Past(message = "La fecha de inicio debe ser una fecha anterior a la actual.")
     private Date fechaInicio;
-    @NotNull(message = "Este campo no puede ser nulo")
+    @NotNull(message = "La fecha fin es obligatoria y no puede ser nula.")
     private Date fechaFin;
-    @NotNull(message = "Este campo no puede ser nulo")
+    @NotNull(message = "El campo 'Hasta la actualidad' es obligatorio y no puede ser nulo.")
     private Integer flActualidad;
 }

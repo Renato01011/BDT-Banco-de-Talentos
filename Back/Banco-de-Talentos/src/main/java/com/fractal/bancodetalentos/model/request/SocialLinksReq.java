@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SocialLinksReq {
+    @NotBlank(message = "El campo Linkedin es obligatorio y no puede estar vacío ni ser nulo.")
     private String linkedin;
+    @NotBlank(message = "El campo Github es obligatorio y no puede estar vacío ni ser nulo.")
     private String github;
 }

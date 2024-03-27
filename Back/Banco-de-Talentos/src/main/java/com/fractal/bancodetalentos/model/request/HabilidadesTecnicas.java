@@ -15,9 +15,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HabilidadesTecnicas {
-    @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
+    @NotBlank(message = "El nombre de la Habilidad técnica es obligatorio y no puede estar vacío ni ser nulo.")
     private String nombre;
-    @NotNull(message = "Este campo no puede ser nulo")
-    @Min(value = 0,  message = "Debe ser un numero positivo o cero")
+    @NotNull(message = "Los Años de experiencia son obligatorios y no puede ser nulo.")
+    @Min(value = 0,  message = "Los Años de experiencia deben ser un número positivo o cero.")
     private BigDecimal anios;
 }

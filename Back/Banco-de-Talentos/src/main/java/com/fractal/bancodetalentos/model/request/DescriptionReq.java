@@ -13,6 +13,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DescriptionReq {
-    @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
+    @NotBlank(message = "La descripción es un campo obligatorio y no puede estar vacía ni ser nula.")
     private String description;
 }

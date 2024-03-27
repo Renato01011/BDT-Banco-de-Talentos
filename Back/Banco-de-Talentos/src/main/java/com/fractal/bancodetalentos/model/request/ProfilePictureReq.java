@@ -14,8 +14,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProfilePictureReq {
-    @NotNull(message = "Este campo no puede ser nulo")
-    @Size(min = 1, message = "Este campo no puede estar vacío")
+    @NotNull(message = "La Foto de perfil es obligatorio y no puede ser nulo.")
+    @Size(min = 1, message = "La Foto de perfil es obligatorio y no puede estar vacío.")
     @Lob
     private byte[] profilePicture;
 }

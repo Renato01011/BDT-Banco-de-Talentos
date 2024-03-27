@@ -15,12 +15,12 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Documento {
-    @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
+    @NotBlank(message = "El nombre del archivo es obligatorio y no puede estar vacío ni ser nulo.")
     private String nombre;
-    @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
+    @NotBlank(message = "El tipo de archivo es obligatorio y no puede estar vacío ni ser nulo.")
     private String tipoArchivo;
-    @NotNull(message = "Este campo no puede ser nulo")
-    @Size(min = 1, message = "Este campo no puede estar vacío")
+    @NotNull(message = "El archivo es obligatorio y no puede ser nulo.")
+    @Size(min = 1, message = "El archivo es obligatorio y no puede quedar vacío.")
     @Lob
     private byte[] archivo;
 }

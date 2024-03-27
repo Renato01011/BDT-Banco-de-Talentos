@@ -13,22 +13,22 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class FilterTalentReq {
 
-    @NotNull(message = "Este campo no puede ser nulo")
+    @NotNull(message = "El nombre de las Habilidades es obligatorio y no puede ser nulo.")
     private String habilities;
 
-    @NotNull(message = "Este campo no puede ser nulo")
+    @NotNull(message = "El Id del Idioma es obligatorio y no puede ser nulo.")
     private String languageIds;
 
-    @NotNull(message = "Este campo no puede ser nulo")
+    @NotNull(message = "El Id del Nivele es obligatorio y no puede ser nulo.")
     private String levelIds;
 
-    @NotNull(message = "Este campo no puede ser nulo")
+    @NotNull(message = "El campo Nombre o Puesto es obligatorio y no puede ser nulo.")
     private String nameJobTitle;
 
-    @NotNull(message = "Este campo no puede ser nulo")
+    @NotNull(message = "El Id del Favorito es obligatorio y no puede ser nulo.")
     private String userListIds;
 
-    @NotNull(message = "Este campo no puede ser nulo")
+    @NotNull(message = "El Id del Usuario es obligatorio y no puede ser nulo.")
     private Integer userId;
 
 }

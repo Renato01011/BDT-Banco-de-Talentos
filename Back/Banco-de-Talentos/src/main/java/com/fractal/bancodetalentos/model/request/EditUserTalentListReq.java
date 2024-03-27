@@ -12,6 +12,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EditUserTalentListReq {
-    @NotNull(message = "Este campo no puede ser nulo")
+    @NotNull(message = "El Id del talento es obligatorio y no ser nulo.")
     private Integer newUserListId;
 }

@@ -14,16 +14,16 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Idiomas {
-    @NotNull(message = "Este campo no puede ser nulo")
-    @Min(value = 1, message = "Debe ser un numero igual o mayor a 1")
-    @Max(value = 3, message = "Debe ser un numero igual o menor a 3")
+    @NotNull(message = "El campo Idioma es obligatorio y no puede ser nulo.")
+    @Min(value = 1, message = "El campo Idioma debe ser un número igual o mayor a 1.")
+    @Max(value = 3, message = "El campo Idioma debe ser un numero igual o menor a 3")
     private Integer idiomaId;
-    @NotNull(message = "Este campo no puede ser nulo")
-    @Min(value = 1, message = "Debe ser un numero igual o mayor a 1")
-    @Max(value = 4, message = "Debe ser un numero igual o menor a 4")
+    @NotNull(message = "El campo Nivel es obligatorio y no puede ser nulo.")
+    @Min(value = 1, message = "El campo Nivel debe ser un numero igual o mayor a 1")
+    @Max(value = 4, message = "El campo Nivel debe ser un numero igual o menor a 4")
     private Integer nivelId;
-    @NotNull(message = "Este campo no puede ser nulo")
-    @Min(value = 0, message = "Debe ser un numero positivo o cero")
-    @Max(value = 5, message = "Debe ser un numero igual o menor a 5")
+    @NotNull(message = "El Número de estrellas es obligatorio y no puede ser nulo.")
+    @Min(value = 0, message = "El Número de estrellas debe ser un numero positivo o cero.")
+    @Max(value = 5, message = "El Número de estrellas debe ser un numero igual o menor a 5.")
     private Integer nuEstrellas;
 }

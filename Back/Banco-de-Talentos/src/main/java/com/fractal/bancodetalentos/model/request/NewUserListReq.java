@@ -12,6 +12,6 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewUserListReq {
-    @NotBlank(message = "Este campo no puede estar vacío ni ser nulo")
+    @NotBlank(message = "El nombre para agregar a su lista de favoritos es obligatorio y no puede estar vacío ni ser nulo.")
     private String listName;
 }

@@ -93,9 +93,10 @@ export class MasterService {
   }
 
   getCities(id: number): Observable<MasterModels.CityModel[]> {
+    const body = { idCountry: id };
     return this.httpClient.post<MasterModels.CityModel[]>(
-      UrlConstants.URL_REQ_CITIES_1 + id + UrlConstants.URL_REQ_CITIES_2,
-      null
+      UrlConstants.URL_REQ_CITIES,
+      body
     );
   }
 

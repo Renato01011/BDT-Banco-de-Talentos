@@ -28,9 +28,9 @@ export class TalentService {
   }
 
   getTalentById(id: number, userId: number): Observable<TalentResponse> {
-    const body = { userId: userId };
+    const body = { idTalent: id, userId: userId };
     return this.httpClient.post<TalentResponse>(
-      `${UrlConstants.URL_REQ_SRCH_BY_ID}/${id}`,
+      `${UrlConstants.URL_REQ_SRCH_BY_ID}`,
       body
     );
   }

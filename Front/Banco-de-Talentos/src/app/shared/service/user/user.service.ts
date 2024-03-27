@@ -23,31 +23,32 @@ export class UserService {
   }
 
   addNewList(userId: number, listName: string): Observable<NewUserListRespone> {
-    const body = { listName: listName };
+    const body = { userId: userId, listName: listName };
     return this.httpClient.post<NewUserListRespone>(
-      `${UrlConstants.URL_ADD_LIST_USER}/${userId}`,
+      `${UrlConstants.URL_ADD_LIST_USER}`,
       body
     );
   }
 
   getUserLists(userId: number): Observable<UserList[]> {
+    const body = { id: userId };
     return this.httpClient
-      .get<UserList[]>(`${UrlConstants.URL_GET_LISTS_USER}/${userId}`)
+      .post<UserList[]>(`${UrlConstants.URL_GET_LISTS_USER}`, body)
       .pipe(tap((favorites) => (this.favoritesCache = favorites)));
   }
 
   addTalentToList(idListUser: number, idTalent: number) {
-    const body = { talentId: idTalent };
+    const body = { listId: idListUser, talentId: idTalent };
     return this.httpClient.post<PostResponse>(
-      `${UrlConstants.URL_ADD_TALENT_TO_LIST}/${idListUser}`,
+      `${UrlConstants.URL_ADD_TALENT_TO_LIST}`,
       body
     );
   }
 
   editTalentUserList(idListUserTalent: number, newListId: number) {
-    const body = { newUserListId: newListId };
+    const body = { listUserTalentId: idListUserTalent, newUserListId: newListId };
     return this.httpClient.put<PostResponse>(
-      `${UrlConstants.URL_EDIT_LIST_USER_TALENT}/${idListUserTalent}`,
+      `${UrlConstants.URL_EDIT_LIST_USER_TALENT}`,
       body
     );
   }

@@ -82,7 +82,8 @@ export class AuthService {
   }
 
   public get isRecruiter(): boolean {
-    const roles = this.decodeToken()?.roles ?? [];
+    let tempRoles = this.decodeToken()?.roles.toString().split(',') ?? [];
+    const roles = tempRoles.map((role) => { return { authority: Authority[role as keyof typeof Authority] } });
     return this.getAuthority(roles);
   }
 

@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
       this.authService.loginUser(this.loginForm.get('username')!.value, this.loginForm.get('password')!.value).subscribe({
         next: (token) => {
           if (token != null && token.token != '') {
-            sessionStorage.setItem(STORAGE_CURRENT_TOKEN, JSON.stringify(token.token));
+            sessionStorage.setItem(STORAGE_CURRENT_TOKEN, JSON.stringify(token.token.slice(7)));
             this.loaderService.hideLoader();
             this.router.navigateByUrl('/home');
           }

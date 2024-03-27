@@ -16,9 +16,13 @@ export class EditInfoService {
     body: EditModels.EditDescription,
     id: number
   ): Observable<EditModels.EditResp> {
+    const sendBody = {
+      id: id,
+      ...body,
+    };
     return this.httpClient.put<EditModels.EditResp>(
-      `${UrlConstants.URL_EDIT_DESCRIPTION}/${id}`,
-      body
+      `${UrlConstants.URL_EDIT_DESCRIPTION}`,
+      sendBody
     );
   }
 
@@ -26,9 +30,13 @@ export class EditInfoService {
     body: EditModels.EditProfilePicture,
     id: number
   ): Observable<EditModels.EditResp> {
+    const sendBody = {
+      id: id,
+      ...body,
+    };
     return this.httpClient.put<EditModels.EditResp>(
-      `${UrlConstants.URL_EDIT_PROFILE_PICTURE}/${id}`,
-      body
+      `${UrlConstants.URL_EDIT_PROFILE_PICTURE}`,
+      sendBody
     );
   }
 
@@ -36,9 +44,13 @@ export class EditInfoService {
     body: EditModels.EditSalary,
     id: number
   ): Observable<EditModels.EditResp> {
+    const sendBody = {
+      id: id,
+      ...body,
+    };
     return this.httpClient.put<EditModels.EditResp>(
-      `${UrlConstants.URL_EDIT_SALARY}/${id}`,
-      body
+      `${UrlConstants.URL_EDIT_SALARY}`,
+      sendBody
     );
   }
 
@@ -46,9 +58,13 @@ export class EditInfoService {
     body: EditModels.EditSocialLinks,
     id: number
   ): Observable<EditModels.EditResp> {
+    const sendBody = {
+      id: id,
+      ...body,
+    };
     return this.httpClient.put<EditModels.EditResp>(
-      `${UrlConstants.URL_EDIT_SOCIAL_LINKS}/${id}`,
-      body
+      `${UrlConstants.URL_EDIT_SOCIAL_LINKS}`,
+      sendBody
     );
   }
 
@@ -57,9 +73,14 @@ export class EditInfoService {
     idTalent: number,
     idEducExp: number
   ): Observable<EditModels.EditResp> {
+    const sendBody = {
+      idEducExp: idEducExp,
+      idTalent: idTalent,
+      ...body
+    };
     return this.httpClient.put<EditModels.EditResp>(
-      `${UrlConstants.URL_EDIT_EDUC_EXP}/${idTalent}/${idEducExp}`,
-      body
+      `${UrlConstants.URL_EDIT_EDUC_EXP}`,
+      sendBody
     );
   }
 
@@ -68,9 +89,14 @@ export class EditInfoService {
     idTalent: number,
     idWorkExp: number
   ): Observable<EditModels.EditResp> {
+    const sendBody = {
+      idWorkExp: idWorkExp,
+      idTalent: idTalent,
+      ...body,
+    };
     return this.httpClient.put<EditModels.EditResp>(
-      `${UrlConstants.URL_EDIT_WORK_EXP}/${idTalent}/${idWorkExp}`,
-      body
+      `${UrlConstants.URL_EDIT_WORK_EXP}`,
+      sendBody
     );
   }
 
@@ -79,9 +105,14 @@ export class EditInfoService {
     idTalent: number,
     idLangExp: number
   ): Observable<EditModels.EditResp> {
+    const sendBody = {
+      idTalentLang: idLangExp,
+      idTalent: idTalent,
+      ...body,
+    };
     return this.httpClient.put<EditModels.EditResp>(
-      `${UrlConstants.URL_EDIT_LANG_EXP}/${idTalent}/${idLangExp}`,
-      body
+      `${UrlConstants.URL_EDIT_LANG_EXP}`,
+      sendBody
     );
   }
 
@@ -90,9 +121,14 @@ export class EditInfoService {
     idFile: number,
     id: number
   ): Observable<EditModels.EditResp> {
+    const sendBody = {
+      id: id,
+      idFile: idFile,
+      ...body,
+    };
     return this.httpClient.put<EditModels.EditResp>(
-      `${UrlConstants.URL_UPDATE_CV}/${idFile}/talent/${id}`,
-      body
+      `${UrlConstants.URL_UPDATE_CV}`,
+      sendBody
     );
   }
 }

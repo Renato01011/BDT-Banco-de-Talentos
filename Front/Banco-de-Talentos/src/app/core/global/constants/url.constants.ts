@@ -15,15 +15,14 @@ export class UrlConstants {
     environment.host + environment.context + '/master/proficiency';
   public static readonly URL_REQ_COUNTRIES =
     environment.host + environment.context + '/master/countries';
-  public static readonly URL_REQ_CITIES_1 =
-    environment.host + environment.context + '/master/country/';
-  public static readonly URL_REQ_CITIES_2 = '/cities';
+  public static readonly URL_REQ_CITIES =
+    environment.host + environment.context + '/master/countries/cities';
   public static readonly URL_POST_TALENT =
     environment.host + environment.context + '/talent/new-talent';
   public static readonly URL_REQ_TEC_SKILL =
     environment.host + environment.context + '/tech/skills';
   public static readonly URL_REQ_FILTER =
-    environment.host + environment.context + '/filter/filter-talent';
+    environment.host + environment.context + '/filter';
   public static readonly URL_REQ_SRCH_BY_ID =
     environment.host + environment.context + '/talent/get-talent';
   public static readonly URL_ADD_TEC_SKILL =
@@ -37,9 +36,9 @@ export class UrlConstants {
   public static readonly URL_ADD_LANG =
     environment.host + environment.context + '/lang/add';
   public static readonly URL_ADD_FILE =
-    environment.host + environment.context + '/file/add';
+    environment.host + environment.context + '/file';
   public static readonly URL_ADD_FEEDBACK =
-    environment.host + environment.context + '/feedback/add';
+    environment.host + environment.context + '/feedback';
   public static readonly URL_EDIT_DESCRIPTION =
     environment.host + environment.context + '/talent/update/description';
   public static readonly URL_EDIT_PROFILE_PICTURE =

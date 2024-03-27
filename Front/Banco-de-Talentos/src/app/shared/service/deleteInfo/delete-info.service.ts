@@ -13,20 +13,35 @@ export class DeleteInfoService {
   constructor(private httpClient: HttpClient) { }
 
   public deleteEducationalExperience(idTalent: number, idEducExp: number): Observable<DeleteModels.DeleteResp> {
-    return this.httpClient.delete<DeleteModels.DeleteResp>(
-      `${UrlConstants.URL_DELETE_EDUC_EXP}/${idTalent}/${idEducExp}`
+    const body = {
+      idEducExp: idEducExp,
+      idTalent: idTalent,
+    };
+    return this.httpClient.post<DeleteModels.DeleteResp>(
+      `${UrlConstants.URL_DELETE_EDUC_EXP}`,
+      body
     );
   }
 
   public deleteWorkExperience(idTalent: number, idWorkExp: number): Observable<DeleteModels.DeleteResp> {
-    return this.httpClient.delete<DeleteModels.DeleteResp>(
-      `${UrlConstants.URL_DELETE_WORK_EXP}/${idTalent}/${idWorkExp}`
+    const body = {
+      idWorkExp: idWorkExp,
+      idTalent: idTalent,
+    };
+    return this.httpClient.post<DeleteModels.DeleteResp>(
+      `${UrlConstants.URL_DELETE_WORK_EXP}`,
+      body
     );
   }
 
   public deleteLanguageExpertise(idTalent: number, idLangExp: number): Observable<DeleteModels.DeleteResp> {
-    return this.httpClient.delete<DeleteModels.DeleteResp>(
-      `${UrlConstants.URL_DELETE_LANG_EXP}/${idTalent}/${idLangExp}`
+    const body = {
+      idTalentLang: idLangExp,
+      idTalent: idTalent,
+    };
+    return this.httpClient.post<DeleteModels.DeleteResp>(
+      `${UrlConstants.URL_DELETE_LANG_EXP}`,
+      body
     );
   }
 

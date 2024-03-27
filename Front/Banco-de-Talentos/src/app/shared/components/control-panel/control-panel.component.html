@@ -67,14 +67,12 @@
               }"
               (dblclick)="deselectFavorite(item.id)"
             >
-              <div class="w-full flex align-items-center justify-content-start">
+              <div class="w-9 flex align-items-center justify-content-start">
                 <label [for]="item.name" class="ml-1 text-base">{{
-                  item.name
+                  item.name | titlecase
                 }}</label>
               </div>
-              <div
-                class="w-full flex align-items-center justify-content-end mr-1"
-              >
+              <div class="w-3 flex align-items-center justify-content-end mr-1">
                 <p-radioButton
                   [inputId]="item.name"
                   name="proficiency"
@@ -96,7 +94,7 @@
       <div
         class="w-12 sm:w-2 xl:w-2 flex align-items-center justify-content-center p-1"
       >
-        <p-overlayPanel #favorite [style]="{ width: '250px' }">
+        <p-overlayPanel #favorite [style]="{ width: '200px' }">
           <ng-template pTemplate>
             <p-scrollPanel [style]="{ width: '100%', height: '200px' }">
               <button
@@ -108,15 +106,13 @@
                 }"
                 (dblclick)="deselectFavorite(item.idListUser)"
               >
-                <div
-                  class="w-full flex align-items-center justify-content-start"
-                >
+                <div class="w-9 flex align-items-center justify-content-start">
                   <label [for]="item.listName" class="ml-1 text-base">{{
                     item.listName
                   }}</label>
                 </div>
                 <div
-                  class="w-full flex align-items-center justify-content-end mr-1"
+                  class="w-3 flex align-items-center justify-content-end mr-1"
                 >
                   <p-radioButton
                     [inputId]="item.listName"

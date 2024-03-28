@@ -43,11 +43,12 @@
         <div
           class="flex align-items-center text-500 text-xs md:text-sm font-normal"
         >
-          {{ item.jobTitle }}
-          {{ item.intialDate | extractYear }} -
-          {{ item.finalDate | extractYear }}
-          {{ expYear(item.intialDate, item.finalDate) }}
-          años
+          <span>{{ item.jobTitle }}</span>
+          <span class="mx-2 lg:mx-3">
+            {{ item.intialDate | extractYear }} -
+            {{ item.finalDate | extractYear }}
+          </span>
+          <span>{{ expYear(item.intialDate, item.finalDate) }} años</span>
         </div>
       </div>
     </div>

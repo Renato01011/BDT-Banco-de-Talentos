@@ -41,10 +41,14 @@
         <div
           class="flex align-items-center text-500 text-xs md:text-sm font-normal"
         >
-          {{ item.degree }}
-          {{ item.major }}
-          {{ item.initialDate | extractYear }} -
-          {{ item.finalDate | extractYear }}
+          <span>
+            {{ item.degree }}
+            {{ item.major }}
+          </span>
+          <span class="mx-2 lg:mx-3">
+            {{ item.initialDate | extractYear }} -
+            {{ item.finalDate | extractYear }}
+          </span>
         </div>
       </div>
     </div>

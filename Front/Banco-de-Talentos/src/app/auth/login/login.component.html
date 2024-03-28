@@ -29,7 +29,9 @@
             formControlName="password"
             [ngClass]="{ 'ng-invalid ng-dirty': isValidField('password') || invalidCredentials }"
           ></p-password>
-          <p class="m-4 ml-0 forgotPasswordText">Olvidé mi contraseña</p>
+          <div class="m-4 ml-0">
+            <!-- <p class="forgotPasswordText">Olvidé mi contraseña</p> -->
+          </div>
           <button
             pButton
             pRipple

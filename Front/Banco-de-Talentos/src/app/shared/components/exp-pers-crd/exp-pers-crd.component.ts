@@ -207,6 +207,7 @@ export class ExpPersCrdComponent implements OnInit {
   }
 
   public openEditWorkExperienceDialog(id: number) {
+    this.editExpForm.reset();
     this.currEditingWorkExp = id;
     const resp = this.findWorkExpById(id);
     const editCompany = resp.firm;
@@ -230,6 +231,7 @@ export class ExpPersCrdComponent implements OnInit {
   }
 
   public openNewWorkExperienceDialog() {
+    this.newExpForm.reset();
     this.newWorkExperienceDialog = true;
   }
 

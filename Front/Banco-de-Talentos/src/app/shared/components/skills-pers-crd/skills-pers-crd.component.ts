@@ -154,6 +154,7 @@ export class SkillsPersCrdComponent implements OnInit {
   }
 
   public openNewTechnicalSkillDialog() {
+    this.techSkForm.reset();
     this.technicalSkillsDialog = true;
   }
 
@@ -162,6 +163,7 @@ export class SkillsPersCrdComponent implements OnInit {
     this.technicalSkillsDialog = false;
   }
   public openNewSoftSkillDialog() {
+    this.softSkForm.reset()
     this.softSkillsDialog = true;
   }
 

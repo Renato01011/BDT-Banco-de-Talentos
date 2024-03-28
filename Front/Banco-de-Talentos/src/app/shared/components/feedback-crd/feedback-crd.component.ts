@@ -99,6 +99,7 @@ export class FeedbackCrdComponent implements OnInit {
   }
 
   openNewFeedbackDialog() {
+    this.feedBkForm.reset();
     this.newFeedbackDialog = true;
   }
 

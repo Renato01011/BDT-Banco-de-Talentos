@@ -88,6 +88,7 @@ export class ControlPanelComponent implements OnInit {
   }
 
   handleTechBtnClick(event: any) {
+    this.masterService.cacheStorage.byTechSkill.techSkills = [];
     this.checkTechSkills();
     this.overlayPanelTech.toggle(event);
   }

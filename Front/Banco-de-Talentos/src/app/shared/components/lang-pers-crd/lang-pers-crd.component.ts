@@ -195,6 +195,7 @@ export class LangPersCrdComponent implements OnInit {
   }
 
   public openNewLanguageDialog() {
+    this.newLanguageForm.reset();
     this.checkLanguages();
     this.checkProficiency();
     this.newLanguageDialog = true;

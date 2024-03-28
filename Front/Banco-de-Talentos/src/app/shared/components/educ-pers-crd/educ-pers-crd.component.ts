@@ -209,6 +209,7 @@ export class EducPersCrdComponent implements OnInit {
   }
 
   public openEditEducationalExperienceDialog(id: number) {
+    this.editEducForm.reset();
     this.currEditingEducExp = id;
     const resp = this.findEducExpById(id);
     const editName = resp.institution;
@@ -241,6 +242,7 @@ export class EducPersCrdComponent implements OnInit {
   }
 
   public openNewEducationalExperienceDialog() {
+    this.newEducForm.reset();
     this.newEducationalExperienceDialog = true;
   }
 

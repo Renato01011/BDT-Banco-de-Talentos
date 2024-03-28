@@ -187,6 +187,7 @@ export class ProfPersCrdComponent implements OnInit {
       tipoArchivo: fileType,
       archivo: this.base64file.split(',')[1],
     };
+    this.loaderService.showLoader();
     this.editInfoService
       .updateResume(body, this.customTalent.resume.idDocument, this.selectedId)
       .subscribe({
@@ -197,6 +198,7 @@ export class ProfPersCrdComponent implements OnInit {
             resp.message
           );
           this.talentId.emit(Number(resp.id));
+          this.loaderService.hideLoader();
           this.hideResumeDialog();
         },
       });
@@ -267,9 +269,11 @@ export class ProfPersCrdComponent implements OnInit {
   }
 
   private getFavorites(userId: number) {
+    this.loaderService.showLoader();
     this.userService.getUserLists(userId).subscribe({
       next: (favorites) => {
         this.favorites = favorites;
+        this.loaderService.hideLoader();
       },
     });
   }

@@ -481,7 +481,6 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   }
 
   OnCountryChangeGetData() {
-    this.loaderService.showLoader();
     this.newTalentForm
       .get('country')!
       .valueChanges.pipe(
@@ -527,6 +526,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   }
 
   OnCountryChange() {
+    this.loaderService.showLoader();
     this.newTalentForm.controls['city'].setValue(null);
   }
 

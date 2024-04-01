@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
 import { MasterService } from 'src/app/core/services/master/master.service';
 
-const yearExpRegEx = '^(?:\\d+(?:\\.(?:[0-9]|1[0-1]))?)$';
+const yearExpRegEx = '^(?:\\d+(?:\\.(?:0\\d|1[01]?))?)$';
 const justLettersRegEx = '^[a-zA-ZÁáÉéÍíÓóÚúÜü\\s]+$';
 
 @Component({
@@ -86,15 +86,15 @@ export class SkillsPersCrdComponent implements OnInit {
     this.loaderService.showLoader();
     this.addInfoService.addTechSkill(body, this.selectedId).subscribe({
       next: (resp) => {
+        this.hideNewTechnicalSkillDialog();
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',
           resp.message
         );
         this.talentId.emit(Number(resp.id));
-        this.loaderService.hideLoader();
         this.masterService.cacheStorage.byTechSkill.techSkills = [];
-        this.hideNewTechnicalSkillDialog();
+        this.loaderService.hideLoader();
       },
     });
   }
@@ -110,6 +110,7 @@ export class SkillsPersCrdComponent implements OnInit {
     this.loaderService.showLoader();
     this.addInfoService.addSoftSkill(body, this.selectedId).subscribe({
       next: (resp) => {
+        this.hideNewSoftSkillDialog();
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',
@@ -117,7 +118,6 @@ export class SkillsPersCrdComponent implements OnInit {
         );
         this.talentId.emit(Number(resp.id));
         this.loaderService.hideLoader();
-        this.hideNewSoftSkillDialog();
       },
     });
   }
@@ -125,7 +125,7 @@ export class SkillsPersCrdComponent implements OnInit {
   public getErrYearExpField(field: string): string {
     return (
       this.fValidator.isRequiredErr(this.techSkForm, field) ??
-      'La parte decimal debe estar entre 0 y 11.'
+      'La parte decimal debe ser uno de los siguientes valores: 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11.'
     );
   }
 
@@ -163,7 +163,7 @@ export class SkillsPersCrdComponent implements OnInit {
     this.technicalSkillsDialog = false;
   }
   public openNewSoftSkillDialog() {
-    this.softSkForm.reset()
+    this.softSkForm.reset();
     this.softSkillsDialog = true;
   }
 

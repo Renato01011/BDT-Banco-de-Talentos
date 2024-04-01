@@ -134,6 +134,7 @@ export class EducPersCrdComponent implements OnInit {
     this.loaderService.showLoader();
     this.addInfoService.addEducExp(body, this.selectedId).subscribe({
       next: (resp) => {
+        this.hideNewEducationalExperienceDialog();
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',
@@ -141,7 +142,6 @@ export class EducPersCrdComponent implements OnInit {
         );
         this.talentId.emit(Number(resp.id));
         this.loaderService.hideLoader();
-        this.hideNewEducationalExperienceDialog();
       },
     });
   }
@@ -216,7 +216,8 @@ export class EducPersCrdComponent implements OnInit {
     const editCareer = resp.major;
     const editDegree = resp.degree;
     const editStDate = new Date(resp.initialDate);
-    const editEdDate = resp.flActualidad == 1 ? new Date() : new Date(resp.finalDate);
+    const editEdDate =
+      resp.flActualidad == 1 ? new Date() : new Date(resp.finalDate);
     const hFractal = editName == 'Fractal';
     const tPresent = resp.flActualidad == 1;
     this.editEducForm.reset({
@@ -228,8 +229,12 @@ export class EducPersCrdComponent implements OnInit {
       hFractal,
       tPresent,
     });
-    if (hFractal) { this.editEducForm.controls['editName'].disable(); }
-    if (tPresent) { this.editEducForm.controls['editEdDate'].disable(); }
+    if (hFractal) {
+      this.editEducForm.controls['editName'].disable();
+    }
+    if (tPresent) {
+      this.editEducForm.controls['editEdDate'].disable();
+    }
     this.editEducationalExperienceDialog = true;
   }
 

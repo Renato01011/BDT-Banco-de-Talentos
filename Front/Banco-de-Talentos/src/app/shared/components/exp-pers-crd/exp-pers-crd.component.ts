@@ -88,7 +88,8 @@ export class ExpPersCrdComponent implements OnInit {
     if (!this.onSaveForm(this.newExpForm)) return;
     if (!this.selectedId) return;
 
-    const { company, job, sDate, eDate, hFractal, tPresent } = this.newExpForm.getRawValue();
+    const { company, job, sDate, eDate, hFractal, tPresent } =
+      this.newExpForm.getRawValue();
     const body = {
       empresa: company,
       puesto: job,
@@ -99,6 +100,7 @@ export class ExpPersCrdComponent implements OnInit {
     this.loaderService.showLoader();
     this.addInfoService.addWorkExp(body, this.selectedId).subscribe({
       next: (resp) => {
+        this.hideNewWorkExperienceDialog();
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',
@@ -106,7 +108,6 @@ export class ExpPersCrdComponent implements OnInit {
         );
         this.talentId.emit(Number(resp.id));
         this.loaderService.hideLoader();
-        this.hideNewWorkExperienceDialog();
       },
     });
   }
@@ -213,12 +214,24 @@ export class ExpPersCrdComponent implements OnInit {
     const editCompany = resp.firm;
     const editJob = resp.jobTitle;
     const editDate = new Date(resp.intialDate);
-    const editEndDate = resp.flActualidad == 1 ? new Date() : new Date(resp.finalDate);
+    const editEndDate =
+      resp.flActualidad == 1 ? new Date() : new Date(resp.finalDate);
     const hFractal = resp.firm == 'Fractal';
     const tPresent = resp.flActualidad == 1;
-    this.editExpForm.reset({ editCompany, editJob, editDate, editEndDate, hFractal, tPresent });
-    if (hFractal) { this.editExpForm.controls['editCompany'].disable(); }
-    if (tPresent) { this.editExpForm.controls['editEndDate'].disable(); }
+    this.editExpForm.reset({
+      editCompany,
+      editJob,
+      editDate,
+      editEndDate,
+      hFractal,
+      tPresent,
+    });
+    if (hFractal) {
+      this.editExpForm.controls['editCompany'].disable();
+    }
+    if (tPresent) {
+      this.editExpForm.controls['editEndDate'].disable();
+    }
     this.editWorkExperienceDialog = true;
   }
 

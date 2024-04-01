@@ -122,6 +122,7 @@ export class CertsPersCrdComponent implements OnInit {
     this.loaderService.showLoader();
     this.addInfoService.addFile(body, this.selectedId).subscribe({
       next: (resp) => {
+        this.hideAddFileDialog();
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',
@@ -129,7 +130,6 @@ export class CertsPersCrdComponent implements OnInit {
         );
         this.talentId.emit(Number(resp.id));
         this.loaderService.hideLoader();
-        this.hideAddFileDialog();
       },
     });
   }
@@ -139,15 +139,20 @@ export class CertsPersCrdComponent implements OnInit {
   }
 
   public openAddFileDialog() {
+    this.resetFileForm();
     this.addFileDialog = true;
   }
 
   public hideAddFileDialog() {
+    this.resetFileForm();
+    this.addFileDialog = false;
+  }
+
+  private resetFileForm() {
     this.fileForm.reset({ fileType: 'PDF' });
     this.fileText = 'Sube un archivo';
     this.fileDetailsText = 'PDF (max. 5MB)';
     this.fileUploaded = false;
-    this.addFileDialog = false;
   }
 
   extractFileName(fileName: string): string {

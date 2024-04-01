@@ -71,12 +71,17 @@ export class ListComponent implements OnInit {
     this.getTalentList(this.filterReq);
   }
 
+  public saveChanges(id: number): void {
+    this.searchByTalentId(id);
+    this.getTalentList(this.filterReq);
+  }
+
   private getTalentList(filter: FilterRequest): void {
     this.loaderService.showLoader();
     this.filterService.filterTalent(filter).subscribe({
       next: (talents) => {
         this.talents = talents;
-        this.firstCall();
+        this.firstCall(talents);
         this.loaderService.hideLoader();
       },
     });
@@ -111,17 +116,12 @@ export class ListComponent implements OnInit {
     this.feedbacks = talent.feedbacks;
   }
 
-  public firstCall(): void {
-    if (this.talents && this.talents.length > 0) {
-      const [firstObjeto] = this.talents;
+  public firstCall(talents: FilterResponse[]): void {
+    if (this.selId === undefined) {
+      const [firstObjeto] = talents;
       const firstId = firstObjeto.id;
       this.searchByTalentId(firstId);
     }
-  }
-
-  public saveChanges(id: number): void {
-    this.searchByTalentId(id);
-    this.getTalentList(this.filterReq);
   }
 
   public newTalent(talent: TalentResponse): void {

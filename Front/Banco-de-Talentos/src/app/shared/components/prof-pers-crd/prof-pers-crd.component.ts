@@ -192,6 +192,7 @@ export class ProfPersCrdComponent implements OnInit {
       .updateResume(body, this.customTalent.resume.idDocument, this.selectedId)
       .subscribe({
         next: (resp) => {
+          this.hideResumeDialog();
           this.toastService.addProperties(
             'success',
             'Se actualizo correctamente',
@@ -199,7 +200,6 @@ export class ProfPersCrdComponent implements OnInit {
           );
           this.talentId.emit(Number(resp.id));
           this.loaderService.hideLoader();
-          this.hideResumeDialog();
         },
       });
   }
@@ -465,6 +465,7 @@ export class ProfPersCrdComponent implements OnInit {
   public onSveProfile() {
     if (!this.onSaveForm(this.profileForm)) return;
     if (!this.selectedId) return;
+    this.loaderService.showLoader();
     this.editInfoService
       .editTalentProfilePicture(
         { profilePicture: this.base64photo.split(',')[1] },
@@ -479,6 +480,7 @@ export class ProfPersCrdComponent implements OnInit {
             resp.message
           );
           this.talentId.emit(this.selectedId);
+          this.loaderService.hideLoader();
         },
       });
   }
@@ -486,6 +488,7 @@ export class ProfPersCrdComponent implements OnInit {
   public onSveSalary() {
     if (!this.onSaveForm(this.salaryForm)) return;
     if (!this.selectedId) return;
+    this.loaderService.showLoader();
     this.editInfoService
       .editTalentSalary(
         {
@@ -504,6 +507,7 @@ export class ProfPersCrdComponent implements OnInit {
             resp.message
           );
           this.talentId.emit(this.selectedId);
+          this.loaderService.hideLoader();
         },
       });
   }
@@ -511,6 +515,7 @@ export class ProfPersCrdComponent implements OnInit {
   public onSveRedSoc() {
     if (!this.onSaveForm(this.redSocForm)) return;
     if (!this.selectedId) return;
+    this.loaderService.showLoader();
     this.editInfoService
       .editTalentSocialLinks(
         {
@@ -528,6 +533,7 @@ export class ProfPersCrdComponent implements OnInit {
             resp.message
           );
           this.talentId.emit(this.selectedId);
+          this.loaderService.hideLoader();
         },
       });
   }

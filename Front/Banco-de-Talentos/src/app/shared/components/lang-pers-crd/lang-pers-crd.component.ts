@@ -91,6 +91,7 @@ export class LangPersCrdComponent implements OnInit {
     this.loaderService.showLoader();
     this.addInfoService.addLang(body, this.selectedId).subscribe({
       next: (resp) => {
+        this.hideNewLanguageDialog();
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',
@@ -98,7 +99,6 @@ export class LangPersCrdComponent implements OnInit {
         );
         this.talentId.emit(Number(resp.id));
         this.loaderService.hideLoader();
-        this.hideNewLanguageDialog();
       },
     });
   }
@@ -118,6 +118,7 @@ export class LangPersCrdComponent implements OnInit {
       )
       .subscribe({
         next: (resp) => {
+          this.hideEditLanguageDialog();
           this.toastService.addProperties(
             'success',
             'Se editó correctamente',
@@ -125,7 +126,6 @@ export class LangPersCrdComponent implements OnInit {
           );
           this.talentId.emit(this.selectedId);
           this.loaderService.hideLoader();
-          this.hideEditLanguageDialog();
         },
       });
   }
@@ -143,6 +143,7 @@ export class LangPersCrdComponent implements OnInit {
           .deleteLanguageExpertise(this.selectedId, this.currEditingLangProf)
           .subscribe({
             next: (resp) => {
+              this.hideEditLanguageDialog();
               this.toastService.addProperties(
                 'success',
                 'Se eliminó correctamente',
@@ -150,7 +151,6 @@ export class LangPersCrdComponent implements OnInit {
               );
               this.talentId.emit(this.selectedId);
               this.loaderService.hideLoader();
-              this.hideEditLanguageDialog();
             },
           });
       },

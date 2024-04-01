@@ -72,14 +72,14 @@ export class FeedbackCrdComponent implements OnInit {
     this.loaderService.showLoader();
     this.addInfoService.addFeedback(body, this.selectedId).subscribe({
       next: (resp) => {
+        this.hideNewFeedbackDialog();
         this.toastService.addProperties(
           'success',
           'Se agregó correctamente',
           resp.message
         );
-        this.talentId.emit(Number(resp.id));
+        this.talentId.emit(this.selectedId);
         this.loaderService.hideLoader();
-        this.hideNewFeedbackDialog();
       },
     });
   }

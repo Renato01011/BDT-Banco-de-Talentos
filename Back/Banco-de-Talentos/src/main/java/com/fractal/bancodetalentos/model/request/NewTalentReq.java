@@ -69,4 +69,6 @@ public class NewTalentReq {
     @Valid
     @NotEmpty(message = "La lista de Idiomas es un campo obligatorio y no puede estar vacía.")
     private List<IdiomasDTO> idiomas;
+    @NotBlank(message = "La disponibilidad del talento es obligatorio y no puede estar vacío ni ser nulo.")
+    private String disponibilidad;
 }

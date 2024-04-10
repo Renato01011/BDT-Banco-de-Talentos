@@ -3,43 +3,90 @@
     <span class="text-left text-sm text-500">
       {{ availability }}
     </span>
-    <button type="button" class="mx-1 back-icon-btn">
+    <button
+      type="button"
+      class="mx-1 back-icon-btn"
+      *ngIf="isRecruiter"
+      (click)="openEditAvailabilityDialog()"
+    >
       <i class="pi pi-pencil text-sm"></i>
     </button>
   </div>
 </div>
 
-<p-dialog [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-  [resizable]="false" [modal]="true">
+<p-dialog
+  [visible]="editAvailabilityDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [modal]="true"
+>
   <ng-template pTemplate="header">
     <div class="flex align-items-center w-12">
       <span class="text-lg md:text-xl font-semibold text-800">
-        Edita tu descripción
+        Edita la disponibilidad
       </span>
     </div>
   </ng-template>
   <div class="w-12 flex flex-column align-items-center">
     <div class="flex align-items-center w-12 pb-3">
       <span class="text-sm md:text-base font-normal text-500">
-        Tiempo de una nueva descripción? Editala.
+        Tiempo de una nueva disponibilidad? Editala.
       </span>
     </div>
-    <form class="w-12 flex flex-column" autocomplete="off">
+    <form
+      class="w-12 flex flex-column"
+      [formGroup]="availabilityForm"
+      (ngSubmit)="onSaveAvailability()"
+      autocomplete="off"
+    >
       <div class="w-12 flex flex-column justify-content-start h-9rem">
-        <label for="inputLink"
-          class="block text-left mb-2 font-medium text-bluegray-800 font-medium text-bluegray-800">Descripción</label>
-        <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" placeholder="Escribe un descripción"
-          class="w-full h-auto" formControlName="description"></textarea>
-        <small id="inputLink" class="hidden"></small>
+        <label
+          for="inputLink"
+          class="block text-left mb-2 font-medium text-bluegray-800 font-medium text-bluegray-800"
+          >Disponibilidad</label
+        >
+        <input
+          pInputText
+          placeholder="Disponibilidad"
+          class="w-full"
+          formControlName="availability"
+        />
+        <small
+          id="inputLink"
+          class="hidden"
+          [ngClass]="{
+            'ng-invalid ng-dirty': isValidField('availability')
+          }"
+          >{{ getErrDescField("availability") }}</small
+        >
       </div>
       <div class="w-12 flex flex-wrap pt-3">
-        <div class="w-6 p-2 pl-0 flex align-items-center justify-content-center">
-          <button pButton pRipple label="Cancelar" icon="pi pi-times" type="button"
-            class="p-button-outlined p-button-secondary w-full"></button>
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            type="button"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideEditAvailabilityDialog()"
+          ></button>
         </div>
-        <div class="w-6 p-2 pr-0 flex align-items-center justify-content-center">
-          <button pButton pRipple label="Editar" icon="pi pi-check" type="submit"
-            class="p-button-success w-full"></button>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Editar"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
         </div>
       </div>
     </form>

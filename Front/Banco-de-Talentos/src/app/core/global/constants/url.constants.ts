@@ -41,6 +41,8 @@ export class UrlConstants {
     environment.host + environment.context + '/feedback';
   public static readonly URL_EDIT_DESCRIPTION =
     environment.host + environment.context + '/talent/update/description';
+  public static readonly URL_EDIT_AVAILABILITY =
+    environment.host + environment.context + '/talent/update/availability';
   public static readonly URL_EDIT_PROFILE_PICTURE =
     environment.host + environment.context + '/talent/update/profile-picture';
   public static readonly URL_EDIT_SALARY =

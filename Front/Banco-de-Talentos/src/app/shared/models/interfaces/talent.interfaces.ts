@@ -11,7 +11,7 @@ export interface NewTalentModel {
     }
   ],
   descripcion: string,
-  availability: string,
+  disponibilidad: string,
   idPuestoActual: number,
   idPais: number,
   idCiudad: number,

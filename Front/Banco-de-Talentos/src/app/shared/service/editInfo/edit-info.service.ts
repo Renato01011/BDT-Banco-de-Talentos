@@ -10,7 +10,7 @@ import { AddFile } from '../../models/interfaces/addInfo.interfaces';
   providedIn: 'root',
 })
 export class EditInfoService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   public editTalentDescription(
     body: EditModels.EditDescription,
@@ -22,6 +22,19 @@ export class EditInfoService {
     };
     return this.httpClient.put<EditModels.EditResp>(
       `${UrlConstants.URL_EDIT_DESCRIPTION}`,
+      sendBody
+    );
+  }
+  public editTalentAvailability(
+    body: EditModels.EditAvailability,
+    id: number
+  ): Observable<EditModels.EditResp> {
+    const sendBody = {
+      id: id,
+      ...body,
+    };
+    return this.httpClient.put<EditModels.EditResp>(
+      `${UrlConstants.URL_EDIT_AVAILABILITY}`,
       sendBody
     );
   }

@@ -70,6 +70,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       [Validators.required, Validators.minLength(10), Validators.max(200)],
     ],
     profile: [null, [Validators.required]],
+    availability: [null, [Validators.required, Validators.max(50)]],
     linkedin: ['', [Validators.required, Validators.pattern(linkedInRegEx)]],
     github: ['', [Validators.required, Validators.pattern(gitHubRegEx)]],
     coin: ['', [Validators.required]],
@@ -145,7 +146,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     private talentService: TalentService,
     private loaderService: LoaderService,
     private toastService: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.checkCurrencies();
@@ -207,7 +208,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   AddTechnicalAbility() {
     (this.newTalentForm.get('technicalAbilities') as FormArray).push(
@@ -625,6 +626,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
           },
         ],
         descripcion: this.newTalentForm.get('description')?.value,
+        availability: this.newTalentForm.get('availability')?.value,
         idPuestoActual: this.newTalentForm.get('profile')?.value.id,
         idPais: this.newTalentForm.get('country')?.value.id,
         idCiudad: this.newTalentForm.get('city')?.value.id,
@@ -698,7 +700,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     return (
       !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
       this.masterService.cacheStorage.byLangProficiency.proficiencies.length ===
-        0
+      0
     );
   }
 

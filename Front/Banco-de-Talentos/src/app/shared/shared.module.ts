@@ -18,6 +18,7 @@ import { PipesModule } from '../core/pipes/pipes.module';
 import { ConfirmationService } from 'primeng/api';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NoResultsComponent } from './components/no-results/no-results.component';
+import { AvailabilityComponent } from './components/availability/availability.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { NoResultsComponent } from './components/no-results/no-results.component
     LangPersCrdComponent,
     FeedbackCrdComponent,
     NoResultsComponent,
+    AvailabilityComponent,
   ],
   imports: [
     CommonModule,

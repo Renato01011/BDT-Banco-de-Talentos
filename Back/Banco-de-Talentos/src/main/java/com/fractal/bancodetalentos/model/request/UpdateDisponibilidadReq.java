@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateDisponibilidadReq {
-    @NotBlank(message = "La descripción es un campo obligatorio y no puede estar vacía ni ser nula.")
+    @NotBlank(message = "La disponibilidad es un campo obligatorio y no puede estar vacía ni ser nula.")
     private String disponibilidad;
 
     @NotNull(message = "El Id del Talento es obligatorio y no puede ser nulo.")

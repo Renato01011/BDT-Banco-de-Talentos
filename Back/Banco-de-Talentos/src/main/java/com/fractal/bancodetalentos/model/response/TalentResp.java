@@ -39,5 +39,5 @@ public class TalentResp {
     private UserListTalentResp userListTalent;
 
     private String disponibilidad;
-
+    private String email;
 }

@@ -321,6 +321,7 @@ public class TalentoServiceImpl implements TalentoService {
             talentResp.setCreated((Date) objects[11]);
             talentResp.setAvgRating((Integer) objects[12]);
             talentResp.setDisponibilidad((String) objects[13]);
+            talentResp.setEmail((String) objects[14]);
         }
 
         // -- Technical Abilities --

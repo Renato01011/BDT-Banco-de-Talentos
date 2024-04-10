@@ -57,7 +57,8 @@ import { AvailabilityComponent } from './components/availability/availability.co
     LangPersCrdComponent,
     FeedbackCrdComponent,
     NoResultsComponent,
+    AvailabilityComponent
   ],
   providers: [ConfirmationService],
 })
-export class SharedModule {}
+export class SharedModule { }

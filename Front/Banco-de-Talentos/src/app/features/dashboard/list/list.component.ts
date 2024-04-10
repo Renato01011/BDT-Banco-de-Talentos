@@ -44,6 +44,7 @@ export class ListComponent implements OnInit {
 
   public customTalent?: CustomTalent;
   public description: string = '';
+  public availability: string = '';
   public documents: Document[] = [];
   public educExp: EducationalExperience[] = [];
   public langProficiency: LanguageLevel[] = [];
@@ -59,7 +60,7 @@ export class ListComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private toastService: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getTalentList(this.filterReq);
@@ -114,6 +115,7 @@ export class ListComponent implements OnInit {
     this.techSkills = talent.technicalAbilities;
     this.workExp = talent.workExperiences;
     this.description = talent.description;
+    this.availability = talent.disponibilidad;
     this.feedbacks = talent.feedbacks;
   }
 

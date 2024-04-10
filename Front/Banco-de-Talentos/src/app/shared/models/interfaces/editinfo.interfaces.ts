@@ -3,7 +3,7 @@ export interface EditDescription {
 }
 
 export interface EditAvailability {
-  availability: string;
+  disponibilidad: string;
 }
 
 export interface EditProfilePicture {

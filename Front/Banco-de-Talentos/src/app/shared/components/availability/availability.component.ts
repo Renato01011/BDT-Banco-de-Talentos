@@ -66,7 +66,7 @@ export class AvailabilityComponent implements OnInit {
     if (!this.selectedId) return;
     this.loaderService.showLoader();
     this.editInfoService.editTalentAvailability(
-      { availability: this.availabilityForm.get('availability')!.value },
+      { disponibilidad: this.availabilityForm.get('availability')!.value },
       this.selectedId
     ).subscribe(
       {

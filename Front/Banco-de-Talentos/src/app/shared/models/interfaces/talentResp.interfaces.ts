@@ -7,6 +7,7 @@ export interface TalentResponse {
   secondSurname: string;
   profilePicture: string;
   description: string;
+  disponibilidad: string;
   initialSalary: number;
   finalSalary: number;
   phone: string;

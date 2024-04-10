@@ -52,6 +52,11 @@
             [selectedId]="selId"
             (talentId)="saveChanges($event)"
           ></shared-summ-pers-crd>
+          <app-availability
+            [availability]="availability"
+            [selectedId]="selId"
+            (talentId)="saveChanges($event)"
+          ></app-availability>
           <shared-exp-pers-crd
             [workExp]="workExp"
             [selectedId]="selId"

@@ -88,4 +88,14 @@ public class TalentoController {
         }
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
+    @PutMapping("/update/contact")
+    public ResponseEntity<GeneralResp> updateContact(@Valid @RequestBody UpdateContactInfoReq updateContactInfoReq) {
+        GeneralResp generalResp = talentoService.updateContactInfo(updateContactInfoReq.getId(), updateContactInfoReq);
+        if (generalResp == null) {
+            throw new ResourceNotFoundException("Talent");
+        }
+        return new ResponseEntity<>(generalResp, HttpStatus.OK);
+    }
 }

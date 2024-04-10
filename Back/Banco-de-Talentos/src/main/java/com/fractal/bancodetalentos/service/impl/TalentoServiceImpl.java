@@ -593,4 +593,38 @@ public class TalentoServiceImpl implements TalentoService {
         temp.setMessage("Correctly Updated");
         return temp;
     }
+
+    @Override
+    public GeneralResp updateContactInfo(Integer id, UpdateContactInfoReq updateContactInfoReq) {
+
+        boolean existsTalent = existsTalentId(id);
+        if (!existsTalent) {
+            throw new ResourceNotFoundException("Talent", "id", id);
+        }
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createStoredProcedureQuery("SP_EDIT_CONTACT_INFO")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
+                .setParameter(1, id)
+                .setParameter(2, updateContactInfoReq.getCelular())
+                .setParameter(3, updateContactInfoReq.getEmail());
+
+        storedProcedureQuery.execute();
+
+        GeneralResp temp = new GeneralResp();
+        temp.setCode(200);
+        temp.setMessage("Correctly Updated");
+        return temp;
+    }
+
+    private boolean existsTalentId(Integer id) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, id);
+        storedProcedureQuery.execute();
+        Integer exists = (Integer) storedProcedureQuery.getOutputParameterValue(2);
+        return exists == 1;
+    }
 }

@@ -14,5 +14,5 @@ public interface TalentoService {
     GeneralResp putSocialLinks(Integer id, UpdateSocialLinksReq updateSocialLinksReq);
     GeneralResp putAvailability(Integer id, UpdateDisponibilidadReq updateDisponibilidadReq);
 
-
+    GeneralResp updateContactInfo(Integer id, UpdateContactInfoReq updateContactInfoReq);
 }

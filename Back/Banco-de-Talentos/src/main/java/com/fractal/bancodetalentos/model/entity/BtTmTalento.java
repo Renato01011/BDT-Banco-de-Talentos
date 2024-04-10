@@ -57,4 +57,7 @@ public class BtTmTalento implements Serializable {
     @Column(name = "FE_CREACION")
     private Date feCreacion;
 
+    @Column(name = "CE_EMAIL")
+    private String ceEmail;
+
 }

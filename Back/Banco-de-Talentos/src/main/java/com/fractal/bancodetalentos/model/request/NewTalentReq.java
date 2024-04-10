@@ -69,6 +69,12 @@ public class NewTalentReq {
     @Valid
     @NotEmpty(message = "La lista de Idiomas es un campo obligatorio y no puede estar vacía.")
     private List<IdiomasDTO> idiomas;
+
     @NotBlank(message = "La disponibilidad del talento es obligatorio y no puede estar vacío ni ser nulo.")
     private String disponibilidad;
+
+
+    @Email(message = "El correo electrónico introducido no tiene el formato correcto.")
+    @NotBlank(message = "El Email del talento es obligatorio y no puede estar vacío ni ser nulo.")
+    private String email;
 }

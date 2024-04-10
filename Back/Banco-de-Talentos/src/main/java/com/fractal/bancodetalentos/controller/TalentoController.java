@@ -78,4 +78,14 @@ public class TalentoController {
         }
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAuthority('RECLUTADOR')")
+    @PutMapping("/update/availability")
+    public ResponseEntity<GeneralResp> putAvailability(@Valid @RequestBody UpdateDisponibilidadReq updateDisponibilidadReq) {
+        GeneralResp generalResp = talentoService.putAvailability(updateDisponibilidadReq.getId(), updateDisponibilidadReq);
+        if (generalResp == null) {
+            throw new ResourceNotFoundException("Talent");
+        }
+        return new ResponseEntity<>(generalResp, HttpStatus.OK);
+    }
 }

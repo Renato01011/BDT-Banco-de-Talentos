@@ -1,6 +1,8 @@
 package com.fractal.bancodetalentos.controller;
 
-import com.fractal.bancodetalentos.model.request.Idiomas;
+import com.fractal.bancodetalentos.model.request.AddLanguageReq;
+import com.fractal.bancodetalentos.model.request.DeleteLanguageReq;
+import com.fractal.bancodetalentos.model.request.UpdateLanguageReq;
 import com.fractal.bancodetalentos.model.response.GeneralResp;
 import com.fractal.bancodetalentos.service.MasterTalentoIdiomaService;
 import lombok.RequiredArgsConstructor;
@@ -20,23 +22,23 @@ public class MasterTalentoIdiomaController {
     private final MasterTalentoIdiomaService idiomaService;
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @PostMapping("/add/{id}")
-    public ResponseEntity<Map<String, String>> addNewLangExp(@PathVariable Integer id, @Valid @RequestBody Idiomas idiomas) {
-        Map<String, String> resp = idiomaService.addNewLanguage(idiomas, id);
+    @PostMapping("/add")
+    public ResponseEntity<Map<String, String>> addNewLangExp(@Valid @RequestBody AddLanguageReq idiomas) {
+        Map<String, String> resp = idiomaService.addNewLanguage(idiomas, idiomas.getId());
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @PutMapping("/update/{idTalent}/{idTalentLang}")
-    public ResponseEntity<GeneralResp> putLangExp(@PathVariable Integer idTalent, @PathVariable Integer idTalentLang, @Valid @RequestBody Idiomas idiomas) {
-        GeneralResp generalResp = idiomaService.putLangExp(idTalent, idTalentLang, idiomas);
+    @PutMapping("/update")
+    public ResponseEntity<GeneralResp> putLangExp(@Valid @RequestBody UpdateLanguageReq idiomas) {
+        GeneralResp generalResp = idiomaService.putLangExp(idiomas.getIdTalent(), idiomas.getIdTalentLang(), idiomas);
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @DeleteMapping("/delete/{idTalent}/{idTalentLang}")
-    public ResponseEntity<GeneralResp> deleteTalentLang(@PathVariable Integer idTalent, @PathVariable Integer idTalentLang) {
-        GeneralResp generalResp = idiomaService.deleteTalentLang(idTalent, idTalentLang);
+    @PostMapping("/delete")
+    public ResponseEntity<GeneralResp> deleteTalentLang(@Valid @RequestBody DeleteLanguageReq languageReq) {
+        GeneralResp generalResp = idiomaService.deleteTalentLang(languageReq.getIdTalent(), languageReq.getIdTalentLang());
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 }

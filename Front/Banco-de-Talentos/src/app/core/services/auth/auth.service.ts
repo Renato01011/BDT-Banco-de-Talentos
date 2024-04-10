@@ -81,9 +81,14 @@ export class AuthService {
     return roles.some((role) => role.authority === Authority.RECLUTADOR);
   }
 
+  // public get isRecruiter(): boolean {
+  //   let tempRoles = this.decodeToken()?.roles.toString().split(',') ?? [];
+  //   const roles = tempRoles.map((role) => { return { authority: Authority[role as keyof typeof Authority] } });
+  //   return this.getAuthority(roles);
+  // }
+
   public get isRecruiter(): boolean {
-    let tempRoles = this.decodeToken()?.roles.toString().split(',') ?? [];
-    const roles = tempRoles.map((role) => { return { authority: Authority[role as keyof typeof Authority] } });
+    const roles = this.decodeToken()?.roles ?? [];
     return this.getAuthority(roles);
   }
 

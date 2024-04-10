@@ -1,7 +1,7 @@
 package com.fractal.bancodetalentos.controller;
 
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
-import com.fractal.bancodetalentos.model.request.HabilidadesTecnicas;
+import com.fractal.bancodetalentos.model.request.AddHabTechReq;
 import com.fractal.bancodetalentos.model.response.TecSkillsResp;
 import com.fractal.bancodetalentos.service.HabilidadTecnicaService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class HabilidadTecnicaController {
 
     private final HabilidadTecnicaService tecnicaService;
 
-    @GetMapping("/skills")
+    @PostMapping("/skills")
     public ResponseEntity<List<TecSkillsResp>> findTecSkills() {
         List<TecSkillsResp> skills = tecnicaService.getTecSkillsResp();
         if (skills == null) {
@@ -31,9 +31,9 @@ public class HabilidadTecnicaController {
     }
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @PostMapping("/add/{id}")
-    public ResponseEntity<Map<String, String>> addNewTechSkill(@PathVariable Integer id, @Valid @RequestBody HabilidadesTecnicas tecnicas) {
-        Map<String, String> resp = tecnicaService.addNewTechSkill(tecnicas, id);
+    @PostMapping("/add")
+    public ResponseEntity<Map<String, String>> addNewTechSkill(@Valid @RequestBody AddHabTechReq tecnicas) {
+        Map<String, String> resp = tecnicaService.addNewTechSkill(tecnicas, tecnicas.getId());
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
 

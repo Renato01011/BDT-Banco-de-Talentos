@@ -1,9 +1,9 @@
 package com.fractal.bancodetalentos.service.impl;
 
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
-import com.fractal.bancodetalentos.model.entity.BtTmListaUsuario;
+
 import com.fractal.bancodetalentos.model.request.NewUserListReq;
-import com.fractal.bancodetalentos.model.response.GeneralResp;
+
 import com.fractal.bancodetalentos.model.response.NewUserListResp;
 import com.fractal.bancodetalentos.model.response.UserListResp;
 import com.fractal.bancodetalentos.service.ListaUsuarioService;
@@ -84,10 +84,5 @@ public class ListaUsuarioServiceImpl implements ListaUsuarioService {
         }
 
         return userLists;
-    }
-
-    @Override
-    public void delete(BtTmListaUsuario listaUsuario) {
-
     }
 }

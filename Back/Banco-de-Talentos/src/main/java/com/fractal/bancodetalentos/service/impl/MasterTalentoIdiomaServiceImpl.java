@@ -2,8 +2,8 @@ package com.fractal.bancodetalentos.service.impl;
 
 import com.fractal.bancodetalentos.exception.DuplicatedDataException;
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
-import com.fractal.bancodetalentos.model.entity.BtTxMasterTalentoIdioma;
-import com.fractal.bancodetalentos.model.request.Idiomas;
+import com.fractal.bancodetalentos.model.request.AddLanguageReq;
+import com.fractal.bancodetalentos.model.request.UpdateLanguageReq;
 import com.fractal.bancodetalentos.model.response.GeneralResp;
 import com.fractal.bancodetalentos.service.MasterTalentoIdiomaService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class MasterTalentoIdiomaServiceImpl implements MasterTalentoIdiomaServic
     private final EntityManager entityManager;
 
     @Override
-    public Map<String, String> addNewLanguage(Idiomas idiomas, Integer id) {
+    public Map<String, String> addNewLanguage(AddLanguageReq idiomas, Integer id) {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
@@ -72,7 +72,7 @@ public class MasterTalentoIdiomaServiceImpl implements MasterTalentoIdiomaServic
     }
 
     @Override
-    public GeneralResp putLangExp(Integer idTalent, Integer idTalentLang, Idiomas idiomas) {
+    public GeneralResp putLangExp(Integer idTalent, Integer idTalentLang, UpdateLanguageReq idiomas) {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)

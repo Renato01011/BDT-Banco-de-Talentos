@@ -12,9 +12,11 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SocialLinksReq {
-    @NotBlank(message = "El campo Linkedin es obligatorio y no puede estar vacío ni ser nulo.")
-    private String linkedin;
-    @NotBlank(message = "El campo Github es obligatorio y no puede estar vacío ni ser nulo.")
-    private String github;
+public class AddSoftSkillReq {
+
+    @NotNull(message = "El Id del Talento es obligatorio y no puede ser nulo.")
+    private Integer id;
+
+    @NotBlank(message = "El nombre de la Habilidad blanda es obligatorio y no puede estar vacío ni ser nulo.")
+    private String nombre;
 }

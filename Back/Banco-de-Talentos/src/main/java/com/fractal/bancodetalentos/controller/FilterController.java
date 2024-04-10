@@ -1,12 +1,9 @@
 package com.fractal.bancodetalentos.controller;
 
-import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.request.FilterTalentReq;
 import com.fractal.bancodetalentos.model.response.FilterTalentoResp;
 import com.fractal.bancodetalentos.service.FilterService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +19,7 @@ public class FilterController {
 
     private final FilterService filterService;
 
-    @PostMapping("/filter-talent")
+    @PostMapping()
     //public ResponseEntity<List<FilterTalentoResp>> filterTalents(@Valid @RequestBody FilterTalentReq filterTalentReq) {
     public List<FilterTalentoResp> filterTalents(@Valid @RequestBody FilterTalentReq filterTalentReq) {
         return filterService.filterTalents(filterTalentReq);

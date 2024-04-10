@@ -2,7 +2,7 @@ package com.fractal.bancodetalentos.service.impl;
 
 import com.fractal.bancodetalentos.exception.DuplicatedDataException;
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
-import com.fractal.bancodetalentos.model.request.HabilidadesTecnicas;
+import com.fractal.bancodetalentos.model.request.AddHabTechReq;
 import com.fractal.bancodetalentos.model.response.TecSkillsResp;
 import com.fractal.bancodetalentos.service.HabilidadTecnicaService;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class HabilidadTecnicaServiceImpl implements HabilidadTecnicaService {
     }
 
     @Override
-    public Map<String, String> addNewTechSkill(HabilidadesTecnicas tecnicas, Integer id) {
+    public Map<String, String> addNewTechSkill(AddHabTechReq tecnicas, Integer id) {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)

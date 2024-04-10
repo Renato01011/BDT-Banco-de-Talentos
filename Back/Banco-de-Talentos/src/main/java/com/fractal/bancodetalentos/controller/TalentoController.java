@@ -30,19 +30,19 @@ public class TalentoController {
         return new ResponseEntity<>(newTalentResp, HttpStatus.CREATED);
     }
 
-    @PostMapping("/get-talent/{id}")
-    public ResponseEntity<TalentResp> getTalent(@PathVariable Integer id, @Valid @RequestBody GetTalentReq getTalentReq) {
-        TalentResp talentResp = talentoService.getTalent(id, getTalentReq);
+    @PostMapping("/get-talent")
+    public ResponseEntity<TalentResp> getTalent(@Valid @RequestBody GetTalentReq getTalentReq) {
+        TalentResp talentResp = talentoService.getTalent(getTalentReq.getIdTalent(), getTalentReq);
         if (talentResp == null) {
-            throw new ResourceNotFoundException("Talent", "id", id);
+            throw new ResourceNotFoundException("Talent", "id", getTalentReq.getIdTalent());
         }
         return new ResponseEntity<>(talentResp, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @PutMapping("/update/description/{id}")
-    public ResponseEntity<GeneralResp> putDescription(@PathVariable Integer id, @Valid @RequestBody DescriptionReq descriptionReq) {
-        GeneralResp generalResp = talentoService.putDescription(id, descriptionReq);
+    @PutMapping("/update/description")
+    public ResponseEntity<GeneralResp> putDescription(@Valid @RequestBody UpdateDescriptionReq updateDescriptionReq) {
+        GeneralResp generalResp = talentoService.putDescription(updateDescriptionReq.getId(), updateDescriptionReq);
         if (generalResp == null) {
             throw new ResourceNotFoundException("Talent");
         }
@@ -50,9 +50,9 @@ public class TalentoController {
     }
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @PutMapping("/update/profile-picture/{id}")
-    public ResponseEntity<GeneralResp> putProfilePicture(@PathVariable Integer id, @Valid @RequestBody ProfilePictureReq profilePictureReq) {
-        GeneralResp generalResp = talentoService.putProfilePicture(id, profilePictureReq);
+    @PutMapping("/update/profile-picture")
+    public ResponseEntity<GeneralResp> putProfilePicture(@Valid @RequestBody UpdateProfilePictureReq updateProfilePictureReq) {
+        GeneralResp generalResp = talentoService.putProfilePicture(updateProfilePictureReq.getId(), updateProfilePictureReq);
         if (generalResp == null) {
             throw new ResourceNotFoundException("Talent");
         }
@@ -60,9 +60,9 @@ public class TalentoController {
     }
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @PutMapping("/update/salary/{id}")
-    public ResponseEntity<GeneralResp> putSalary(@PathVariable Integer id, @Valid @RequestBody SalaryReq salaryReq) {
-        GeneralResp generalResp = talentoService.putSalary(id, salaryReq);
+    @PutMapping("/update/salary")
+    public ResponseEntity<GeneralResp> putSalary(@Valid @RequestBody UpdateSalaryReq updateSalaryReq) {
+        GeneralResp generalResp = talentoService.putSalary(updateSalaryReq.getId(), updateSalaryReq);
         if (generalResp == null) {
             throw new ResourceNotFoundException("Talent");
         }
@@ -70,9 +70,9 @@ public class TalentoController {
     }
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @PutMapping("/update/social-links/{id}")
-    public ResponseEntity<GeneralResp> putSocialLinks(@PathVariable Integer id, @Valid @RequestBody SocialLinksReq socialLinksReq) {
-        GeneralResp generalResp = talentoService.putSocialLinks(id, socialLinksReq);
+    @PutMapping("/update/social-links")
+    public ResponseEntity<GeneralResp> putSocialLinks(@Valid @RequestBody UpdateSocialLinksReq updateSocialLinksReq) {
+        GeneralResp generalResp = talentoService.putSocialLinks(updateSocialLinksReq.getId(), updateSocialLinksReq);
         if (generalResp == null) {
             throw new ResourceNotFoundException("Talent");
         }

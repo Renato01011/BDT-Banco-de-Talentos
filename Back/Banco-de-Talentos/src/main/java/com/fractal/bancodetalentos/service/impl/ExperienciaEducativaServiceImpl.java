@@ -1,8 +1,8 @@
 package com.fractal.bancodetalentos.service.impl;
 
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
-import com.fractal.bancodetalentos.model.entity.BtTdExperienciaEducativa;
-import com.fractal.bancodetalentos.model.request.ExperienciasEducativas;
+import com.fractal.bancodetalentos.model.request.AddEducExpReq;
+import com.fractal.bancodetalentos.model.request.UpdateEducExpReq;
 import com.fractal.bancodetalentos.model.response.GeneralResp;
 import com.fractal.bancodetalentos.service.ExperienciaEducativaService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class ExperienciaEducativaServiceImpl implements ExperienciaEducativaServ
     private final EntityManager entityManager;
 
     @Override
-    public Map<String, String> addNewEducExp(ExperienciasEducativas educativas, Integer id) {
+    public Map<String, String> addNewEducExp(AddEducExpReq educativas, Integer id) {
 
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
@@ -62,7 +62,7 @@ public class ExperienciaEducativaServiceImpl implements ExperienciaEducativaServ
     }
 
     @Override
-    public GeneralResp putEducExp(Integer idTalent, Integer idEducExp, ExperienciasEducativas experienciasEducativas) {
+    public GeneralResp putEducExp(Integer idTalent, Integer idEducExp, UpdateEducExpReq educExpReq) {
 
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
@@ -85,12 +85,12 @@ public class ExperienciaEducativaServiceImpl implements ExperienciaEducativaServ
                 .registerStoredProcedureParameter(6, Date.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(7, Integer.class, ParameterMode.IN)
                 .setParameter(1, idEducExp)
-                .setParameter(2, experienciasEducativas.getInstitucion())
-                .setParameter(3, experienciasEducativas.getCarrera())
-                .setParameter(4, experienciasEducativas.getGrado())
-                .setParameter(5, experienciasEducativas.getFechaInicio())
-                .setParameter(6, experienciasEducativas.getFechaFin())
-                .setParameter(7, experienciasEducativas.getFlActualidad());
+                .setParameter(2, educExpReq.getInstitucion())
+                .setParameter(3, educExpReq.getCarrera())
+                .setParameter(4, educExpReq.getGrado())
+                .setParameter(5, educExpReq.getFechaInicio())
+                .setParameter(6, educExpReq.getFechaFin())
+                .setParameter(7, educExpReq.getFlActualidad());
         storedProcedureQueryExperienciasEducativas.execute();
 
         GeneralResp generalResp = new GeneralResp();

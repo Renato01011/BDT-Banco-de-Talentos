@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'https://4mtj0emw24.execute-api.us-east-2.amazonaws.com',
+  host: 'http://localhost:8080',
   context: '/api/v1/bdt',
 };
 

@@ -1,8 +1,8 @@
 package com.fractal.bancodetalentos.service.impl;
 
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
-import com.fractal.bancodetalentos.model.entity.BtTdExperienciaLaboral;
-import com.fractal.bancodetalentos.model.request.ExperienciasLaborales;
+import com.fractal.bancodetalentos.model.request.AddWorkExpReq;
+import com.fractal.bancodetalentos.model.request.UpdateWorkExpReq;
 import com.fractal.bancodetalentos.model.response.GeneralResp;
 import com.fractal.bancodetalentos.service.ExperienciaLaboralService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
     private final EntityManager entityManager;
 
     @Override
-    public Map<String, String> addNewWorkExp(ExperienciasLaborales laborales, Integer id) {
+    public Map<String, String> addNewWorkExp(AddWorkExpReq laborales, Integer id) {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
@@ -59,7 +59,7 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
     }
 
     @Override
-    public GeneralResp putWorkExp(Integer idTalent, Integer idWorkExp, ExperienciasLaborales experienciasLaborales) {
+    public GeneralResp putWorkExp(Integer idTalent, Integer idWorkExp, UpdateWorkExpReq workExpReq) {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
@@ -80,11 +80,11 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
                 .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
                 .setParameter(1, idWorkExp)
-                .setParameter(2, experienciasLaborales.getEmpresa())
-                .setParameter(3, experienciasLaborales.getPuesto())
-                .setParameter(4, experienciasLaborales.getFechaInicio())
-                .setParameter(5, experienciasLaborales.getFechaFin())
-                .setParameter(6, experienciasLaborales.getFlActualidad());
+                .setParameter(2, workExpReq.getEmpresa())
+                .setParameter(3, workExpReq.getPuesto())
+                .setParameter(4, workExpReq.getFechaInicio())
+                .setParameter(5, workExpReq.getFechaFin())
+                .setParameter(6, workExpReq.getFlActualidad());
         storedProcedureQueryExperienciasLaborales.execute();
 
         GeneralResp generalResp = new GeneralResp();

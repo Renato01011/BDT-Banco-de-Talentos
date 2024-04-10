@@ -1,6 +1,6 @@
 package com.fractal.bancodetalentos.controller;
 
-import com.fractal.bancodetalentos.model.request.HabilidadesBlandas;
+import com.fractal.bancodetalentos.model.request.AddSoftSkillReq;
 import com.fractal.bancodetalentos.service.HabilidadBlandaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,9 +19,9 @@ public class HabilidadBlandaController {
     private final HabilidadBlandaService blandaService;
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @PostMapping("/add/{id}")
-    public ResponseEntity<Map<String, String>> addNewSoftSkill(@PathVariable Integer id, @Valid @RequestBody HabilidadesBlandas blandas) {
-        Map<String, String> resp = blandaService.addNewSoftSkill(blandas, id);
+    @PostMapping("/add")
+    public ResponseEntity<Map<String, String>> addNewSoftSkill(@Valid @RequestBody AddSoftSkillReq blandas) {
+        Map<String, String> resp = blandaService.addNewSoftSkill(blandas, blandas.getId());
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
 }

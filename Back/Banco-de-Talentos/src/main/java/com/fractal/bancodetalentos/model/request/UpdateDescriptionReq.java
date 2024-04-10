@@ -12,11 +12,10 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewUserListReq {
+public class UpdateDescriptionReq {
+    @NotBlank(message = "La descripción es un campo obligatorio y no puede estar vacía ni ser nula.")
+    private String description;
 
-    @NotNull(message = "El Id del Usuario es obligatorio y no puede ser nulo.")
+    @NotNull(message = "El Id del Talento es obligatorio y no puede ser nulo.")
     private Integer id;
-
-    @NotBlank(message = "El nombre para agregar a su lista de favoritos es obligatorio y no puede estar vacío ni ser nulo.")
-    private String listName;
 }

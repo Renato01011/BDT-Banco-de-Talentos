@@ -2,7 +2,7 @@ package com.fractal.bancodetalentos.controller;
 
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.request.NewUserListReq;
-import com.fractal.bancodetalentos.model.response.GeneralResp;
+import com.fractal.bancodetalentos.model.request.UserFavListReq;
 import com.fractal.bancodetalentos.model.response.NewUserListResp;
 import com.fractal.bancodetalentos.model.response.UserListResp;
 import com.fractal.bancodetalentos.service.ListaUsuarioService;
@@ -21,20 +21,20 @@ public class ListaUsuarioController {
 
     private final ListaUsuarioService listaUsuarioService;
 
-    @PostMapping("/new/{id}")
-    public ResponseEntity<NewUserListResp> addNewUserList(@PathVariable Integer id, @Valid @RequestBody NewUserListReq newUserListReq) {
-        NewUserListResp newUserListResp = listaUsuarioService.addNewUserList(id, newUserListReq);
+    @PostMapping("/new")
+    public ResponseEntity<NewUserListResp> addNewUserList(@Valid @RequestBody NewUserListReq newUserListReq) {
+        NewUserListResp newUserListResp = listaUsuarioService.addNewUserList(newUserListReq.getId(), newUserListReq);
         if (newUserListResp == null) {
-            throw new ResourceNotFoundException("Talent");
+            throw new ResourceNotFoundException("Lista de Favoritos");
         }
         return new ResponseEntity<>(newUserListResp, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<UserListResp>> getUserLists(@PathVariable Integer id) {
-        List<UserListResp> userListResp = listaUsuarioService.getUserLists(id);
+    @PostMapping()
+    public ResponseEntity<List<UserListResp>> getUserLists(@Valid @RequestBody UserFavListReq userFavListReq) {
+        List<UserListResp> userListResp = listaUsuarioService.getUserLists(userFavListReq.getId());
         if (userListResp == null) {
-            throw new ResourceNotFoundException("Talent");
+            throw new ResourceNotFoundException("Lista de Favoritos");
         }
         return new ResponseEntity<>(userListResp, HttpStatus.OK);
     }

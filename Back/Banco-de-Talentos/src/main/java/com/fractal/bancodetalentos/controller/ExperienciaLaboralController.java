@@ -1,6 +1,8 @@
 package com.fractal.bancodetalentos.controller;
 
-import com.fractal.bancodetalentos.model.request.ExperienciasLaborales;
+import com.fractal.bancodetalentos.model.request.AddWorkExpReq;
+import com.fractal.bancodetalentos.model.request.DeleteWorkExpReq;
+import com.fractal.bancodetalentos.model.request.UpdateWorkExpReq;
 import com.fractal.bancodetalentos.model.response.GeneralResp;
 import com.fractal.bancodetalentos.service.ExperienciaLaboralService;
 import lombok.RequiredArgsConstructor;
@@ -20,23 +22,23 @@ public class ExperienciaLaboralController {
     private final ExperienciaLaboralService laboralService;
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @PostMapping("/add/{id}")
-    public ResponseEntity<Map<String, String>> addNewWorkExp(@PathVariable Integer id, @Valid @RequestBody ExperienciasLaborales laborales) {
-        Map<String, String> resp = laboralService.addNewWorkExp(laborales, id);
+    @PostMapping("/add")
+    public ResponseEntity<Map<String, String>> addNewWorkExp(@Valid @RequestBody AddWorkExpReq laborales) {
+        Map<String, String> resp = laboralService.addNewWorkExp(laborales, laborales.getId());
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @PutMapping("/update/{idTalent}/{idWorkExp}")
-    public ResponseEntity<GeneralResp> putWorkExp(@PathVariable Integer idTalent, @PathVariable Integer idWorkExp, @Valid @RequestBody ExperienciasLaborales experienciasLaborales) {
-        GeneralResp generalResp = laboralService.putWorkExp(idTalent, idWorkExp, experienciasLaborales);
+    @PutMapping("/update")
+    public ResponseEntity<GeneralResp> putWorkExp(@Valid @RequestBody UpdateWorkExpReq workExpReq) {
+        GeneralResp generalResp = laboralService.putWorkExp(workExpReq.getIdTalent(), workExpReq.getIdWorkExp(), workExpReq);
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('RECLUTADOR')")
-    @DeleteMapping("/delete/{idTalent}/{idWorkExp}")
-    public ResponseEntity<GeneralResp> deleteWorkExp(@PathVariable Integer idTalent, @PathVariable Integer idWorkExp) {
-        GeneralResp generalResp = laboralService.deleteWorkExp(idTalent, idWorkExp);
+    @PostMapping("/delete")
+    public ResponseEntity<GeneralResp> deleteWorkExp(@Valid @RequestBody DeleteWorkExpReq workExpReq) {
+        GeneralResp generalResp = laboralService.deleteWorkExp(workExpReq.getIdTalent(), workExpReq.getIdWorkExp());
         return new ResponseEntity<>(generalResp, HttpStatus.OK);
     }
 }

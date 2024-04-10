@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HabilidadesBlandas {
-    @NotBlank(message = "El nombre de la Habilidad blanda es obligatorio y no puede estar vacío ni ser nulo.")
-    private String nombre;
+public class FindCityByCountryIdReq {
+
+    @NotNull(message = "El Id del Pais es obligatorio y no puede ser nulo.")
+    private Integer idCountry;
 }

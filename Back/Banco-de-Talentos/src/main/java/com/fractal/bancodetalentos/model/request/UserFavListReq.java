@@ -1,17 +1,18 @@
 package com.fractal.bancodetalentos.model.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EditUserTalentListReq {
-    @NotNull(message = "El Id del talento es obligatorio y no ser nulo.")
-    private Integer newUserListId;
+public class UserFavListReq {
+
+    @NotNull(message = "El Id del Usuario es obligatorio y no puede ser nulo.")
+    private Integer id;
 }

@@ -68,6 +68,7 @@ export class ListComponent implements OnInit {
 
   public filterTalent(filter: FilterRequest): void {
     this.filterReq = filter;
+    this.selId = undefined;
     this.getTalentList(this.filterReq);
   }
 
@@ -117,6 +118,7 @@ export class ListComponent implements OnInit {
   }
 
   public firstCall(talents: FilterResponse[]): void {
+    if (talents.length === 0) return;
     if (this.selId === undefined) {
       const [firstObjeto] = talents;
       const firstId = firstObjeto.id;

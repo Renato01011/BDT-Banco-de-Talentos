@@ -8,9 +8,9 @@ public interface TalentoService {
 
     GeneralResp addNewTalent(NewTalentReq newTalentRequest);
     TalentResp getTalent(Integer id, GetTalentReq getTalentReq);
-    GeneralResp putDescription(Integer id, DescriptionReq descriptionReq);
-    GeneralResp putProfilePicture(Integer id, ProfilePictureReq profilePictureReq);
-    GeneralResp putSalary(Integer id, SalaryReq salaryReq);
-    GeneralResp putSocialLinks(Integer id, SocialLinksReq socialLinksReq);
+    GeneralResp putDescription(Integer id, UpdateDescriptionReq updateDescriptionReq);
+    GeneralResp putProfilePicture(Integer id, UpdateProfilePictureReq updateProfilePictureReq);
+    GeneralResp putSalary(Integer id, UpdateSalaryReq updateSalaryReq);
+    GeneralResp putSocialLinks(Integer id, UpdateSocialLinksReq updateSocialLinksReq);
 
 }

@@ -13,15 +13,21 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Idiomas {
+public class AddLanguageReq {
+
+    @NotNull(message = "El Id del Talento es obligatorio y no puede ser nulo.")
+    private Integer id;
+
     @NotNull(message = "El campo Idioma es obligatorio y no puede ser nulo.")
     @Min(value = 1, message = "El campo Idioma debe ser un número igual o mayor a 1.")
     @Max(value = 3, message = "El campo Idioma debe ser un numero igual o menor a 3")
     private Integer idiomaId;
+
     @NotNull(message = "El campo Nivel es obligatorio y no puede ser nulo.")
     @Min(value = 1, message = "El campo Nivel debe ser un numero igual o mayor a 1")
     @Max(value = 4, message = "El campo Nivel debe ser un numero igual o menor a 4")
     private Integer nivelId;
+
     @NotNull(message = "El Número de estrellas es obligatorio y no puede ser nulo.")
     @Min(value = 0, message = "El Número de estrellas debe ser un numero positivo o cero.")
     @Max(value = 5, message = "El Número de estrellas debe ser un numero igual o menor a 5.")

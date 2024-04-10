@@ -1,9 +1,9 @@
 package com.fractal.bancodetalentos.service.impl;
 
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
+import com.fractal.bancodetalentos.model.dto.*;
 import com.fractal.bancodetalentos.model.request.*;
 import com.fractal.bancodetalentos.model.response.*;
-//import com.fractal.bancodetalentos.repository.BtTmTalentoRepositorio;
 import com.fractal.bancodetalentos.service.TalentoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TalentoServiceImpl implements TalentoService {
-
-    //private final BtTmTalentoRepositorio talentoRepositorio;
 
     @PersistenceContext
     private final EntityManager entityManager;
@@ -58,35 +56,35 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Habilidades Tecnicas --
         if (!newTalentRequest.getHabilidadesTecnicas().isEmpty()) {
-            for (HabilidadesTecnicas habilidadesTecnicas: newTalentRequest.getHabilidadesTecnicas()) {
+            for (HabilidadesTecnicasDTO habilidadesTecnicasDTO : newTalentRequest.getHabilidadesTecnicas()) {
                 StoredProcedureQuery storedProcedureQueryHabilidadTecnica = entityManager
                         .createStoredProcedureQuery("SP_ADD_TECHNICAL_ABILITY")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(3, BigDecimal.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
-                        .setParameter(2, habilidadesTecnicas.getNombre())
-                        .setParameter(3, habilidadesTecnicas.getAnios());
+                        .setParameter(2, habilidadesTecnicasDTO.getNombre())
+                        .setParameter(3, habilidadesTecnicasDTO.getAnios());
                 storedProcedureQueryHabilidadTecnica.execute();
             }
         }
 
         // -- Habilidades Blandas --
         if (!newTalentRequest.getHabilidadesBlandas().isEmpty()) {
-            for (HabilidadesBlandas habilidadesBlandas: newTalentRequest.getHabilidadesBlandas()) {
+            for (HabilidadesBlandasDTO habilidadesBlandasDTO : newTalentRequest.getHabilidadesBlandas()) {
                 StoredProcedureQuery storedProcedureQueryHabilidadBlanda = entityManager
                         .createStoredProcedureQuery("SP_ADD_SOFT_SKILL")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
-                        .setParameter(2, habilidadesBlandas.getNombre());
+                        .setParameter(2, habilidadesBlandasDTO.getNombre());
                 storedProcedureQueryHabilidadBlanda.execute();
             }
         }
 
         // -- Experiencias Laborales --
         if (!newTalentRequest.getExperienciasLaborales().isEmpty()) {
-            for (ExperienciasLaborales experienciasLaborales : newTalentRequest.getExperienciasLaborales()) {
+            for (ExperienciasLaboralesDTO experienciasLaboralesDTO : newTalentRequest.getExperienciasLaborales()) {
                 StoredProcedureQuery storedProcedureQueryExperienciasLaborales = entityManager
                         .createStoredProcedureQuery("SP_ADD_WORK_EXPERIENCE")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
@@ -96,18 +94,18 @@ public class TalentoServiceImpl implements TalentoService {
                         .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
-                        .setParameter(2, experienciasLaborales.getEmpresa())
-                        .setParameter(3, experienciasLaborales.getPuesto())
-                        .setParameter(4, experienciasLaborales.getFechaInicio())
-                        .setParameter(5, experienciasLaborales.getFechaFin())
-                        .setParameter(6, experienciasLaborales.getFlActualidad());
+                        .setParameter(2, experienciasLaboralesDTO.getEmpresa())
+                        .setParameter(3, experienciasLaboralesDTO.getPuesto())
+                        .setParameter(4, experienciasLaboralesDTO.getFechaInicio())
+                        .setParameter(5, experienciasLaboralesDTO.getFechaFin())
+                        .setParameter(6, experienciasLaboralesDTO.getFlActualidad());
                 storedProcedureQueryExperienciasLaborales.execute();
             }
         }
 
         // -- Experiencias Educativas --
         if (!newTalentRequest.getExperienciasEducativas().isEmpty()) {
-            for (ExperienciasEducativas experienciasEducativas : newTalentRequest.getExperienciasEducativas()) {
+            for (ExperienciasEducativasDTO experienciasEducativasDTO : newTalentRequest.getExperienciasEducativas()) {
                 StoredProcedureQuery storedProcedureQueryExperienciasEducativas = entityManager
                         .createStoredProcedureQuery("SP_ADD_EDUCATIONAL_EXPERIENCE")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
@@ -118,19 +116,19 @@ public class TalentoServiceImpl implements TalentoService {
                         .registerStoredProcedureParameter(6, Date.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(7, Integer.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
-                        .setParameter(2, experienciasEducativas.getInstitucion())
-                        .setParameter(3, experienciasEducativas.getCarrera())
-                        .setParameter(4, experienciasEducativas.getGrado())
-                        .setParameter(5, experienciasEducativas.getFechaInicio())
-                        .setParameter(6, experienciasEducativas.getFechaFin())
-                        .setParameter(7, experienciasEducativas.getFlActualidad());
+                        .setParameter(2, experienciasEducativasDTO.getInstitucion())
+                        .setParameter(3, experienciasEducativasDTO.getCarrera())
+                        .setParameter(4, experienciasEducativasDTO.getGrado())
+                        .setParameter(5, experienciasEducativasDTO.getFechaInicio())
+                        .setParameter(6, experienciasEducativasDTO.getFechaFin())
+                        .setParameter(7, experienciasEducativasDTO.getFlActualidad());
                 storedProcedureQueryExperienciasEducativas.execute();
             }
         }
 
         // -- Idiomas --
         if (!newTalentRequest.getIdiomas().isEmpty()) {
-            for (Idiomas idioma : newTalentRequest.getIdiomas()) {
+            for (IdiomasDTO idioma : newTalentRequest.getIdiomas()) {
                 StoredProcedureQuery storedProcedureQueryIdioma = entityManager
                         .createStoredProcedureQuery("SP_ADD_LANGUAGE")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
@@ -147,7 +145,7 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Documentos --
         if (!newTalentRequest.getDocumentos().isEmpty()) {
-            for (Documento documento : newTalentRequest.getDocumentos()) {
+            for (DocumentoDTO documentoDTO : newTalentRequest.getDocumentos()) {
                 StoredProcedureQuery storedProcedureDocumentos = entityManager
                         .createStoredProcedureQuery("SP_ADD_FILES")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
@@ -155,9 +153,9 @@ public class TalentoServiceImpl implements TalentoService {
                         .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(4, byte[].class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
-                        .setParameter(2, documento.getNombre())
-                        .setParameter(3, documento.getTipoArchivo())
-                        .setParameter(4, documento.getArchivo());
+                        .setParameter(2, documentoDTO.getNombre())
+                        .setParameter(3, documentoDTO.getTipoArchivo())
+                        .setParameter(4, documentoDTO.getArchivo());
                 storedProcedureDocumentos.execute();
             }
         }
@@ -303,7 +301,7 @@ public class TalentoServiceImpl implements TalentoService {
         TalentResp talentResp = new TalentResp();
 
         // -- General Info --
-        for (Object[] objects: generalInfo) {
+        for (Object[] objects : generalInfo) {
             talentResp.setIdTalent((Integer) objects[0]);
             talentResp.setName((String) objects[1]);
             talentResp.setSurname((String) objects[2]);
@@ -321,7 +319,7 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Technical Abilities --
         List<TechnicalAbilitiesResp> technicalAbilitiesList = new ArrayList<>();
-        for (Object[] objects: technicalAbilities) {
+        for (Object[] objects : technicalAbilities) {
             TechnicalAbilitiesResp technicalAbility = new TechnicalAbilitiesResp();
             technicalAbility.setIdTechnicalAbility((Integer) objects[0]);
             technicalAbility.setName((String) objects[1]);
@@ -332,7 +330,7 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Soft Skills --
         List<SoftSkillsResp> softSkillsList = new ArrayList<>();
-        for (Object[] objects: softSkills) {
+        for (Object[] objects : softSkills) {
             SoftSkillsResp softSkill = new SoftSkillsResp();
             softSkill.setIdSoftSkill((Integer) objects[0]);
             softSkill.setName((String) objects[1]);
@@ -342,7 +340,7 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Work Experience --
         List<WorkExperienceResp> workExperiencesList = new ArrayList<>();
-        for (Object[] objects: workExperience) {
+        for (Object[] objects : workExperience) {
             WorkExperienceResp workExperienceTemp = new WorkExperienceResp();
             workExperienceTemp.setIdWorkExperience((Integer) objects[0]);
             workExperienceTemp.setFirm((String) objects[1]);
@@ -356,7 +354,7 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Educational Experience --
         List<EducationalExperienceResp> educationalExperiencesList = new ArrayList<>();
-        for (Object[] objects: educationalExperience) {
+        for (Object[] objects : educationalExperience) {
             EducationalExperienceResp educationalExperienceTemp = new EducationalExperienceResp();
             educationalExperienceTemp.setIdEducationalExperience((Integer) objects[0]);
             educationalExperienceTemp.setInstitution((String) objects[1]);
@@ -371,7 +369,7 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Language Proficiency --
         List<LanguageLevelResp> languageLevelList = new ArrayList<>();
-        for (Object[] objects: languageProficiency) {
+        for (Object[] objects : languageProficiency) {
             LanguageLevelResp languageLevel = new LanguageLevelResp();
             languageLevel.setIdTalentLanguage((Integer) objects[0]);
             languageLevel.setIdLanguage((Integer) objects[1]);
@@ -386,7 +384,7 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Documents --
         List<DocumentResp> documentsList = new ArrayList<>();
-        for (Object[] objects: documents) {
+        for (Object[] objects : documents) {
             DocumentResp document = new DocumentResp();
             document.setIdDocument((Integer) objects[0]);
             document.setDocumentName((String) objects[1]);
@@ -398,7 +396,7 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Master Talent --
         List<MasterTalentResp> masterTalentList = new ArrayList<>();
-        for (Object[] objects: masterTalent) {
+        for (Object[] objects : masterTalent) {
             MasterTalentResp masterTalentTemp = new MasterTalentResp();
             masterTalentTemp.setIdMasterTalent((Integer) objects[0]);
             masterTalentTemp.setIdMaster((Integer) objects[1]);
@@ -413,7 +411,7 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Feedbacks --
         List<FeedbackResp> feedbackList = new ArrayList<>();
-        for (Object[] objects: feedbacks) {
+        for (Object[] objects : feedbacks) {
             FeedbackResp feedback = new FeedbackResp();
             feedback.setIdFeedback((Integer) objects[0]);
             feedback.setStarCount((Integer) objects[1]);
@@ -428,15 +426,14 @@ public class TalentoServiceImpl implements TalentoService {
         // -- User Lists --
         if (!userListTalent.isEmpty()) {
             UserListTalentResp userListTalentResp = new UserListTalentResp();
-            for (Object[] objects: userListTalent) {
+            for (Object[] objects : userListTalent) {
                 userListTalentResp.setIdListUser((Integer) objects[0]);
                 userListTalentResp.setListName((String) objects[1]);
                 userListTalentResp.setCreated((Date) objects[2]);
                 userListTalentResp.setIdListUserTalent((Integer) objects[3]);
             }
             talentResp.setUserListTalent(userListTalentResp);
-        }
-        else {
+        } else {
             talentResp.setUserListTalent(null);
         }
 
@@ -444,7 +441,7 @@ public class TalentoServiceImpl implements TalentoService {
     }
 
     @Override
-    public GeneralResp putDescription(Integer id, DescriptionReq descriptionReq) {
+    public GeneralResp putDescription(Integer id, UpdateDescriptionReq updateDescriptionReq) {
         StoredProcedureQuery storedProcedureQueryCheckTalent = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
@@ -461,7 +458,7 @@ public class TalentoServiceImpl implements TalentoService {
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                 .setParameter(1, id)
-                .setParameter(2, descriptionReq.getDescription());
+                .setParameter(2, updateDescriptionReq.getDescription());
         storedProcedureQuery.execute();
 
         GeneralResp temp = new GeneralResp();
@@ -471,7 +468,7 @@ public class TalentoServiceImpl implements TalentoService {
     }
 
     @Override
-    public GeneralResp putProfilePicture(Integer id, ProfilePictureReq profilePictureReq) {
+    public GeneralResp putProfilePicture(Integer id, UpdateProfilePictureReq updateProfilePictureReq) {
         StoredProcedureQuery storedProcedureQueryCheckTalent = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
@@ -488,7 +485,7 @@ public class TalentoServiceImpl implements TalentoService {
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, byte[].class, ParameterMode.IN)
                 .setParameter(1, id)
-                .setParameter(2, profilePictureReq.getProfilePicture());
+                .setParameter(2, updateProfilePictureReq.getProfilePicture());
         storedProcedureQuery.execute();
 
         GeneralResp temp = new GeneralResp();
@@ -498,7 +495,7 @@ public class TalentoServiceImpl implements TalentoService {
     }
 
     @Override
-    public GeneralResp putSalary(Integer id, SalaryReq salaryReq) {
+    public GeneralResp putSalary(Integer id, UpdateSalaryReq updateSalaryReq) {
         StoredProcedureQuery storedProcedureQueryCheckTalent = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
@@ -515,7 +512,7 @@ public class TalentoServiceImpl implements TalentoService {
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
                 .setParameter(1, id)
-                .setParameter(2, salaryReq.getIdCoin());
+                .setParameter(2, updateSalaryReq.getIdCoin());
         storedProcedureQueryCoin.execute();
 
         StoredProcedureQuery storedProcedureQuery = entityManager
@@ -524,8 +521,8 @@ public class TalentoServiceImpl implements TalentoService {
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN)
                 .setParameter(1, id)
-                .setParameter(2, salaryReq.getInitialSalary())
-                .setParameter(3, salaryReq.getFinalSalary());
+                .setParameter(2, updateSalaryReq.getInitialSalary())
+                .setParameter(3, updateSalaryReq.getFinalSalary());
         storedProcedureQuery.execute();
 
         GeneralResp temp = new GeneralResp();
@@ -535,7 +532,7 @@ public class TalentoServiceImpl implements TalentoService {
     }
 
     @Override
-    public GeneralResp putSocialLinks(Integer id, SocialLinksReq socialLinksReq) {
+    public GeneralResp putSocialLinks(Integer id, UpdateSocialLinksReq updateSocialLinksReq) {
         StoredProcedureQuery storedProcedureQueryCheckTalent = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
@@ -553,8 +550,8 @@ public class TalentoServiceImpl implements TalentoService {
                 .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
                 .setParameter(1, id)
-                .setParameter(2, socialLinksReq.getLinkedin())
-                .setParameter(3, socialLinksReq.getGithub());
+                .setParameter(2, updateSocialLinksReq.getLinkedin())
+                .setParameter(3, updateSocialLinksReq.getGithub());
         storedProcedureQuery.execute();
 
         GeneralResp temp = new GeneralResp();

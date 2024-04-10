@@ -1,5 +1,6 @@
 package com.fractal.bancodetalentos.model.request;
 
+import com.fractal.bancodetalentos.model.dto.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,7 @@ public class NewTalentReq {
     private byte[] fotoDePerfil;
     @Valid
     @NotEmpty(message = "La lista de Documentos es un campo obligatorio y no puede estar vacía.")
-    private List<Documento> documentos;
+    private List<DocumentoDTO> documentos;
     @NotBlank(message = "El campo Descripción es obligatorio y no puede estar vacío ni ser nulo.")
     private String descripcion;
     @NotNull(message = "El campo Puesto es obligatorio y no puede ser nulo.")
@@ -55,18 +56,17 @@ public class NewTalentReq {
     private String celular;
     @Valid
     @NotEmpty(message = "La lista de Habilidades técnicas es un campo obligatorio y no puede estar vacía.")
-    private List<HabilidadesTecnicas> habilidadesTecnicas;
+    private List<HabilidadesTecnicasDTO> habilidadesTecnicas;
     @Valid
     @NotEmpty(message = "La lista de Habilidades blandas es un campo obligatorio y no puede estar vacía.")
-    private List<HabilidadesBlandas> habilidadesBlandas;
+    private List<HabilidadesBlandasDTO> habilidadesBlandas;
     @Valid
     @NotEmpty(message = "La lista de Experiencia laboral es un campo obligatorio y no puede estar vacía.")
-    private List<ExperienciasLaborales> experienciasLaborales;
+    private List<ExperienciasLaboralesDTO> experienciasLaborales;
     @Valid
     @NotEmpty(message = "La lista de Experiencia educativa es un campo obligatorio y no puede estar vacía.")
-    private List<ExperienciasEducativas> experienciasEducativas;
+    private List<ExperienciasEducativasDTO> experienciasEducativas;
     @Valid
     @NotEmpty(message = "La lista de Idiomas es un campo obligatorio y no puede estar vacía.")
-    private List<Idiomas> idiomas;
-
+    private List<IdiomasDTO> idiomas;
 }

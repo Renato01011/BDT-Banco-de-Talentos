@@ -2,7 +2,8 @@ package com.fractal.bancodetalentos.service.impl;
 
 
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
-import com.fractal.bancodetalentos.model.request.Documento;
+import com.fractal.bancodetalentos.model.request.DocumentoReq;
+import com.fractal.bancodetalentos.model.request.UpdateFileReq;
 import com.fractal.bancodetalentos.service.ArchivosService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class ArchivosServiceImpl implements ArchivosService {
     private final EntityManager entityManager;
 
     @Override
-    public Map<String, String> addNewFile(Documento documento, Integer id) {
+    public Map<String, String> addNewFile(DocumentoReq documento, Integer id) {
         Boolean existsTalent = existsTalentId(id);
         if (Boolean.FALSE.equals(existsTalent)) {
             throw new ResourceNotFoundException("Talent", "id", id);
@@ -47,7 +48,7 @@ public class ArchivosServiceImpl implements ArchivosService {
     }
 
     @Override
-    public Map<String, String> updateCV(Documento documento, Integer id, Integer idFile) {
+    public Map<String, String> updateCV(UpdateFileReq documento, Integer id, Integer idFile) {
         Boolean existsTalent = existsTalentId(id);
         if (Boolean.FALSE.equals(existsTalent)) {
             throw new ResourceNotFoundException("Talent", "id", id);

@@ -2,8 +2,7 @@ package com.fractal.bancodetalentos.service.impl;
 
 import com.fractal.bancodetalentos.exception.DuplicatedDataException;
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
-import com.fractal.bancodetalentos.model.entity.BtTdHabilidadBlanda;
-import com.fractal.bancodetalentos.model.request.HabilidadesBlandas;
+import com.fractal.bancodetalentos.model.request.AddSoftSkillReq;
 import com.fractal.bancodetalentos.service.HabilidadBlandaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class HabilidadBlandaServiceImpl implements HabilidadBlandaService {
     private final EntityManager entityManager;
 
     @Override
-    public Map<String, String> addNewSoftSkill(HabilidadesBlandas blanda, Integer id) {
+    public Map<String, String> addNewSoftSkill(AddSoftSkillReq blanda, Integer id) {
 
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)

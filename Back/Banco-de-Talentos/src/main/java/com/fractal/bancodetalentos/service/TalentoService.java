@@ -12,5 +12,7 @@ public interface TalentoService {
     GeneralResp putProfilePicture(Integer id, UpdateProfilePictureReq updateProfilePictureReq);
     GeneralResp putSalary(Integer id, UpdateSalaryReq updateSalaryReq);
     GeneralResp putSocialLinks(Integer id, UpdateSocialLinksReq updateSocialLinksReq);
+    GeneralResp putAvailability(Integer id, UpdateDisponibilidadReq updateDisponibilidadReq);
+
 
 }

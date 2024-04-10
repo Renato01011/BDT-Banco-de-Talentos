@@ -37,4 +37,7 @@ public class TalentResp {
     private List<MasterTalentResp> miscData;
     private List<FeedbackResp> feedbacks;
     private UserListTalentResp userListTalent;
+
+    private String disponibilidad;
+
 }

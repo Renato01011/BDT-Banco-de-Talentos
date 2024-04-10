@@ -562,4 +562,31 @@ public class TalentoServiceImpl implements TalentoService {
         temp.setMessage("Correctly Updated");
         return temp;
     }
+
+    @Override
+    public GeneralResp putAvailability(Integer id, UpdateDisponibilidadReq updateDisponibilidadReq) {
+        StoredProcedureQuery storedProcedureQueryCheckTalent = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, id);
+        storedProcedureQueryCheckTalent.execute();
+        Integer exists = (Integer) storedProcedureQueryCheckTalent.getOutputParameterValue(2);
+
+        if (exists == 0) {
+            throw new ResourceNotFoundException("Talent", "id", id);
+        }
+
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createStoredProcedureQuery("SP_EDIT_AVAILABILITY")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+                .setParameter(1, id)
+                .setParameter(2, updateDisponibilidadReq.getDisponibilidad());
+        storedProcedureQuery.execute();
+
+        GeneralResp temp = new GeneralResp();
+        temp.setCode(200);
+        temp.setMessage("Correctly Updated");
+        return temp;
+    }
 }

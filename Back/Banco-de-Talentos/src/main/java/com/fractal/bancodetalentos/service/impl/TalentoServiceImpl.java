@@ -42,7 +42,8 @@ public class TalentoServiceImpl implements TalentoService {
                 .registerStoredProcedureParameter(8, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(9, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(10, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(11, Integer.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter(11, String.class,ParameterMode.IN)
+                .registerStoredProcedureParameter(12, Integer.class, ParameterMode.OUT)
                 .setParameter(1, newTalentRequest.getNombre())
                 .setParameter(2, newTalentRequest.getApellidoPaterno())
                 .setParameter(3, newTalentRequest.getApellidoMaterno())
@@ -52,9 +53,10 @@ public class TalentoServiceImpl implements TalentoService {
                 .setParameter(7, newTalentRequest.getMontoFinal())
                 .setParameter(8, newTalentRequest.getCelular())
                 .setParameter(9, newTalentRequest.getLinkedin())
-                .setParameter(10, newTalentRequest.getGithub());
+                .setParameter(10, newTalentRequest.getGithub())
+                .setParameter(11,newTalentRequest.getDisponibilidad());
         storedProcedureQueryTalent.execute();
-        Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(11);
+        Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(12);
 
         // -- Habilidades Tecnicas --
         if (!newTalentRequest.getHabilidadesTecnicas().isEmpty()) {

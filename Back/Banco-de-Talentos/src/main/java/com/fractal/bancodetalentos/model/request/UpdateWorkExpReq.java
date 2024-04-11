@@ -41,5 +41,5 @@ public class UpdateWorkExpReq {
 
     @Size(max = 1000, message = "El límite máximo de caracteres es de 1000.")
     @NotNull(message = "Las funciones del talento no puede ser nula.")
-    private String funtions;
+    private String functions;
 }

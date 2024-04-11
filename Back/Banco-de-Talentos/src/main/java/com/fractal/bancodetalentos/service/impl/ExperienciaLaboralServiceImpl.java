@@ -76,7 +76,7 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
                 .setParameter(4, workExpReq.getFechaInicio())
                 .setParameter(5, workExpReq.getFechaFin())
                 .setParameter(6, workExpReq.getFlActualidad())
-                .setParameter(7, workExpReq.getFuntions());
+                .setParameter(7, workExpReq.getFunctions());
         storedProcedureQueryExperienciasLaborales.execute();
 
         GeneralResp generalResp = new GeneralResp();

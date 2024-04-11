@@ -17,8 +17,10 @@ public class FilterTalentoResp {
     @Lob
     private byte[] image;
     private String nameJobTitle;
-    private Integer initialSalary;
-    private Integer finalSalary;
+    private Integer initialSalaryPlanilla;
+    private Integer finalSalaryPlanilla;
+    private Integer initialSalaryRxH;
+    private Integer finalSalaryRxH;
     private String location;
     private Integer avgRating;
     private Integer inUserList;

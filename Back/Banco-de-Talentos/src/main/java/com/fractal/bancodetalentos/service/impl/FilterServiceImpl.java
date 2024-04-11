@@ -55,6 +55,8 @@ public class FilterServiceImpl implements FilterService {
             filterTalentResp.setNameJobTitle((String) objects[2]);
             filterTalentResp.setInitialSalary((Integer) objects[3]);
             filterTalentResp.setFinalSalary((Integer) objects[4]);
+            filterTalentResp.setInitialSalary((Integer) objects[3]);
+            filterTalentResp.setFinalSalary((Integer) objects[4]);
             filterTalentResp.setLocation((String) objects[5]);
             filterTalentResp.setAvgRating((Integer) objects[6]);
             filterTalentResp.setInUserList((Integer) objects[7]);

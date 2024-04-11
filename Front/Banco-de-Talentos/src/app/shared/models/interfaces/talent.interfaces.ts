@@ -11,7 +11,7 @@ export interface NewTalentModel {
     }
   ];
   descripcion: string;
-  correo: string;
+  email: string;
   disponibilidad: string;
   idPuestoActual: number;
   idPais: number;

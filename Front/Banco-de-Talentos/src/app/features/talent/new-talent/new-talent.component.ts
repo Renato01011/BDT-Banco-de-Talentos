@@ -627,7 +627,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
           },
         ],
         descripcion: this.newTalentForm.get('description')?.value,
-        correo: this.newTalentForm.get('email')?.value,
+        email: this.newTalentForm.get('email')?.value,
         disponibilidad: this.newTalentForm.get('availability')?.value,
         idPuestoActual: this.newTalentForm.get('profile')?.value.id,
         idPais: this.newTalentForm.get('country')?.value.id,

@@ -53,10 +53,10 @@ public class FilterServiceImpl implements FilterService {
             filterTalentResp.setId((Integer) objects[0]);
             filterTalentResp.setImage((byte[]) objects[1]);
             filterTalentResp.setNameJobTitle((String) objects[2]);
-            filterTalentResp.setInitialSalary((Integer) objects[3]);
-            filterTalentResp.setFinalSalary((Integer) objects[4]);
-            filterTalentResp.setInitialSalary((Integer) objects[3]);
-            filterTalentResp.setFinalSalary((Integer) objects[4]);
+            filterTalentResp.setInitialSalaryPlanilla((Integer) objects[3]);
+            filterTalentResp.setFinalSalaryPlanilla((Integer) objects[4]);
+            filterTalentResp.setInitialSalaryRxH((Integer) objects[3]);
+            filterTalentResp.setFinalSalaryRxH((Integer) objects[4]);
             filterTalentResp.setLocation((String) objects[5]);
             filterTalentResp.setAvgRating((Integer) objects[6]);
             filterTalentResp.setInUserList((Integer) objects[7]);

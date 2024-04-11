@@ -75,10 +75,10 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     linkedin: ['', [Validators.required, Validators.pattern(linkedInRegEx)]],
     github: ['', [Validators.required, Validators.pattern(gitHubRegEx)]],
     coin: ['', [Validators.required]],
-    montoInicialRxH: [,],
-    montoFinalRxH: [, Validators.required],
-    initialAmount: [,],
-    finalAmount: [, [Validators.required]],
+    initialAmountRxH: [,],
+    finalAmountRxH: [, [Validators.required]],
+    initialAmountPlanilla: [,],
+    finalAmountPlanilla: [, [Validators.required]],
     technicalAbilities: this.formBuilder.array([
       this.formBuilder.group({
         name: [
@@ -161,8 +161,8 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     this.OnCountryChangeGetData();
     // this.OnFinalSalaryInput();
     // this.OnInitialSalaryInput();
-    this.OnAmountInput('initialAmount', 'finalAmount', 'Cantidad final de planilla no puede ser menor que cantidad inicial');
-    this.OnAmountInput('montoInicialRxH', 'montoFinalRxH', 'Cantidad final de RxH no puede ser menor que cantidad inicial');
+    this.OnAmountInput('initialAmountPlanilla', 'finalAmountPlanilla', 'Cantidad final de planilla no puede ser menor que cantidad inicial');
+    this.OnAmountInput('initialAmountRxH', 'finalAmountRxH', 'Cantidad final de RxH no puede ser menor que cantidad inicial');
   }
 
   private getCountries(): void {
@@ -567,16 +567,16 @@ export class NewTalentComponent implements OnInit, OnDestroy {
 
   OnInitialSalaryInput() {
     this.newTalentForm
-      .get('initialAmount')!
+      .get('initialAmountPlanilla')!
       .valueChanges.subscribe((value: number) => {
-        if (this.newTalentForm.get('initialAmount')?.value == null) {
+        if (this.newTalentForm.get('initialAmountPlanilla')?.value == null) {
           return;
         }
         if (
-          this.newTalentForm.get('finalAmount')?.value != null &&
-          value > this.newTalentForm.get('finalAmount')?.value
+          this.newTalentForm.get('finalAmountPlanilla')?.value != null &&
+          value > this.newTalentForm.get('finalAmountPlanilla')?.value
         ) {
-          this.newTalentForm.controls['initialAmount'].setValue(null);
+          this.newTalentForm.controls['initialAmountPlanilla'].setValue(null);
           this.toastService.addProperties(
             'error',
             'Ocurrio un error',
@@ -588,16 +588,16 @@ export class NewTalentComponent implements OnInit, OnDestroy {
 
   OnFinalSalaryInput() {
     this.newTalentForm
-      .get('finalAmount')!
+      .get('finalAmountPlanilla')!
       .valueChanges.subscribe((value: number) => {
-        if (this.newTalentForm.get('finalAmount')?.value == null) {
+        if (this.newTalentForm.get('finalAmountPlanilla')?.value == null) {
           return;
         }
         if (
-          this.newTalentForm.get('initialAmount')?.value != null &&
-          this.newTalentForm.get('initialAmount')?.value > value
+          this.newTalentForm.get('initialAmountPlanilla')?.value != null &&
+          this.newTalentForm.get('initialAmountPlanilla')?.value > value
         ) {
-          this.newTalentForm.controls['finalAmount'].setValue(null);
+          this.newTalentForm.controls['finalAmountPlanilla'].setValue(null);
           this.toastService.addProperties(
             'error',
             'Ocurrio un error',
@@ -663,9 +663,9 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         github: this.newTalentForm.get('github')?.value,
         idTipoMoneda: this.newTalentForm.get('coin')?.value.id,
         montoInicialRxH: this.newTalentForm.get('initialAmountRxH')?.value ?? 0,
-        montoFinalRxH: this.newTalentForm.get('finalAmountRxH')?.value,
-        montoInicialPlanilla: this.newTalentForm.get('initialAmount')?.value ?? 0,
-        montoFinalPlanilla: this.newTalentForm.get('finalAmount')?.value,
+        montoFinalRxh: this.newTalentForm.get('finalAmountRxH')?.value,
+        montoInicialPlanilla: this.newTalentForm.get('initialAmountPlanilla')?.value ?? 0,
+        montoFinalPlanilla: this.newTalentForm.get('finalAmountPlanilla')?.value,
         celular:
           this.newTalentForm.get('callingCode')?.value.callingCode +
           ' ' +

@@ -7,8 +7,8 @@ export interface CustomTalent {
   secondSurname: string;
   profilePicture: string;
 
-  initialSalaryRxh: number;
-  finalSalaryRxh: number;
+  initialSalaryRxH: number;
+  finalSalaryRxH: number;
   initialSalaryPlanilla: number;
   finalSalaryPlanilla: number;
   phone: string;

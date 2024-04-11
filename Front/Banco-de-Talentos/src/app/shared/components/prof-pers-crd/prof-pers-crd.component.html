@@ -133,26 +133,41 @@
             {{ countryCity.country | titlecase }}
           </span>
           <span class="text-500 text-xs sm:text-sm font-light">
-            <i class="pi pi-dollar text-xs sm:text-sm text-800"></i>
+            <i
+              *ngIf="coin.id === 0"
+              class="pi pi-soles text-xs sm:text-sm text-800"
+            ></i>
+            <i
+              *ngIf="coin.id === 1"
+              class="pi pi-dollar text-xs sm:text-sm text-800"
+            ></i>
             <ng-container
               *ngIf="
-                (customTalent?.initialSalaryRxh ?? 0) > 0 &&
-                (customTalent?.finalSalaryRxh ?? 0) > 0
+                (customTalent?.initialSalaryRxH ?? 0) > 0 &&
+                (customTalent?.finalSalaryRxH ?? 0) > 0
               "
             >
-              RxH {{ customTalent?.initialSalaryRxh }} -
-              {{ customTalent?.finalSalaryRxh }} |
+              RxH {{ customTalent?.initialSalaryRxH }} -
+              {{ customTalent?.finalSalaryRxH }} |
             </ng-container>
             <ng-container
               *ngIf="
                 !(
-                  (customTalent?.initialSalaryRxh ?? 0) > 0 &&
-                  (customTalent?.finalSalaryRxh ?? 0) > 0
+                  (customTalent?.initialSalaryRxH ?? 0) > 0 &&
+                  (customTalent?.finalSalaryRxH ?? 0) > 0
                 )
               "
             >
               RxH no cuenta con rango salarial |
             </ng-container>
+            <i
+              *ngIf="coin.id === 0"
+              class="pi pi-soles text-xs sm:text-sm text-800"
+            ></i>
+            <i
+              *ngIf="coin.id === 1"
+              class="pi pi-dollar text-xs sm:text-sm text-800"
+            ></i>
             <ng-container
               *ngIf="
                 (customTalent?.initialSalaryPlanilla ?? 0) > 0 &&
@@ -170,7 +185,7 @@
                 )
               "
             >
-              Planilla no cuenta con rango salaria
+              Planilla no cuenta con rango salarial
             </ng-container>
           </span>
           <button

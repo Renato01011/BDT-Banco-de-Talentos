@@ -20,7 +20,7 @@ export interface NewTalentModel {
   github: string,
   idTipoMoneda: number,
   montoInicialRxH: number,
-  montoFinalRxH: number,
+  montoFinalRxh: number,
   montoInicialPlanilla: number,
   montoFinalPlanilla: number,
   celular: string,

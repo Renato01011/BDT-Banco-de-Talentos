@@ -489,7 +489,6 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
         },
       });
   }
-
   //Tocar esto
   public onSveSalary() {
     if (!this.onSaveForm(this.salaryForm)) return;
@@ -499,8 +498,8 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
       .editTalentSalary(
         {
           idCoin: this.salaryForm.get('currency')!.value,
-          initialSalaryRxh: this.salaryForm.get('iAmountRxH')!.value ?? 0,
-          finalSalaryRxh: this.salaryForm.get('fAmountRxH')!.value,
+          initialSalaryRxH: this.salaryForm.get('iAmountRxH')!.value ?? 0,
+          finalSalaryRxH: this.salaryForm.get('fAmountRxH')!.value,
           initialSalaryPlanilla: this.salaryForm.get('iAmountPlanilla')!.value ?? 0,
           finalSalaryPlanilla: this.salaryForm.get('fAmountPlanilla')!.value,
         },
@@ -574,11 +573,11 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
   public openEditSalaryDialog() {
     this.checkCurrencies();
     const currency = this.coin.id;
-    const iAmountRxh = this.customTalent?.initialSalaryRxh ?? '';
-    const fAmountRxh = this.customTalent?.finalSalaryRxh ?? '';
+    const iAmountRxH = this.customTalent?.initialSalaryRxH ?? '';
+    const fAmountRxH = this.customTalent?.finalSalaryRxH ?? '';
     const iAmountPlanilla = this.customTalent?.initialSalaryPlanilla ?? '';
     const fAmountPlanilla = this.customTalent?.finalSalaryPlanilla ?? '';
-    this.salaryForm.reset({ currency, iAmountRxh, fAmountRxh, iAmountPlanilla, fAmountPlanilla });
+    this.salaryForm.reset({ currency, iAmountRxH, fAmountRxH, iAmountPlanilla, fAmountPlanilla });
     this.editSalaryDialog = true;
   }
 

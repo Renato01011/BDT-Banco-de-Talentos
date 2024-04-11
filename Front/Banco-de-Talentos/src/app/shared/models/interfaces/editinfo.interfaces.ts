@@ -12,8 +12,8 @@ export interface EditProfilePicture {
 
 export interface EditSalary {
   idCoin: number,
-  initialSalaryRxh: number;
-  finalSalaryRxh: number;
+  initialSalaryRxH: number;
+  finalSalaryRxH: number;
   initialSalaryPlanilla: number;
   finalSalaryPlanilla: number;
 }

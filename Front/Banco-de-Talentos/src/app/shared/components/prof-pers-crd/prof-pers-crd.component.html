@@ -830,7 +830,7 @@
       [formGroup]="contactInfoForm"
       (ngSubmit)="updateContactInfo()"
     >
-      <div class="w-12 flex flex-column justify-content-start mb-2">
+      <div class="w-12 flex flex-column justify-content-start mb-4">
         <div class="pt-2">
           <label
             for="inputLink"
@@ -889,7 +889,7 @@
           </div>
         </div>
       </div>
-      <div class="w-12 flex flex-wrap pt-3">
+      <div class="w-12 flex flex-wrap pt-4" *ngIf="isRecruiter">
         <div
           class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
         >

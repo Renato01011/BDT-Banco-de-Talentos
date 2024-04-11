@@ -74,5 +74,5 @@ export class UrlConstants {
   public static readonly URL_UPDATE_CV =
     environment.host + environment.context + '/file/update';
   public static readonly URL_UPDATE_CONTACT_INFO =
-    environment.host + environment.context + '/update/contact';
+    environment.host + environment.context + '/talent/update/contact';
 }

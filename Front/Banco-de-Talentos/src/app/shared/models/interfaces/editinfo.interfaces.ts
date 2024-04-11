@@ -36,6 +36,7 @@ export interface EditWorkExp {
   fechaInicio: string;
   fechaFin: string;
   flActualidad: number;
+  functions: string;
 }
 
 export interface EditLang {

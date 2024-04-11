@@ -211,6 +211,33 @@
           (onChange)="onCheckCurrDate()"
         ></p-checkbox>
       </div>
+      <div class="w-12 flex flex-column justify-content-start py-4">
+        <label
+          for="editDate"
+          class="block text-left mb-2 font-medium text-bluegray-800"
+          >Funciones</label
+        >
+        <textarea
+          id="textFunctions"
+          rows="5"
+          cols="30"
+          pInputTextarea
+          placeholder="Digitar funciones"
+          class="w-full h-5rem"
+          formControlName="functions"
+          [ngClass]="{
+            'ng-invalid ng-dirty': isValidEditField('editJob')
+          }"
+        ></textarea>
+        <small
+          id="textFunctions"
+          class="hidden"
+          [ngClass]="{
+            'ng-invalid ng-dirty': isValidEditField('editJob')
+          }"
+          >Este campo debe tener como mínimo 10 caracteres.
+        </small>
+      </div>
       <div class="w-12 flex flex-wrap pt-3">
         <div
           class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
@@ -393,6 +420,33 @@
           formControlName="tPresent"
           (onChange)="onEdtCheckCurrDate()"
         ></p-checkbox>
+      </div>
+      <div class="w-12 flex flex-column justify-content-start py-4">
+        <label
+          for="editDate"
+          class="block text-left mb-2 font-medium text-bluegray-800"
+          >Funciones</label
+        >
+        <textarea
+          id="textFunctions"
+          rows="5"
+          cols="30"
+          pInputTextarea
+          placeholder="Digitar funciones"
+          class="w-full h-5rem"
+          formControlName="functions"
+          [ngClass]="{
+            'ng-invalid ng-dirty': isValidEditField('editJob')
+          }"
+        ></textarea>
+        <small
+          id="textFunctions"
+          class="hidden"
+          [ngClass]="{
+            'ng-invalid ng-dirty': isValidEditField('editJob')
+          }"
+          >Este campo debe tener como mínimo 10 caracteres.
+        </small>
       </div>
       <div class="w-12 flex flex-wrap pt-3">
         <div

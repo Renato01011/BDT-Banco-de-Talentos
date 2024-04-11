@@ -23,6 +23,7 @@ export interface TalentResponse {
   languageLevels: LanguageLevel[];
   feedbacks: Feedbacks[];
   userListTalent: UserListTalent;
+  email: string;
 }
 
 export interface Document {

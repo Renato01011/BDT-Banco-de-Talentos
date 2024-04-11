@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   AbstractControl,
   FormArray,
@@ -8,16 +7,17 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import * as MasterModels from 'src/app/shared/models/interfaces/master.interfaces';
 
-import { FrmValService } from 'src/app/shared/service/frmVal/frm-val.service';
-import { TalentService } from 'src/app/core/services/talent/talent.service';
-import * as TalentModels from 'src/app/shared/models/interfaces/talent.interfaces';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
-import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { MasterService } from 'src/app/core/services/master/master.service';
+import { TalentService } from 'src/app/core/services/talent/talent.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
+import * as TalentModels from 'src/app/shared/models/interfaces/talent.interfaces';
+import { FrmValService } from 'src/app/shared/service/frmVal/frm-val.service';
 
 const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
 const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
@@ -59,6 +59,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       '',
       [Validators.required, Validators.minLength(2), Validators.max(20)],
     ],
+    email: ['', [Validators.required, Validators.email]],
     cv: [, [Validators.required]],
     profilePicture: [, [Validators.required]],
     country: [, [Validators.required]],
@@ -621,6 +622,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
           },
         ],
         descripcion: this.newTalentForm.get('description')?.value,
+        correo: this.newTalentForm.get('email')?.value,
         idPuestoActual: this.newTalentForm.get('profile')?.value.id,
         idPais: this.newTalentForm.get('country')?.value.id,
         idCiudad: this.newTalentForm.get('city')?.value.id,

@@ -8,17 +8,17 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem } from 'primeng/api';
-import { FrmValService } from '../../service/frmVal/frm-val.service';
-import { MasterService } from 'src/app/core/services/master/master.service';
-import { CurrenciesModel } from '../../models/interfaces/master.interfaces';
-import { CustomTalent } from '../../models/interfaces/customTalent.interfaces';
-import { EditInfoService } from '../../service/editInfo/edit-info.service';
-import { ToastService } from 'src/app/core/services/toast/toast.service';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { UserService } from '../../service/user/user.service';
-import { UserList } from '../../models/interfaces/userList.interfaces';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { switchMap } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { MasterService } from 'src/app/core/services/master/master.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { CustomTalent } from '../../models/interfaces/customTalent.interfaces';
+import { CurrenciesModel } from '../../models/interfaces/master.interfaces';
+import { UserList } from '../../models/interfaces/userList.interfaces';
+import { EditInfoService } from '../../service/editInfo/edit-info.service';
+import { FrmValService } from '../../service/frmVal/frm-val.service';
+import { UserService } from '../../service/user/user.service';
 import { UtilsService } from '../../service/util/utils.service';
 
 interface Favorite {
@@ -670,5 +670,48 @@ export class ProfPersCrdComponent implements OnInit {
       msg = 'El monto final debe ser mayor que el monto inicial.';
     }
     return msg;
+  }
+
+  emailAndPhoneDialog: boolean = false;
+  phoneNumber: string = this.customTalent!.phone;
+
+  public emailAndPhoneForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    phone: [this.phoneNumber, [Validators.required]],
+  });
+
+  openEmailAndPhoneDialog() {
+    this.emailAndPhoneDialog = true;
+    console.log(this.customTalent?.phone.split(' ')[1]);
+    console.log(this.selectedId);
+  }
+
+  saveEmailAndPhone() {
+    if (!this.onSaveForm(this.emailAndPhoneForm)) return;
+    this.editInfoService
+      .updateContactInfo({
+        id: this.customTalent!.idTalent,
+        celular: this.emailAndPhoneForm.get('phone')!.value,
+        email: this.emailAndPhoneForm.get('email')!.value,
+      })
+      .subscribe({
+        next: (resp) => {
+          this.hideEmailAndPhoneDialog();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
+  }
+
+  isValidField(field: string) {
+    return this.fValidator.isValidField(this.emailAndPhoneForm, field);
+  }
+
+  hideEmailAndPhoneDialog() {
+    this.emailAndPhoneDialog = false;
   }
 }

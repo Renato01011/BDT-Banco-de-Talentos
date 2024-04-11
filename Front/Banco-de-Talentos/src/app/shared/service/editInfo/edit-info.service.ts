@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import * as EditModels from '../../models/interfaces/editinfo.interfaces';
 import { UrlConstants } from 'src/app/core/global/constants/url.constants';
 import { AddFile } from '../../models/interfaces/addInfo.interfaces';
+import * as EditModels from '../../models/interfaces/editinfo.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -92,6 +92,15 @@ export class EditInfoService {
   ): Observable<EditModels.EditResp> {
     return this.httpClient.put<EditModels.EditResp>(
       `${UrlConstants.URL_UPDATE_CV}/${idFile}/talent/${id}`,
+      body
+    );
+  }
+
+  public updateContactInfo(
+    body: EditModels.EditContactInfo
+  ): Observable<EditModels.EditResp> {
+    return this.httpClient.put<EditModels.EditResp>(
+      `${UrlConstants.URL_UPDATE_CONTACT_INFO}`,
       body
     );
   }

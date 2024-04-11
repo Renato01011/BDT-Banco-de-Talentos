@@ -11,6 +11,7 @@ import {
   Role,
 } from 'src/app/shared/models/interfaces/payload.interfaces';
 import { Authority } from 'src/app/shared/models/enums/authority.enum';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -88,8 +89,18 @@ export class AuthService {
   // }
 
   public get isRecruiter(): boolean {
-    const roles = this.decodeToken()?.roles ?? [];
-    return this.getAuthority(roles);
+    console.log(environment.production);
+
+    if (environment.production) {
+      let tempRoles = this.decodeToken()?.roles.toString().split(',') ?? [];
+      const roles = tempRoles.map((role) => {
+        return { authority: Authority[role as keyof typeof Authority] };
+      });
+      return this.getAuthority(roles);
+    } else {
+      const roles = this.decodeToken()?.roles ?? [];
+      return this.getAuthority(roles);
+    }
   }
 
   public get idUser(): number {

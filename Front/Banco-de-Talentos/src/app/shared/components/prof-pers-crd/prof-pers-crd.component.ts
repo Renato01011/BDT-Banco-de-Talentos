@@ -2,25 +2,26 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem } from 'primeng/api';
-import { FrmValService } from '../../service/frmVal/frm-val.service';
-import { MasterService } from 'src/app/core/services/master/master.service';
-import { CurrenciesModel } from '../../models/interfaces/master.interfaces';
-import { CustomTalent } from '../../models/interfaces/customTalent.interfaces';
-import { EditInfoService } from '../../service/editInfo/edit-info.service';
-import { ToastService } from 'src/app/core/services/toast/toast.service';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { UserService } from '../../service/user/user.service';
-import { UserList } from '../../models/interfaces/userList.interfaces';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { switchMap } from 'rxjs';
-import { UtilsService } from '../../service/util/utils.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
+import { MasterService } from 'src/app/core/services/master/master.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { CustomTalent } from '../../models/interfaces/customTalent.interfaces';
+import { CurrenciesModel } from '../../models/interfaces/master.interfaces';
+import { UserList } from '../../models/interfaces/userList.interfaces';
+import { EditInfoService } from '../../service/editInfo/edit-info.service';
+import { FrmValService } from '../../service/frmVal/frm-val.service';
+import { UserService } from '../../service/user/user.service';
+import { UtilsService } from '../../service/util/utils.service';
 
 interface Favorite {
   name: string;
@@ -35,7 +36,7 @@ const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
   templateUrl: './prof-pers-crd.component.html',
   styleUrls: ['./prof-pers-crd.component.scss'],
 })
-export class ProfPersCrdComponent implements OnInit {
+export class ProfPersCrdComponent implements OnInit, OnChanges {
   @Input()
   public customTalent?: CustomTalent;
   @Input()
@@ -696,5 +697,79 @@ export class ProfPersCrdComponent implements OnInit {
       msg = 'El monto final debe ser mayor que el monto inicial.';
     }
     return msg;
+  }
+
+  //
+  contactInfoDialog: boolean = false;
+
+  phoneNumber: string = '';
+  email: string = '';
+
+  ngOnChanges(): void {
+    if (this.customTalent) {
+      this.initContactInfo();
+    }
+  }
+
+  initContactInfo(): void {
+    this.phoneNumber = this.customTalent?.phone ?? '';
+    this.email = this.customTalent?.email ?? '';
+  }
+
+  public contactInfoForm: FormGroup = this.fb.group({
+    email: [this.email, [Validators.required, Validators.email]],
+    phone: [this.phoneNumber.split(' ')[1], [Validators.required]],
+  });
+
+  openContactInfoDialog() {
+    this.contactInfoDialog = true;
+    console.log(this.phoneNumber.split(' ')[1]);
+    console.log(this.email);
+  }
+
+  updateContactInfo() {
+    if (!this.onSaveForm(this.contactInfoForm)) return;
+    this.editInfoService
+      .updateContactInfo({
+        id: this.selectedId!,
+        celular:
+          this.customTalent?.phone.split(' ')[0] +
+          ' ' +
+          this.contactInfoForm.get('phone')!.value,
+        email: this.contactInfoForm.get('email')!.value,
+      })
+      .subscribe({
+        next: (resp) => {
+          this.hideContactInfoDialog();
+          this.toastService.addProperties(
+            'success',
+            'Se editó correctamente',
+            resp.message
+          );
+          this.talentId.emit(this.selectedId);
+        },
+      });
+  }
+
+  isValidField(field: string) {
+    return this.fValidator.isValidField(this.contactInfoForm, field);
+  }
+
+  hideContactInfoDialog() {
+    //this.contactInfoForm.reset();
+    this.contactInfoDialog = false;
+  }
+
+  phoneToCopy: string = '';
+  emailToCopy: string = '';
+
+  copyEmail(input: HTMLInputElement) {
+    input.select();
+    document.execCommand('copy');
+  }
+
+  copyPhone(input: any) {
+    input.inputViewChild.nativeElement.select();
+    document.execCommand('copy');
   }
 }

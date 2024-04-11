@@ -50,3 +50,9 @@ export interface EditResp {
   id: string;
   message: string;
 }
+
+export interface EditContactInfo {
+  id: number;
+  celular: string;
+  email: string;
+}

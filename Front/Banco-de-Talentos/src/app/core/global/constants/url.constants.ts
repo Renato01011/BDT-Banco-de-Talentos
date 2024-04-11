@@ -73,4 +73,6 @@ export class UrlConstants {
     environment.host + environment.context + '/list-user/edit';
   public static readonly URL_UPDATE_CV =
     environment.host + environment.context + '/file/update';
+  public static readonly URL_UPDATE_CONTACT_INFO =
+    environment.host + environment.context + '/update/contact';
 }

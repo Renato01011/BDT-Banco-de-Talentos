@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   AbstractControl,
   FormArray,
@@ -8,16 +7,17 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import * as MasterModels from 'src/app/shared/models/interfaces/master.interfaces';
 
-import { FrmValService } from 'src/app/shared/service/frmVal/frm-val.service';
-import { TalentService } from 'src/app/core/services/talent/talent.service';
-import * as TalentModels from 'src/app/shared/models/interfaces/talent.interfaces';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
-import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { MasterService } from 'src/app/core/services/master/master.service';
+import { TalentService } from 'src/app/core/services/talent/talent.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
+import * as TalentModels from 'src/app/shared/models/interfaces/talent.interfaces';
+import { FrmValService } from 'src/app/shared/service/frmVal/frm-val.service';
 
 const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
 const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
@@ -65,6 +65,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     city: [, [Validators.required]],
     callingCode: [, [Validators.required]],
     phone: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
     description: [
       '',
       [Validators.required, Validators.minLength(10), Validators.max(200)],
@@ -148,7 +149,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     private talentService: TalentService,
     private loaderService: LoaderService,
     private toastService: ToastService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.checkCurrencies();
@@ -212,7 +213,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {}
 
   AddTechnicalAbility() {
     (this.newTalentForm.get('technicalAbilities') as FormArray).push(
@@ -648,6 +649,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
           },
         ],
         descripcion: this.newTalentForm.get('description')?.value,
+        email: this.newTalentForm.get('email')?.value,
         disponibilidad: this.newTalentForm.get('availability')?.value,
         idPuestoActual: this.newTalentForm.get('profile')?.value.id,
         idPais: this.newTalentForm.get('country')?.value.id,
@@ -724,7 +726,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     return (
       !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
       this.masterService.cacheStorage.byLangProficiency.proficiencies.length ===
-      0
+        0
     );
   }
 

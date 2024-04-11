@@ -22,4 +22,6 @@ export interface CustomTalent {
   userListTalent: UserListTalent;
 
   resume: Document;
+
+  email: string;
 }

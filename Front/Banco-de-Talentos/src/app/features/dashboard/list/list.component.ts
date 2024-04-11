@@ -2,14 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { tap } from 'rxjs';
-import { CustomTalent } from '../../../shared/models/interfaces/customTalent.interfaces';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 import { FilterRequest } from 'src/app/shared/models/interfaces/filterReq.interfaces';
 import { FilterResponse } from 'src/app/shared/models/interfaces/filterResp.interfaces';
-import { FilterService } from '../../../core/services/filter/filter.service';
-import { LoaderService } from 'src/app/core/services/loader/loader.service';
-import { TalentService } from '../../../core/services/talent/talent.service';
-import { ToastService } from '../../../core/services/toast/toast.service';
-import { AuthService } from '../../../core/services/auth/auth.service';
 import {
   Document,
   EducationalExperience,
@@ -20,6 +15,11 @@ import {
   TechnicalAbility,
   WorkExperience,
 } from 'src/app/shared/models/interfaces/talentResp.interfaces';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { FilterService } from '../../../core/services/filter/filter.service';
+import { TalentService } from '../../../core/services/talent/talent.service';
+import { ToastService } from '../../../core/services/toast/toast.service';
+import { CustomTalent } from '../../../shared/models/interfaces/customTalent.interfaces';
 
 @Component({
   selector: 'app-list',
@@ -60,7 +60,7 @@ export class ListComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private toastService: ToastService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getTalentList(this.filterReq);
@@ -147,6 +147,7 @@ export class ListComponent implements OnInit {
       miscData,
       feedbacks,
       userListTalent,
+      email,
     } = talent;
 
     this.customTalent = {
@@ -167,6 +168,7 @@ export class ListComponent implements OnInit {
       feedbacks,
       userListTalent,
       resume,
+      email,
     };
   }
 

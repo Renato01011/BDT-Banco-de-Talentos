@@ -199,6 +199,28 @@
                 ></p-inputMask>
               </div>
             </div>
+            <!-- <div class="pt-2">
+              <h3 class="subHeaderText">Correo electrónico</h3>
+              <input
+                pInputText
+                placeholder="Correo electrónico"
+                class="w-full"
+                formControlName="email"
+                [ngClass]="{ 'ng-invalid ng-dirty': isValidField('email') }"
+              />
+            </div> -->
+            <div class="pt-2">
+              <h3 class="subHeaderText">Correo Electrónico</h3>
+              <input
+                pInputText
+                placeholder="Correo Electrónico"
+                class="w-full"
+                formControlName="email"
+                [ngClass]="{
+                  'ng-invalid ng-dirty': isValidField('email')
+                }"
+              />
+            </div>
             <div class="h-7rem">
               <h3 class="subHeaderText">Descripción</h3>
               <textarea

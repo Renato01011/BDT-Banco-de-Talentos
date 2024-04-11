@@ -41,7 +41,8 @@ public class TalentoServiceImpl implements TalentoService {
                 .registerStoredProcedureParameter(9, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(10, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(11, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(12, Integer.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter(12, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(13, Integer.class, ParameterMode.OUT)
                 .setParameter(1, newTalentRequest.getNombre())
                 .setParameter(2, newTalentRequest.getApellidoPaterno())
                 .setParameter(3, newTalentRequest.getApellidoMaterno())
@@ -52,9 +53,11 @@ public class TalentoServiceImpl implements TalentoService {
                 .setParameter(8, newTalentRequest.getCelular())
                 .setParameter(9, newTalentRequest.getLinkedin())
                 .setParameter(10, newTalentRequest.getGithub())
-                .setParameter(11, newTalentRequest.getDisponibilidad());
+                .setParameter(11, newTalentRequest.getDisponibilidad())
+                .setParameter(12, newTalentRequest.getEmail());
+
         storedProcedureQueryTalent.execute();
-        Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(12);
+        Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(13);
 
         // -- Habilidades Tecnicas --
         if (!newTalentRequest.getHabilidadesTecnicas().isEmpty()) {
@@ -318,6 +321,7 @@ public class TalentoServiceImpl implements TalentoService {
             talentResp.setCreated((Date) objects[11]);
             talentResp.setAvgRating((Integer) objects[12]);
             talentResp.setDisponibilidad((String) objects[13]);
+            talentResp.setEmail((String) objects[14]);
         }
 
         // -- Technical Abilities --
@@ -588,5 +592,39 @@ public class TalentoServiceImpl implements TalentoService {
         temp.setCode(200);
         temp.setMessage("Correctly Updated");
         return temp;
+    }
+
+    @Override
+    public GeneralResp updateContactInfo(Integer id, UpdateContactInfoReq updateContactInfoReq) {
+
+        boolean existsTalent = existsTalentId(id);
+        if (!existsTalent) {
+            throw new ResourceNotFoundException("Talent", "id", id);
+        }
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createStoredProcedureQuery("SP_EDIT_CONTACT_INFO")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
+                .setParameter(1, id)
+                .setParameter(2, updateContactInfoReq.getCelular())
+                .setParameter(3, updateContactInfoReq.getEmail());
+
+        storedProcedureQuery.execute();
+
+        GeneralResp temp = new GeneralResp();
+        temp.setCode(200);
+        temp.setMessage("Correctly Updated");
+        return temp;
+    }
+
+    private boolean existsTalentId(Integer id) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, id);
+        storedProcedureQuery.execute();
+        Integer exists = (Integer) storedProcedureQuery.getOutputParameterValue(2);
+        return exists == 1;
     }
 }

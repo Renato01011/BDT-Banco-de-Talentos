@@ -191,7 +191,7 @@
         <p-button
           label="Contactar"
           icon="pi pi-phone"
-          (click)="openWhatsApp()"
+          (click)="openContactInfoDialog()"
           styleClass="p-button-sm p-button-success w-full"
         ></p-button>
       </div>
@@ -765,6 +765,118 @@
             pButton
             pRipple
             label="Subir"
+            icon="pi pi-check"
+            type="submit"
+            class="p-button-success w-full"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="contactInfoDialog"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [modal]="true"
+>
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center w-12">
+      <span class="text-lg md:text-xl font-semibold text-800">
+        Métodos de Contacto
+      </span>
+    </div>
+  </ng-template>
+  <div class="w-12 flex flex-column align-items-center">
+    <form
+      class="w-12 flex flex-column"
+      autocomplete="off"
+      [formGroup]="contactInfoForm"
+      (ngSubmit)="updateContactInfo()"
+    >
+      <div class="w-12 flex flex-column justify-content-start mb-2">
+        <div class="pt-2">
+          <label
+            for="inputLink"
+            class="block text-left mb-2 font-medium text-bluegray-800 font-medium text-bluegray-800"
+            >Correo Electrónico</label
+          >
+          <div class="h-3rem p-inputgroup">
+            <input
+              pInputText
+              placeholder="Correo Electrónico"
+              class="w-full"
+              formControlName="email"
+              [ngClass]="{ 'ng-invalid ng-dirty': isValidField('email') }"
+              #inputEmail
+              [(ngModel)]="email"
+            />
+            <span class="p-inputgroup-addon w-5rem pr-0"
+              ><p-button
+                label="Copiar"
+                (click)="copyEmail(inputEmail)"
+              ></p-button
+            ></span>
+          </div>
+        </div>
+        <div class="pt-2">
+          <label
+            for="inputLink"
+            class="block text-left mb-2 font-medium text-bluegray-800 font-medium text-bluegray-800"
+            >Número de Celular</label
+          >
+          <div class="h-3rem p-inputgroup">
+            <span class="p-inputgroup-addon w-5rem pr-0">{{
+              phoneNumber.split(" ")[0]
+            }}</span>
+            <p-inputMask
+              [style]="{
+                'border-radius': '0',
+                'border-top-right-radius': '0.375rem',
+                'border-bottom-right-radius': '0.375rem'
+              }"
+              class="w-full h-full"
+              styleClass="w-full h-full"
+              mask="999-999-999"
+              placeholder="999-999-999"
+              formControlName="phone"
+              [ngClass]="{ 'ng-invalid ng-dirty': isValidField('phone') }"
+              #inputPhone
+              [(ngModel)]="phoneNumber.split(' ')[1]"
+            ></p-inputMask>
+            <span class="p-inputgroup-addon w-5rem pr-0"
+              ><p-button
+                label="Copiar"
+                (click)="copyPhone(inputPhone)"
+              ></p-button
+            ></span>
+          </div>
+        </div>
+      </div>
+      <div class="w-12 flex flex-wrap pt-3">
+        <div
+          class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            type="button"
+            class="p-button-outlined p-button-secondary w-full"
+            (click)="hideContactInfoDialog()"
+          ></button>
+        </div>
+        <div
+          class="w-6 p-2 pr-0 flex align-items-center justify-content-center"
+        >
+          <button
+            pButton
+            pRipple
+            label="Actualizar"
             icon="pi pi-check"
             type="submit"
             class="p-button-success w-full"

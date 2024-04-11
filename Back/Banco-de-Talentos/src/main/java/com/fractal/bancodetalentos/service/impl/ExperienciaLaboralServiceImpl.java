@@ -25,14 +25,8 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
 
     @Override
     public Map<String, String> addNewWorkExp(AddWorkExpReq laborales, Integer id) {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
-                .setParameter(1, id);
-        storedProcedureQuery.execute();
-        Integer exists = (Integer) storedProcedureQuery.getOutputParameterValue(2);
-
-        if (exists == 0) {
+        boolean existsTalent = existsTalentId(id);
+        if (!existsTalent) {
             throw new ResourceNotFoundException("Talent", "id", id);
         }
 
@@ -44,12 +38,14 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
                 .registerStoredProcedureParameter(4, Date.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(7, String.class, ParameterMode.IN)
                 .setParameter(1, id)
                 .setParameter(2, laborales.getEmpresa())
                 .setParameter(3, laborales.getPuesto())
                 .setParameter(4, laborales.getFechaInicio())
                 .setParameter(5, laborales.getFechaFin())
-                .setParameter(6, laborales.getFlActualidad());
+                .setParameter(6, laborales.getFlActualidad())
+                .setParameter(7, laborales.getFuntions());
         storedProcedureQueryExperienciasLaborales.execute();
         Map<String, String> resp = new HashMap<>();
         resp.put("id", String.valueOf(id));
@@ -60,14 +56,8 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
 
     @Override
     public GeneralResp putWorkExp(Integer idTalent, Integer idWorkExp, UpdateWorkExpReq workExpReq) {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
-                .setParameter(1, idTalent);
-        storedProcedureQuery.execute();
-        Integer exists = (Integer) storedProcedureQuery.getOutputParameterValue(2);
-
-        if (exists == 0) {
+        boolean existsTalent = existsTalentId(idTalent);
+        if (!existsTalent) {
             throw new ResourceNotFoundException("Talent", "id", idTalent);
         }
 
@@ -96,14 +86,8 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
 
     @Override
     public GeneralResp deleteWorkExp(Integer idTalent, Integer idWorkExp) {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
-                .setParameter(1, idTalent);
-        storedProcedureQuery.execute();
-        Integer exists = (Integer) storedProcedureQuery.getOutputParameterValue(2);
-
-        if (exists == 0) {
+        boolean existsTalent = existsTalentId(idTalent);
+        if (!existsTalent) {
             throw new ResourceNotFoundException("Talent", "id", idTalent);
         }
 
@@ -118,5 +102,15 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
         generalResp.setMessage("Correctly Deleted");
 
         return generalResp;
+    }
+
+    private boolean existsTalentId(Integer id) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("SP_CHECK_TALENT_ID")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.OUT)
+                .setParameter(1, id);
+        storedProcedureQuery.execute();
+        Integer exists = (Integer) storedProcedureQuery.getOutputParameterValue(2);
+        return exists == 1;
     }
 }

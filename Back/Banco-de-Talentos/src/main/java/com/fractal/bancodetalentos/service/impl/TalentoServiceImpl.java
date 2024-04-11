@@ -109,7 +109,7 @@ public class TalentoServiceImpl implements TalentoService {
                         .setParameter(4, experienciasLaboralesDTO.getFechaInicio())
                         .setParameter(5, experienciasLaboralesDTO.getFechaFin())
                         .setParameter(6, experienciasLaboralesDTO.getFlActualidad())
-                        .setParameter(7, experienciasLaboralesDTO.getFuntions());
+                        .setParameter(7, experienciasLaboralesDTO.getFunctions());
                 storedProcedureQueryExperienciasLaborales.execute();
             }
         }

@@ -18,4 +18,5 @@ public class WorkExperienceResp {
     private Date intialDate;
     private Date finalDate;
     private Integer flActualidad;
+    private String functions;
 }

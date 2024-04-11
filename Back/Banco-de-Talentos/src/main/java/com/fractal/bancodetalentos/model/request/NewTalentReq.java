@@ -46,13 +46,13 @@ public class NewTalentReq {
     private String github;
     @NotNull(message = "El campo Tipo de moneda es obligatorio y no puede ser nulo.")
     private Integer idTipoMoneda;
-    @NotNull(message = "El campo Tipo de moneda es obligatorio y no puede ser nulo.")
+    @NotNull(message = "El campo monto inicial planilla es obligatorio y no puede ser nulo.")
     private Integer montoInicialPlanilla;
-    @NotNull(message = "El campo Tipo de moneda es obligatorio y no puede ser nulo.")
+    @NotNull(message = "El campo monto final planilla es obligatorio y no puede ser nulo.")
     private Integer montoFinalPlanilla;
-    @NotNull(message = "El campo Tipo de moneda es obligatorio y no puede ser nulo.")
+    @NotNull(message = "El campo monto inicial recibos por honorarios es obligatorio y no puede ser nulo.")
     private Integer montoInicialRxH;
-    @NotNull(message = "El campo Tipo de moneda es obligatorio y no puede ser nulo.")
+    @NotNull(message = "El campo monto final recibos por honorarios es obligatorio y no puede ser nulo.")
     private Integer montoFinalRxh;
     @NotBlank(message = "El Número de celular es obligatorio y no puede estar vacío ni ser nulo.")
     private String celular;

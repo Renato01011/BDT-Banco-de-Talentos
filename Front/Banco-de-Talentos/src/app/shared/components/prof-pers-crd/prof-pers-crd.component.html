@@ -135,20 +135,20 @@
           <span class="text-500 text-xs sm:text-sm font-light">
             <ng-container
               *ngIf="
-                (customTalent?.initialSalaryRxH ?? 0) >= 0 ||
-                (customTalent?.finalSalaryRxH ?? 0) >= 0
+                (customTalent?.initialSalaryRxH ?? 0) > 0 ||
+                (customTalent?.finalSalaryRxH ?? 0) > 0
               "
             >
               RxH
               {{
                 customTalent?.initialSalaryRxH
-                  | currency : (coin.id === 0 ? "PEN" : "USD")
+                  | currency
+                    : (coin.id === 1 ? "S/. " : "$ ")
+                    : "symbol-narrow"
+                    : "1.0-0"
               }}
               -
-              {{
-                customTalent?.finalSalaryRxH
-                  | currency : (coin.id === 0 ? "PEN" : "USD")
-              }}
+              {{ customTalent?.finalSalaryRxH }}
               |
             </ng-container>
             <ng-container
@@ -161,20 +161,20 @@
             </ng-container>
             <ng-container
               *ngIf="
-                (customTalent?.initialSalaryPlanilla ?? 0) >= 0 ||
-                (customTalent?.finalSalaryPlanilla ?? 0) >= 0
+                (customTalent?.initialSalaryPlanilla ?? 0) > 0 ||
+                (customTalent?.finalSalaryPlanilla ?? 0) > 0
               "
             >
               Planilla
               {{
                 customTalent?.initialSalaryPlanilla
-                  | currency : (coin.id === 0 ? "PEN" : "USD")
+                  | currency
+                    : (coin.id === 1 ? "S/. " : "$ ")
+                    : "symbol-narrow"
+                    : "1.0-0"
               }}
               -
-              {{
-                customTalent?.finalSalaryPlanilla
-                  | currency : (coin.id === 0 ? "PEN" : "USD")
-              }}
+              {{ customTalent?.finalSalaryPlanilla }}
             </ng-container>
             <ng-container
               *ngIf="

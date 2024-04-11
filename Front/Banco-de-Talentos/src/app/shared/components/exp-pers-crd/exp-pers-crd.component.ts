@@ -67,7 +67,7 @@ export class ExpPersCrdComponent implements OnInit {
       editEndDate: ['', [Validators.required]],
       hFractal: [false],
       tPresent: [false],
-      functions: ['', [Validators.minLength(10)]],
+      functions: ['', [Validators.minLength(10), Validators.maxLength(1000)]],
     },
     {
       validators: [this.fValidator.compareDates('editDate', 'editEndDate')],
@@ -98,7 +98,7 @@ export class ExpPersCrdComponent implements OnInit {
       fechaInicio: sDate,
       fechaFin: eDate,
       flActualidad: tPresent ? 1 : 0,
-      funciones: functions,
+      functions: functions,
     };
     this.loaderService.showLoader();
     this.addInfoService.addWorkExp(body, this.selectedId).subscribe({
@@ -222,6 +222,7 @@ export class ExpPersCrdComponent implements OnInit {
       resp.flActualidad == 1 ? new Date() : new Date(resp.finalDate);
     const hFractal = resp.firm == 'Fractal';
     const tPresent = resp.flActualidad == 1;
+    const functions = resp.functions;
     this.editExpForm.reset({
       editCompany,
       editJob,
@@ -229,6 +230,7 @@ export class ExpPersCrdComponent implements OnInit {
       editEndDate,
       hFractal,
       tPresent,
+      functions,
     });
     if (hFractal) {
       this.editExpForm.controls['editCompany'].disable();

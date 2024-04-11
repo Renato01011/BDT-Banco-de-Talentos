@@ -84,6 +84,7 @@ export interface WorkExperience {
   intialDate: string;
   finalDate: string;
   flActualidad: number;
+  functions: string;
 }
 
 export interface Feedbacks {

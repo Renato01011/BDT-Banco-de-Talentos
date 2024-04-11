@@ -37,27 +37,31 @@ public class TalentoServiceImpl implements TalentoService {
                 .registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(7, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(8, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(9, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(8, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(9, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(10, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(11, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(12, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(13, Integer.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter(13, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(14, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(15, Integer.class, ParameterMode.OUT)
                 .setParameter(1, newTalentRequest.getNombre())
                 .setParameter(2, newTalentRequest.getApellidoPaterno())
                 .setParameter(3, newTalentRequest.getApellidoMaterno())
                 .setParameter(4, newTalentRequest.getFotoDePerfil())
                 .setParameter(5, newTalentRequest.getDescripcion())
-                .setParameter(6, newTalentRequest.getMontoInicial())
-                .setParameter(7, newTalentRequest.getMontoFinal())
-                .setParameter(8, newTalentRequest.getCelular())
-                .setParameter(9, newTalentRequest.getLinkedin())
-                .setParameter(10, newTalentRequest.getGithub())
-                .setParameter(11, newTalentRequest.getDisponibilidad())
-                .setParameter(12, newTalentRequest.getEmail());
+                .setParameter(6, newTalentRequest.getMontoInicialPlanilla())
+                .setParameter(7, newTalentRequest.getMontoFinalPlanilla())
+                .setParameter(8, newTalentRequest.getMontoInicialRxH())
+                .setParameter(9, newTalentRequest.getMontoFinalRxh())
+                .setParameter(10, newTalentRequest.getCelular())
+                .setParameter(11, newTalentRequest.getLinkedin())
+                .setParameter(12, newTalentRequest.getGithub())
+                .setParameter(13, newTalentRequest.getDisponibilidad())
+                .setParameter(14, newTalentRequest.getEmail());
 
         storedProcedureQueryTalent.execute();
-        Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(13);
+        Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(15);
 
         // -- Habilidades Tecnicas --
         if (!newTalentRequest.getHabilidadesTecnicas().isEmpty()) {
@@ -315,8 +319,8 @@ public class TalentoServiceImpl implements TalentoService {
             talentResp.setSecondSurname((String) objects[3]);
             talentResp.setProfilePicture((byte[]) objects[4]);
             talentResp.setDescription((String) objects[5]);
-            talentResp.setInitialSalary((Integer) objects[6]);
-            talentResp.setFinalSalary((Integer) objects[7]);
+            talentResp.setInitialSalaryPlanilla((Integer) objects[6]);
+            talentResp.setFinalSalaryPlanilla((Integer) objects[7]);
             talentResp.setPhone((String) objects[8]);
             talentResp.setLinkedin((String) objects[9]);
             talentResp.setGithub((String) objects[10]);
@@ -324,6 +328,8 @@ public class TalentoServiceImpl implements TalentoService {
             talentResp.setAvgRating((Integer) objects[12]);
             talentResp.setDisponibilidad((String) objects[13]);
             talentResp.setEmail((String) objects[14]);
+            talentResp.setInitialSalaryRxH((Integer) objects[15]);
+            talentResp.setFinalSalaryRxH((Integer) objects[16]);
         }
 
         // -- Technical Abilities --
@@ -529,9 +535,13 @@ public class TalentoServiceImpl implements TalentoService {
                 .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(3, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(4, Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(5, Integer.class, ParameterMode.IN)
                 .setParameter(1, id)
-                .setParameter(2, updateSalaryReq.getInitialSalary())
-                .setParameter(3, updateSalaryReq.getFinalSalary());
+                .setParameter(2, updateSalaryReq.getInitialSalaryPlanilla())
+                .setParameter(3, updateSalaryReq.getFinalSalaryPlanilla())
+                .setParameter(4, updateSalaryReq.getInitialSalaryRxH())
+                .setParameter(5, updateSalaryReq.getFinalSalaryRxH());
         storedProcedureQuery.execute();
 
         GeneralResp temp = new GeneralResp();

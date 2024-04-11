@@ -145,6 +145,16 @@
             </ng-container>
             <ng-container
               *ngIf="
+                !(
+                  (customTalent?.initialSalaryRxh ?? 0) > 0 &&
+                  (customTalent?.finalSalaryRxh ?? 0) > 0
+                )
+              "
+            >
+              RxH Sin salario registrado |
+            </ng-container>
+            <ng-container
+              *ngIf="
                 (customTalent?.initialSalaryPlanilla ?? 0) > 0 &&
                 (customTalent?.finalSalaryPlanilla ?? 0) > 0
               "

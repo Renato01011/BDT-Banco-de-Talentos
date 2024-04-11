@@ -77,7 +77,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     coin: ['', [Validators.required]],
     montoInicialRxH: [,],
     montoFinalRxH: [, Validators.required],
-    initialAmount: [, [Validators.required]],
+    initialAmount: [,],
     finalAmount: [, [Validators.required]],
     technicalAbilities: this.formBuilder.array([
       this.formBuilder.group({
@@ -149,7 +149,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     private talentService: TalentService,
     private loaderService: LoaderService,
     private toastService: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.checkCurrencies();
@@ -213,7 +213,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   AddTechnicalAbility() {
     (this.newTalentForm.get('technicalAbilities') as FormArray).push(
@@ -657,9 +657,9 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         linkedin: this.newTalentForm.get('linkedin')?.value,
         github: this.newTalentForm.get('github')?.value,
         idTipoMoneda: this.newTalentForm.get('coin')?.value.id,
-        montoInicialRxH: this.newTalentForm.get('initialAmountRxH')?.value,
+        montoInicialRxH: this.newTalentForm.get('initialAmountRxH')?.value ?? 0,
         montoFinalRxH: this.newTalentForm.get('finalAmountRxH')?.value,
-        montoInicialPlanilla: this.newTalentForm.get('initialAmount')?.value,
+        montoInicialPlanilla: this.newTalentForm.get('initialAmount')?.value ?? 0,
         montoFinalPlanilla: this.newTalentForm.get('finalAmount')?.value,
         celular:
           this.newTalentForm.get('callingCode')?.value.callingCode +
@@ -726,7 +726,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     return (
       !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
       this.masterService.cacheStorage.byLangProficiency.proficiencies.length ===
-        0
+      0
     );
   }
 

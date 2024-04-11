@@ -499,9 +499,9 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
       .editTalentSalary(
         {
           idCoin: this.salaryForm.get('currency')!.value,
-          initialSalaryRxh: this.salaryForm.get('iAmountRxH')!.value,
+          initialSalaryRxh: this.salaryForm.get('iAmountRxH')!.value ?? 0,
           finalSalaryRxh: this.salaryForm.get('fAmountRxH')!.value,
-          initialSalaryPlanilla: this.salaryForm.get('iAmountPlanilla')!.value,
+          initialSalaryPlanilla: this.salaryForm.get('iAmountPlanilla')!.value ?? 0,
           finalSalaryPlanilla: this.salaryForm.get('fAmountPlanilla')!.value,
         },
         this.selectedId

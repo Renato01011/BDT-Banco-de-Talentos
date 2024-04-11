@@ -151,7 +151,7 @@
                 )
               "
             >
-              RxH Sin salario registrado |
+              RxH no cuenta con rango salarial |
             </ng-container>
             <ng-container
               *ngIf="
@@ -161,6 +161,16 @@
             >
               Planilla {{ customTalent?.initialSalaryPlanilla }} -
               {{ customTalent?.finalSalaryPlanilla }}
+            </ng-container>
+            <ng-container
+              *ngIf="
+                !(
+                  (customTalent?.initialSalaryPlanilla ?? 0) > 0 &&
+                  (customTalent?.finalSalaryPlanilla ?? 0) > 0
+                )
+              "
+            >
+              Planilla no cuenta con rango salaria
             </ng-container>
           </span>
           <button

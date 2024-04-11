@@ -60,7 +60,7 @@ export class ListComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private toastService: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getTalentList(this.filterReq);
@@ -136,10 +136,10 @@ export class ListComponent implements OnInit {
       surname,
       secondSurname,
       profilePicture,
-      montoInicialRxH,
-      montoFinalRxH,
-      initialSalary,
-      finalSalary,
+      initialSalaryRxH: montoInicialRxH,
+      finalSalaryRxH: montoFinalRxH,
+      initialSalaryPlanilla: initialSalary,
+      finalSalaryPlanilla: finalSalary,
       phone,
       linkedin,
       github,

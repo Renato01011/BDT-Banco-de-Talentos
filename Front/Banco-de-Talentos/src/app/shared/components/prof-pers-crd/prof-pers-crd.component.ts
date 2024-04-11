@@ -99,9 +99,9 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
     {
       currency: ['', [Validators.required]],
       iAmountRxH: [''],
-      fAmountRxH: ['', [Validators.required]],
+      fAmountRxH: [''],
       iAmountPlanilla: [''],
-      fAmountPlanilla: ['', [Validators.required]],
+      fAmountPlanilla: [''],
     },
     {
       validators: [
@@ -499,9 +499,9 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
         {
           idCoin: this.salaryForm.get('currency')!.value,
           initialSalaryRxH: this.salaryForm.get('iAmountRxH')!.value ?? 0,
-          finalSalaryRxH: this.salaryForm.get('fAmountRxH')!.value,
+          finalSalaryRxH: this.salaryForm.get('fAmountRxH')!.value ?? 0,
           initialSalaryPlanilla: this.salaryForm.get('iAmountPlanilla')!.value ?? 0,
-          finalSalaryPlanilla: this.salaryForm.get('fAmountPlanilla')!.value,
+          finalSalaryPlanilla: this.salaryForm.get('fAmountPlanilla')!.value ?? 0,
         },
         this.selectedId
       )

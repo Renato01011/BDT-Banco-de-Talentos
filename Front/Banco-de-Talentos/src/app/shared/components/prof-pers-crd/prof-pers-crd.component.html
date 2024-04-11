@@ -133,56 +133,53 @@
             {{ countryCity.country | titlecase }}
           </span>
           <span class="text-500 text-xs sm:text-sm font-light">
-            <i
-              *ngIf="coin.id === 0"
-              class="pi pi-soles text-xs sm:text-sm text-800"
-            ></i>
-            <i
-              *ngIf="coin.id === 1"
-              class="pi pi-dollar text-xs sm:text-sm text-800"
-            ></i>
             <ng-container
               *ngIf="
-                (customTalent?.initialSalaryRxH ?? 0) > 0 &&
+                (customTalent?.initialSalaryRxH ?? 0) > 0 ||
                 (customTalent?.finalSalaryRxH ?? 0) > 0
               "
             >
-              RxH {{ customTalent?.initialSalaryRxH }} -
-              {{ customTalent?.finalSalaryRxH }} |
+              RxH
+              {{
+                customTalent?.initialSalaryRxH
+                  | currency
+                    : (coin.id === 1 ? "S/. " : "$ ")
+                    : "symbol-narrow"
+                    : "1.0-0"
+              }}
+              -
+              {{ customTalent?.finalSalaryRxH }}
+              |
             </ng-container>
             <ng-container
               *ngIf="
-                !(
-                  (customTalent?.initialSalaryRxH ?? 0) > 0 &&
-                  (customTalent?.finalSalaryRxH ?? 0) > 0
-                )
+                (customTalent?.initialSalaryRxH ?? 0) === 0 &&
+                (customTalent?.finalSalaryRxH ?? 0) === 0
               "
             >
               RxH no cuenta con rango salarial |
             </ng-container>
-            <i
-              *ngIf="coin.id === 0"
-              class="pi pi-soles text-xs sm:text-sm text-800"
-            ></i>
-            <i
-              *ngIf="coin.id === 1"
-              class="pi pi-dollar text-xs sm:text-sm text-800"
-            ></i>
             <ng-container
               *ngIf="
-                (customTalent?.initialSalaryPlanilla ?? 0) > 0 &&
+                (customTalent?.initialSalaryPlanilla ?? 0) > 0 ||
                 (customTalent?.finalSalaryPlanilla ?? 0) > 0
               "
             >
-              Planilla {{ customTalent?.initialSalaryPlanilla }} -
+              Planilla
+              {{
+                customTalent?.initialSalaryPlanilla
+                  | currency
+                    : (coin.id === 1 ? "S/. " : "$ ")
+                    : "symbol-narrow"
+                    : "1.0-0"
+              }}
+              -
               {{ customTalent?.finalSalaryPlanilla }}
             </ng-container>
             <ng-container
               *ngIf="
-                !(
-                  (customTalent?.initialSalaryPlanilla ?? 0) > 0 &&
-                  (customTalent?.finalSalaryPlanilla ?? 0) > 0
-                )
+                (customTalent?.initialSalaryPlanilla ?? 0) === 0 &&
+                (customTalent?.finalSalaryPlanilla ?? 0) === 0
               "
             >
               Planilla no cuenta con rango salarial
@@ -191,6 +188,7 @@
           <button
             type="button"
             class="mx-1 back-icon-btn"
+            style="z-index: 20"
             *ngIf="isRecruiter"
             (click)="openEditSalaryDialog()"
           >

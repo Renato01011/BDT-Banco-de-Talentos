@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 
 @Getter
@@ -26,4 +27,8 @@ public class ExperienciasLaboralesDTO {
     private Date fechaFin;
     @NotNull(message = "El campo 'Hasta la actualidad' es obligatorio y no puede ser nulo.")
     private Integer flActualidad;
+
+    @Size(max = 1000, message = "El límite máximo de caracteres es de 1000.")
+    @NotNull(message = "Las funciones del talento no puede ser nula.")
+    private String funtions;
 }

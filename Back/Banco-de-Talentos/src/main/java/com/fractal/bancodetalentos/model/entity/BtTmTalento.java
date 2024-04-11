@@ -60,4 +60,7 @@ public class BtTmTalento implements Serializable {
     @Column(name = "CE_EMAIL")
     private String ceEmail;
 
+    @Column(name = "DE_FUNCTIONS")
+    private String deFunctions;
+
 }

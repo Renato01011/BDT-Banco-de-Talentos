@@ -98,12 +98,14 @@ public class TalentoServiceImpl implements TalentoService {
                         .registerStoredProcedureParameter(4, Date.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(5, Date.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
+                        .registerStoredProcedureParameter(7, String.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
                         .setParameter(2, experienciasLaboralesDTO.getEmpresa())
                         .setParameter(3, experienciasLaboralesDTO.getPuesto())
                         .setParameter(4, experienciasLaboralesDTO.getFechaInicio())
                         .setParameter(5, experienciasLaboralesDTO.getFechaFin())
-                        .setParameter(6, experienciasLaboralesDTO.getFlActualidad());
+                        .setParameter(6, experienciasLaboralesDTO.getFlActualidad())
+                        .setParameter(7, experienciasLaboralesDTO.getFuntions());
                 storedProcedureQueryExperienciasLaborales.execute();
             }
         }

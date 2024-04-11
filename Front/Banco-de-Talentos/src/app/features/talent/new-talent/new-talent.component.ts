@@ -76,9 +76,9 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     github: ['', [Validators.required, Validators.pattern(gitHubRegEx)]],
     coin: ['', [Validators.required]],
     initialAmountRxH: [,],
-    finalAmountRxH: [, [Validators.required]],
+    finalAmountRxH: [,],
     initialAmountPlanilla: [,],
-    finalAmountPlanilla: [, [Validators.required]],
+    finalAmountPlanilla: [,],
     technicalAbilities: this.formBuilder.array([
       this.formBuilder.group({
         name: [
@@ -663,9 +663,9 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         github: this.newTalentForm.get('github')?.value,
         idTipoMoneda: this.newTalentForm.get('coin')?.value.id,
         montoInicialRxH: this.newTalentForm.get('initialAmountRxH')?.value ?? 0,
-        montoFinalRxh: this.newTalentForm.get('finalAmountRxH')?.value,
+        montoFinalRxh: this.newTalentForm.get('finalAmountRxH')?.value ?? 0,
         montoInicialPlanilla: this.newTalentForm.get('initialAmountPlanilla')?.value ?? 0,
-        montoFinalPlanilla: this.newTalentForm.get('finalAmountPlanilla')?.value,
+        montoFinalPlanilla: this.newTalentForm.get('finalAmountPlanilla')?.value ?? 0,
         celular:
           this.newTalentForm.get('callingCode')?.value.callingCode +
           ' ' +

@@ -99,9 +99,9 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
     {
       currency: ['', [Validators.required]],
       iAmountRxH: [''],
-      fAmountRxH: ['', [Validators.required]],
+      fAmountRxH: [''],
       iAmountPlanilla: [''],
-      fAmountPlanilla: ['', [Validators.required]],
+      fAmountPlanilla: [''],
     },
     {
       validators: [

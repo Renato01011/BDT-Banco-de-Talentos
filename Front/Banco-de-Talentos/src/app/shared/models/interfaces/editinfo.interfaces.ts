@@ -11,7 +11,7 @@ export interface EditProfilePicture {
 }
 
 export interface EditSalary {
-  idCoin: number,
+  idCoin: number;
   initialSalary: number;
   finalSalary: number;
 }
@@ -47,4 +47,10 @@ export interface EditLang {
 export interface EditResp {
   id: string;
   message: string;
+}
+
+export interface EditContactInfo {
+  id: number;
+  celular: string;
+  email: string;
 }

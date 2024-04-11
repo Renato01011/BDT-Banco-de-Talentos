@@ -7,8 +7,10 @@ export interface CustomTalent {
   secondSurname: string;
   profilePicture: string;
 
-  initialSalary: number;
-  finalSalary: number;
+  initialSalaryRxh: number;
+  finalSalaryRxh: number;
+  initialSalaryPlanilla: number;
+  finalSalaryPlanilla: number;
   phone: string;
   linkedin: string;
   github: string;

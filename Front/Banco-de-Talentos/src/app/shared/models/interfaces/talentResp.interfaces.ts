@@ -8,6 +8,8 @@ export interface TalentResponse {
   profilePicture: string;
   description: string;
   disponibilidad: string;
+  montoInicialRxH: number;
+  montoFinalRxH: number;
   initialSalary: number;
   finalSalary: number;
   phone: string;

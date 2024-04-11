@@ -82,7 +82,7 @@ export class ProfPersCrdComponent implements OnInit {
     private utilsService: UtilsService,
     private confirmationService: ConfirmationService,
     private loaderService: LoaderService
-  ) {}
+  ) { }
 
   public profileForm: FormGroup = this.fb.group({
     img: ['', [Validators.required]],
@@ -93,15 +93,19 @@ export class ProfPersCrdComponent implements OnInit {
     github: ['', [Validators.required, Validators.pattern(gitHubRegEx)]],
   });
 
+  //Tocar esto
   public salaryForm: FormGroup = this.fb.group(
     {
       currency: ['', [Validators.required]],
-      iAmount: ['', [Validators.required]],
-      fAmount: ['', [Validators.required]],
+      iAmountRxH: [''],
+      fAmountRxH: ['', [Validators.required]],
+      iAmountPlanilla: [''],
+      fAmountPlanilla: ['', [Validators.required]],
     },
     {
       validators: [
-        this.fValidator.isFieldOneLessFieldTwo('iAmount', 'fAmount'),
+        this.fValidator.isFieldOneLessFieldTwo('iAmountRxH', 'fAmountRxH'),
+        this.fValidator.isFieldOneLessFieldTwo('iAmountPlanilla', 'fAmountPlanilla')
       ],
     }
   );
@@ -485,6 +489,7 @@ export class ProfPersCrdComponent implements OnInit {
       });
   }
 
+  //Tocar esto
   public onSveSalary() {
     if (!this.onSaveForm(this.salaryForm)) return;
     if (!this.selectedId) return;
@@ -493,8 +498,10 @@ export class ProfPersCrdComponent implements OnInit {
       .editTalentSalary(
         {
           idCoin: this.salaryForm.get('currency')!.value,
-          initialSalary: this.salaryForm.get('iAmount')!.value,
-          finalSalary: this.salaryForm.get('fAmount')!.value,
+          initialSalaryRxh: this.salaryForm.get('iAmountRxH')!.value,
+          finalSalaryRxh: this.salaryForm.get('fAmountRxH')!.value,
+          initialSalaryPlanilla: this.salaryForm.get('iAmountPlanilla')!.value,
+          finalSalaryPlanilla: this.salaryForm.get('fAmountPlanilla')!.value,
         },
         this.selectedId
       )
@@ -562,12 +569,15 @@ export class ProfPersCrdComponent implements OnInit {
     this.editSocialMediaDialog = true;
   }
 
+  //Tocar esto
   public openEditSalaryDialog() {
     this.checkCurrencies();
     const currency = this.coin.id;
-    const iAmount = this.customTalent?.initialSalary ?? '';
-    const fAmount = this.customTalent?.finalSalary ?? '';
-    this.salaryForm.reset({ currency, iAmount, fAmount });
+    const iAmountRxh = this.customTalent?.initialSalaryRxh ?? '';
+    const fAmountRxh = this.customTalent?.finalSalaryRxh ?? '';
+    const iAmountPlanilla = this.customTalent?.initialSalaryPlanilla ?? '';
+    const fAmountPlanilla = this.customTalent?.finalSalaryPlanilla ?? '';
+    this.salaryForm.reset({ currency, iAmountRxh, fAmountRxh, iAmountPlanilla, fAmountPlanilla });
     this.editSalaryDialog = true;
   }
 

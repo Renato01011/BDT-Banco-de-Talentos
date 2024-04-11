@@ -110,6 +110,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         initialDate: [, [Validators.required]],
         finalDate: [, [Validators.required]],
         flagCurrently: [false],
+        functions: ['', [Validators.minLength(10), Validators.maxLength(1000)]],
       }),
     ]),
     educationalExperience: this.formBuilder.array([
@@ -259,12 +260,15 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         initialDate: [, [Validators.required]],
         finalDate: [, [Validators.required]],
         flagCurrently: [false],
+        functions: ['', [Validators.minLength(10), Validators.maxLength(1000)]],
       })
     );
   }
+
   DeleteWorkExperience(index: number) {
     (this.newTalentForm.get('workExperience') as FormArray).removeAt(index);
   }
+
   getWorkExperience(): AbstractControl[] {
     return (<FormArray>this.newTalentForm.get('workExperience')).controls;
   }
@@ -450,6 +454,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         fechaInicio: formGroup.get('initialDate')?.value,
         fechaFin: formGroup.get('finalDate')?.value,
         flActualidad: formGroup.get('flagCurrently')?.value ? 1 : 0,
+        functions: formGroup.get('functions')?.value,
       });
     });
     return objectArray;

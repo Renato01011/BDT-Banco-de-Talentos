@@ -46,6 +46,7 @@ export interface WorkExperienceTalentModel {
   fechaInicio: Date;
   fechaFin: Date;
   flActualidad: number;
+  functions: string;
 }
 
 export interface EducationalExperienceTalentModel {

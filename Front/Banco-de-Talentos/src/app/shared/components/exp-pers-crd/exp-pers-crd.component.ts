@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FrmValService } from '../../service/frmVal/frm-val.service';
-import { WorkExperience } from '../../models/interfaces/talentResp.interfaces';
-import { AddInfoService } from '../../service/addInfo/add-info.service';
-import { EditInfoService } from '../../service/editInfo/edit-info.service';
-import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { ConfirmationService } from 'primeng/api';
-import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { WorkExperience } from '../../models/interfaces/talentResp.interfaces';
+import { AddInfoService } from '../../service/addInfo/add-info.service';
+import { DeleteInfoService } from '../../service/deleteInfo/delete-info.service';
+import { EditInfoService } from '../../service/editInfo/edit-info.service';
+import { FrmValService } from '../../service/frmVal/frm-val.service';
 
 @Component({
   selector: 'shared-exp-pers-crd',
@@ -52,6 +52,7 @@ export class ExpPersCrdComponent implements OnInit {
       eDate: ['', [Validators.required]],
       hFractal: [false],
       tPresent: [false],
+      functions: ['', [Validators.minLength(10)]],
     },
     {
       validators: [this.fValidator.compareDates('sDate', 'eDate')],
@@ -66,6 +67,7 @@ export class ExpPersCrdComponent implements OnInit {
       editEndDate: ['', [Validators.required]],
       hFractal: [false],
       tPresent: [false],
+      functions: ['', [Validators.minLength(10)]],
     },
     {
       validators: [this.fValidator.compareDates('editDate', 'editEndDate')],
@@ -88,7 +90,7 @@ export class ExpPersCrdComponent implements OnInit {
     if (!this.onSaveForm(this.newExpForm)) return;
     if (!this.selectedId) return;
 
-    const { company, job, sDate, eDate, hFractal, tPresent } =
+    const { company, job, sDate, eDate, hFractal, tPresent, functions } =
       this.newExpForm.getRawValue();
     const body = {
       empresa: company,
@@ -96,6 +98,7 @@ export class ExpPersCrdComponent implements OnInit {
       fechaInicio: sDate,
       fechaFin: eDate,
       flActualidad: tPresent ? 1 : 0,
+      funciones: functions,
     };
     this.loaderService.showLoader();
     this.addInfoService.addWorkExp(body, this.selectedId).subscribe({
@@ -124,6 +127,7 @@ export class ExpPersCrdComponent implements OnInit {
           fechaInicio: this.editExpForm.get('editDate')!.value,
           fechaFin: this.editExpForm.get('editEndDate')!.value,
           flActualidad: this.editExpForm.get('tPresent')!.value ? 1 : 0,
+          functions: this.editExpForm.get('functions')!.value,
         },
         this.selectedId,
         this.currEditingWorkExp

@@ -17,10 +17,16 @@ public class UpdateSalaryReq {
     private Integer idCoin;
     @NotNull(message = "El Monto inicial es obligatorio y no puede ser nulo.")
     @Min(value = 0,  message = "El Monto inicial debe ser un numero positivo o cero.")
-    private Integer initialSalary;
+    private Integer initialSalaryPlanilla;
     @NotNull(message = "El Monto final es obligatorio y no puede ser nulo.")
     @Min(value = 0,  message = "El Monto final debe ser un numero positivo o cero.")
-    private Integer finalSalary;
+    private Integer finalSalaryPlanilla;
+    @NotNull(message = "El Monto inicial es obligatorio y no puede ser nulo.")
+    @Min(value = 0,  message = "El Monto inicial debe ser un numero positivo o cero.")
+    private Integer initialSalaryRxH;
+    @NotNull(message = "El Monto final es obligatorio y no puede ser nulo.")
+    @Min(value = 0,  message = "El Monto final debe ser un numero positivo o cero.")
+    private Integer finalSalaryRxH;
 
     @NotNull(message = "El Id del Talento es obligatorio y no puede ser nulo.")
     private Integer id;

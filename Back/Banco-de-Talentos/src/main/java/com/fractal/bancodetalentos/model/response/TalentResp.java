@@ -21,8 +21,10 @@ public class TalentResp {
     @Lob
     private byte[] profilePicture;
     private String description;
-    private Integer initialSalary;
-    private Integer finalSalary;
+    private Integer initialSalaryPlanilla;
+    private Integer finalSalaryPlanilla;
+    private Integer initialSalaryRxH;
+    private Integer finalSalaryRxH;
     private String phone;
     private String linkedin;
     private String github;

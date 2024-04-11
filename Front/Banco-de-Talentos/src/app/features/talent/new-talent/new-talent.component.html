@@ -598,6 +598,33 @@
                 formControlName="flagCurrently"
                 (onChange)="OnCurrentlyCheckboxChange(we)"
               ></p-checkbox>
+              <div class="h-7rem">
+                <h3 class="subHeaderText">Funciones</h3>
+                <textarea
+                  id="textFunctions"
+                  rows="5"
+                  cols="30"
+                  pInputTextarea
+                  placeholder="Digitar funciones"
+                  class="w-full h-5rem"
+                  formControlName="functions"
+                  [ngClass]="{
+                    'ng-invalid ng-dirty':
+                      we.get('functions')?.errors &&
+                      we.get('functions')?.touched
+                  }"
+                ></textarea>
+                <small
+                  id="textFunctions"
+                  class="hidden"
+                  [ngClass]="{
+                    'ng-invalid ng-dirty':
+                      we.get('functions')?.errors &&
+                      we.get('functions')?.touched
+                  }"
+                  >Este campo debe tener como mínimo 10 caracteres.
+                </small>
+              </div>
               <p-divider *ngIf="getWorkExperience().length > 1" align="center">
                 <button
                   pButton

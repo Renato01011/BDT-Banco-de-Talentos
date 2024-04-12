@@ -168,7 +168,6 @@
                 [options]="countries"
                 styleClass="w-full mb-2"
                 class="w-full mb-2"
-                placeholder="Codigo de País"
                 optionLabel="country"
                 [showClear]="false"
                 appendTo="body"
@@ -188,7 +187,8 @@
                   [style]="{
                     'border-radius': '0',
                     'border-top-right-radius': '0.375rem',
-                    'border-bottom-right-radius': '0.375rem'
+                    'border-bottom-right-radius': '0.375rem',
+                    'border-color': '#ef4444'
                   }"
                   class="w-full h-full"
                   styleClass="w-full h-full"
@@ -212,6 +212,9 @@
             <div class="pt-2">
               <h3 class="subHeaderText">Correo Electrónico</h3>
               <input
+                [style]="{
+                  'border-color': '#ef4444'
+                }"
                 pInputText
                 placeholder="Correo Electrónico"
                 class="w-full"

@@ -46,6 +46,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   fileUploaded: boolean = false;
   photoUploaded: boolean = false;
 
+
   newTalentForm = this.formBuilder.group({
     names: [
       '',
@@ -59,22 +60,22 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       '',
       [Validators.required, Validators.minLength(2), Validators.max(20)],
     ],
-    cv: [, [Validators.required]],
-    profilePicture: [, [Validators.required]],
+    cv: [,],
+    profilePicture: [,],
     country: [, [Validators.required]],
     city: [, [Validators.required]],
-    callingCode: [, [Validators.required]],
-    phone: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+    callingCode: [,],
+    phone: ['',],
+    email: ['', [Validators.email]],
     description: [
       '',
-      [Validators.required, Validators.minLength(10), Validators.max(200)],
+      [Validators.minLength(10), Validators.max(200)],
     ],
-    profile: [null, [Validators.required]],
+    profile: [null],
     availability: [null, [Validators.required, Validators.maxLength(50)]],
-    linkedin: ['', [Validators.required, Validators.pattern(linkedInRegEx)]],
-    github: ['', [Validators.required, Validators.pattern(gitHubRegEx)]],
-    coin: ['', [Validators.required]],
+    linkedin: ['', [Validators.pattern(linkedInRegEx)]],
+    github: ['', [Validators.pattern(gitHubRegEx)]],
+    coin: [''],
     initialAmountRxH: [,],
     finalAmountRxH: [,],
     initialAmountPlanilla: [,],
@@ -92,7 +93,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       this.formBuilder.group({
         name: [
           '',
-          [Validators.required, Validators.minLength(2), Validators.max(20)],
+          [Validators.minLength(2), Validators.max(20)],
         ],
       }),
     ]),
@@ -100,15 +101,15 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       this.formBuilder.group({
         firm: [
           '',
-          [Validators.required, Validators.minLength(2), Validators.max(20)],
+          [Validators.minLength(2), Validators.max(20)],
         ],
         job: [
           '',
-          [Validators.required, Validators.minLength(2), Validators.max(20)],
+          [Validators.minLength(2), Validators.max(20)],
         ],
         flagOnFractal: [false],
-        initialDate: [, [Validators.required]],
-        finalDate: [, [Validators.required]],
+        initialDate: [,],
+        finalDate: [,],
         flagCurrently: [false],
         functions: ['', [Validators.minLength(10), Validators.maxLength(1000)]],
       }),
@@ -117,27 +118,27 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       this.formBuilder.group({
         institution: [
           '',
-          [Validators.required, Validators.minLength(2), Validators.max(20)],
+          [Validators.minLength(2), Validators.max(20)],
         ],
         major: [
           '',
-          [Validators.required, Validators.minLength(2), Validators.max(20)],
+          [Validators.minLength(2), Validators.max(20)],
         ],
         degree: [
           '',
-          [Validators.required, Validators.minLength(2), Validators.max(20)],
+          [Validators.minLength(2), Validators.max(20)],
         ],
         flagOnFractal: [false],
-        initialDate: [, [Validators.required]],
-        finalDate: [, [Validators.required]],
+        initialDate: [,],
+        finalDate: [,],
         flagCurrently: [false],
       }),
     ]),
     knownLanguages: this.formBuilder.array([
       this.formBuilder.group({
-        language: [, [Validators.required]],
-        level: [, [Validators.required]],
-        starCount: [, [Validators.required]],
+        language: [,],
+        level: [,],
+        starCount: [,],
       }),
     ]),
   });
@@ -159,6 +160,29 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     this.checkLanguages();
     this.checkProficiency();
     this.OnCountryChangeGetData();
+    // console.log(this.countries, this.cities)
+    // Encuentra el objeto "PERU" en el array 'countries'
+    const peru = this.countries.find(country => country.country === 'PERU');
+
+    // Si el objeto "PERU" existe, establece el valor del control de formulario 'country'
+    if (peru) {
+      //Valores iniciales para country y callingCode
+      this.newTalentForm.controls['country'].setValue(peru);
+      this.newTalentForm.controls['callingCode'].setValue(peru);
+
+      // Obtiene las ciudades de "PERU"
+      this.masterService.getCities(peru.id).subscribe((cities) => {
+        this.cities = cities;
+
+        // Encuentra el objeto "LIMA" en el array 'cities'
+        const lima = this.cities.find(city => city.city === 'LIMA');
+
+        // Si el objeto "LIMA" existe, establece el valor del control de formulario 'city'
+        if (lima) {
+          this.newTalentForm.controls['city'].setValue(lima);
+        }
+      });
+    }
     // this.OnFinalSalaryInput();
     // this.OnInitialSalaryInput();
     this.OnAmountInput('initialAmountPlanilla', 'finalAmountPlanilla', 'Cantidad final de planilla no puede ser menor que cantidad inicial');
@@ -169,6 +193,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     this.masterService.getCountries().subscribe({
       next: (countries) => {
         this.countries = countries;
+
       },
     });
   }
@@ -667,9 +692,9 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         montoInicialPlanilla: this.newTalentForm.get('initialAmountPlanilla')?.value ?? 0,
         montoFinalPlanilla: this.newTalentForm.get('finalAmountPlanilla')?.value ?? 0,
         celular:
-          this.newTalentForm.get('callingCode')?.value.callingCode +
-          ' ' +
-          this.newTalentForm.get('phone')?.value,
+          this.newTalentForm.get('callingCode')?.value && this.newTalentForm.get('phone')?.value
+            ? this.newTalentForm.get('callingCode')?.value.callingCode + ' ' + this.newTalentForm.get('phone')?.value
+            : '',
         habilidadesTecnicas: this.getTechnicalAbilitiesArrayValues(),
         habilidadesBlandas: this.getSoftSkillsArrayValues(),
         experienciasLaborales: this.getWorkExperienceArrayValues(),
@@ -701,6 +726,18 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       this.ValidateAllFormFields(this.newTalentForm);
     }
   }
+
+  // testAddTalent() {
+  //   if (this.newTalentForm.valid) {
+  //     this.newTalentForm.get('callingCode')?.value && this.newTalentForm.get('phone')?.value
+  //       ? this.newTalentForm.get('callingCode')?.value.callingCode + ' ' + this.newTalentForm.get('phone')?.value
+  //       : '',
+  //       console.log(this.newTalentForm.value);
+  //   } else {
+  //     console.log('Formulario no válido');
+  //     this.ValidateAllFormFields(this.newTalentForm);
+  //   }
+  // }
 
   private get isCacheLanguagesEmpty(): boolean {
     return (

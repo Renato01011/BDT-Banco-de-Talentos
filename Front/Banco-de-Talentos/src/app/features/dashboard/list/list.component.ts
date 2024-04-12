@@ -52,6 +52,7 @@ export class ListComponent implements OnInit {
   public techSkills: TechnicalAbility[] = [];
   public workExp: WorkExperience[] = [];
   public feedbacks: Feedbacks[] = [];
+  public iconCoin: string = '';
 
   constructor(
     private filterService: FilterService,
@@ -117,6 +118,7 @@ export class ListComponent implements OnInit {
     this.description = talent.description;
     this.availability = talent.disponibilidad;
     this.feedbacks = talent.feedbacks;
+    this.iconCoin = talent.iconCoin;
   }
 
   public firstCall(talents: FilterResponse[]): void {
@@ -148,6 +150,7 @@ export class ListComponent implements OnInit {
       feedbacks,
       userListTalent,
       email,
+      iconCoin,
     } = talent;
 
     this.customTalent = {
@@ -169,6 +172,7 @@ export class ListComponent implements OnInit {
       userListTalent,
       resume,
       email,
+      iconCoin,
     };
   }
 

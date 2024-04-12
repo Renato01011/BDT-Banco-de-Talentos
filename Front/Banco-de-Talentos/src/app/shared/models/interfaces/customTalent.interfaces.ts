@@ -24,4 +24,5 @@ export interface CustomTalent {
   resume: Document;
 
   email: string;
+  iconCoin: string;
 }

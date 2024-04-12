@@ -11,4 +11,5 @@ export interface FilterResponse {
   location: string;
   avgRating: number;
   inUserList: number;
+  iconCoin: string;
 }

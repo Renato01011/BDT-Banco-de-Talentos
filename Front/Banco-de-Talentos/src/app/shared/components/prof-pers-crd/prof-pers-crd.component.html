@@ -139,14 +139,8 @@
                 (customTalent?.finalSalaryRxH ?? 0) > 0
               "
             >
-              RxH
-              {{
-                customTalent?.initialSalaryRxH
-                  | currency
-                    : (coin.id === 1 ? "S/. " : "$ ")
-                    : "symbol-narrow"
-                    : "1.0-0"
-              }}
+              RxH {{ customTalent?.iconCoin }}
+              {{ customTalent?.initialSalaryRxH }}
               -
               {{ customTalent?.finalSalaryRxH }}
               |
@@ -165,14 +159,8 @@
                 (customTalent?.finalSalaryPlanilla ?? 0) > 0
               "
             >
-              Planilla
-              {{
-                customTalent?.initialSalaryPlanilla
-                  | currency
-                    : (coin.id === 1 ? "S/. " : "$ ")
-                    : "symbol-narrow"
-                    : "1.0-0"
-              }}
+              Planilla {{ customTalent?.iconCoin }}
+              {{ customTalent?.initialSalaryPlanilla }}
               -
               {{ customTalent?.finalSalaryPlanilla }}
             </ng-container>

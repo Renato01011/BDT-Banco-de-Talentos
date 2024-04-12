@@ -27,6 +27,7 @@ export interface TalentResponse {
   feedbacks: Feedbacks[];
   userListTalent: UserListTalent;
   email: string;
+  iconCoin: string;
 }
 
 export interface Document {

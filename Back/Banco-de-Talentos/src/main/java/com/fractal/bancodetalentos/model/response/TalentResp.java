@@ -21,6 +21,7 @@ public class TalentResp {
     @Lob
     private byte[] profilePicture;
     private String description;
+    private String iconCoin;
     private Integer initialSalaryPlanilla;
     private Integer finalSalaryPlanilla;
     private Integer initialSalaryRxH;

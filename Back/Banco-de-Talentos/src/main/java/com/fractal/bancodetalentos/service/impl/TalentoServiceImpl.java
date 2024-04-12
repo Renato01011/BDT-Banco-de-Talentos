@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -308,6 +309,15 @@ public class TalentoServiceImpl implements TalentoService {
         storedProcedureQueryUserList.execute();
         List<Object[]> userListTalent = storedProcedureQueryUserList.getResultList();
 
+        // -- Icon coin--
+        StoredProcedureQuery storedProcedureQueryCoinIcon = entityManager
+                .createStoredProcedureQuery("SP_GET_COIN_ICON")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
+                .setParameter(1, id);
+
+        storedProcedureQueryCoinIcon.execute();
+        List<String> coinIcon = storedProcedureQueryCoinIcon.getResultList();
+
         // -- -- Filling Response -- --
         TalentResp talentResp = new TalentResp();
 
@@ -363,7 +373,7 @@ public class TalentoServiceImpl implements TalentoService {
             workExperienceTemp.setIntialDate((Date) objects[3]);
             workExperienceTemp.setFinalDate((Date) objects[4]);
             workExperienceTemp.setFlActualidad((Integer) objects[5]);
-            workExperienceTemp.setFunctions((String) objects[6]);
+            //workExperienceTemp.setFunctions((String) objects[6]);
             workExperiencesList.add(workExperienceTemp);
         }
         talentResp.setWorkExperiences(workExperiencesList);
@@ -451,6 +461,13 @@ public class TalentoServiceImpl implements TalentoService {
             talentResp.setUserListTalent(userListTalentResp);
         } else {
             talentResp.setUserListTalent(null);
+        }
+
+        // -- Coin Icon --
+        if(!coinIcon.isEmpty() && coinIcon!=null){
+            for(String coin : coinIcon){
+                talentResp.setIconCoin(coin);
+            }
         }
 
         return talentResp;

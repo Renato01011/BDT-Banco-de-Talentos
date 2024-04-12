@@ -731,6 +731,7 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
 
   updateContactInfo() {
     if (!this.onSaveForm(this.contactInfoForm)) return;
+    this.loaderService.showLoader();
     this.editInfoService
       .updateContactInfo({
         id: this.selectedId!,
@@ -749,6 +750,7 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
             resp.message
           );
           this.talentId.emit(this.selectedId);
+          this.loaderService.hideLoader();
         },
       });
   }

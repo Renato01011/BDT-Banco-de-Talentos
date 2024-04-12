@@ -19,6 +19,7 @@ public class FilterTalentoResp {
     private String nameJobTitle;
     private Integer initialSalaryPlanilla;
     private Integer finalSalaryPlanilla;
+    private String iconCoin;
     private Integer initialSalaryRxH;
     private Integer finalSalaryRxH;
     private String location;

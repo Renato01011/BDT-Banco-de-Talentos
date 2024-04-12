@@ -60,6 +60,7 @@ public class FilterServiceImpl implements FilterService {
             filterTalentResp.setLocation((String) objects[7]);
             filterTalentResp.setAvgRating((Integer) objects[8]);
             filterTalentResp.setInUserList((Integer) objects[9]);
+            filterTalentResp.setIconCoin((String) objects[10]);
             respList.add(filterTalentResp);
         }
         return respList;

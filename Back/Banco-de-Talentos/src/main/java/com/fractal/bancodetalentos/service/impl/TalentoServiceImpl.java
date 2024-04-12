@@ -373,7 +373,7 @@ public class TalentoServiceImpl implements TalentoService {
             workExperienceTemp.setIntialDate((Date) objects[3]);
             workExperienceTemp.setFinalDate((Date) objects[4]);
             workExperienceTemp.setFlActualidad((Integer) objects[5]);
-            //workExperienceTemp.setFunctions((String) objects[6]);
+            workExperienceTemp.setFunctions((String) objects[6]);
             workExperiencesList.add(workExperienceTemp);
         }
         talentResp.setWorkExperiences(workExperiencesList);

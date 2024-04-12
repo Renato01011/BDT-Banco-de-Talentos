@@ -45,7 +45,7 @@ public class ExperienciaLaboralServiceImpl implements ExperienciaLaboralService 
                 .setParameter(4, laborales.getFechaInicio())
                 .setParameter(5, laborales.getFechaFin())
                 .setParameter(6, laborales.getFlActualidad())
-                .setParameter(7, laborales.getFuntions());
+                .setParameter(7, laborales.getFunctions());
         storedProcedureQueryExperienciasLaborales.execute();
         Map<String, String> resp = new HashMap<>();
         resp.put("id", String.valueOf(id));

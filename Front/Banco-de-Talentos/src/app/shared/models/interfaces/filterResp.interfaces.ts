@@ -4,8 +4,10 @@ export interface FilterResponse {
   id: number;
   image: string;
   nameJobTitle: string;
-  initialSalary: number;
-  finalSalary: number;
+  initialSalaryPlanilla: number;
+  finalSalaryPlanilla: number;
+  initialSalaryRxH: number;
+  finalSalaryRxH: number;
   location: string;
   avgRating: number;
   inUserList: number;

@@ -367,6 +367,7 @@
                 </div>
               </div>
             </div>
+            <p class="subHeaderText2">Monto por RxH</p>
             <div class="formgrid grid">
               <div class="field col">
                 <p class="subHeaderText">Monto Inicial</p>
@@ -374,9 +375,9 @@
                   class="w-full"
                   styleClass="w-full"
                   placeholder="1000"
-                  formControlName="initialAmount"
+                  formControlName="initialAmountRxH"
                   [ngClass]="{
-                    'ng-invalid ng-dirty': isValidField('initialAmount')
+                    'ng-invalid ng-dirty': isValidField('initialAmountRxH')
                   }"
                 ></p-inputNumber>
               </div>
@@ -386,9 +387,36 @@
                   class="w-full"
                   styleClass="w-full"
                   placeholder="1000"
-                  formControlName="finalAmount"
+                  formControlName="finalAmountRxH"
                   [ngClass]="{
-                    'ng-invalid ng-dirty': isValidField('finalAmount')
+                    'ng-invalid ng-dirty': isValidField('finalAmountRxH')
+                  }"
+                ></p-inputNumber>
+              </div>
+            </div>
+            <p class="subHeaderText2">Banda por Planilla</p>
+            <div class="formgrid grid">
+              <div class="field col">
+                <p class="subHeaderText">Monto Inicial</p>
+                <p-inputNumber
+                  class="w-full"
+                  styleClass="w-full"
+                  placeholder="1000"
+                  formControlName="initialAmountPlanilla"
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': isValidField('initialAmountPlanilla')
+                  }"
+                ></p-inputNumber>
+              </div>
+              <div class="field col">
+                <p class="subHeaderText">Monto Final</p>
+                <p-inputNumber
+                  class="w-full"
+                  styleClass="w-full"
+                  placeholder="1000"
+                  formControlName="finalAmountPlanilla"
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': isValidField('finalAmountPlanilla')
                   }"
                 ></p-inputNumber>
               </div>

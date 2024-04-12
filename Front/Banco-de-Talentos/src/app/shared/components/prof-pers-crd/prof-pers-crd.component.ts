@@ -94,15 +94,22 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
     github: ['', [Validators.required, Validators.pattern(gitHubRegEx)]],
   });
 
+  //Tocar esto
   public salaryForm: FormGroup = this.fb.group(
     {
       currency: ['', [Validators.required]],
-      iAmount: ['', [Validators.required]],
-      fAmount: ['', [Validators.required]],
+      iAmountRxH: [''],
+      fAmountRxH: [''],
+      iAmountPlanilla: [''],
+      fAmountPlanilla: [''],
     },
     {
       validators: [
-        this.fValidator.isFieldOneLessFieldTwo('iAmount', 'fAmount'),
+        this.fValidator.isFieldOneLessFieldTwo('iAmountRxH', 'fAmountRxH'),
+        this.fValidator.isFieldOneLessFieldTwo(
+          'iAmountPlanilla',
+          'fAmountPlanilla'
+        ),
       ],
     }
   );
@@ -485,7 +492,7 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
         },
       });
   }
-
+  //Tocar esto
   public onSveSalary() {
     if (!this.onSaveForm(this.salaryForm)) return;
     if (!this.selectedId) return;
@@ -494,8 +501,12 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
       .editTalentSalary(
         {
           idCoin: this.salaryForm.get('currency')!.value,
-          initialSalary: this.salaryForm.get('iAmount')!.value,
-          finalSalary: this.salaryForm.get('fAmount')!.value,
+          initialSalaryRxH: this.salaryForm.get('iAmountRxH')!.value ?? 0,
+          finalSalaryRxH: this.salaryForm.get('fAmountRxH')!.value ?? 0,
+          initialSalaryPlanilla:
+            this.salaryForm.get('iAmountPlanilla')!.value ?? 0,
+          finalSalaryPlanilla:
+            this.salaryForm.get('fAmountPlanilla')!.value ?? 0,
         },
         this.selectedId
       )
@@ -563,12 +574,21 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
     this.editSocialMediaDialog = true;
   }
 
+  //Tocar esto
   public openEditSalaryDialog() {
     this.checkCurrencies();
     const currency = this.coin.id;
-    const iAmount = this.customTalent?.initialSalary ?? '';
-    const fAmount = this.customTalent?.finalSalary ?? '';
-    this.salaryForm.reset({ currency, iAmount, fAmount });
+    const iAmountRxH = this.customTalent?.initialSalaryRxH ?? '';
+    const fAmountRxH = this.customTalent?.finalSalaryRxH ?? '';
+    const iAmountPlanilla = this.customTalent?.initialSalaryPlanilla ?? '';
+    const fAmountPlanilla = this.customTalent?.finalSalaryPlanilla ?? '';
+    this.salaryForm.reset({
+      currency,
+      iAmountRxH,
+      fAmountRxH,
+      iAmountPlanilla,
+      fAmountPlanilla,
+    });
     this.editSalaryDialog = true;
   }
 
@@ -691,30 +711,22 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
 
   //
   contactInfoDialog: boolean = false;
-
-  phoneNumber: string = '';
-  email: string = '';
+  phonePrefix!: string;
 
   ngOnChanges(): void {
     if (this.customTalent) {
-      this.initContactInfo();
+      this.resetContactInfoForm();
+      this.phonePrefix = this.customTalent.phone.split(' ')[0];
     }
   }
 
-  initContactInfo(): void {
-    this.phoneNumber = this.customTalent?.phone ?? '';
-    this.email = this.customTalent?.email ?? '';
-  }
-
   public contactInfoForm: FormGroup = this.fb.group({
-    email: [this.email, [Validators.required, Validators.email]],
-    phone: [this.phoneNumber.split(' ')[1], [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    phone: ['', [Validators.required]],
   });
 
   openContactInfoDialog() {
     this.contactInfoDialog = true;
-    console.log(this.phoneNumber.split(' ')[1]);
-    console.log(this.email);
   }
 
   updateContactInfo() {
@@ -746,12 +758,15 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
   }
 
   hideContactInfoDialog() {
-    //this.contactInfoForm.reset();
+    this.resetContactInfoForm();
     this.contactInfoDialog = false;
   }
 
-  phoneToCopy: string = '';
-  emailToCopy: string = '';
+  resetContactInfoForm() {
+    const phone = this.customTalent!.phone.split(' ')[1];
+    const email = this.customTalent!.email;
+    this.contactInfoForm.reset({ email, phone });
+  }
 
   copyEmail(input: HTMLInputElement) {
     input.select();

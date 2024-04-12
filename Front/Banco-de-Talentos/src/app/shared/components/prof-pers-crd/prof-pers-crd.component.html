@@ -133,12 +133,62 @@
             {{ countryCity.country | titlecase }}
           </span>
           <span class="text-500 text-xs sm:text-sm font-light">
-            <i class="pi pi-dollar text-xs sm:text-sm text-800"></i>
-            {{ customTalent?.initialSalary }} - {{ customTalent?.finalSalary }}
+            <ng-container
+              *ngIf="
+                (customTalent?.initialSalaryRxH ?? 0) > 0 ||
+                (customTalent?.finalSalaryRxH ?? 0) > 0
+              "
+            >
+              RxH
+              {{
+                customTalent?.initialSalaryRxH
+                  | currency
+                    : (coin.id === 1 ? "S/. " : "$ ")
+                    : "symbol-narrow"
+                    : "1.0-0"
+              }}
+              -
+              {{ customTalent?.finalSalaryRxH }}
+              |
+            </ng-container>
+            <ng-container
+              *ngIf="
+                (customTalent?.initialSalaryRxH ?? 0) === 0 &&
+                (customTalent?.finalSalaryRxH ?? 0) === 0
+              "
+            >
+              RxH no cuenta con rango salarial |
+            </ng-container>
+            <ng-container
+              *ngIf="
+                (customTalent?.initialSalaryPlanilla ?? 0) > 0 ||
+                (customTalent?.finalSalaryPlanilla ?? 0) > 0
+              "
+            >
+              Planilla
+              {{
+                customTalent?.initialSalaryPlanilla
+                  | currency
+                    : (coin.id === 1 ? "S/. " : "$ ")
+                    : "symbol-narrow"
+                    : "1.0-0"
+              }}
+              -
+              {{ customTalent?.finalSalaryPlanilla }}
+            </ng-container>
+            <ng-container
+              *ngIf="
+                (customTalent?.initialSalaryPlanilla ?? 0) === 0 &&
+                (customTalent?.finalSalaryPlanilla ?? 0) === 0
+              "
+            >
+              Planilla no cuenta con rango salarial
+            </ng-container>
           </span>
           <button
             type="button"
             class="mx-1 back-icon-btn"
+            style="z-index: 20"
             *ngIf="isRecruiter"
             (click)="openEditSalaryDialog()"
           >
@@ -363,6 +413,71 @@
           </div>
         </div>
       </div>
+      <div class="flex align-items-center w-12 pb-3">
+        <span class="text-sm md:text-base font-normal text-500">
+          Monto por RxH
+        </span>
+      </div>
+      <div class="w-12 flex flex-wrap align-items-center">
+        <div
+          class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pr-3"
+        >
+          <div class="w-12 flex flex-column justify-content-start mb-2">
+            <label
+              for="inputNumberRxh"
+              class="block text-left mb-2 font-medium text-bluegray-800"
+              >Monto Inicial</label
+            >
+            <p-inputNumber
+              inputId="inputNumberRxh"
+              class="w-full"
+              styleClass="w-full"
+              [min]="0"
+              [max]="10000"
+              formControlName="iAmountRxH"
+            ></p-inputNumber>
+            <small
+              id="inputNumberRxh"
+              class="hidden"
+              [ngClass]="{
+                'p-error block text-left': isValidSalaryField('iAmountRxH')
+              }"
+              >Este campo no puede estar vacío.</small
+            >
+          </div>
+        </div>
+        <div
+          class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pl-3"
+        >
+          <div class="w-12 flex flex-column justify-content-start mb-2">
+            <label
+              for="inputNumberRxh2"
+              class="block text-left mb-2 font-medium text-bluegray-800"
+              >Monto Final</label
+            >
+            <p-inputNumber
+              inputId="inputNumberRxh2"
+              styleClass="w-12"
+              [min]="0"
+              [max]="10000"
+              formControlName="fAmountRxH"
+            ></p-inputNumber>
+            <small
+              id="inputNumberRxh2"
+              class="hidden"
+              [ngClass]="{
+                'p-error block text-left': isValidSalaryField('fAmountRxH')
+              }"
+              >{{ getErrFnAmountField("fAmountRxH") }}</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="flex align-items-center w-12 pb-3">
+        <span class="text-sm md:text-base font-normal text-500">
+          Monto por planilla
+        </span>
+      </div>
       <div class="w-12 flex flex-wrap align-items-center">
         <div
           class="w-12 sm:w-6 flex flex-column align-items-center py-2 md:pr-3"
@@ -379,13 +494,13 @@
               styleClass="w-full"
               [min]="0"
               [max]="10000"
-              formControlName="iAmount"
+              formControlName="iAmountPlanilla"
             ></p-inputNumber>
             <small
               id="inputNumber"
               class="hidden"
               [ngClass]="{
-                'p-error block text-left': isValidSalaryField('iAmount')
+                'p-error block text-left': isValidSalaryField('iAmountPlanilla')
               }"
               >Este campo no puede estar vacío.</small
             >
@@ -405,15 +520,15 @@
               styleClass="w-12"
               [min]="0"
               [max]="10000"
-              formControlName="fAmount"
+              formControlName="fAmountPlanilla"
             ></p-inputNumber>
             <small
               id="inputNumber2"
               class="hidden"
               [ngClass]="{
-                'p-error block text-left': isValidSalaryField('fAmount')
+                'p-error block text-left': isValidSalaryField('fAmountPlanilla')
               }"
-              >{{ getErrFnAmountField("fAmount") }}</small
+              >{{ getErrFnAmountField("fAmountPlanilla") }}</small
             >
           </div>
         </div>
@@ -715,7 +830,7 @@
       [formGroup]="contactInfoForm"
       (ngSubmit)="updateContactInfo()"
     >
-      <div class="w-12 flex flex-column justify-content-start mb-2">
+      <div class="w-12 flex flex-column justify-content-start mb-4">
         <div class="pt-2">
           <label
             for="inputLink"
@@ -730,14 +845,13 @@
               formControlName="email"
               [ngClass]="{ 'ng-invalid ng-dirty': isValidField('email') }"
               #inputEmail
-              [(ngModel)]="email"
             />
-            <span class="p-inputgroup-addon w-5rem pr-0"
-              ><p-button
-                label="Copiar"
-                (click)="copyEmail(inputEmail)"
-              ></p-button
-            ></span>
+            <p-button
+              class="ml-2"
+              icon="pi pi-clone"
+              (click)="copyEmail(inputEmail)"
+            >
+            </p-button>
           </div>
         </div>
         <div class="pt-2">
@@ -748,7 +862,7 @@
           >
           <div class="h-3rem p-inputgroup">
             <span class="p-inputgroup-addon w-5rem pr-0">{{
-              phoneNumber.split(" ")[0]
+              phonePrefix
             }}</span>
             <p-inputMask
               [style]="{
@@ -763,18 +877,17 @@
               formControlName="phone"
               [ngClass]="{ 'ng-invalid ng-dirty': isValidField('phone') }"
               #inputPhone
-              [(ngModel)]="phoneNumber.split(' ')[1]"
             ></p-inputMask>
-            <span class="p-inputgroup-addon w-5rem pr-0"
-              ><p-button
-                label="Copiar"
-                (click)="copyPhone(inputPhone)"
-              ></p-button
-            ></span>
+            <p-button
+              class="ml-2"
+              icon="pi pi-clone"
+              (click)="copyPhone(inputPhone)"
+            >
+            </p-button>
           </div>
         </div>
       </div>
-      <div class="w-12 flex flex-wrap pt-3">
+      <div class="w-12 flex flex-wrap pt-4" *ngIf="isRecruiter">
         <div
           class="w-6 p-2 pl-0 flex align-items-center justify-content-center"
         >

@@ -75,8 +75,10 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     linkedin: ['', [Validators.required, Validators.pattern(linkedInRegEx)]],
     github: ['', [Validators.required, Validators.pattern(gitHubRegEx)]],
     coin: ['', [Validators.required]],
-    initialAmount: [, [Validators.required]],
-    finalAmount: [, [Validators.required]],
+    initialAmountRxH: [,],
+    finalAmountRxH: [,],
+    initialAmountPlanilla: [,],
+    finalAmountPlanilla: [,],
     technicalAbilities: this.formBuilder.array([
       this.formBuilder.group({
         name: [
@@ -148,7 +150,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     private talentService: TalentService,
     private loaderService: LoaderService,
     private toastService: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.checkCurrencies();
@@ -157,8 +159,10 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     this.checkLanguages();
     this.checkProficiency();
     this.OnCountryChangeGetData();
-    this.OnFinalSalaryInput();
-    this.OnInitialSalaryInput();
+    // this.OnFinalSalaryInput();
+    // this.OnInitialSalaryInput();
+    this.OnAmountInput('initialAmountPlanilla', 'finalAmountPlanilla', 'Cantidad final de planilla no puede ser menor que cantidad inicial');
+    this.OnAmountInput('initialAmountRxH', 'finalAmountRxH', 'Cantidad final de RxH no puede ser menor que cantidad inicial');
   }
 
   private getCountries(): void {
@@ -210,7 +214,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   AddTechnicalAbility() {
     (this.newTalentForm.get('technicalAbilities') as FormArray).push(
@@ -543,18 +547,36 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     formGroup.controls['starCount'].setValue(null);
   }
 
+  OnAmountInput(initialField: string, finalField: string, errorMessage: string) {
+    this.newTalentForm.get(initialField)!.valueChanges.subscribe((initialValue: number) => {
+      const finalValue = this.newTalentForm.get(finalField)?.value;
+      if (initialValue != null && finalValue != null && initialValue > finalValue) {
+        this.newTalentForm.controls[initialField].setValue(null);
+        this.toastService.addProperties('error', 'Ocurrio un error', errorMessage);
+      }
+    });
+
+    this.newTalentForm.get(finalField)!.valueChanges.subscribe((finalValue: number) => {
+      const initialValue = this.newTalentForm.get(initialField)?.value;
+      if (initialValue != null && finalValue != null && initialValue > finalValue) {
+        this.newTalentForm.controls[finalField].setValue(null);
+        this.toastService.addProperties('error', 'Ocurrio un error', errorMessage);
+      }
+    });
+  }
+
   OnInitialSalaryInput() {
     this.newTalentForm
-      .get('initialAmount')!
+      .get('initialAmountPlanilla')!
       .valueChanges.subscribe((value: number) => {
-        if (this.newTalentForm.get('initialAmount')?.value == null) {
+        if (this.newTalentForm.get('initialAmountPlanilla')?.value == null) {
           return;
         }
         if (
-          this.newTalentForm.get('finalAmount')?.value != null &&
-          value > this.newTalentForm.get('finalAmount')?.value
+          this.newTalentForm.get('finalAmountPlanilla')?.value != null &&
+          value > this.newTalentForm.get('finalAmountPlanilla')?.value
         ) {
-          this.newTalentForm.controls['initialAmount'].setValue(null);
+          this.newTalentForm.controls['initialAmountPlanilla'].setValue(null);
           this.toastService.addProperties(
             'error',
             'Ocurrio un error',
@@ -566,16 +588,16 @@ export class NewTalentComponent implements OnInit, OnDestroy {
 
   OnFinalSalaryInput() {
     this.newTalentForm
-      .get('finalAmount')!
+      .get('finalAmountPlanilla')!
       .valueChanges.subscribe((value: number) => {
-        if (this.newTalentForm.get('finalAmount')?.value == null) {
+        if (this.newTalentForm.get('finalAmountPlanilla')?.value == null) {
           return;
         }
         if (
-          this.newTalentForm.get('initialAmount')?.value != null &&
-          this.newTalentForm.get('initialAmount')?.value > value
+          this.newTalentForm.get('initialAmountPlanilla')?.value != null &&
+          this.newTalentForm.get('initialAmountPlanilla')?.value > value
         ) {
-          this.newTalentForm.controls['finalAmount'].setValue(null);
+          this.newTalentForm.controls['finalAmountPlanilla'].setValue(null);
           this.toastService.addProperties(
             'error',
             'Ocurrio un error',
@@ -640,8 +662,10 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         linkedin: this.newTalentForm.get('linkedin')?.value,
         github: this.newTalentForm.get('github')?.value,
         idTipoMoneda: this.newTalentForm.get('coin')?.value.id,
-        montoInicial: this.newTalentForm.get('initialAmount')?.value,
-        montoFinal: this.newTalentForm.get('finalAmount')?.value,
+        montoInicialRxH: this.newTalentForm.get('initialAmountRxH')?.value ?? 0,
+        montoFinalRxh: this.newTalentForm.get('finalAmountRxH')?.value ?? 0,
+        montoInicialPlanilla: this.newTalentForm.get('initialAmountPlanilla')?.value ?? 0,
+        montoFinalPlanilla: this.newTalentForm.get('finalAmountPlanilla')?.value ?? 0,
         celular:
           this.newTalentForm.get('callingCode')?.value.callingCode +
           ' ' +
@@ -707,7 +731,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     return (
       !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
       this.masterService.cacheStorage.byLangProficiency.proficiencies.length ===
-        0
+      0
     );
   }
 

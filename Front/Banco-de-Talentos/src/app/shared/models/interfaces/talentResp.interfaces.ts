@@ -8,8 +8,10 @@ export interface TalentResponse {
   profilePicture: string;
   description: string;
   disponibilidad: string;
-  initialSalary: number;
-  finalSalary: number;
+  initialSalaryRxH: number;
+  finalSalaryRxH: number;
+  initialSalaryPlanilla: number;
+  finalSalaryPlanilla: number;
   phone: string;
   linkedin: string;
   github: string;
@@ -82,6 +84,7 @@ export interface WorkExperience {
   intialDate: string;
   finalDate: string;
   flActualidad: number;
+  functions: string;
 }
 
 export interface Feedbacks {

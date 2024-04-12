@@ -83,7 +83,7 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
     private utilsService: UtilsService,
     private confirmationService: ConfirmationService,
     private loaderService: LoaderService
-  ) { }
+  ) {}
 
   public profileForm: FormGroup = this.fb.group({
     img: ['', [Validators.required]],
@@ -106,7 +106,10 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
     {
       validators: [
         this.fValidator.isFieldOneLessFieldTwo('iAmountRxH', 'fAmountRxH'),
-        this.fValidator.isFieldOneLessFieldTwo('iAmountPlanilla', 'fAmountPlanilla')
+        this.fValidator.isFieldOneLessFieldTwo(
+          'iAmountPlanilla',
+          'fAmountPlanilla'
+        ),
       ],
     }
   );
@@ -500,8 +503,10 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
           idCoin: this.salaryForm.get('currency')!.value,
           initialSalaryRxH: this.salaryForm.get('iAmountRxH')!.value ?? 0,
           finalSalaryRxH: this.salaryForm.get('fAmountRxH')!.value ?? 0,
-          initialSalaryPlanilla: this.salaryForm.get('iAmountPlanilla')!.value ?? 0,
-          finalSalaryPlanilla: this.salaryForm.get('fAmountPlanilla')!.value ?? 0,
+          initialSalaryPlanilla:
+            this.salaryForm.get('iAmountPlanilla')!.value ?? 0,
+          finalSalaryPlanilla:
+            this.salaryForm.get('fAmountPlanilla')!.value ?? 0,
         },
         this.selectedId
       )
@@ -577,7 +582,13 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
     const fAmountRxH = this.customTalent?.finalSalaryRxH ?? '';
     const iAmountPlanilla = this.customTalent?.initialSalaryPlanilla ?? '';
     const fAmountPlanilla = this.customTalent?.finalSalaryPlanilla ?? '';
-    this.salaryForm.reset({ currency, iAmountRxH, fAmountRxH, iAmountPlanilla, fAmountPlanilla });
+    this.salaryForm.reset({
+      currency,
+      iAmountRxH,
+      fAmountRxH,
+      iAmountPlanilla,
+      fAmountPlanilla,
+    });
     this.editSalaryDialog = true;
   }
 
@@ -700,30 +711,22 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
 
   //
   contactInfoDialog: boolean = false;
-
-  phoneNumber: string = '';
-  email: string = '';
+  phonePrefix!: string;
 
   ngOnChanges(): void {
     if (this.customTalent) {
-      this.initContactInfo();
+      this.resetContactInfoForm();
+      this.phonePrefix = this.customTalent.phone.split(' ')[0];
     }
   }
 
-  initContactInfo(): void {
-    this.phoneNumber = this.customTalent?.phone ?? '';
-    this.email = this.customTalent?.email ?? '';
-  }
-
   public contactInfoForm: FormGroup = this.fb.group({
-    email: [this.email, [Validators.required, Validators.email]],
-    phone: [this.phoneNumber.split(' ')[1], [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    phone: ['', [Validators.required]],
   });
 
   openContactInfoDialog() {
     this.contactInfoDialog = true;
-    console.log(this.phoneNumber.split(' ')[1]);
-    console.log(this.email);
   }
 
   updateContactInfo() {
@@ -755,12 +758,15 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
   }
 
   hideContactInfoDialog() {
-    //this.contactInfoForm.reset();
+    this.resetContactInfoForm();
     this.contactInfoDialog = false;
   }
 
-  phoneToCopy: string = '';
-  emailToCopy: string = '';
+  resetContactInfoForm() {
+    const phone = this.customTalent!.phone.split(' ')[1];
+    const email = this.customTalent!.email;
+    this.contactInfoForm.reset({ email, phone });
+  }
 
   copyEmail(input: HTMLInputElement) {
     input.select();

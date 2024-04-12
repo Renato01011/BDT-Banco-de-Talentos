@@ -845,14 +845,13 @@
               formControlName="email"
               [ngClass]="{ 'ng-invalid ng-dirty': isValidField('email') }"
               #inputEmail
-              [(ngModel)]="email"
             />
-            <span class="p-inputgroup-addon w-5rem pr-0"
-              ><p-button
-                label="Copiar"
-                (click)="copyEmail(inputEmail)"
-              ></p-button
-            ></span>
+            <p-button
+              class="ml-2"
+              icon="pi pi-clone"
+              (click)="copyEmail(inputEmail)"
+            >
+            </p-button>
           </div>
         </div>
         <div class="pt-2">
@@ -863,7 +862,7 @@
           >
           <div class="h-3rem p-inputgroup">
             <span class="p-inputgroup-addon w-5rem pr-0">{{
-              phoneNumber.split(" ")[0]
+              phonePrefix
             }}</span>
             <p-inputMask
               [style]="{
@@ -878,14 +877,13 @@
               formControlName="phone"
               [ngClass]="{ 'ng-invalid ng-dirty': isValidField('phone') }"
               #inputPhone
-              [(ngModel)]="phoneNumber.split(' ')[1]"
             ></p-inputMask>
-            <span class="p-inputgroup-addon w-5rem pr-0"
-              ><p-button
-                label="Copiar"
-                (click)="copyPhone(inputPhone)"
-              ></p-button
-            ></span>
+            <p-button
+              class="ml-2"
+              icon="pi pi-clone"
+              (click)="copyPhone(inputPhone)"
+            >
+            </p-button>
           </div>
         </div>
       </div>

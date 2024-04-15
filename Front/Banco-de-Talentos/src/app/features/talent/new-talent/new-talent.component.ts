@@ -686,7 +686,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         idCiudad: this.newTalentForm.get('city')?.value.id,
         linkedin: this.newTalentForm.get('linkedin')?.value,
         github: this.newTalentForm.get('github')?.value,
-        idTipoMoneda: this.newTalentForm.get('coin')?.value.id,
+        idTipoMoneda: this.newTalentForm.get('coin')?.value.id || 3,
         montoInicialRxH: this.newTalentForm.get('initialAmountRxH')?.value ?? 0,
         montoFinalRxh: this.newTalentForm.get('finalAmountRxH')?.value ?? 0,
         montoInicialPlanilla: this.newTalentForm.get('initialAmountPlanilla')?.value ?? 0,

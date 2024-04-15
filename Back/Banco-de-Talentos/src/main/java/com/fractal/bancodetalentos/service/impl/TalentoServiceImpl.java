@@ -17,6 +17,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fractal.bancodetalentos.util.ValidationUtil.setNonNullValue;
+
 @Service
 @RequiredArgsConstructor
 public class TalentoServiceImpl implements TalentoService {
@@ -66,7 +68,7 @@ public class TalentoServiceImpl implements TalentoService {
         Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(16);
 
         // -- Habilidades Tecnicas --
-        if (!newTalentRequest.getHabilidadesTecnicas().isEmpty()) {
+        if (newTalentRequest.getHabilidadesTecnicas()!=null && !newTalentRequest.getHabilidadesTecnicas().isEmpty()) {
             for (HabilidadesTecnicasDTO habilidadesTecnicasDTO : newTalentRequest.getHabilidadesTecnicas()) {
                 StoredProcedureQuery storedProcedureQueryHabilidadTecnica = entityManager
                         .createStoredProcedureQuery("SP_ADD_TECHNICAL_ABILITY")
@@ -81,7 +83,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Habilidades Blandas --
-        if (!newTalentRequest.getHabilidadesBlandas().isEmpty()) {
+        if (newTalentRequest.getHabilidadesBlandas()!=null && !newTalentRequest.getHabilidadesBlandas().isEmpty()) {
             for (HabilidadesBlandasDTO habilidadesBlandasDTO : newTalentRequest.getHabilidadesBlandas()) {
                 StoredProcedureQuery storedProcedureQueryHabilidadBlanda = entityManager
                         .createStoredProcedureQuery("SP_ADD_SOFT_SKILL")
@@ -94,7 +96,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Experiencias Laborales --
-        if (!newTalentRequest.getExperienciasLaborales().isEmpty()) {
+        if (newTalentRequest.getExperienciasLaborales()!=null && !newTalentRequest.getExperienciasLaborales().isEmpty()) {
             for (ExperienciasLaboralesDTO experienciasLaboralesDTO : newTalentRequest.getExperienciasLaborales()) {
                 StoredProcedureQuery storedProcedureQueryExperienciasLaborales = entityManager
                         .createStoredProcedureQuery("SP_ADD_WORK_EXPERIENCE")
@@ -117,7 +119,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Experiencias Educativas --
-        if (!newTalentRequest.getExperienciasEducativas().isEmpty()) {
+        if (newTalentRequest.getExperienciasEducativas()!=null && !newTalentRequest.getExperienciasEducativas().isEmpty()) {
             for (ExperienciasEducativasDTO experienciasEducativasDTO : newTalentRequest.getExperienciasEducativas()) {
                 StoredProcedureQuery storedProcedureQueryExperienciasEducativas = entityManager
                         .createStoredProcedureQuery("SP_ADD_EDUCATIONAL_EXPERIENCE")
@@ -140,7 +142,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Idiomas --
-        if (!newTalentRequest.getIdiomas().isEmpty()) {
+        if (newTalentRequest.getIdiomas()!=null && !newTalentRequest.getIdiomas().isEmpty()) {
             for (IdiomasDTO idioma : newTalentRequest.getIdiomas()) {
                 StoredProcedureQuery storedProcedureQueryIdioma = entityManager
                         .createStoredProcedureQuery("SP_ADD_LANGUAGE")
@@ -157,7 +159,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Documentos --
-        if (!newTalentRequest.getDocumentos().isEmpty()) {
+        if (newTalentRequest.getDocumentos()!=null && !newTalentRequest.getDocumentos().isEmpty()) {
             for (DocumentoDTO documentoDTO : newTalentRequest.getDocumentos()) {
                 StoredProcedureQuery storedProcedureDocumentos = entityManager
                         .createStoredProcedureQuery("SP_ADD_FILES")
@@ -315,33 +317,33 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- General Info --
         for (Object[] objects : generalInfo) {
-            talentResp.setIdTalent((Integer) objects[0]);
-            talentResp.setName((String) objects[1]);
-            talentResp.setSurname((String) objects[2]);
-            talentResp.setSecondSurname((String) objects[3]);
-            talentResp.setProfilePicture((byte[]) objects[4]);
-            talentResp.setDescription((String) objects[5]);
-            talentResp.setInitialSalaryPlanilla((Integer) objects[6]);
-            talentResp.setFinalSalaryPlanilla((Integer) objects[7]);
-            talentResp.setPhone((String) objects[8]);
-            talentResp.setLinkedin((String) objects[9]);
-            talentResp.setGithub((String) objects[10]);
-            talentResp.setCreated((Date) objects[11]);
-            talentResp.setAvgRating((Integer) objects[12]);
-            talentResp.setDisponibilidad((String) objects[13]);
-            talentResp.setEmail((String) objects[14]);
-            talentResp.setInitialSalaryRxH((Integer) objects[15]);
-            talentResp.setFinalSalaryRxH((Integer) objects[16]);
-            talentResp.setPuesto((String) objects[17]);
+            setNonNullValue(objects[0], talentResp::setIdTalent);
+            setNonNullValue(objects[1], talentResp::setName);
+            setNonNullValue(objects[2], talentResp::setSurname);
+            setNonNullValue(objects[3], talentResp::setSecondSurname);
+            setNonNullValue(objects[4], talentResp::setProfilePicture);
+            setNonNullValue(objects[5], talentResp::setDescription);
+            setNonNullValue(objects[6], talentResp::setInitialSalaryPlanilla);
+            setNonNullValue(objects[7], talentResp::setFinalSalaryPlanilla);
+            setNonNullValue(objects[8], talentResp::setPhone);
+            setNonNullValue(objects[9], talentResp::setLinkedin);
+            setNonNullValue(objects[10], talentResp::setGithub);
+            setNonNullValue(objects[11], talentResp::setCreated);
+            setNonNullValue(objects[12], talentResp::setAvgRating);
+            setNonNullValue(objects[13], talentResp::setDisponibilidad);
+            setNonNullValue(objects[14], talentResp::setEmail);
+            setNonNullValue(objects[15], talentResp::setInitialSalaryRxH);
+            setNonNullValue(objects[16], talentResp::setFinalSalaryRxH);
+            setNonNullValue(objects[17], talentResp::setPuesto);
         }
 
         // -- Technical Abilities --
         List<TechnicalAbilitiesResp> technicalAbilitiesList = new ArrayList<>();
         for (Object[] objects : technicalAbilities) {
             TechnicalAbilitiesResp technicalAbility = new TechnicalAbilitiesResp();
-            technicalAbility.setIdTechnicalAbility((Integer) objects[0]);
-            technicalAbility.setName((String) objects[1]);
-            technicalAbility.setYears((BigDecimal) objects[2]);
+            setNonNullValue(objects[0], technicalAbility::setIdTechnicalAbility);
+            setNonNullValue(objects[1], technicalAbility::setName);
+            setNonNullValue(objects[2], (value) -> technicalAbility.setYears(value != null ? (BigDecimal) value : null));
             technicalAbilitiesList.add(technicalAbility);
         }
         talentResp.setTechnicalAbilities(technicalAbilitiesList);
@@ -350,8 +352,8 @@ public class TalentoServiceImpl implements TalentoService {
         List<SoftSkillsResp> softSkillsList = new ArrayList<>();
         for (Object[] objects : softSkills) {
             SoftSkillsResp softSkill = new SoftSkillsResp();
-            softSkill.setIdSoftSkill((Integer) objects[0]);
-            softSkill.setName((String) objects[1]);
+            setNonNullValue(objects[0], softSkill::setIdSoftSkill);
+            setNonNullValue(objects[1], softSkill::setName);
             softSkillsList.add(softSkill);
         }
         talentResp.setSoftSkills(softSkillsList);
@@ -360,13 +362,13 @@ public class TalentoServiceImpl implements TalentoService {
         List<WorkExperienceResp> workExperiencesList = new ArrayList<>();
         for (Object[] objects : workExperience) {
             WorkExperienceResp workExperienceTemp = new WorkExperienceResp();
-            workExperienceTemp.setIdWorkExperience((Integer) objects[0]);
-            workExperienceTemp.setFirm((String) objects[1]);
-            workExperienceTemp.setJobTitle((String) objects[2]);
-            workExperienceTemp.setIntialDate((Date) objects[3]);
-            workExperienceTemp.setFinalDate((Date) objects[4]);
-            workExperienceTemp.setFlActualidad((Integer) objects[5]);
-            workExperienceTemp.setFunctions((String) objects[6]);
+            setNonNullValue(objects[0], workExperienceTemp::setIdWorkExperience);
+            setNonNullValue(objects[1], workExperienceTemp::setFirm);
+            setNonNullValue(objects[2], workExperienceTemp::setJobTitle);
+            setNonNullValue(objects[3], workExperienceTemp::setIntialDate);
+            setNonNullValue(objects[4], workExperienceTemp::setFinalDate);
+            setNonNullValue(objects[5], workExperienceTemp::setFlActualidad);
+            setNonNullValue(objects[6], workExperienceTemp::setFunctions);
             workExperiencesList.add(workExperienceTemp);
         }
         talentResp.setWorkExperiences(workExperiencesList);
@@ -375,13 +377,13 @@ public class TalentoServiceImpl implements TalentoService {
         List<EducationalExperienceResp> educationalExperiencesList = new ArrayList<>();
         for (Object[] objects : educationalExperience) {
             EducationalExperienceResp educationalExperienceTemp = new EducationalExperienceResp();
-            educationalExperienceTemp.setIdEducationalExperience((Integer) objects[0]);
-            educationalExperienceTemp.setInstitution((String) objects[1]);
-            educationalExperienceTemp.setMajor((String) objects[2]);
-            educationalExperienceTemp.setDegree((String) objects[3]);
-            educationalExperienceTemp.setInitialDate((Date) objects[4]);
-            educationalExperienceTemp.setFinalDate((Date) objects[5]);
-            educationalExperienceTemp.setFlActualidad((Integer) objects[6]);
+            setNonNullValue(objects[0], educationalExperienceTemp::setIdEducationalExperience);
+            setNonNullValue(objects[1], educationalExperienceTemp::setInstitution);
+            setNonNullValue(objects[2], educationalExperienceTemp::setMajor);
+            setNonNullValue(objects[3], educationalExperienceTemp::setDegree);
+            setNonNullValue(objects[4], educationalExperienceTemp::setInitialDate);
+            setNonNullValue(objects[5], educationalExperienceTemp::setFinalDate);
+            setNonNullValue(objects[6], educationalExperienceTemp::setFlActualidad);
             educationalExperiencesList.add(educationalExperienceTemp);
         }
         talentResp.setEducationalExperiences(educationalExperiencesList);
@@ -390,13 +392,13 @@ public class TalentoServiceImpl implements TalentoService {
         List<LanguageLevelResp> languageLevelList = new ArrayList<>();
         for (Object[] objects : languageProficiency) {
             LanguageLevelResp languageLevel = new LanguageLevelResp();
-            languageLevel.setIdTalentLanguage((Integer) objects[0]);
-            languageLevel.setIdLanguage((Integer) objects[1]);
-            languageLevel.setLanguageName((String) objects[2]);
-            languageLevel.setLanguageCode((String) objects[3]);
-            languageLevel.setIdProficiency((Integer) objects[4]);
-            languageLevel.setProficiency((String) objects[5]);
-            languageLevel.setStarCount((Integer) objects[6]);
+            setNonNullValue(objects[0], languageLevel::setIdTalentLanguage);
+            setNonNullValue(objects[1], languageLevel::setIdLanguage);
+            setNonNullValue(objects[2], languageLevel::setLanguageName);
+            setNonNullValue(objects[3], languageLevel::setLanguageCode);
+            setNonNullValue(objects[4], languageLevel::setIdProficiency);
+            setNonNullValue(objects[5], languageLevel::setProficiency);
+            setNonNullValue(objects[6], languageLevel::setStarCount);
             languageLevelList.add(languageLevel);
         }
         talentResp.setLanguageLevels(languageLevelList);
@@ -405,10 +407,10 @@ public class TalentoServiceImpl implements TalentoService {
         List<DocumentResp> documentsList = new ArrayList<>();
         for (Object[] objects : documents) {
             DocumentResp document = new DocumentResp();
-            document.setIdDocument((Integer) objects[0]);
-            document.setDocumentName((String) objects[1]);
-            document.setDocumentType((String) objects[2]);
-            document.setDocument((byte[]) objects[3]);
+            setNonNullValue(objects[0], document::setIdDocument);
+            setNonNullValue(objects[1], document::setDocumentName);
+            setNonNullValue(objects[2], document::setDocumentType);
+            setNonNullValue(objects[3], document::setDocument);
             documentsList.add(document);
         }
         talentResp.setDocuments(documentsList);
@@ -417,13 +419,13 @@ public class TalentoServiceImpl implements TalentoService {
         List<MasterTalentResp> masterTalentList = new ArrayList<>();
         for (Object[] objects : masterTalent) {
             MasterTalentResp masterTalentTemp = new MasterTalentResp();
-            masterTalentTemp.setIdMasterTalent((Integer) objects[0]);
-            masterTalentTemp.setIdMaster((Integer) objects[1]);
-            masterTalentTemp.setId((Integer) objects[2]);
-            masterTalentTemp.setName((String) objects[3]);
-            masterTalentTemp.setDescription((String) objects[4]);
-            masterTalentTemp.setCode((String) objects[5]);
-            masterTalentTemp.setSecondCode((String) objects[6]);
+            setNonNullValue(objects[0], masterTalentTemp::setIdMasterTalent);
+            setNonNullValue(objects[1], masterTalentTemp::setIdMaster);
+            setNonNullValue(objects[2], masterTalentTemp::setId);
+            setNonNullValue(objects[3], masterTalentTemp::setName);
+            setNonNullValue(objects[4], masterTalentTemp::setDescription);
+            setNonNullValue(objects[5], masterTalentTemp::setCode);
+            setNonNullValue(objects[6], masterTalentTemp::setSecondCode);
             masterTalentList.add(masterTalentTemp);
         }
         talentResp.setMiscData(masterTalentList);
@@ -432,12 +434,12 @@ public class TalentoServiceImpl implements TalentoService {
         List<FeedbackResp> feedbackList = new ArrayList<>();
         for (Object[] objects : feedbacks) {
             FeedbackResp feedback = new FeedbackResp();
-            feedback.setIdFeedback((Integer) objects[0]);
-            feedback.setStarCount((Integer) objects[1]);
-            feedback.setDescription((String) objects[2]);
-            feedback.setIdUserFrom((Integer) objects[3]);
-            feedback.setUserFromName((String) objects[4]);
-            feedback.setUserFromPhoto((byte[]) objects[5]);
+            setNonNullValue(objects[0], feedback::setIdFeedback);
+            setNonNullValue(objects[1], feedback::setStarCount);
+            setNonNullValue(objects[2], feedback::setDescription);
+            setNonNullValue(objects[3], feedback::setIdUserFrom);
+            setNonNullValue(objects[4], feedback::setUserFromName);
+            setNonNullValue(objects[5], feedback::setUserFromPhoto);
             feedbackList.add(feedback);
         }
         talentResp.setFeedbacks(feedbackList);

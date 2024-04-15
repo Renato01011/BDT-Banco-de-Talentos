@@ -12,6 +12,5 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HabilidadesBlandasDTO {
-    @NotBlank(message = "El nombre de la Habilidad blanda es obligatorio y no puede estar vacío ni ser nulo.")
     private String nombre;
 }

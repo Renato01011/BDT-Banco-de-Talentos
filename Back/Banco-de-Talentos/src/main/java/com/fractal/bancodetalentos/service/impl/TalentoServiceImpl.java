@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +44,8 @@ public class TalentoServiceImpl implements TalentoService {
                 .registerStoredProcedureParameter(12, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(13, String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter(14, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(15, Integer.class, ParameterMode.OUT)
+                .registerStoredProcedureParameter(15, String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter(16, Integer.class, ParameterMode.OUT)
                 .setParameter(1, newTalentRequest.getNombre())
                 .setParameter(2, newTalentRequest.getApellidoPaterno())
                 .setParameter(3, newTalentRequest.getApellidoMaterno())
@@ -59,10 +59,11 @@ public class TalentoServiceImpl implements TalentoService {
                 .setParameter(11, newTalentRequest.getLinkedin())
                 .setParameter(12, newTalentRequest.getGithub())
                 .setParameter(13, newTalentRequest.getDisponibilidad())
-                .setParameter(14, newTalentRequest.getEmail());
+                .setParameter(14, newTalentRequest.getEmail())
+                .setParameter(15, newTalentRequest.getPuesto());
 
         storedProcedureQueryTalent.execute();
-        Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(15);
+        Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(16);
 
         // -- Habilidades Tecnicas --
         if (!newTalentRequest.getHabilidadesTecnicas().isEmpty()) {
@@ -189,15 +190,6 @@ public class TalentoServiceImpl implements TalentoService {
                 .setParameter(1, newTalentoId)
                 .setParameter(2, newTalentRequest.getIdCiudad());
         storedProcedureQueryCiudad.execute();
-
-        // -- Perfil --
-        StoredProcedureQuery storedProcedureQueryPerfil = entityManager
-                .createStoredProcedureQuery("SP_ADD_PROFILE")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
-                .setParameter(1, newTalentoId)
-                .setParameter(2, newTalentRequest.getIdPuestoActual());
-        storedProcedureQueryPerfil.execute();
 
         // -- Tipo Moneda --
         StoredProcedureQuery storedProcedureQueryMoneda = entityManager
@@ -340,6 +332,7 @@ public class TalentoServiceImpl implements TalentoService {
             talentResp.setEmail((String) objects[14]);
             talentResp.setInitialSalaryRxH((Integer) objects[15]);
             talentResp.setFinalSalaryRxH((Integer) objects[16]);
+            talentResp.setPuesto((String) objects[17]);
         }
 
         // -- Technical Abilities --

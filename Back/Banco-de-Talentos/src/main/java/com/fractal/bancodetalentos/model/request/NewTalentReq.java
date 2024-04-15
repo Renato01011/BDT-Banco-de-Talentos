@@ -34,8 +34,11 @@ public class NewTalentReq {
     private List<DocumentoDTO> documentos;
     @NotBlank(message = "El campo Descripción es obligatorio y no puede estar vacío ni ser nulo.")
     private String descripcion;
+
+    @Size(max = 50, message = "El límite máximo de caracteres es de 50.")
     @NotNull(message = "El campo Puesto es obligatorio y no puede ser nulo.")
-    private Integer idPuestoActual;
+    private String puesto;
+
     @NotNull(message = "El campo Pais es obligatorio y no puede ser nulo.")
     private Integer idPais;
     @NotNull(message = "El campo Ciudad es obligatorio y no puede ser nulo.")

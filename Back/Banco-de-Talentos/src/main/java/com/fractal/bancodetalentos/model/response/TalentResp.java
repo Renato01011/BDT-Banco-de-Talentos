@@ -43,4 +43,5 @@ public class TalentResp {
 
     private String disponibilidad;
     private String email;
+    private String puesto;
 }

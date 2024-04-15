@@ -38,10 +38,33 @@
           <i class="pi pi-map-marker text-xs sm:text-sm text-800"></i>
           {{ item.location | titlecase }}
         </span>
+      </div>
+      <div class="border-round flex align-items-center justify-content-between">
         <span class="text-500 text-xs sm:text-sm font-light">
-          RxH {{ item.iconCoin }} {{ item.initialSalaryRxH }} -
-          {{ item.finalSalaryRxH }} | Planilla {{ item.iconCoin }}
-          {{ item.initialSalaryPlanilla }} - {{ item.finalSalaryPlanilla }}
+          <ng-container
+            *ngIf="item.initialSalaryRxH > 0 || item.finalSalaryRxH > 0"
+          >
+            RxH {{ item.iconCoin }} {{ item.initialSalaryRxH }} -
+            {{ item.finalSalaryRxH }}
+          </ng-container>
+          <ng-container
+            *ngIf="
+              item.initialSalaryPlanilla > 0 || item.finalSalaryPlanilla > 0
+            "
+          >
+            | Planilla {{ item.iconCoin }} {{ item.initialSalaryPlanilla }} -
+            {{ item.finalSalaryPlanilla }}
+          </ng-container>
+          <ng-container
+            *ngIf="
+              item.initialSalaryRxH == 0 &&
+              item.initialSalaryPlanilla == 0 &&
+              item.finalSalaryRxH == 0 &&
+              item.finalSalaryPlanilla == 0
+            "
+          >
+            No cuenta con rango salarial
+          </ng-container>
         </span>
       </div>
     </div>

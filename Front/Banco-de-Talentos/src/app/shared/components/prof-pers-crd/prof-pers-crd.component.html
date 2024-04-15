@@ -133,60 +133,54 @@
             {{ countryCity.country | titlecase }}
           </span>
         </div>
-        <div
-          class="w-12 sm:w-max border-round flex align-items-center justify-content-around profile-country-salary"
-        >
-          <span class="text-500 text-xs sm:text-sm font-light">
-            <ng-container
-              *ngIf="
-                (customTalent?.initialSalaryRxH ?? 0) > 0 ||
-                (customTalent?.finalSalaryRxH ?? 0) > 0
-              "
-            >
-              RxH {{ customTalent?.iconCoin }}
-              {{ customTalent?.initialSalaryRxH }}
-              -
-              {{ customTalent?.finalSalaryRxH }}
-              |
-            </ng-container>
-            <ng-container
-              *ngIf="
-                (customTalent?.initialSalaryRxH ?? 0) === 0 &&
-                (customTalent?.finalSalaryRxH ?? 0) === 0
-              "
-            >
-              RxH no cuenta con rango salarial |
-            </ng-container>
-            <ng-container
-              *ngIf="
-                (customTalent?.initialSalaryPlanilla ?? 0) > 0 ||
-                (customTalent?.finalSalaryPlanilla ?? 0) > 0
-              "
-            >
-              Planilla {{ customTalent?.iconCoin }}
-              {{ customTalent?.initialSalaryPlanilla }}
-              -
-              {{ customTalent?.finalSalaryPlanilla }}
-            </ng-container>
-            <ng-container
-              *ngIf="
-                (customTalent?.initialSalaryPlanilla ?? 0) === 0 &&
-                (customTalent?.finalSalaryPlanilla ?? 0) === 0
-              "
-            >
-              Planilla no cuenta con rango salarial
-            </ng-container>
-          </span>
-          <button
-            type="button"
-            class="mx-1 back-icon-btn"
-            style="z-index: 20"
-            *ngIf="isRecruiter"
-            (click)="openEditSalaryDialog()"
+      </div>
+      <div
+        class="w-12 sm:w-max border-round flex align-items-center justify-content-around profile-country-salary"
+      >
+        <span class="text-500 text-xs sm:text-sm font-light">
+          <ng-container
+            *ngIf="
+              (customTalent?.initialSalaryRxH ?? 0) > 0 ||
+              (customTalent?.finalSalaryRxH ?? 0) > 0
+            "
           >
-            <i class="pi pi-pencil text-sm"></i>
-          </button>
-        </div>
+            RxH {{ customTalent?.iconCoin }}
+            {{ customTalent?.initialSalaryRxH }}
+            -
+            {{ customTalent?.finalSalaryRxH }}
+            |
+          </ng-container>
+          <ng-container
+            *ngIf="
+              (customTalent?.initialSalaryPlanilla ?? 0) > 0 ||
+              (customTalent?.finalSalaryPlanilla ?? 0) > 0
+            "
+          >
+            Planilla {{ customTalent?.iconCoin }}
+            {{ customTalent?.initialSalaryPlanilla }}
+            -
+            {{ customTalent?.finalSalaryPlanilla }}
+          </ng-container>
+          <ng-container
+            *ngIf="
+              customTalent?.initialSalaryRxH == 0 &&
+              customTalent?.initialSalaryPlanilla == 0 &&
+              customTalent?.finalSalaryRxH == 0 &&
+              customTalent?.finalSalaryPlanilla == 0
+            "
+          >
+            No cuenta con rango salarial
+          </ng-container>
+        </span>
+        <button
+          type="button"
+          class="mx-1 back-icon-btn"
+          style="z-index: 20"
+          *ngIf="isRecruiter"
+          (click)="openEditSalaryDialog()"
+        >
+          <i class="pi pi-pencil text-sm"></i>
+        </button>
       </div>
       <div
         class="border-round flex align-items-center sm:justify-content-start justify-content-between"

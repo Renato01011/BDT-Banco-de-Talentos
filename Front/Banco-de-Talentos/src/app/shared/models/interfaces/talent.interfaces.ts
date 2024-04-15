@@ -9,26 +9,26 @@ export interface NewTalentModel {
       tipoArchivo: string;
       archivo: string;
     }
-  ],
-  descripcion: string,
+  ];
+  descripcion: string;
+  puesto: string;
+  idPais: number;
+  idCiudad: number;
+  linkedin: string;
+  github: string;
+  idTipoMoneda: number;
+  montoInicialRxH: number;
+  montoFinalRxh: number;
+  montoInicialPlanilla: number;
+  montoFinalPlanilla: number;
+  celular: string;
+  habilidadesTecnicas: TechnicalAbilitiesTalentModel[];
+  habilidadesBlandas: SoftSkillsTalentModel[];
+  experienciasLaborales: WorkExperienceTalentModel[];
+  experienciasEducativas: EducationalExperienceTalentModel[];
+  idiomas: LanguagesTalentModel[];
+  disponibilidad: string;
   email: string;
-  disponibilidad: string,
-  idPuestoActual: number,
-  idPais: number,
-  idCiudad: number,
-  linkedin: string,
-  github: string,
-  idTipoMoneda: number,
-  montoInicialRxH: number,
-  montoFinalRxh: number,
-  montoInicialPlanilla: number,
-  montoFinalPlanilla: number,
-  celular: string,
-  habilidadesTecnicas: TechnicalAbilitiesTalentModel[],
-  habilidadesBlandas: SoftSkillsTalentModel[],
-  experienciasLaborales: WorkExperienceTalentModel[],
-  experienciasEducativas: EducationalExperienceTalentModel[],
-  idiomas: LanguagesTalentModel[],
 }
 
 export interface TechnicalAbilitiesTalentModel {

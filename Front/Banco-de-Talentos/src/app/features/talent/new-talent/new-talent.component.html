@@ -248,18 +248,16 @@
               </small>
             </div>
             <div class="pt-2">
-              <h3 class="subHeaderText">Puesto actual</h3>
-              <p-dropdown
-                [options]="profiles"
-                styleClass="w-full"
-                class="w-full"
+              <h3 class="subHeaderText">Puesto Actual</h3>
+              <input
+                pInputText
                 placeholder="Puesto Actual"
-                optionLabel="name"
-                [showClear]="false"
-                appendTo="body"
+                class="w-full"
                 formControlName="profile"
-                [ngClass]="{ 'ng-invalid ng-dirty': isValidField('profile') }"
-              ></p-dropdown>
+                [ngClass]="{
+                  'ng-invalid ng-dirty': isValidField('profile')
+                }"
+              />
             </div>
             <div class="pt-2">
               <h3 class="subHeaderText">Disponibilidad</h3>

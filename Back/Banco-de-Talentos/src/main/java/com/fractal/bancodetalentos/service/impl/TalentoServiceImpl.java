@@ -5,13 +5,12 @@ import com.fractal.bancodetalentos.model.dto.*;
 import com.fractal.bancodetalentos.model.request.*;
 import com.fractal.bancodetalentos.model.response.*;
 import com.fractal.bancodetalentos.service.TalentoService;
+import com.fractal.bancodetalentos.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.procedure.ParameterRegistration;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.ParameterMode;
-import javax.persistence.PersistenceContext;
-import javax.persistence.StoredProcedureQuery;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class TalentoServiceImpl implements TalentoService {
                 .setParameter(1, newTalentRequest.getNombre())
                 .setParameter(2, newTalentRequest.getApellidoPaterno())
                 .setParameter(3, newTalentRequest.getApellidoMaterno())
-                .setParameter(4, newTalentRequest.getFotoDePerfil())
+                .setParameter(4, newTalentRequest.getFotoDePerfil()!=null?newTalentRequest.getFotoDePerfil():new byte[0])
                 .setParameter(5, newTalentRequest.getDescripcion())
                 .setParameter(6, newTalentRequest.getMontoInicialPlanilla())
                 .setParameter(7, newTalentRequest.getMontoFinalPlanilla())
@@ -96,7 +95,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Experiencias Laborales --
-        if (newTalentRequest.getExperienciasLaborales()!=null && !newTalentRequest.getExperienciasLaborales().isEmpty()) {
+        if (newTalentRequest.getExperienciasLaborales()!=null && !newTalentRequest.getExperienciasLaborales().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getExperienciasLaborales())) {
             for (ExperienciasLaboralesDTO experienciasLaboralesDTO : newTalentRequest.getExperienciasLaborales()) {
                 StoredProcedureQuery storedProcedureQueryExperienciasLaborales = entityManager
                         .createStoredProcedureQuery("SP_ADD_WORK_EXPERIENCE")
@@ -119,7 +118,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Experiencias Educativas --
-        if (newTalentRequest.getExperienciasEducativas()!=null && !newTalentRequest.getExperienciasEducativas().isEmpty()) {
+        if (newTalentRequest.getExperienciasEducativas()!=null && !newTalentRequest.getExperienciasEducativas().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getExperienciasEducativas())) {
             for (ExperienciasEducativasDTO experienciasEducativasDTO : newTalentRequest.getExperienciasEducativas()) {
                 StoredProcedureQuery storedProcedureQueryExperienciasEducativas = entityManager
                         .createStoredProcedureQuery("SP_ADD_EDUCATIONAL_EXPERIENCE")
@@ -159,7 +158,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Documentos --
-        if (newTalentRequest.getDocumentos()!=null && !newTalentRequest.getDocumentos().isEmpty()) {
+        if (newTalentRequest.getDocumentos()!=null && !newTalentRequest.getDocumentos().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getDocumentos())) {
             for (DocumentoDTO documentoDTO : newTalentRequest.getDocumentos()) {
                 StoredProcedureQuery storedProcedureDocumentos = entityManager
                         .createStoredProcedureQuery("SP_ADD_FILES")

@@ -28,9 +28,10 @@ public class NewTalentReq {
     @Lob
     private byte[] fotoDePerfil;
     private List<DocumentoDTO> documentos;
+    @Size(max = 1000, message = "El límite máximo de caracteres para la descripcion es de 100.")
     private String descripcion;
 
-    @Size(max = 50, message = "El límite máximo de caracteres es de 50.")
+    @Size(max = 50, message = "El límite máximo de caracteres para el puesto es de 50.")
     @NotNull(message = "El campo Puesto es obligatorio y no puede ser nulo.")
     private String puesto;
 

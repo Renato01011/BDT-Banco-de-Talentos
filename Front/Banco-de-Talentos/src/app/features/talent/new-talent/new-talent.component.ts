@@ -129,7 +129,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     private talentService: TalentService,
     private loaderService: LoaderService,
     private toastService: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.checkCurrencies();
@@ -224,7 +224,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   AddTechnicalAbility() {
     (this.newTalentForm.get('technicalAbilities') as FormArray).push(
@@ -485,13 +485,27 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     return objectArray;
   }
 
+  // getLanguagesArrayValues() {
+  //   let objectArray: TalentModels.LanguagesTalentModel[] = [];
+  //   this.getKnownLanguages().forEach((formGroup) => {
+  //     objectArray.push({
+  //       idiomaId: formGroup.get('language')?.value.id,
+  //       nivelId: formGroup.get('level')?.value.id,
+  //       nuEstrellas: formGroup.get('starCount')?.value,
+  //     });
+  //   });
+  //   return objectArray;
+  // }
+
   getLanguagesArrayValues() {
     let objectArray: TalentModels.LanguagesTalentModel[] = [];
     this.getKnownLanguages().forEach((formGroup) => {
+      let languageValue = formGroup.get('language')?.value;
+      let levelValue = formGroup.get('level')?.value;
       objectArray.push({
-        idiomaId: formGroup.get('language')?.value.id,
-        nivelId: formGroup.get('level')?.value.id,
-        nuEstrellas: formGroup.get('starCount')?.value,
+        idiomaId: languageValue ? languageValue.id : 4,
+        nivelId: levelValue ? levelValue.id : 5,
+        nuEstrellas: formGroup.get('starCount')?.value ?? 0,
       });
     });
     return objectArray;
@@ -704,10 +718,10 @@ export class NewTalentComponent implements OnInit, OnDestroy {
           this.newTalentForm.get('finalAmountPlanilla')?.value ?? 0,
         celular:
           this.newTalentForm.get('callingCode')?.value &&
-          this.newTalentForm.get('phone')?.value
+            this.newTalentForm.get('phone')?.value
             ? this.newTalentForm.get('callingCode')?.value.callingCode +
-              ' ' +
-              this.newTalentForm.get('phone')?.value
+            ' ' +
+            this.newTalentForm.get('phone')?.value
             : '',
         habilidadesTecnicas: this.getTechnicalAbilitiesArrayValues(),
         habilidadesBlandas: this.getSoftSkillsArrayValues(),
@@ -782,7 +796,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     return (
       !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
       this.masterService.cacheStorage.byLangProficiency.proficiencies.length ===
-        0
+      0
     );
   }
 

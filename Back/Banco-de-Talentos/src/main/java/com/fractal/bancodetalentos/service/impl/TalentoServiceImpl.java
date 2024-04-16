@@ -141,7 +141,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Idiomas --
-        if (newTalentRequest.getIdiomas()!=null && !newTalentRequest.getIdiomas().isEmpty()) {
+        if (newTalentRequest.getIdiomas()!=null && !newTalentRequest.getIdiomas().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getIdiomas())) {
             for (IdiomasDTO idioma : newTalentRequest.getIdiomas()) {
                 StoredProcedureQuery storedProcedureQueryIdioma = entityManager
                         .createStoredProcedureQuery("SP_ADD_LANGUAGE")

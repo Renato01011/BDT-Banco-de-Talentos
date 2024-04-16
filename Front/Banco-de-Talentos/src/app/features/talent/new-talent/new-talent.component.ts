@@ -503,9 +503,9 @@ export class NewTalentComponent implements OnInit, OnDestroy {
       let languageValue = formGroup.get('language')?.value;
       let levelValue = formGroup.get('level')?.value;
       objectArray.push({
-        idiomaId: languageValue ? languageValue.id : 4,
-        nivelId: levelValue ? levelValue.id : 5,
-        nuEstrellas: formGroup.get('starCount')?.value ?? 0,
+        idiomaId: languageValue ? languageValue.id : null,
+        nivelId: levelValue ? levelValue.id : null,
+        nuEstrellas: formGroup.get('starCount')?.value ?? null,
       });
     });
     return objectArray;

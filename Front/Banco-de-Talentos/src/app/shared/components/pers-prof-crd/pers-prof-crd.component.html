@@ -49,10 +49,20 @@
           </ng-container>
           <ng-container
             *ngIf="
+              ((item?.initialSalaryRxH ?? 0) > 0 ||
+                (item?.finalSalaryRxH ?? 0) > 0) &&
+              ((item?.initialSalaryPlanilla ?? 0) > 0 ||
+                (item?.finalSalaryPlanilla ?? 0) > 0)
+            "
+          >
+            |
+          </ng-container>
+          <ng-container
+            *ngIf="
               item.initialSalaryPlanilla > 0 || item.finalSalaryPlanilla > 0
             "
           >
-            | Planilla {{ item.iconCoin }} {{ item.initialSalaryPlanilla }} -
+            Planilla {{ item.iconCoin }} {{ item.initialSalaryPlanilla }} -
             {{ item.finalSalaryPlanilla }}
           </ng-container>
           <ng-container

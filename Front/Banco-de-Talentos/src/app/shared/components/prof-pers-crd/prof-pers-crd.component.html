@@ -148,6 +148,15 @@
             {{ customTalent?.initialSalaryRxH }}
             -
             {{ customTalent?.finalSalaryRxH }}
+          </ng-container>
+          <ng-container
+            *ngIf="
+              ((customTalent?.initialSalaryRxH ?? 0) > 0 ||
+                (customTalent?.finalSalaryRxH ?? 0) > 0) &&
+              ((customTalent?.initialSalaryPlanilla ?? 0) > 0 ||
+                (customTalent?.finalSalaryPlanilla ?? 0) > 0)
+            "
+          >
             |
           </ng-container>
           <ng-container

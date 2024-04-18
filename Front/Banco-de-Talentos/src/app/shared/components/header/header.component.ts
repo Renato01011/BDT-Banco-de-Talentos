@@ -26,18 +26,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.profileOpItems = [
       {
-        label: 'Edit Profile',
-        icon: 'pi pi-fw pi-user',
-      },
-      {
-        label: 'Settings & Privacy',
-        icon: 'pi pi-fw pi-cog',
-      },
-      {
-        label: 'Help & Support',
-        icon: 'pi pi-fw pi-question-circle',
-      },
-      {
         label: 'Logout',
         icon: 'pi pi-fw pi-sign-out',
         command: (event) => this.logout(),

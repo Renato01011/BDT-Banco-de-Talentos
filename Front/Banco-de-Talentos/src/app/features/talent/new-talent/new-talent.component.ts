@@ -134,7 +134,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.checkCurrencies();
     this.checkCountries();
-    this.checkProfiles();
+    // this.checkProfiles();
     this.checkLanguages();
     this.checkProficiency();
     this.OnCountryChangeGetData();
@@ -176,8 +176,8 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   }
 
   private getCountries(): void {
-    this.masterService.getCountries().subscribe({
-      next: (countries) => {
+    this.masterService.getGeneralData().subscribe({
+      next: ({ countries }) => {
         this.countries = countries;
       },
     });
@@ -200,13 +200,13 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getProfiles(): void {
-    this.masterService.getProfiles().subscribe({
-      next: (profiles) => {
-        this.profiles = profiles;
-      },
-    });
-  }
+  // private getProfiles(): void {
+  //   this.masterService.getGeneralData().subscribe({
+  //     next: (proficiency) => {
+  //       this.profiles = profiles;
+  //     },
+  //   });
+  // }
 
   private get isCacheProfilesEmpty(): boolean {
     return (
@@ -215,14 +215,14 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     );
   }
 
-  private checkProfiles(): void {
-    if (this.isCacheProfilesEmpty) {
-      this.getProfiles();
-    } else {
-      const cacheProfiles = this.masterService.cacheStorage.byProfile.profiles;
-      this.profiles = cacheProfiles;
-    }
-  }
+  // private checkProfiles(): void {
+  //   if (this.isCacheProfilesEmpty) {
+  //     this.getProfiles();
+  //   } else {
+  //     const cacheProfiles = this.masterService.cacheStorage.byProfile.profiles;
+  //     this.profiles = cacheProfiles;
+  //   }
+  // }
 
   ngOnDestroy(): void { }
 
@@ -785,8 +785,8 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   }
 
   private getLanguages(): void {
-    this.masterService.getLanguages().subscribe({
-      next: (languages) => {
+    this.masterService.getGeneralData().subscribe({
+      next: ({ languages }) => {
         this.languages = languages;
       },
     });
@@ -819,9 +819,9 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   }
 
   private getCurrencies(): void {
-    this.masterService.getCurrencies().subscribe({
-      next: (coins) => {
-        this.coins = coins;
+    this.masterService.getGeneralData().subscribe({
+      next: ({ currencies }) => {
+        this.coins = currencies;
       },
     });
   }

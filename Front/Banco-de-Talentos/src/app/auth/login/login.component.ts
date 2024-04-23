@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private loaderService: LoaderService,
     private masterService: MasterService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (window.screen.width < 1000) {
@@ -91,12 +91,13 @@ export class LoginComponent implements OnInit {
               );
               // -- CALL EVERY GET API FROM MASTER --
               forkJoin([
-                this.masterService.getLanguages(),
-                this.masterService.getCurrencies(),
-                this.masterService.getProfiles(),
-                this.masterService.getLangProficiency(),
-                this.masterService.getCountries(),
-                this.masterService.getTechSkills(),
+                this.masterService.getGeneralData()
+                // this.masterService.getLanguages(),
+                // this.masterService.getCurrencies(),
+                // this.masterService.getProfiles(),
+                // this.masterService.getLangProficiency(),
+                // this.masterService.getCountries(),
+                // this.masterService.getTechSkills(),
               ]).subscribe({
                 next: () => {
                   this.loaderService.hideLoader();

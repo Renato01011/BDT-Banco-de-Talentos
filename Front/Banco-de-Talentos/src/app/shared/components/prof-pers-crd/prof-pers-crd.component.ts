@@ -83,7 +83,7 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
     private utilsService: UtilsService,
     private confirmationService: ConfirmationService,
     private loaderService: LoaderService
-  ) {}
+  ) { }
 
   public profileForm: FormGroup = this.fb.group({
     img: ['', [Validators.required]],
@@ -662,9 +662,9 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
   }
 
   private getCurrencies(): void {
-    this.masterService.getCurrencies().subscribe({
-      next: (coins) => {
-        this.coins = coins;
+    this.masterService.getGeneralData().subscribe({
+      next: ({ currencies }) => {
+        this.coins = currencies;
       },
     });
   }

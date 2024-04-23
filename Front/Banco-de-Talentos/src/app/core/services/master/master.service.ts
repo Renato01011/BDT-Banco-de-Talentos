@@ -34,39 +34,55 @@ export class MasterService {
     this.cacheStorage = JSON.parse(sessionStorage.getItem(MASTER_STORAGE)!);
   }
 
-  getLanguages(): Observable<MasterModels.LanguageModel[]> {
-    return this.httpClient
-      .post<MasterModels.LanguageModel[]>(UrlConstants.URL_REQ_LANG, null)
-      .pipe(
-        tap((languages) => (this.cacheStorage.byLanguage = { languages })),
-        tap(() => this.sveToSessionStorage())
-      );
-  }
-
-  getRoles(): Observable<MasterModels.RoleModel[]> {
-    return this.httpClient.post<MasterModels.RoleModel[]>(
-      UrlConstants.URL_REQ_ROLES,
+  getGeneralData(): Observable<MasterModels.General> {
+    return this.httpClient.post<MasterModels.General>(
+      UrlConstants.URL_REQ_GENERAL,
       null
-    );
+    ).pipe(
+      tap((general) => {
+        this.cacheStorage.byLanguage = { languages: general.languages };
+        this.cacheStorage.byCurrency = { currencies: general.currencies };
+        this.cacheStorage.byLangProficiency = { proficiencies: general.proficiency };
+        this.cacheStorage.byCountry = { countries: general.countries };
+        this.cacheStorage.byTechSkill = { techSkills: general.skills };
+      }),
+      tap(() => this.sveToSessionStorage()
+      ));
   }
 
-  getCurrencies(): Observable<MasterModels.CurrenciesModel[]> {
-    return this.httpClient
-      .post<MasterModels.CurrenciesModel[]>(UrlConstants.URL_REQ_CURRS, null)
-      .pipe(
-        tap((currencies) => (this.cacheStorage.byCurrency = { currencies })),
-        tap(() => this.sveToSessionStorage())
-      );
-  }
+  // getLanguages(): Observable<MasterModels.LanguageModel[]> {
+  //   return this.httpClient
+  //     .post<MasterModels.LanguageModel[]>(UrlConstants.URL_REQ_LANG, null)
+  //     .pipe(
+  //       tap((languages) => (this.cacheStorage.byLanguage = { languages })),
+  //       tap(() => this.sveToSessionStorage())
+  //     );
+  // }
 
-  getProfiles(): Observable<MasterModels.ProfileModel[]> {
-    return this.httpClient
-      .post<MasterModels.ProfileModel[]>(UrlConstants.URL_REQ_PROF, null)
-      .pipe(
-        tap((profiles) => (this.cacheStorage.byProfile = { profiles })),
-        tap(() => this.sveToSessionStorage())
-      );
-  }
+  // getRoles(): Observable<MasterModels.RoleModel[]> {
+  //   return this.httpClient.post<MasterModels.RoleModel[]>(
+  //     UrlConstants.URL_REQ_ROLES,
+  //     null
+  //   );
+  // }
+
+  // getCurrencies(): Observable<MasterModels.CurrenciesModel[]> {
+  //   return this.httpClient
+  //     .post<MasterModels.CurrenciesModel[]>(UrlConstants.URL_REQ_CURRS, null)
+  //     .pipe(
+  //       tap((currencies) => (this.cacheStorage.byCurrency = { currencies })),
+  //       tap(() => this.sveToSessionStorage())
+  //     );
+  // }
+
+  // getProfiles(): Observable<MasterModels.ProfileModel[]> {
+  //   return this.httpClient
+  //     .post<MasterModels.ProfileModel[]>(UrlConstants.URL_REQ_PROF, null)
+  //     .pipe(
+  //       tap((profiles) => (this.cacheStorage.byProfile = { profiles })),
+  //       tap(() => this.sveToSessionStorage())
+  //     );
+  // }
 
   getLangProficiency(): Observable<MasterModels.LangProficiencyModel[]> {
     return this.httpClient
@@ -83,14 +99,14 @@ export class MasterService {
       );
   }
 
-  getCountries(): Observable<MasterModels.CountryModel[]> {
-    return this.httpClient
-      .post<MasterModels.CountryModel[]>(UrlConstants.URL_REQ_COUNTRIES, null)
-      .pipe(
-        tap((countries) => (this.cacheStorage.byCountry = { countries })),
-        tap(() => this.sveToSessionStorage())
-      );
-  }
+  // getCountries(): Observable<MasterModels.CountryModel[]> {
+  //   return this.httpClient
+  //     .post<MasterModels.CountryModel[]>(UrlConstants.URL_REQ_COUNTRIES, null)
+  //     .pipe(
+  //       tap((countries) => (this.cacheStorage.byCountry = { countries })),
+  //       tap(() => this.sveToSessionStorage())
+  //     );
+  // }
 
   getCities(id: number): Observable<MasterModels.CityModel[]> {
     const body = { idCountry: id };

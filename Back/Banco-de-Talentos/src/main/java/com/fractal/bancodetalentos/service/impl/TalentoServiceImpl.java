@@ -1,16 +1,30 @@
 package com.fractal.bancodetalentos.service.impl;
 
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
-import com.fractal.bancodetalentos.model.dto.*;
-import com.fractal.bancodetalentos.model.request.*;
+import com.fractal.bancodetalentos.model.dto.DocumentoDTO;
+import com.fractal.bancodetalentos.model.dto.ExperienciasEducativasDTO;
+import com.fractal.bancodetalentos.model.dto.ExperienciasLaboralesDTO;
+import com.fractal.bancodetalentos.model.dto.HabilidadesBlandasDTO;
+import com.fractal.bancodetalentos.model.dto.HabilidadesTecnicasDTO;
+import com.fractal.bancodetalentos.model.dto.IdiomasDTO;
+import com.fractal.bancodetalentos.model.request.GetTalentReq;
+import com.fractal.bancodetalentos.model.request.NewTalentReq;
+import com.fractal.bancodetalentos.model.request.UpdateContactInfoReq;
+import com.fractal.bancodetalentos.model.request.UpdateDescriptionReq;
+import com.fractal.bancodetalentos.model.request.UpdateDisponibilidadReq;
+import com.fractal.bancodetalentos.model.request.UpdateProfilePictureReq;
+import com.fractal.bancodetalentos.model.request.UpdateSalaryReq;
+import com.fractal.bancodetalentos.model.request.UpdateSocialLinksReq;
 import com.fractal.bancodetalentos.model.response.*;
 import com.fractal.bancodetalentos.service.TalentoService;
 import com.fractal.bancodetalentos.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.procedure.ParameterRegistration;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -30,38 +44,44 @@ public class TalentoServiceImpl implements TalentoService {
 
         // -- Talento --
         StoredProcedureQuery storedProcedureQueryTalent = entityManager
-                .createStoredProcedureQuery("SP_ADD_TALENT")
-                .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(4, byte[].class, ParameterMode.IN)
-                .registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(7, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(8, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(9, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(10, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(11, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(12, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(13, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(14, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(15, String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(16, Integer.class, ParameterMode.OUT)
-                .setParameter(1, newTalentRequest.getNombre())
-                .setParameter(2, newTalentRequest.getApellidoPaterno())
-                .setParameter(3, newTalentRequest.getApellidoMaterno())
-                .setParameter(4, newTalentRequest.getFotoDePerfil()!=null?newTalentRequest.getFotoDePerfil():new byte[0])
-                .setParameter(5, newTalentRequest.getDescripcion())
-                .setParameter(6, newTalentRequest.getMontoInicialPlanilla())
-                .setParameter(7, newTalentRequest.getMontoFinalPlanilla())
-                .setParameter(8, newTalentRequest.getMontoInicialRxH())
-                .setParameter(9, newTalentRequest.getMontoFinalRxh())
-                .setParameter(10, newTalentRequest.getCelular())
-                .setParameter(11, newTalentRequest.getLinkedin())
-                .setParameter(12, newTalentRequest.getGithub())
-                .setParameter(13, newTalentRequest.getDisponibilidad())
-                .setParameter(14, newTalentRequest.getEmail())
-                .setParameter(15, newTalentRequest.getPuesto());
+            .createStoredProcedureQuery("SP_ADD_TALENT")
+            .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(4, byte[].class, ParameterMode.IN)
+            .registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(6, Integer.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(7, Integer.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(8, Integer.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(9, Integer.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(10, String.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(11, String.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(12, String.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(13, String.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(14, String.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(15, String.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(16, Integer.class, ParameterMode.OUT)
+            .registerStoredProcedureParameter(17, Integer.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(18, Integer.class, ParameterMode.IN)
+            .registerStoredProcedureParameter(19, Integer.class, ParameterMode.IN)
+            .setParameter(1, newTalentRequest.getNombre())
+            .setParameter(2, newTalentRequest.getApellidoPaterno())
+            .setParameter(3, newTalentRequest.getApellidoMaterno())
+            .setParameter(4, newTalentRequest.getFotoDePerfil() != null ? newTalentRequest.getFotoDePerfil() : new byte[0])
+            .setParameter(5, newTalentRequest.getDescripcion())
+            .setParameter(6, newTalentRequest.getMontoInicialPlanilla())
+            .setParameter(7, newTalentRequest.getMontoFinalPlanilla())
+            .setParameter(8, newTalentRequest.getMontoInicialRxH())
+            .setParameter(9, newTalentRequest.getMontoFinalRxh())
+            .setParameter(10, newTalentRequest.getCelular())
+            .setParameter(11, newTalentRequest.getLinkedin())
+            .setParameter(12, newTalentRequest.getGithub())
+            .setParameter(13, newTalentRequest.getDisponibilidad())
+            .setParameter(14, newTalentRequest.getEmail())
+            .setParameter(15, newTalentRequest.getPuesto())
+            .setParameter(17, newTalentRequest.getIdPais())
+            .setParameter(18, newTalentRequest.getIdCiudad())
+            .setParameter(19, newTalentRequest.getIdTipoMoneda());
 
         storedProcedureQueryTalent.execute();
         Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(16);
@@ -173,33 +193,6 @@ public class TalentoServiceImpl implements TalentoService {
                 storedProcedureDocumentos.execute();
             }
         }
-
-        // -- Pais --
-        StoredProcedureQuery storedProcedureQueryPais = entityManager
-                .createStoredProcedureQuery("SP_ADD_COUNTRY")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
-                .setParameter(1, newTalentoId)
-                .setParameter(2, newTalentRequest.getIdPais());
-        storedProcedureQueryPais.execute();
-
-        // -- Ciudad --
-        StoredProcedureQuery storedProcedureQueryCiudad = entityManager
-                .createStoredProcedureQuery("SP_ADD_CITY")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
-                .setParameter(1, newTalentoId)
-                .setParameter(2, newTalentRequest.getIdCiudad());
-        storedProcedureQueryCiudad.execute();
-
-        // -- Tipo Moneda --
-        StoredProcedureQuery storedProcedureQueryMoneda = entityManager
-                .createStoredProcedureQuery("SP_ADD_COIN")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
-                .setParameter(1, newTalentoId)
-                .setParameter(2, newTalentRequest.getIdTipoMoneda());
-        storedProcedureQueryMoneda.execute();
 
         GeneralResp temp = new GeneralResp();
         temp.setCode(200);

@@ -6,17 +6,19 @@ import java.util.List;
 
 public interface MasterService {
 
-    List<LanguageResp> getLanguage();
+    /*List<LanguageResp> getLanguage();*/
 
-    List<RoleResp> getRol();
+    /*List<RoleResp> getRol();*/
 
-    List<CurrenciesResp> getCurrencies();
+    /*List<CurrenciesResp> getCurrencies();*/
 
-    List<ProfileResp> getProfile();
+    /*List<ProfileResp> getProfile();*/
 
-    List<LangProficiencyResp> getLangProficiency();
+    /*List<LangProficiencyResp> getLangProficiency();*/
 
-    List<CountryResp> getCountry();
+    /*List<CountryResp> getCountry();*/
 
     List<CityResp> getCityById(Integer countryId);
+
+    GeneralDataResp getGeneralData();
 }

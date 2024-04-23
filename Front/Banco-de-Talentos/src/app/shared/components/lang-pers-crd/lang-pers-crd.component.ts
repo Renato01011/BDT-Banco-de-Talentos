@@ -50,7 +50,7 @@ export class LangPersCrdComponent implements OnInit {
     private deleteInfoService: DeleteInfoService,
     private loaderService: LoaderService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   public newLanguageForm: FormGroup = this.fb.group({
     languages: ['', [Validators.required]],
@@ -241,8 +241,8 @@ export class LangPersCrdComponent implements OnInit {
   }
 
   private getLanguages(): void {
-    this.masterService.getLanguages().subscribe({
-      next: (languages) => {
+    this.masterService.getGeneralData().subscribe({
+      next: ({ languages }) => {
         this.language = languages;
       },
     });
@@ -252,7 +252,7 @@ export class LangPersCrdComponent implements OnInit {
     return (
       !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
       this.masterService.cacheStorage.byLangProficiency.proficiencies.length ===
-        0
+      0
     );
   }
 

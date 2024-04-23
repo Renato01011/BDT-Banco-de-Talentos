@@ -20,8 +20,10 @@ import com.fractal.bancodetalentos.service.TalentoService;
 import com.fractal.bancodetalentos.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
@@ -38,12 +40,14 @@ public class TalentoServiceImpl implements TalentoService {
 
     @PersistenceContext
     private final EntityManager entityManager;
+    private StoredProcedureQuery storedProcedureQuery;
 
+    @Transactional
     @Override
     public GeneralResp addNewTalent(NewTalentReq newTalentRequest) {
 
         // -- Talento --
-        StoredProcedureQuery storedProcedureQueryTalent = entityManager
+        storedProcedureQuery = entityManager
             .createStoredProcedureQuery("SP_ADD_TALENT")
             .registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
             .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
@@ -81,43 +85,42 @@ public class TalentoServiceImpl implements TalentoService {
             .setParameter(15, newTalentRequest.getPuesto())
             .setParameter(17, newTalentRequest.getIdPais())
             .setParameter(18, newTalentRequest.getIdCiudad())
-            .setParameter(19, newTalentRequest.getIdTipoMoneda());
-
-        storedProcedureQueryTalent.execute();
-        Integer newTalentoId = (Integer) storedProcedureQueryTalent.getOutputParameterValue(16);
+            .setParameter(19, newTalentRequest.getIdTipoMoneda()).setFlushMode(FlushModeType.COMMIT);
+        storedProcedureQuery.execute();
+        Integer newTalentoId = (Integer) storedProcedureQuery.getOutputParameterValue(16);
 
         // -- Habilidades Tecnicas --
         if (newTalentRequest.getHabilidadesTecnicas()!=null && !newTalentRequest.getHabilidadesTecnicas().isEmpty()) {
             for (HabilidadesTecnicasDTO habilidadesTecnicasDTO : newTalentRequest.getHabilidadesTecnicas()) {
-                StoredProcedureQuery storedProcedureQueryHabilidadTecnica = entityManager
+                storedProcedureQuery = entityManager
                         .createStoredProcedureQuery("SP_ADD_TECHNICAL_ABILITY")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(3, BigDecimal.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
                         .setParameter(2, habilidadesTecnicasDTO.getNombre())
-                        .setParameter(3, habilidadesTecnicasDTO.getAnios());
-                storedProcedureQueryHabilidadTecnica.execute();
+                        .setParameter(3, habilidadesTecnicasDTO.getAnios()).setFlushMode(FlushModeType.COMMIT);
+                storedProcedureQuery.execute();
             }
         }
 
         // -- Habilidades Blandas --
         if (newTalentRequest.getHabilidadesBlandas()!=null && !newTalentRequest.getHabilidadesBlandas().isEmpty()) {
             for (HabilidadesBlandasDTO habilidadesBlandasDTO : newTalentRequest.getHabilidadesBlandas()) {
-                StoredProcedureQuery storedProcedureQueryHabilidadBlanda = entityManager
+                storedProcedureQuery = entityManager
                         .createStoredProcedureQuery("SP_ADD_SOFT_SKILL")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
                         .setParameter(1, newTalentoId)
-                        .setParameter(2, habilidadesBlandasDTO.getNombre());
-                storedProcedureQueryHabilidadBlanda.execute();
+                        .setParameter(2, habilidadesBlandasDTO.getNombre()).setFlushMode(FlushModeType.COMMIT);
+                storedProcedureQuery.execute();
             }
         }
 
         // -- Experiencias Laborales --
         if (newTalentRequest.getExperienciasLaborales()!=null && !newTalentRequest.getExperienciasLaborales().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getExperienciasLaborales())) {
             for (ExperienciasLaboralesDTO experienciasLaboralesDTO : newTalentRequest.getExperienciasLaborales()) {
-                StoredProcedureQuery storedProcedureQueryExperienciasLaborales = entityManager
+                storedProcedureQuery = entityManager
                         .createStoredProcedureQuery("SP_ADD_WORK_EXPERIENCE")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
@@ -132,15 +135,15 @@ public class TalentoServiceImpl implements TalentoService {
                         .setParameter(4, experienciasLaboralesDTO.getFechaInicio())
                         .setParameter(5, experienciasLaboralesDTO.getFechaFin())
                         .setParameter(6, experienciasLaboralesDTO.getFlActualidad())
-                        .setParameter(7, experienciasLaboralesDTO.getFunctions());
-                storedProcedureQueryExperienciasLaborales.execute();
+                        .setParameter(7, experienciasLaboralesDTO.getFunctions()).setFlushMode(FlushModeType.COMMIT);
+                storedProcedureQuery.execute();
             }
         }
 
         // -- Experiencias Educativas --
         if (newTalentRequest.getExperienciasEducativas()!=null && !newTalentRequest.getExperienciasEducativas().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getExperienciasEducativas())) {
             for (ExperienciasEducativasDTO experienciasEducativasDTO : newTalentRequest.getExperienciasEducativas()) {
-                StoredProcedureQuery storedProcedureQueryExperienciasEducativas = entityManager
+                storedProcedureQuery = entityManager
                         .createStoredProcedureQuery("SP_ADD_EDUCATIONAL_EXPERIENCE")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
@@ -155,15 +158,15 @@ public class TalentoServiceImpl implements TalentoService {
                         .setParameter(4, experienciasEducativasDTO.getGrado())
                         .setParameter(5, experienciasEducativasDTO.getFechaInicio())
                         .setParameter(6, experienciasEducativasDTO.getFechaFin())
-                        .setParameter(7, experienciasEducativasDTO.getFlActualidad());
-                storedProcedureQueryExperienciasEducativas.execute();
+                        .setParameter(7, experienciasEducativasDTO.getFlActualidad()).setFlushMode(FlushModeType.COMMIT);
+                storedProcedureQuery.execute();
             }
         }
 
         // -- Idiomas --
         if (newTalentRequest.getIdiomas()!=null && !newTalentRequest.getIdiomas().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getIdiomas())) {
             for (IdiomasDTO idioma : newTalentRequest.getIdiomas()) {
-                StoredProcedureQuery storedProcedureQueryIdioma = entityManager
+                storedProcedureQuery = entityManager
                         .createStoredProcedureQuery("SP_ADD_LANGUAGE")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
@@ -172,15 +175,15 @@ public class TalentoServiceImpl implements TalentoService {
                         .setParameter(1, newTalentoId)
                         .setParameter(2, idioma.getIdiomaId())
                         .setParameter(3, idioma.getNivelId())
-                        .setParameter(4, idioma.getNuEstrellas());
-                storedProcedureQueryIdioma.execute();
+                        .setParameter(4, idioma.getNuEstrellas()).setFlushMode(FlushModeType.COMMIT);
+                storedProcedureQuery.execute();
             }
         }
 
         // -- Documentos --
         if (newTalentRequest.getDocumentos()!=null && !newTalentRequest.getDocumentos().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getDocumentos())) {
             for (DocumentoDTO documentoDTO : newTalentRequest.getDocumentos()) {
-                StoredProcedureQuery storedProcedureDocumentos = entityManager
+                storedProcedureQuery = entityManager
                         .createStoredProcedureQuery("SP_ADD_FILES")
                         .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
                         .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
@@ -189,8 +192,8 @@ public class TalentoServiceImpl implements TalentoService {
                         .setParameter(1, newTalentoId)
                         .setParameter(2, documentoDTO.getNombre())
                         .setParameter(3, documentoDTO.getTipoArchivo())
-                        .setParameter(4, documentoDTO.getArchivo());
-                storedProcedureDocumentos.execute();
+                        .setParameter(4, documentoDTO.getArchivo()).setFlushMode(FlushModeType.COMMIT);
+                storedProcedureQuery.execute();
             }
         }
 

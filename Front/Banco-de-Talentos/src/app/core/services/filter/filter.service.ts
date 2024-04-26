@@ -12,7 +12,7 @@ export class FilterService {
   public resultMsg: string = '';
   public total: number = 0;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   filterTalent(filter: FilterRequest): Observable<FilterResponse[]> {
     return this.httpClient
@@ -31,6 +31,6 @@ export class FilterService {
   }
 
   private generateFilterMsg(name: string): string {
-    return name.length === 0 ? 'tu búsqueda' : `"${name}"`;
+    return name.trim().length === 0 ? 'tu búsqueda' : `"${name}"`;
   }
 }

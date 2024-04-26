@@ -19,6 +19,7 @@ import { ConfirmationService } from 'primeng/api';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NoResultsComponent } from './components/no-results/no-results.component';
 import { AvailabilityComponent } from './components/availability/availability.component';
+import { DirectivesModule } from './directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AvailabilityComponent } from './components/availability/availability.co
     ReactiveFormsModule,
     PipesModule,
     PdfViewerModule,
+    DirectivesModule,
   ],
   exports: [
     HeaderComponent,
@@ -57,8 +59,8 @@ import { AvailabilityComponent } from './components/availability/availability.co
     LangPersCrdComponent,
     FeedbackCrdComponent,
     NoResultsComponent,
-    AvailabilityComponent
+    AvailabilityComponent,
   ],
   providers: [ConfirmationService],
 })
-export class SharedModule { }
+export class SharedModule {}

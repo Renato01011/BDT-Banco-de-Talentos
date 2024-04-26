@@ -118,7 +118,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Experiencias Laborales --
-        if (newTalentRequest.getExperienciasLaborales()!=null && !newTalentRequest.getExperienciasLaborales().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getExperienciasLaborales())) {
+        if (newTalentRequest.getExperienciasLaborales()!=null && !newTalentRequest.getExperienciasLaborales().isEmpty()) {
             for (ExperienciasLaboralesDTO experienciasLaboralesDTO : newTalentRequest.getExperienciasLaborales()) {
                 storedProcedureQuery = entityManager
                         .createStoredProcedureQuery("SP_ADD_WORK_EXPERIENCE")
@@ -141,7 +141,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Experiencias Educativas --
-        if (newTalentRequest.getExperienciasEducativas()!=null && !newTalentRequest.getExperienciasEducativas().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getExperienciasEducativas())) {
+        if (newTalentRequest.getExperienciasEducativas()!=null && !newTalentRequest.getExperienciasEducativas().isEmpty()) {
             for (ExperienciasEducativasDTO experienciasEducativasDTO : newTalentRequest.getExperienciasEducativas()) {
                 storedProcedureQuery = entityManager
                         .createStoredProcedureQuery("SP_ADD_EDUCATIONAL_EXPERIENCE")
@@ -164,7 +164,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Idiomas --
-        if (newTalentRequest.getIdiomas()!=null && !newTalentRequest.getIdiomas().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getIdiomas())) {
+        if (newTalentRequest.getIdiomas()!=null && !newTalentRequest.getIdiomas().isEmpty()) {
             for (IdiomasDTO idioma : newTalentRequest.getIdiomas()) {
                 storedProcedureQuery = entityManager
                         .createStoredProcedureQuery("SP_ADD_LANGUAGE")
@@ -181,7 +181,7 @@ public class TalentoServiceImpl implements TalentoService {
         }
 
         // -- Documentos --
-        if (newTalentRequest.getDocumentos()!=null && !newTalentRequest.getDocumentos().isEmpty() && ValidationUtil.allFieldsValid(newTalentRequest.getDocumentos())) {
+        if (newTalentRequest.getDocumentos()!=null && !newTalentRequest.getDocumentos().isEmpty()) {
             for (DocumentoDTO documentoDTO : newTalentRequest.getDocumentos()) {
                 storedProcedureQuery = entityManager
                         .createStoredProcedureQuery("SP_ADD_FILES")

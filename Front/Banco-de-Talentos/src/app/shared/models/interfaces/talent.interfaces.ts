@@ -3,13 +3,12 @@ export interface NewTalentModel {
   apellidoPaterno: string;
   apellidoMaterno: string;
   fotoDePerfil: string;
-  documentos: [
-    {
-      nombre: string;
-      tipoArchivo: string;
-      archivo: string;
-    }
-  ];
+  documentos:
+  {
+    nombre: string;
+    tipoArchivo: string;
+    archivo: string;
+  }[];
   descripcion: string;
   puesto: string;
   idPais: number;

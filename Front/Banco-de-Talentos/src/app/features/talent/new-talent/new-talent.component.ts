@@ -448,9 +448,12 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   getSoftSkillsArrayValues() {
     let objectArray: TalentModels.SoftSkillsTalentModel[] = [];
     this.getSoftSkills().forEach((formGroup) => {
-      objectArray.push({
-        nombre: formGroup.get('name')?.value,
-      });
+      let nameValue = formGroup.get('name')?.value;
+      if (nameValue && nameValue.trim().length > 0) {
+        objectArray.push({
+          nombre: nameValue,
+        });
+      }
     });
     return objectArray;
   }
@@ -458,14 +461,18 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   getWorkExperienceArrayValues() {
     let objectArray: TalentModels.WorkExperienceTalentModel[] = [];
     this.getWorkExperience().forEach((formGroup) => {
-      objectArray.push({
-        empresa: formGroup.get('firm')?.value,
-        puesto: formGroup.get('job')?.value,
-        fechaInicio: formGroup.get('initialDate')?.value,
-        fechaFin: formGroup.get('finalDate')?.value,
-        flActualidad: formGroup.get('flagCurrently')?.value ? 1 : 0,
-        functions: formGroup.get('functions')?.value,
-      });
+      let firmValue = formGroup.get('firm')?.value;
+      let jobValue = formGroup.get('job')?.value;
+      if (firmValue && firmValue.trim().length > 0 && jobValue && jobValue.trim().length > 0) {
+        objectArray.push({
+          empresa: firmValue,
+          puesto: jobValue,
+          fechaInicio: formGroup.get('initialDate')?.value,
+          fechaFin: formGroup.get('finalDate')?.value,
+          flActualidad: formGroup.get('flagCurrently')?.value ? 1 : 0,
+          functions: formGroup.get('functions')?.value,
+        });
+      }
     });
     return objectArray;
   }
@@ -473,14 +480,18 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   getEducationalExperienceArrayValues() {
     let objectArray: TalentModels.EducationalExperienceTalentModel[] = [];
     this.getEducationalExperience().forEach((formGroup) => {
-      objectArray.push({
-        institucion: formGroup.get('institution')?.value,
-        carrera: formGroup.get('major')?.value,
-        grado: formGroup.get('degree')?.value,
-        fechaInicio: formGroup.get('initialDate')?.value,
-        fechaFin: formGroup.get('finalDate')?.value,
-        flActualidad: formGroup.get('flagCurrently')?.value ? 1 : 0,
-      });
+      let institutionValue = formGroup.get('institution')?.value;
+      let majorValue = formGroup.get('major')?.value;
+      if (institutionValue && institutionValue.trim().length > 0 && majorValue && majorValue.trim().length > 0) {
+        objectArray.push({
+          institucion: institutionValue,
+          carrera: majorValue,
+          grado: formGroup.get('degree')?.value,
+          fechaInicio: formGroup.get('initialDate')?.value,
+          fechaFin: formGroup.get('finalDate')?.value,
+          flActualidad: formGroup.get('flagCurrently')?.value ? 1 : 0,
+        });
+      }
     });
     return objectArray;
   }
@@ -502,11 +513,13 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     this.getKnownLanguages().forEach((formGroup) => {
       let languageValue = formGroup.get('language')?.value;
       let levelValue = formGroup.get('level')?.value;
-      objectArray.push({
-        idiomaId: languageValue ? languageValue.id : null,
-        nivelId: levelValue ? levelValue.id : null,
-        nuEstrellas: formGroup.get('starCount')?.value ?? null,
-      });
+      if (languageValue && levelValue) {
+        objectArray.push({
+          idiomaId: languageValue.id,
+          nivelId: levelValue.id,
+          nuEstrellas: formGroup.get('starCount')?.value ?? null,
+        });
+      }
     });
     return objectArray;
   }
@@ -694,13 +707,13 @@ export class NewTalentComponent implements OnInit, OnDestroy {
         apellidoPaterno: this.newTalentForm.get('surName')?.value,
         apellidoMaterno: this.newTalentForm.get('secondSurName')?.value,
         fotoDePerfil: this.base64photo.split(',')[1],
-        documentos: [
+        documentos: this.base64file && this.fileDetailsText ? [
           {
             nombre: this.fileDetailsText,
             tipoArchivo: 'application/pdf',
             archivo: this.base64file.split(',')[1],
           },
-        ],
+        ] : [],
         descripcion: this.newTalentForm.get('description')?.value,
         email: this.newTalentForm.get('email')?.value,
         disponibilidad: this.newTalentForm.get('availability')?.value,

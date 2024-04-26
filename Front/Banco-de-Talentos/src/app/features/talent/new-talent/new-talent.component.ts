@@ -19,8 +19,8 @@ import { ToastService } from 'src/app/core/services/toast/toast.service';
 import * as TalentModels from 'src/app/shared/models/interfaces/talent.interfaces';
 import { FrmValService } from 'src/app/shared/service/frmVal/frm-val.service';
 
-const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
-const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
+const gitHubRegEx = '^https://github.com(/([a-zA-Z0-9-]+/?)?)?$';
+const linkedInRegEx = '^https://www.linkedin.com(/([a-zA-Z0-9-]+/?)?)?$';
 
 @Component({
   selector: 'app-new-talent',
@@ -129,7 +129,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     private talentService: TalentService,
     private loaderService: LoaderService,
     private toastService: ToastService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.checkCurrencies();
@@ -224,7 +224,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
   //   }
   // }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {}
 
   AddTechnicalAbility() {
     (this.newTalentForm.get('technicalAbilities') as FormArray).push(
@@ -731,10 +731,10 @@ export class NewTalentComponent implements OnInit, OnDestroy {
           this.newTalentForm.get('finalAmountPlanilla')?.value ?? 0,
         celular:
           this.newTalentForm.get('callingCode')?.value &&
-            this.newTalentForm.get('phone')?.value
+          this.newTalentForm.get('phone')?.value
             ? this.newTalentForm.get('callingCode')?.value.callingCode +
-            ' ' +
-            this.newTalentForm.get('phone')?.value
+              ' ' +
+              this.newTalentForm.get('phone')?.value
             : '',
         habilidadesTecnicas: this.getTechnicalAbilitiesArrayValues(),
         habilidadesBlandas: this.getSoftSkillsArrayValues(),
@@ -809,7 +809,7 @@ export class NewTalentComponent implements OnInit, OnDestroy {
     return (
       !this.masterService.cacheStorage.byLangProficiency.proficiencies ||
       this.masterService.cacheStorage.byLangProficiency.proficiencies.length ===
-      0
+        0
     );
   }
 

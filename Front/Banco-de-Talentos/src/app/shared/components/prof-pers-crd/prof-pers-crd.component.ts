@@ -28,8 +28,8 @@ interface Favorite {
   code: string;
 }
 
-const gitHubRegEx = '^https://github.com/[a-zA-Z0-9-]+/?$';
-const linkedInRegEx = '^https://www.linkedin.com/in/[a-zA-Z0-9-]+/?$';
+const gitHubRegEx = '^https://github.com(/([a-zA-Z0-9-]+/?)?)?$';
+const linkedInRegEx = '^https://www.linkedin.com(/([a-zA-Z0-9-]+/?)?)?$';
 
 @Component({
   selector: 'shared-prof-pers-crd',
@@ -83,7 +83,7 @@ export class ProfPersCrdComponent implements OnInit, OnChanges {
     private utilsService: UtilsService,
     private confirmationService: ConfirmationService,
     private loaderService: LoaderService
-  ) { }
+  ) {}
 
   public profileForm: FormGroup = this.fb.group({
     img: ['', [Validators.required]],

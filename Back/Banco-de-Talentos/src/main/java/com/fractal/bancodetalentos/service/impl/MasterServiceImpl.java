@@ -1,6 +1,6 @@
 package com.fractal.bancodetalentos.service.impl;
 
-import com.fractal.bancodetalentos.config.DataSourceConfig;
+import com.fractal.bancodetalentos.Config.DataSourceConfig;
 import com.fractal.bancodetalentos.exception.ResourceNotFoundException;
 import com.fractal.bancodetalentos.model.response.*;
 import com.fractal.bancodetalentos.service.MasterService;

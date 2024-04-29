@@ -30,6 +30,7 @@
       >
         <p-scrollPanel
           [style]="{ width: '100%', height: 'calc(100vh - 190px)' }"
+          *ngIf="selId"
         >
           <shared-prof-pers-crd
             [customTalent]="customTalent"

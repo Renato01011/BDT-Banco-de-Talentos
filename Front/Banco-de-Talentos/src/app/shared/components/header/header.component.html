@@ -13,11 +13,7 @@
     (click)="profileOP.toggle($event)"
   >
     <div class="flex flex-order-1 sm:flex-order-0">
-      <p-avatar
-        [image]="picture | base64ToImage"
-        size="large"
-        shape="circle"
-      ></p-avatar>
+      <p-avatar [label]="name[0]" size="large" shape="circle"></p-avatar>
     </div>
     <div
       class="flex flex-order-0 sm:flex-order-1 flex-column hidden md:block px-3"

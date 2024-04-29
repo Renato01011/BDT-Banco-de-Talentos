@@ -579,14 +579,12 @@
                   }"
                 ></textarea>
                 <small
-                  id="textFunctions"
-                  class="hidden"
-                  [ngClass]="{
-                    'ng-invalid ng-dirty':
-                      we.get('functions')?.errors &&
-                      we.get('functions')?.touched
-                  }"
-                  >Este campo debe tener como mínimo 10 caracteres.
+                  style="color: #ef4444; display: flex"
+                  *ngIf="
+                    we.get('functions')?.errors && we.get('functions')?.touched
+                  "
+                >
+                  Ingrese 10 caracteres como mínimo.
                 </small>
               </div>
               <p-divider *ngIf="getWorkExperience().length > 1" align="center">

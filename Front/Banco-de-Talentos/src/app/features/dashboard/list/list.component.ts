@@ -84,7 +84,7 @@ export class ListComponent implements OnInit {
     this.filterService.filterTalent(filter).subscribe({
       next: (talents) => {
         this.talents = talents;
-        this.firstCall(talents);
+        // this.firstCall(talents);
         this.loaderService.hideLoader();
       },
     });

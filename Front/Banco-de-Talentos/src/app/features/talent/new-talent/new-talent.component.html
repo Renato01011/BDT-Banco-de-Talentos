@@ -773,6 +773,7 @@
                   'ng-invalid ng-dirty':
                     kl.get('level')?.errors && kl.get('level')?.touched
                 }"
+                [disabled]="!kl.get('language')?.value"
               ></p-dropdown>
 
               <div class="pt-4">

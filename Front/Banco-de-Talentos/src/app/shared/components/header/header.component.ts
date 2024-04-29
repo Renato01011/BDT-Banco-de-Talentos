@@ -17,11 +17,11 @@ export class HeaderComponent implements OnInit {
   @Input()
   public isRecruiter: boolean = false;
 
-  public picture: string = '';
+  // public picture: string = '';
 
   profileOpItems: MenuItem[] = [];
 
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
     this.profileOpItems = [
@@ -31,14 +31,14 @@ export class HeaderComponent implements OnInit {
         command: (event) => this.logout(),
       },
     ];
-    this.getPicture();
+    // this.getPicture();
   }
 
-  public getPicture() {
-    this.userService.getPicture(this.username).subscribe({
-      next: (resp) => (this.picture = resp.img),
-    });
-  }
+  // public getPicture() {
+  //   this.userService.getPicture(this.username).subscribe({
+  //     next: (resp) => (this.picture = resp.img),
+  //   });
+  // }
 
   private logout() {
     sessionStorage.clear();

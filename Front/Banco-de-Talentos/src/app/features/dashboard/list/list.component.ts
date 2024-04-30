@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { tap } from 'rxjs';
@@ -20,6 +20,7 @@ import { FilterService } from '../../../core/services/filter/filter.service';
 import { TalentService } from '../../../core/services/talent/talent.service';
 import { ToastService } from '../../../core/services/toast/toast.service';
 import { CustomTalent } from '../../../shared/models/interfaces/customTalent.interfaces';
+import { Paginator } from 'primeng/paginator';
 
 @Component({
   selector: 'app-list',
@@ -36,7 +37,11 @@ export class ListComponent implements OnInit {
     levelIds: '',
     nameJobTitle: '',
     userListIds: '',
+    pagina: 1,
   };
+
+  public totalTalents: number = 0;
+  @ViewChild('paginator') paginator!: Paginator;
 
   public selId?: number;
   public talentId?: number;
@@ -61,17 +66,35 @@ export class ListComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private toastService: ToastService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getTalentList(this.filterReq);
     this.isRecruiter = this.authService.isRecruiter;
   }
 
+  resetPage() {
+    if (this.paginator) {
+      this.paginator.changePage(0);
+    }
+  }
+
+  paginate(event: any) {
+    //event.first = Index of the first record
+    //event.rows = Number of rows to display in new page
+    //event.page = Index of the new page
+    //event.pageCount = Total number of pages
+    this.filterReq.pagina = event.page + 1;
+    this.getTalentList(this.filterReq);
+  }
+
   public filterTalent(filter: FilterRequest): void {
     this.filterReq = filter;
     this.selId = undefined;
     this.getTalentList(this.filterReq);
+    if (this.totalTalents > 0) {
+      this.resetPage();
+    }
   }
 
   public saveChanges(id: number): void {
@@ -83,7 +106,8 @@ export class ListComponent implements OnInit {
     this.loaderService.showLoader();
     this.filterService.filterTalent(filter).subscribe({
       next: (talents) => {
-        this.talents = talents;
+        this.totalTalents = talents.total;
+        this.talents = talents.list;
         // this.firstCall(talents);
         this.loaderService.hideLoader();
       },

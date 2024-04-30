@@ -10,9 +10,9 @@
     <div
       class="content w-12 sm:w-4 font-bold py-1 px-2 flex justify-content-center"
     >
-      <div class="w-full">
+      <div class="w-full list__container">
         <p-scrollPanel
-          [style]="{ width: '100%', height: 'calc(100vh - 190px)' }"
+          [style]="{ width: '100%', height: 'calc(100vh - 262px)' }"
         >
           <shared-pers-prof-crd
             [talents]="talents"
@@ -20,6 +20,12 @@
             (talentId)="searchByTalentId($event)"
           ></shared-pers-prof-crd>
         </p-scrollPanel>
+        <p-paginator
+          [rows]="5"
+          [totalRecords]="totalTalents"
+          (onPageChange)="paginate($event)"
+          #paginator
+        ></p-paginator>
       </div>
     </div>
     <div

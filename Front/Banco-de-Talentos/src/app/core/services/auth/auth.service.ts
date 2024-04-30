@@ -89,8 +89,6 @@ export class AuthService {
   // }
 
   public get isRecruiter(): boolean {
-    console.log(environment.production);
-
     if (environment.production) {
       let tempRoles = this.decodeToken()?.roles.toString().split(',') ?? [];
       const roles = tempRoles.map((role) => {

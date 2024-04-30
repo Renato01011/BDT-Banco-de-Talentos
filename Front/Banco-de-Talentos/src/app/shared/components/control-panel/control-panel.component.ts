@@ -51,6 +51,7 @@ export class ControlPanelComponent implements OnInit {
     levelIds: '',
     nameJobTitle: '',
     userListIds: '',
+    pagina: 1,
   };
 
   selectedIdProficiency?: number;
@@ -111,6 +112,7 @@ export class ControlPanelComponent implements OnInit {
     this.filterReq.levelIds = `${this.selectedIdProficiency ?? ''}`;
     this.filterReq.nameJobTitle = this.term;
     this.filterReq.userListIds = `${this.selectedFavoriteId ?? ''}`;
+    this.filterReq.pagina = 1;
     this.onFilterReqVal.emit(this.filterReq);
   }
 

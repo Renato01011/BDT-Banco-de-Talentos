@@ -7,4 +7,5 @@ export interface FilterRequest {
   levelIds: string;
   nameJobTitle: string;
   userListIds: string;
+  pagina: number;
 }

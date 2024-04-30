@@ -31,4 +31,8 @@ public class FilterTalentReq {
     @NotNull(message = "El Id del Usuario es obligatorio y no puede ser nulo.")
     private Integer userId;
 
+    @NotNull(message = "El numero de pagina es obligatorio y no puede ser nulo.")
+    private Integer pagina;
+
+
 }

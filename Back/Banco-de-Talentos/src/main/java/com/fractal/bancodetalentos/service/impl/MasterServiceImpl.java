@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fractal.bancodetalentos.util.ValidationUtil.multiDataFromDb;
+
 @Service
 @RequiredArgsConstructor
 public class MasterServiceImpl implements MasterService {
@@ -137,7 +139,7 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public GeneralDataResp getGeneralData() {
 
-        List<List<Object[]>> allResults = multiDataFromDb("CALL SP_GET_GENERAL_DATA");
+        List<List<Object[]>> allResults = multiDataFromDb("CALL SP_GET_GENERAL_DATA",false,dataSource);
 
         GeneralDataResp dataResp = new GeneralDataResp();
         dataResp.setLanguages(languages((allResults.get(0))));
@@ -221,31 +223,5 @@ public class MasterServiceImpl implements MasterService {
         return result;
     }
 
-    private List<List<Object[]>> multiDataFromDb(String sp) {
-        List<List<Object[]>> results = new ArrayList<>();
-        try (Connection connection = dataSource.dataSource().getConnection()) {
-            try (CallableStatement statement = connection.prepareCall(sp)) {
-                boolean isResultSet = statement.execute();
-                while (isResultSet) {
-                    ResultSet resultSet = statement.getResultSet();
-                    List<Object[]> singleResultSet = new ArrayList<>();
-                    int columnCount = resultSet.getMetaData().getColumnCount();
-                    while (resultSet.next()) {
-                        Object[] row = new Object[columnCount];
-                        for (int i = 0; i < columnCount; i++) {
-                            row[i] = resultSet.getObject(i + 1);
-                        }
-                        singleResultSet.add(row);
-                    }
-                    results.add(singleResultSet);
-                    resultSet.close();
-                    isResultSet = statement.getMoreResults();
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return results;
-    }
 
 }

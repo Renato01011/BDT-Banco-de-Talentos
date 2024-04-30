@@ -1,6 +1,7 @@
 package com.fractal.bancodetalentos.controller;
 
 import com.fractal.bancodetalentos.model.request.FilterTalentReq;
+import com.fractal.bancodetalentos.model.response.FilterResponse;
 import com.fractal.bancodetalentos.model.response.FilterTalentoResp;
 import com.fractal.bancodetalentos.service.FilterService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class FilterController {
 
     @PostMapping()
     //public ResponseEntity<List<FilterTalentoResp>> filterTalents(@Valid @RequestBody FilterTalentReq filterTalentReq) {
-    public List<FilterTalentoResp> filterTalents(@Valid @RequestBody FilterTalentReq filterTalentReq) {
+    public FilterResponse filterTalents(@Valid @RequestBody FilterTalentReq filterTalentReq) {
         return filterService.filterTalents(filterTalentReq);
         /*List<FilterTalentoResp> talents = filterService.filterTalents(filterTalentReq);
         if (talents == null || talents.isEmpty()) {

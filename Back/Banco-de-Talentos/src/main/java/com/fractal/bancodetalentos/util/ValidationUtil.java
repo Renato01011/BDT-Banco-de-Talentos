@@ -1,6 +1,11 @@
 package com.fractal.bancodetalentos.util;
 
-import java.lang.reflect.Field;
+import com.fractal.bancodetalentos.Config.DataSourceConfig;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -12,42 +17,38 @@ public final class ValidationUtil {
         }
     }
 
-    public static <T> boolean allFieldsValid(List<T> list) {
-        if (list == null || list.isEmpty()) {
-            return false;
-        }
-
-        for (T obj : list) {
-            if (obj == null || !checkFields(obj)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static <T> boolean checkFields(T obj) {
-        Class<?> clazz = obj.getClass();
-
-        for (Field field : clazz.getDeclaredFields()) {
-            field.setAccessible(true);
-            try {
-                if (field.getType() == String.class) {
-                    String value = (String) field.get(obj);
-                    if (value == null || value.isEmpty()) {
-                        return false;
+    public static List<List<Object[]>> multiDataFromDb(String sp, boolean isParameter, DataSourceConfig dataSourceConfig, Object... params) {
+        List<List<Object[]>> results = new ArrayList<>();
+        try {
+            try (Connection connection = dataSourceConfig.dataSource().getConnection()) {
+                try (CallableStatement statement = connection.prepareCall(sp)) {
+                    if (isParameter) {
+                        for (int i = 0; i < params.length; i++) {
+                            statement.setObject(i + 1, params[i]);
+                        }
                     }
-                } else {
-                    Object value = field.get(obj);
-                    if (value == null) {
-                        return false;
+                    boolean isResultSet = statement.execute();
+                    while (isResultSet) {
+                        ResultSet resultSet = statement.getResultSet();
+                        List<Object[]> singleResultSet = new ArrayList<>();
+                        int columnCount = resultSet.getMetaData().getColumnCount();
+                        while (resultSet.next()) {
+                            Object[] row = new Object[columnCount];
+                            for (int i = 0; i < columnCount; i++) {
+                                row[i] = resultSet.getObject(i + 1);
+                            }
+                            singleResultSet.add(row);
+                        }
+                        results.add(singleResultSet);
+                        resultSet.close();
+                        isResultSet = statement.getMoreResults();
                     }
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-                return false;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return true;
+        return results;
     }
 
 
